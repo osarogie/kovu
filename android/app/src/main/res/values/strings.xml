@@ -1,0 +1,5 @@
+<resources>
+
+    <string moduleConfig="true" name="reactNativeCodePush_androidDeploymentKey">OZKNMKoLwzQN7z_zWSdhbf9pw3WV1b1d2ce9-a650-48ff-9c10-e182b45a236d</string>
+    <string name="app_name">kovu</string>
+</resources>
