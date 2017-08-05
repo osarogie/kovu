@@ -5,27 +5,42 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
-    "build": "babel src/ -d lib/",
-    "prepublish": "yarn run build"
+    "react-devtools": "react-devtools",
+    "update-schema": "./node_modules/.bin/fetch-schema http://localhost:3000/_/api -f schema.graphql",
+    "relay": "relay-compiler --src ./src --schema schema.graphql",
+    "relayw": "relay-compiler --src ./src --schema schema.graphql --watch"
   },
   "dependencies": {
+    "base-64": "^0.1.0",
+    "hoist-non-react-statics": "^2.2.1",
+    "lodash": "^4.17.4",
     "react": "16.0.0-alpha.12",
     "react-native": "0.46.0",
     "react-native-code-push": "^3.0.1-beta",
+    "react-native-searchbar": "^1.11.0",
+    "react-native-simple-markdown": "^1.0.60-rc.3",
+    "react-native-swiper": "^1.5.4",
     "react-native-vector-icons": "^4.2.0",
+    "react-navigation": "^1.0.0-beta.11",
     "react-redux": "^5.0.5",
+    "react-relay": "^1.1.0",
     "redux": "^3.7.1",
     "redux-logger": "^3.0.6",
+    "redux-persist": "^4.8.2",
     "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-jest": "20.0.3",
+    "babel-plugin-relay": "^1.1.0",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-preset-flow": "^6.23.0",
     "babel-preset-react-native": "2.1.0",
+    "fetch-schema": "^0.0.14",
     "flow-bin": "^0.49.1",
     "jest": "20.0.4",
-    "react-test-renderer": "16.0.0-alpha.12"
+    "react-test-renderer": "16.0.0-alpha.12",
+    "relay-compiler": "^1.1.0"
   },
   "jest": {
     "preset": "react-native"
