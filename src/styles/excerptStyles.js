@@ -1,0 +1,40 @@
+// import { StyleSheet } from 'react-native'
+
+module.exports = {
+  body: {
+    view: {
+      // justifyContent: 'justify'
+    },
+    text: {
+      color: '#000',
+      lineHeight: 25,
+      flex: 1
+    }
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#000',
+    flex: 1
+  },
+  container: { margin: 17 },
+  profilePicture: {
+    height: 40,
+    width: 40,
+    borderRadius: 5
+  },
+  featurePhoto: {
+    // height: 100,
+    // marginTop: 10,
+    borderRadius: 5
+    // marginBottom: 10
+  },
+  controlIcon: {
+    marginTop: 0,
+    marginBottom: 0,
+    marginLeft: 0,
+    marginRight: 0
+  },
+  meta: { fontSize: 11 },
+  groupInfo: { flexDirection: 'row', marginBottom: 10, flex: 1 }
+}

@@ -11,9 +11,9 @@ module.exports = StyleSheet.create({
     alignItems: 'center'
   },
   logoImage: {
-    width: 100,
-    height: 100,
-    // marginTop: 60,
+    width: 80,
+    height: 80,
+    marginTop: 50,
     marginBottom: 20
   },
   bottomControl: {
@@ -26,16 +26,18 @@ module.exports = StyleSheet.create({
     marginTop: 20
   },
   input: {
-    width: 200
+    // width: 200,
+    flex: 1
   },
   inputContainer: {
     flex: 1,
     flexDirection: 'row',
     backgroundColor: '#eee',
-    marginTop: 20,
     paddingRight: 20,
     paddingLeft: 20,
-    borderRadius: 5
+    borderRadius: 40,
+    // justifyContent: 'center',
+    alignItems: 'center'
   },
   button: {
     borderRadius: 40,
@@ -43,9 +45,21 @@ module.exports = StyleSheet.create({
     height: 40,
     backgroundColor: '#05f'
   },
+  writeButton: {
+    borderRadius: 40,
+    backgroundColor: '#05f'
+  },
   icon: {
     marginTop: 5,
     marginBottom: 5,
+    marginRight: 10
+  },
+  tabIcon: {
+    marginTop: 5,
+    marginBottom: 5
+  },
+  loginFieldIcon: {
+    // marginTop: 15,
     marginRight: 10
   },
   chatList: {
@@ -53,8 +67,9 @@ module.exports = StyleSheet.create({
     flex: 1
   },
   toolbar: {
-    backgroundColor: '#fff',
     // borderBottomWidth: 1,
+    borderTopRightRadius: 4,
+    borderTopLeftRadius: 4,
     // borderBottomColor: '#ccc',
     height: 53
   },
@@ -69,20 +84,21 @@ module.exports = StyleSheet.create({
     color: '#aaa'
   },
   container: {
-    flex: 1,
-    backgroundColor: '#fff'
+    flex: 1
+    // backgroundColor: '#fff'
   },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#000'
+    color: '#000',
+    flex: 1
   },
   separator: {
     height: 1,
     backgroundColor: '#cccccc'
   },
   discussionContainer: {
-    margin: 20
+    margin: 17
   },
   body: {
     color: '#000',
@@ -98,5 +114,21 @@ module.exports = StyleSheet.create({
   },
   imageWrap: {
     backgroundColor: '#eee'
-  }
+  },
+  optionRow: {
+    flexDirection: 'row',
+    flex: 1,
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 20,
+    paddingRight: 20
+  },
+  optionTextView: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingLeft: 20
+  },
+  fillRow: { flexDirection: 'row', flex: 1 },
+  row: { flexDirection: 'row' },
+  fill: { flex: 1 }
 })
