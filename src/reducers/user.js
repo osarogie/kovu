@@ -1,5 +1,6 @@
 const initialState = {
   user: {},
+  api_key: null,
   loggedIn: false
 }
 
@@ -9,10 +10,12 @@ const user = (state = initialState, action) => {
       if (action.user) {
         return Object.assign({}, state, {
           user: action.user,
+          api_key: action.api_key,
           loggedIn: true
         })
       } else return initialState
-
+    case 'LOGOUT':
+      return initialState
     default:
       return state
   }
