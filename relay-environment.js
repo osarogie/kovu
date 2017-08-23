@@ -3,29 +3,30 @@ const { Environment, Network, RecordSource, Store } = require('relay-runtime')
 const source = new RecordSource()
 const store = new Store(source)
 
-function fetchQuery(operation, variables, cacheConfig, uploadables) {
-  return fetch('https://thecommunity.ng/_/api', {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    }, // Add authentication and other headers here
-    body: JSON.stringify({
-      query: operation.text, // GraphQL text from input
-      variables
+export default (createEnvironment = ({ headers }) => {
+  const fetchQuery = (operation, variables, cacheConfig, uploadables) => {
+    // return fetch('http://localhost:3000/v2', {
+    return fetch('https://data.thecommunity.ng/v2', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        ...headers
+      },
+      body: JSON.stringify({
+        query: operation.text,
+        variables
+      })
+    }).then(response => {
+      // console.log(response.text())
+      const r = response.json()
+      return r
     })
-  }).then(response => {
-    // console.log(response.text())
-    const r = response.json()
-    return r
-  })
-}
+  }
 
-const network = Network.create(fetchQuery)
+  const network = Network.create(fetchQuery)
 
-const environment = new Environment({
-  network,
-  store
+  const environment = new Environment({ network, store })
+
+  return environment
 })
-
-export default environment
