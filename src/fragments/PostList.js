@@ -6,13 +6,15 @@ import {
   Text,
   View,
   TouchableHighlight,
-  FlatList,
+  VirtualizedList,
   Image
 } from 'react-native'
 import { withNavigation } from 'react-navigation'
 import environment from '../../relay-environment'
 import styles from '../styles'
+import colors from '../colors'
 import LoaderBox from '../components/LoaderBox'
+import EmptyList from '../components/EmptyList'
 import PostListItem from '../fragments/PostListItem'
 
 // @withNavigation
@@ -24,7 +26,7 @@ export default class PostList extends Component<any, Props, State> {
   }
 
   onRefresh = () => {
-    const { discussions } = this.props.list
+    const { discussions } = this.props.discussionList
 
     if (this.props.relay.isLoading()) {
       return
@@ -42,6 +44,10 @@ export default class PostList extends Component<any, Props, State> {
   }
 
   onEndReached = () => {
+    const discussions = this.props.discussionList.discussions
+
+    if (!discussions.edges || discussions.edges.length == 0) return
+
     const hasMore = this.props.relay.hasMore()
     const isLoading = this.props.relay.isLoading()
 
@@ -54,12 +60,12 @@ export default class PostList extends Component<any, Props, State> {
     }
 
     // fetch more 5
-    this.props.relay.loadMore(5, err => {
+    this.props.relay.loadMore(10, err => {
       this.setState({
         hasMore: this.props.relay.hasMore(),
         isLoading: this.props.relay.isLoading()
       })
-      console.log('loadMore: ', err)
+      // console.log('loadMore: ', err)
     })
 
     this.setState({
@@ -69,49 +75,42 @@ export default class PostList extends Component<any, Props, State> {
   }
 
   renderItem = ({ item, itemProps }) =>
-    <PostListItem
-      discussion={item.node}
-      // onPress={() => this.goToDiscussionDetail(item.node)}
-      navigation={this.props.navigation}
-      {...itemProps}
-    />
-
-  // goToDiscussionDetail = discussion => {
-  //   const { navigate } = this.props.navigation
-  //
-  //   navigate('Discussion', { id: discussion.id })
-  // }
+    <PostListItem discussion={item.node} {...itemProps} />
 
   renderFooter() {
+    const discussions = this.props.discussionList.discussions
+
+    if (!discussions.edges || discussions.edges.length == 0) {
+      return <EmptyList message="No posts yet" />
+    }
+
     if (this.state.hasMore) {
       return (
         <LoaderBox isLoading={true} onLoadInit={this.onEndReached.bind(this)} />
       )
-    } else {
-      return null
     }
-  }
 
-  renderHeader() {
-    return <View style={[styles.imageWrap, { height: 0 }]} />
+    return null
   }
 
   render() {
-    const { list, itemProps } = this.props
-    const discussions = list.discussions
+    const { discussionList, itemProps } = this.props
+    const discussions = discussionList.discussions
 
     return (
-      <View style={styles.container}>
-        <FlatList
+      <View>
+        {this.props.renderTopHeader && this.props.renderTopHeader()}
+        <VirtualizedList
           data={discussions.edges}
           renderItem={props => this.renderItem({ ...props, itemProps })}
           keyExtractor={item => item.node.id}
           onEndReached={this.onEndReached}
           onRefresh={this.onRefresh}
           refreshing={this.state.isFetchingTop}
-          ItemSeparatorComponent={() => <View style={styles.separator} />}
           ListFooterComponent={this.renderFooter.bind(this)}
-          ListHeaderComponent={this.renderHeader.bind(this)}
+          ListHeaderComponent={this.props.renderHeader}
+          getItemCount={data => data.length}
+          getItem={(data, ii) => data[ii]}
         />
       </View>
     )
