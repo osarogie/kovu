@@ -10,23 +10,31 @@
 import type {ConcreteFragment} from 'relay-runtime';
 export type PostListItem_discussion = {|
   +id: string;
+  +_id: string;
   +name: ?string;
   +excerpt: ?string;
   +word_count: ?number;
+  +comment_count: ?number;
+  +created_at: ?number;
   +user: ?{|
     +id: string;
+    +_id: string;
     +name: ?string;
-    +profile_picture: ?string;
+    +username: ?string;
+    +profile_picture_name: ?string;
   |};
   +group: ?{|
+    +id: string;
+    +_id: string;
     +name: ?string;
     +permalink: ?string;
   |};
   +feature_photo: ?{|
     +id: string;
-    +url: ?string;
+    +_id: string;
     +height: ?number;
     +width: ?number;
+    +name: ?string;
   |};
 |};
 */
@@ -38,6 +46,13 @@ const fragment /*: ConcreteFragment*/ = {
   "metadata": null,
   "name": "PostListItem_discussion",
   "selections": [
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "args": null,
+      "name": "comment_count",
+      "storageKey": null
+    },
     {
       "kind": "ScalarField",
       "alias": null,
@@ -74,6 +89,20 @@ const fragment /*: ConcreteFragment*/ = {
       "storageKey": null
     },
     {
+      "kind": "ScalarField",
+      "alias": null,
+      "args": null,
+      "name": "_id",
+      "storageKey": null
+    },
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "args": null,
+      "name": "created_at",
+      "storageKey": null
+    },
+    {
       "kind": "LinkedField",
       "alias": null,
       "args": null,
@@ -92,22 +121,29 @@ const fragment /*: ConcreteFragment*/ = {
           "kind": "ScalarField",
           "alias": null,
           "args": null,
+          "name": "_id",
+          "storageKey": null
+        },
+        {
+          "kind": "ScalarField",
+          "alias": null,
+          "args": null,
           "name": "name",
           "storageKey": null
         },
         {
           "kind": "ScalarField",
           "alias": null,
-          "args": [
-            {
-              "kind": "Literal",
-              "name": "size",
-              "value": 50,
-              "type": "Int"
-            }
-          ],
-          "name": "profile_picture",
-          "storageKey": "profile_picture{\"size\":50}"
+          "args": null,
+          "name": "username",
+          "storageKey": null
+        },
+        {
+          "kind": "ScalarField",
+          "alias": null,
+          "args": null,
+          "name": "profile_picture_name",
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -120,6 +156,20 @@ const fragment /*: ConcreteFragment*/ = {
       "name": "group",
       "plural": false,
       "selections": [
+        {
+          "kind": "ScalarField",
+          "alias": null,
+          "args": null,
+          "name": "id",
+          "storageKey": null
+        },
+        {
+          "kind": "ScalarField",
+          "alias": null,
+          "args": null,
+          "name": "_id",
+          "storageKey": null
+        },
         {
           "kind": "ScalarField",
           "alias": null,
@@ -155,16 +205,9 @@ const fragment /*: ConcreteFragment*/ = {
         {
           "kind": "ScalarField",
           "alias": null,
-          "args": [
-            {
-              "kind": "Literal",
-              "name": "size",
-              "value": "1000x960",
-              "type": "String"
-            }
-          ],
-          "name": "url",
-          "storageKey": "url{\"size\":\"1000x960\"}"
+          "args": null,
+          "name": "_id",
+          "storageKey": null
         },
         {
           "kind": "ScalarField",
@@ -179,9 +222,21 @@ const fragment /*: ConcreteFragment*/ = {
           "args": null,
           "name": "width",
           "storageKey": null
+        },
+        {
+          "kind": "ScalarField",
+          "alias": null,
+          "args": null,
+          "name": "name",
+          "storageKey": null
         }
       ],
       "storageKey": null
+    },
+    {
+      "kind": "FragmentSpread",
+      "name": "DiscussionLike_discussion",
+      "args": null
     }
   ],
   "type": "Discussion"

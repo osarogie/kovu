@@ -5,46 +5,59 @@ import {
   View,
   Image,
   ViewPropTypes,
-  TouchableHighlight
+  Dimensions,
+  TouchableHighlight,
+  PixelRatio,
+  TouchableOpacity
 } from 'react-native'
 import styles from '../styles'
-import { commitMutation, createFragmentContainer, graphql } from 'react-relay'
+import excerptStyles from '../styles/excerptStyles'
+import { createFragmentContainer, graphql } from 'react-relay'
 import Markdown from 'react-native-simple-markdown'
-import { withNavigation } from 'react-navigation'
+import { connect } from 'react-redux'
+import Separator from '../components/Separator'
+import DiscussionLike from '../fragments/DiscussionLike'
+import { getTimeAgo, imageUrl, getCommentCount } from '../utils'
+import Icon from 'react-native-vector-icons/Ionicons'
 
-// @withNavigation
-class PostListItem extends React.Component {
-  openProfile() {
-    const { navigation, discussion } = this.props
-    navigation.navigate('Profile', { id: discussion.user.id })
+const mapStateToProps = state => ({
+  night_mode: state.night_mode
+})
+
+class PostListItem extends React.PureComponent {
+  clickableProps = {
+    underlayColor: 'whitesmoke'
   }
 
-  openDiscussion() {
-    const { navigation, discussion } = this.props
-    navigation.navigate('Discussion', { id: discussion.id })
+  collectionNameProps = {
+    style: { color: '#05f' }
   }
 
-  openCollection() {
-    const { navigation, discussion } = this.props
-    navigation.navigate('Collection', { id: discussion.group.id })
+  featurePhotoStyles = {
+    ...excerptStyles.featurePhoto,
+    backgroundColor: '#eee',
+    marginTop: 10
   }
 
   renderFeaturePhoto() {
     const image = this.props.discussion.feature_photo
 
     if (image) {
-      const { height, width } = this.props.feature_photo
-      // alert(image.url)
+      if (this.props.feature_photo) {
+        const { height, width } = this.props.feature_photo
+      } else {
+        var { width } = Dimensions.get('window')
+        var height = width / 3
+        width -= 34
+      }
+      const f_width = PixelRatio.getPixelSizeForLayoutSize(width)
+      const f_height = PixelRatio.getPixelSizeForLayoutSize(height)
+
+      const uri = imageUrl(image.name, `${f_width}x${f_height}`)
+
       return (
-        <View style={[styles.featurePhotoWarp, { height, width }]}>
-          <Image
-            source={{ uri: `http://${image.url}` }}
-            style={{
-              borderRadius: 5,
-              height,
-              width
-            }}
-          />
+        <View style={[{ height, width }, this.featurePhotoStyles]}>
+          <Image source={{ uri }} style={{ borderRadius: 5, height, width }} />
         </View>
       )
     } else {
@@ -52,90 +65,139 @@ class PostListItem extends React.Component {
     }
   }
 
-  renderGroupInfo() {
-    const { navigation, discussion, showGroupInfo } = this.props
+  renderCollectionName() {
+    const { discussion, showGroupInfo, openCollection } = this.props
 
     if (discussion.group && showGroupInfo !== false) {
       return (
-        <TouchableHighlight
-          underlayColor="whitesmoke"
-          onPress={this.openCollection.bind(this)}
+        <TouchableOpacity
+          {...this.clickableProps}
+          style={{ flex: 1, flexDirection: 'row' }}
+          onPress={_ => openCollection(discussion.group)}
         >
-          <View style={{ flexDirection: 'row', marginBottom: 10 }}>
-            <Text>In </Text>
-            <Text style={{ color: '#05f' }}>
+          <Text
+            style={[excerptStyles.groupInfo, excerptStyles.meta]}
+            numberOfLines={1}
+          >
+            <Text> in </Text>
+            <Text {...this.collectionNameProps}>
               {discussion.group.name}
             </Text>
-          </View>
-        </TouchableHighlight>
+            <Text> collection</Text>
+          </Text>
+        </TouchableOpacity>
       )
-    } else {
-      return null
-    }
+    } else return null
   }
 
   renderProfilePicture() {
-    const { navigation, discussion } = this.props
+    const { discussion, openProfile } = this.props
+    const size = PixelRatio.getPixelSizeForLayoutSize(40)
+
+    const uri = imageUrl(
+      discussion.user.profile_picture_name,
+      `${size}x${size}`
+    )
 
     return (
-      <TouchableHighlight
-        underlayColor="whitesmoke"
-        onPress={this.openProfile.bind(this)}
+      <TouchableOpacity
+        {...this.clickableProps}
+        onPress={_ => openProfile(discussion.user)}
       >
         <View
-          style={{
-            height: 40,
-            width: 40,
-            backgroundColor: '#eee',
-            borderRadius: 5
-          }}
-          onPress={this.openProfile.bind(this)}
+          style={[excerptStyles.profilePicture, { backgroundColor: '#eee' }]}
         >
-          <Image
-            source={{ uri: `http://${discussion.user.profile_picture}` }}
-            style={{ height: 40, width: 40, borderRadius: 5 }}
-          />
+          <Image source={{ uri }} style={excerptStyles.profilePicture} />
         </View>
-      </TouchableHighlight>
+      </TouchableOpacity>
+    )
+  }
+
+  renderMeta() {
+    const { discussion, openProfile } = this.props
+
+    return (
+      <View>
+        <TouchableOpacity
+          {...this.clickableProps}
+          onPress={_ => openProfile(discussion.user)}
+        >
+          <Text style={[styles.fill, { color: '#000' }]} numberOfLines={1}>
+            {discussion.user.name}
+          </Text>
+        </TouchableOpacity>
+        <View style={styles.row}>
+          <Text style={excerptStyles.meta}>
+            {getTimeAgo(discussion.created_at)}
+          </Text>
+          {this.renderCollectionName()}
+        </View>
+      </View>
+    )
+  }
+
+  renderControls() {
+    const { discussion, openComments } = this.props
+    const { comment_count } = discussion
+    const comment_count_ = getCommentCount(comment_count)
+
+    return (
+      <View>
+        <Separator styles={{ marginTop: 13, marginBottom: 10 }} />
+        <View style={[styles.row, { alignItems: 'center' }]}>
+          <DiscussionLike discussion={discussion} />
+          <View style={styles.fillRow} />
+          <TouchableOpacity
+            {...this.clickableProps}
+            onPress={_ => openComments(discussion)}
+          >
+            <Text style={{ marginLeft: 20 }}>
+              {`${comment_count_} Contribution${comment_count == 1 ? '' : 's'}`}
+            </Text>
+          </TouchableOpacity>
+          {/* <Icon
+            name="md-more"
+            style={excerptStyles.control}
+            size={25}
+            color="#777"
+          /> */}
+        </View>
+      </View>
     )
   }
 
   render() {
-    const { discussion, onPress } = this.props
-
+    const { discussion, openDiscussion } = this.props
+    const { name, excerpt, word_count } = discussion
+    // console.log(this.props);
+    // console.log(discussion.created_at)
     return (
-      <TouchableHighlight
-        underlayColor="whitesmoke"
-        onPress={this.openDiscussion.bind(this)}
-      >
-        <View style={styles.discussionContainer}>
-          {this.renderGroupInfo()}
-          <View style={{ flexDirection: 'row' }}>
-            {this.renderProfilePicture()}
-            <View style={{ marginLeft: 20 }}>
-              <Text>
-                {discussion.user.name}
-              </Text>
-              <Text style={styles.title}>
-                {discussion.name}
-              </Text>
+      <View>
+        <TouchableHighlight
+          {...this.clickableProps}
+          style={{ backgroundColor: '#fff', elevation: 2, marginBottom: 10 }}
+          onPress={_ => openDiscussion(discussion)}
+        >
+          <View style={excerptStyles.container}>
+            <View style={{ flexDirection: 'row', marginBottom: 8 }}>
+              {this.renderProfilePicture()}
+              <View style={{ marginLeft: 15, marginRight: 15, flex: 1 }}>
+                {this.renderMeta()}
+              </View>
             </View>
+            <Text style={excerptStyles.title}>
+              {name}
+            </Text>
+            {this.renderFeaturePhoto()}
+            <Markdown styles={excerptStyles.body}>
+              {excerpt}
+              {word_count > 30 ? '***...(Read More)***' : ''}
+            </Markdown>
+            {this.renderControls()}
           </View>
-          {this.renderFeaturePhoto()}
-          <Markdown
-            styles={{
-              text: {
-                color: '#000',
-                lineHeight: 25,
-                textAlign: 'justify'
-              }
-            }}
-          >
-            {discussion.excerpt}
-            {discussion.word_count > 30 ? '***...(Read More)***' : ''}
-          </Markdown>
-        </View>
-      </TouchableHighlight>
+        </TouchableHighlight>
+        <Separator />
+      </View>
     )
   }
 }
@@ -147,52 +209,37 @@ PostListItem.propTypes = {
 }
 
 export default createFragmentContainer(
-  PostListItem,
+  connect(mapStateToProps)(PostListItem),
   graphql`
     fragment PostListItem_discussion on Discussion {
       id
+      _id
       name
       excerpt(size: 30)
       word_count
+      comment_count
+      created_at
       user {
         id
+        _id
         name
-        profile_picture(size: 50)
+        username
+        profile_picture_name
       }
       group {
+        id
+        _id
         name
         permalink
       }
       feature_photo {
         id
-        url(size: "1000x960")
+        _id
         height
         width
+        name
       }
+      ...DiscussionLike_discussion
     }
   `
-  // {
-  //   direction: 'forward',
-  //   getConnectionFromProps(props) {
-  //     return props.list && props.list.discussions
-  //   },
-  //   getFragmentVariables(prevVars, totalCount) {
-  //     return {
-  //       ...prevVars,
-  //       count: totalCount
-  //     }
-  //   },
-  //   getVariables(
-  //     props,
-  //     { count, cursor, feature_photo_size },
-  //     fragmentVariables
-  //   ) {
-  //     return {
-  //       count,
-  //       cursor,
-  //       itemProps: props.itemProps
-  //     }
-  //   },
-  //   variables: { cursor: null, feature_photo_size: '' }
-  // }
 )
