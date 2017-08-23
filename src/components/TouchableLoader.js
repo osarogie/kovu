@@ -8,10 +8,15 @@ import {
   TouchableOpacity,
   View
 } from 'react-native'
+var keyOf = require('fbjs/lib/keyOf')
 
 export default class TouchableLoader extends React.Component {
   renderLoading() {
-    if (this.props.isLoading === false) {
+    const { icon } = this.props
+    // console.log(this.props)
+    if (icon) {
+      return icon
+    } else if (this.props.isLoading === false) {
       return (
         <Text style={[styles.text, this.props.textStyle]}>
           {this.props.title}
@@ -20,15 +25,7 @@ export default class TouchableLoader extends React.Component {
     }
     return (
       <View>
-        <Text
-          style={[
-            styles.text,
-            this.props.textStyle,
-            {
-              opacity: 0
-            }
-          ]}
-        >
+        <Text style={[styles.text, this.props.textStyle, { opacity: 0 }]}>
           {this.props.title}
         </Text>
         <ActivityIndicator

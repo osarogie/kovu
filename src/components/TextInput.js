@@ -15,7 +15,13 @@ export default class TextInput extends React.Component {
 
   onChangeText(value) {
     this.setState({ value })
-    this.props.onChangeText(value)
+    if (this.props.onChangeText) {
+      this.props.onChangeText(value)
+    }
+  }
+
+  renderRightIcon() {
+    return this.props.renderRightIcon ? this.props.renderRightIcon() : null
   }
 
   renderIcon() {
@@ -24,10 +30,10 @@ export default class TextInput extends React.Component {
     return (
       <Icon
         name={this.props.androidIcon}
-        style={styles.icon}
+        style={[styles.loginFieldIcon, this.props.iconStyle]}
         size={20}
         onPress={this.focus.bind(this)}
-        color="#b2b2b2"
+        color={this.props.iconColor || '#b2b2b2'}
       />
     )
   }
@@ -38,7 +44,11 @@ export default class TextInput extends React.Component {
     return (
       <Icon
         name="remove-red-eye"
-        style={[styles.icon, { marginRight: 0 }]}
+        style={[
+          styles.loginFieldIcon,
+          { marginRight: 0 },
+          this.props.iconStyle
+        ]}
         size={20}
         color={this.state.showSecureEntry ? '#05f' : '#b2b2b2'}
         onPress={() => {
@@ -52,22 +62,26 @@ export default class TextInput extends React.Component {
 
   render() {
     return (
-      <View style={styles.inputContainer}>
+      <View style={[styles.inputContainer, this.props.style]}>
         {this.renderIcon()}
         <OTextInput
-          style={styles.input}
+          style={[styles.input, this.props.inputStyle]}
           ref={component => (this.textInput = component)}
           onChangeText={this.onChangeText.bind(this)}
           underlineColorAndroid="transparent"
           keyboardType={this.props.keyboardType}
-          value={this.props.value}
+          value={
+            (this.props.onChangeText && this.props.value) || this.state.value
+          }
           secureTextEntry={
             this.props.secureTextEntry && !this.state.showSecureEntry
           }
           placeholder={this.props.placeholder}
           onSubmitEditing={this.props.onSubmitEditing}
+          {...this.props.inputProps}
         />
         {this.renderShowSecureIcon()}
+        {this.renderRightIcon()}
       </View>
     )
   }
@@ -77,9 +91,10 @@ TextInput.defaultProps = {
   secureTextEntry: false,
   onSubmitEditing: () => {},
   placeholder: '',
-  onChangeText: value => {},
+  // onChangeText: value => {},
   androidIcon: '',
   value: '',
+  inputProps: {},
   keyboardType: 'default'
 }
 
@@ -88,8 +103,9 @@ TextInput.propTypes = {
   secureTextEntry: React.PropTypes.bool,
   onSubmitEditing: React.PropTypes.func,
   placeholder: React.PropTypes.string,
-  onChangeText: React.PropTypes.func,
+  // onChangeText: React.PropTypes.func,
   androidIcon: React.PropTypes.string,
   value: React.PropTypes.string,
+  inputPropstyle: React.PropTypes.object,
   keyboardType: React.PropTypes.string
 }
