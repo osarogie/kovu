@@ -5,21 +5,23 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
-    "react-devtools": "react-devtools",
+    "devtools": "react-devtools",
     "update-schema": "./node_modules/.bin/fetch-schema http://localhost:3000/_/api -f schema.graphql",
     "relay": "relay-compiler --src ./src --schema schema.graphql",
     "relayw": "relay-compiler --src ./src --schema schema.graphql --watch"
   },
   "dependencies": {
     "base-64": "^0.1.0",
-    "hoist-non-react-statics": "^2.2.1",
+    "domain-browser": "^1.1.7",
     "lodash": "^4.17.4",
     "react": "16.0.0-alpha.12",
     "react-native": "0.46.0",
     "react-native-code-push": "^3.0.1-beta",
-    "react-native-searchbar": "^1.11.0",
+    "react-native-elements": "^0.16.0",
+    "react-native-settings-list": "^1.6.1",
     "react-native-simple-markdown": "^1.0.60-rc.3",
     "react-native-swiper": "^1.5.4",
+    "react-native-tab-view": "^0.0.69",
     "react-native-vector-icons": "^4.2.0",
     "react-navigation": "^1.0.0-beta.11",
     "react-redux": "^5.0.5",
@@ -27,7 +29,8 @@
     "redux": "^3.7.1",
     "redux-logger": "^3.0.6",
     "redux-persist": "^4.8.2",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "then-request": "^4.1.0"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
@@ -40,9 +43,16 @@
     "flow-bin": "^0.49.1",
     "jest": "20.0.4",
     "react-test-renderer": "16.0.0-alpha.12",
-    "relay-compiler": "^1.1.0"
+    "relay-compiler": "^1.1.0",
+    "rn-nodeify": "^7.0.1"
   },
   "jest": {
     "preset": "react-native"
+  },
+  "react-native": {
+    "domain": "domain-browser"
+  },
+  "browser": {
+    "domain": "domain-browser"
   }
 }
