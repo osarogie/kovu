@@ -3,9 +3,10 @@ import { AsyncStorage } from 'react-native'
 import Constants from './constants'
 
 const apiBaseUrl = 'https://data.thecommunity.ng/v1/'
+// const apiBaseUrl = 'http://localhost:3000/v1/'
 
 export default (auth = {
-  login: async (username, l_password) => {
+  async login(username, l_password) {
     const credentials = `${username}:${l_password}`
     const basic = 'Basic ' + Base64.encode(credentials)
 
@@ -19,7 +20,7 @@ export default (auth = {
     }).then(response => response.json())
   },
 
-  register: (name, username, email, r_password) => {
+  async register(name, username, email, r_password) {
     const credentials = `${email}:${r_password}`
     const basic = 'Basic ' + Base64.encode(credentials)
     return fetch(`${apiBaseUrl}register`, {
@@ -36,7 +37,7 @@ export default (auth = {
     }).then(response => response.json())
   },
 
-  logout: () => {
+  logout() {
     AsyncStorage.multiRemove([
       Constants.USER_ID,
       Constants.USER,
