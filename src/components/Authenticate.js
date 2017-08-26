@@ -107,7 +107,12 @@ class Authenticate extends React.Component {
 
   storeSession(response) {
     const { goBack, dispatch } = this.props
-    dispatch(setUser(response.user, response.api_key))
+    dispatch(
+      setUser(
+        { ...response.user, _id: `${response.user.id}` },
+        response.api_key
+      )
+    )
     goBack()
   }
 
