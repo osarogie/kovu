@@ -4204,6 +4204,12 @@ react-native-markdown-view@^1.0.0:
     react-native-tabular-grid "github:Benjamin-Dobell/react-native-tabular-grid"
     simple-markdown "^0.2.1"
 
+react-native-progress@^3.4.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/react-native-progress/-/react-native-progress-3.4.0.tgz#c002e6efb2f0b82dd6889510e669c492da2718ac"
+  dependencies:
+    prop-types "^15.5.8"
+
 react-native-settings-list@^1.6.1:
   version "1.6.1"
   resolved "https://registry.yarnpkg.com/react-native-settings-list/-/react-native-settings-list-1.6.1.tgz#296228079e5000fc037b072ac3039eba397de432"

@@ -17,6 +17,7 @@
     "react-native": "^0.47.2",
     "react-native-code-push": "^5.0.0-beta",
     "react-native-markdown-editor": "^1.0.1",
+    "react-native-progress": "^3.4.0",
     "react-native-settings-list": "^1.6.1",
     "react-native-simple-markdown": "^1.0.60-rc.3",
     "react-native-vector-icons": "^4.3.0",
