@@ -4,20 +4,36 @@ export const openProfile = (user, navigation) =>
 export const openDiscussion = (discussion, navigation) =>
   navigation.navigate('Discussion', { id: discussion._id })
 
-export const openCollection = (collection, navigation) =>
-  navigation.navigate('Collection', { id: collection._id, collection })
+export const openCulture = (culture, navigation) =>
+  navigation.navigate('Culture', { id: culture._id, culture })
 
 export const openComments = (discussion, navigation) =>
   navigation.navigate('Comments', { id: discussion._id, discussion })
 
-export const openWrite = navigation => navigation.navigate('Write')
+export const openWrite = (
+  navigation,
+  { culture, discussion, id, editing_mode = false }
+) =>
+  navigation.navigate('Write', {
+    culture,
+    id,
+    discussion,
+    editing_mode
+  })
 
 export const openLogin = navigation => navigation.navigate('Login')
+export const openEditProfile = (user, navigation) =>
+  navigation.navigate('EditProfile', { id: user.id })
+export const openChangePassword = navigation =>
+  navigation.navigate('ChangePassword')
 
-export const openSearch = navigation => navigation.navigate('Search')
+export const openSearch = navigation => navigation.navigate('Discover')
+export const openStartCulture = (navigation, { id, editing_mode = false }) =>
+  navigation.navigate('StartCulture', { editing_mode, id })
+export const goBack = navigation => navigation.goBack()
 
 export const getTimeAgo = time => {
-  var diff = new Date().getTime() / 1000 - time
+  var diff = Math.floor(new Date().getTime() / 1000 - time)
   var time_diff
 
   var MINUTE = 60
@@ -30,22 +46,29 @@ export const getTimeAgo = time => {
   if (diff >= YEAR) {
     const t = new Date(time * 1000)
     // time_diff = `${time.getMonth()} ${time.getFullYear()}`
-    time_diff = `${t.getDate()} ${getMonth(t.getMonth())} ${t.getFullYear()}`
+    time_diff = `${t.getDate()}/${t.getMonth()}/${t
+      .getYear()
+      .toString()
+      .slice(1, 3)}`
   } else if (diff >= MONTH) {
     const t = new Date(time * 1000)
     time_diff = `${getMonth(t.getMonth())} ${t.getDate()}`
-  } else if (diff >= WEEK) {
+  } else if (diff > WEEK) {
     const duration = Math.floor(diff / WEEK)
     time_diff = duration.toString() + ` week${duration !== 1 ? 's' : ''} ago`
-  } else if (diff >= DAY) {
+  } else if (diff == WEEK) {
+    time_diff = getDay(t.getDay())
+  } else if (diff > DAY) {
     const duration = Math.floor(diff / DAY)
     time_diff = duration.toString() + ` day${duration !== 1 ? 's' : ''} ago`
+  } else if (diff == DAY) {
+    time_diff = 'Yesterday'
   } else if (diff >= HOUR) {
     const duration = Math.floor(diff / HOUR)
     time_diff = duration.toString() + ` hour${duration !== 1 ? 's' : ''} ago`
   } else if (diff >= MINUTE) {
     const duration = Math.floor(diff / MINUTE)
-    time_diff = duration.toString() + ` minute${duration !== 1 ? 's' : ''} ago`
+    time_diff = duration.toString() + ` min${duration !== 1 ? 's' : ''} ago`
   } else time_diff = diff.toString() + `s`
 
   return time_diff
@@ -54,22 +77,26 @@ export const getTimeAgo = time => {
 export const getCommentCount = count => count
 
 export const imageUrl = (name, dim = false) =>
-  `https://img.thecommunity.ng/${dim && dim + '/'}${name}`
+  `https://img.thecommunity.ng/${dim && dim + 'g/'}${name}`
 
 function getMonth(month) {
   const months = [
-    'JAN',
-    'FEB',
-    'MAR',
-    'APR',
-    'MAY',
-    'JUN',
-    'JUL',
-    'AUG',
-    'SEP',
-    'OCT',
-    'NOV',
-    'DEC'
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sept',
+    'Oct',
+    'Nov',
+    'Dec'
   ]
   return months[month]
+}
+function getDay(day) {
+  const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+  return days[day]
 }
