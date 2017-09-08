@@ -23,7 +23,7 @@ const mapStateToProps = state => ({
 })
 
 // @connect(mapStateToProps)
-// @withNavigation
+
 export default class GroupList extends Component<any, Props, State> {
   state = {
     isFetchingTop: false,
@@ -87,7 +87,7 @@ export default class GroupList extends Component<any, Props, State> {
   renderFooter() {
     if (this.state.hasMore) {
       return (
-        <LoaderBox isLoading={true} onLoadInit={this.onEndReached.bind(this)} />
+        <LoaderBox isLoading={true} onPress={this.onEndReached.bind(this)} />
       )
     } else {
       return null

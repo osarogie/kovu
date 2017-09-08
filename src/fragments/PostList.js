@@ -17,7 +17,6 @@ import LoaderBox from '../components/LoaderBox'
 import EmptyList from '../components/EmptyList'
 import PostListItem from '../fragments/PostListItem'
 
-// @withNavigation
 export default class PostList extends Component<any, Props, State> {
   state = {
     isFetchingTop: false,
@@ -25,12 +24,16 @@ export default class PostList extends Component<any, Props, State> {
     hasMore: false
   }
 
-  onRefresh = () => {
-    const { discussions } = this.props.discussionList
+  constructor(props) {
+    super(props)
+    this.onEndReached = this.onEndReached.bind(this)
+  }
 
-    if (this.props.relay.isLoading()) {
-      return
-    }
+  onRefresh = () => {
+    const { discussionList } = this.props
+    const discussions = discussionList.discussions || discussionList.top_stories
+
+    if (this.props.relay.isLoading()) return
 
     this.setState({
       isFetchingTop: true
@@ -43,8 +46,9 @@ export default class PostList extends Component<any, Props, State> {
     })
   }
 
-  onEndReached = () => {
-    const discussions = this.props.discussionList.discussions
+  onEndReached = _ => {
+    const { discussionList } = this.props
+    const discussions = discussionList.discussions || discussionList.top_stories
 
     if (!discussions.edges || discussions.edges.length == 0) return
 
@@ -78,16 +82,15 @@ export default class PostList extends Component<any, Props, State> {
     <PostListItem discussion={item.node} {...itemProps} />
 
   renderFooter() {
-    const discussions = this.props.discussionList.discussions
+    const { discussionList } = this.props
+    const discussions = discussionList.discussions || discussionList.top_stories
 
     if (!discussions.edges || discussions.edges.length == 0) {
       return <EmptyList message="No posts yet" />
     }
 
     if (this.state.hasMore) {
-      return (
-        <LoaderBox isLoading={true} onLoadInit={this.onEndReached.bind(this)} />
-      )
+      return <LoaderBox isLoading={true} onPress={this.onEndReached} />
     }
 
     return null
@@ -95,10 +98,10 @@ export default class PostList extends Component<any, Props, State> {
 
   render() {
     const { discussionList, itemProps } = this.props
-    const discussions = discussionList.discussions
+    const discussions = discussionList.discussions || discussionList.top_stories
 
     return (
-      <View>
+      <View style={{ flex: 1, backgroundColor: '#eee' }}>
         {this.props.renderTopHeader && this.props.renderTopHeader()}
         <VirtualizedList
           data={discussions.edges}

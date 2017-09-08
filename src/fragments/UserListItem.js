@@ -6,69 +6,99 @@ import {
   Image,
   ViewPropTypes,
   PixelRatio,
-  TouchableOpacity
+  TouchableHighlight
 } from 'react-native'
 import styles from '../styles'
 import excerptStyles from '../styles/excerptStyles'
 import { commitMutation, createFragmentContainer, graphql } from 'react-relay'
 import { imageUrl } from '../utils'
-import { Avatar } from 'react-native-elements'
+import Avatar from '../components/Avatar'
+import FollowButton from './FollowButton'
+import { connect } from 'react-redux'
 
+const mapStateToProps = state => ({
+  night_mode: state.night_mode,
+  loggedIn: state.user.loggedIn,
+  current_user: state.user.user
+})
 class UserListItem extends React.Component {
   clickableProps = {
     underlayColor: 'whitesmoke'
   }
 
-  renderProfilePicture() {
-    const { user, openProfile } = this.props
-    const size = PixelRatio.getPixelSizeForLayoutSize(50)
-    const image = user.profile_picture_name
-
-    return (
-      <Avatar
-        medium
-        rounded
-        source={{ uri: imageUrl(image, `${size}x${size}`) }}
-        onPress={_ => openProfile(user)}
-        title={user.name}
-        activeOpacity={0.7}
-      />
-    )
+  constructor(props) {
+    super(props)
+    this.openProfile = this.openProfile.bind(this)
   }
 
+  openProfile = _ => this.props.openProfile(this.props.user)
+
+  renderFollowButton = _ =>
+    this.props.loggedIn && this.props.user._id == this.props.current_user._id
+      ? null
+      : <FollowButton user={this.props.user} openLogin={this.props.openLogin} />
+
   render() {
-    const { user, openProfile } = this.props
+    const { user } = this.props
 
     return (
-      <TouchableOpacity
+      <TouchableHighlight
         {...this.clickableProps}
-        onPress={_ => openProfile(user)}
+        onPress={this.openProfile}
+        style={{
+          margin: 17,
+          marginTop: 10,
+          backgroundColor: '#fff',
+          flex: 1,
+          elevation: 3,
+          borderRadius: 5
+        }}
       >
-        <View
-          style={{
-            marginLeft: 17,
-            width: 80,
-            marginTop: 10,
-            alignItems: 'center'
-          }}
-        >
-          {this.renderProfilePicture()}
-          <View>
+        <View style={{ width: 200, padding: 17, flex: 1 }}>
+          <View style={{ flexDirection: 'row', flex: 1 }}>
             <Text
-              numberOfLines={1}
+              numberOfLines={2}
               style={{
-                marginBottom: 20,
                 marginTop: 10,
+                // marginLeft: 10,
+                flex: 1,
+                marginRight: 5,
                 color: '#000',
-                fontSize: 14,
-                textAlign: 'center'
+                fontSize: 16,
+                fontWeight: 'bold'
+                // textAlign: 'center'
               }}
             >
               {user.name}
             </Text>
+            <Avatar
+              medium
+              rounded
+              source={user}
+              title={user.name}
+              activeOpacity={0.7}
+            />
           </View>
+
+          <View style={{ flex: 1, height: '100%' }}>
+            <Text
+              numberOfLines={2}
+              style={{
+                marginTop: 10,
+                marginBottom: 10,
+                // marginLeft: 10,
+                flex: 1,
+                marginRight: 5,
+                fontSize: 14
+                // textAlign: 'center'
+              }}
+            >
+              {user.bio}
+            </Text>
+          </View>
+          {this.renderFollowButton()}
         </View>
-      </TouchableOpacity>
+      </TouchableHighlight>
     )
   }
 }
@@ -80,7 +110,7 @@ UserListItem.propTypes = {
 }
 
 export default createFragmentContainer(
-  UserListItem,
+  connect(mapStateToProps)(UserListItem),
   graphql`
     fragment UserListItem_user on User {
       id
@@ -89,6 +119,7 @@ export default createFragmentContainer(
       username
       bio
       profile_picture_name
+      ...FollowButton_user
     }
   `
 )

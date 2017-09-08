@@ -66,6 +66,11 @@ const fragment /*: ConcreteFragment*/ = {
       "args": null,
       "name": "profile_picture_name",
       "storageKey": null
+    },
+    {
+      "kind": "FragmentSpread",
+      "name": "FollowButton_user",
+      "args": null
     }
   ],
   "type": "User"

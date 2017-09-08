@@ -8,22 +8,23 @@
 
 /*::
 import type {ConcreteFragment} from 'relay-runtime';
-export type CommentListItem_comment = {|
+export type PostThumb_discussion = {|
   +id: string;
   +_id: string;
-  +body: ?string;
+  +name: ?string;
+  +excerpt: ?string;
+  +word_count: ?number;
   +created_at: ?number;
-  +discussion_id: string;
-  +discussion: ?{|
-    +id: string;
-    +_id: string;
-  |};
   +user: ?{|
     +id: string;
     +_id: string;
     +name: ?string;
     +username: ?string;
     +profile_picture_name: ?string;
+  |};
+  +group: ?{|
+    +name: ?string;
+    +permalink: ?string;
   |};
 |};
 */
@@ -33,7 +34,7 @@ const fragment /*: ConcreteFragment*/ = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "CommentListItem_comment",
+  "name": "PostThumb_discussion",
   "selections": [
     {
       "kind": "ScalarField",
@@ -53,7 +54,28 @@ const fragment /*: ConcreteFragment*/ = {
       "kind": "ScalarField",
       "alias": null,
       "args": null,
-      "name": "body",
+      "name": "name",
+      "storageKey": null
+    },
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "size",
+          "value": 10,
+          "type": "Int"
+        }
+      ],
+      "name": "excerpt",
+      "storageKey": "excerpt{\"size\":10}"
+    },
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "args": null,
+      "name": "word_count",
       "storageKey": null
     },
     {
@@ -61,38 +83,6 @@ const fragment /*: ConcreteFragment*/ = {
       "alias": null,
       "args": null,
       "name": "created_at",
-      "storageKey": null
-    },
-    {
-      "kind": "ScalarField",
-      "alias": null,
-      "args": null,
-      "name": "discussion_id",
-      "storageKey": null
-    },
-    {
-      "kind": "LinkedField",
-      "alias": null,
-      "args": null,
-      "concreteType": "Discussion",
-      "name": "discussion",
-      "plural": false,
-      "selections": [
-        {
-          "kind": "ScalarField",
-          "alias": null,
-          "args": null,
-          "name": "id",
-          "storageKey": null
-        },
-        {
-          "kind": "ScalarField",
-          "alias": null,
-          "args": null,
-          "name": "_id",
-          "storageKey": null
-        }
-      ],
       "storageKey": null
     },
     {
@@ -140,9 +130,34 @@ const fragment /*: ConcreteFragment*/ = {
         }
       ],
       "storageKey": null
+    },
+    {
+      "kind": "LinkedField",
+      "alias": null,
+      "args": null,
+      "concreteType": "Group",
+      "name": "group",
+      "plural": false,
+      "selections": [
+        {
+          "kind": "ScalarField",
+          "alias": null,
+          "args": null,
+          "name": "name",
+          "storageKey": null
+        },
+        {
+          "kind": "ScalarField",
+          "alias": null,
+          "args": null,
+          "name": "permalink",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
-  "type": "Comment"
+  "type": "Discussion"
 };
 
 module.exports = fragment;

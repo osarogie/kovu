@@ -17,7 +17,6 @@ import LoaderBox from '../components/LoaderBox'
 import EmptyList from '../components/EmptyList'
 import CommentListItem from '../fragments/CommentListItem'
 
-// @withNavigation
 export default class PostList extends Component<any, Props, State> {
   state = {
     isFetchingTop: false,
@@ -81,11 +80,11 @@ export default class PostList extends Component<any, Props, State> {
     const comments = this.props.commentList.comments
 
     if (!comments.edges || comments.edges.length == 0) {
-      return <EmptyList message="No posts yet" />
+      return <EmptyList message="No comments yet" />
     }
     if (this.state.hasMore) {
       return (
-        <LoaderBox isLoading={true} onLoadInit={this.onEndReached.bind(this)} />
+        <LoaderBox isLoading={true} onPress={this.onEndReached.bind(this)} />
       )
     }
     return null

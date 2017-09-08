@@ -17,7 +17,6 @@ import LoaderBox from '../components/LoaderBox'
 import UserListItem from '../fragments/UserListItem'
 import Separator from '../components/Separator'
 
-// @withNavigation
 export default class UserList extends Component<any, Props, State> {
   state = {
     isFetchingTop: false,
@@ -80,7 +79,7 @@ export default class UserList extends Component<any, Props, State> {
   renderFooter() {
     if (this.state.hasMore) {
       return (
-        <LoaderBox isLoading={true} onLoadInit={this.onEndReached.bind(this)} />
+        <LoaderBox isLoading={true} onPress={this.onEndReached.bind(this)} />
       )
     } else {
       return null

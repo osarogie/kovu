@@ -29,7 +29,7 @@ class CommentListItem extends React.PureComponent {
     underlayColor: 'whitesmoke'
   }
 
-  collectionNameProps = {
+  cultureNameProps = {
     style: { color: '#05f' }
   }
 
@@ -118,16 +118,16 @@ class CommentListItem extends React.PureComponent {
           style={{ backgroundColor: '#fff' }}
         >
           <View style={excerptStyles.container}>
-            <View style={{ flexDirection: 'row', marginBottom: 8 }}>
+            <View style={{ flexDirection: 'row' }}>
               {this.renderProfilePicture()}
               <View style={{ marginLeft: 15, flex: 1 }}>
                 {this.renderMeta()}
+                <Markdown styles={excerptStyles.body}>
+                  {comment.body}
+                  {comment.word_count > 30 ? '***...(Read More)***' : ''}
+                </Markdown>
               </View>
             </View>
-            <Markdown styles={excerptStyles.body}>
-              {comment.body}
-              {comment.word_count > 30 ? '***...(Read More)***' : ''}
-            </Markdown>
           </View>
         </TouchableHighlight>
         <Separator />
@@ -150,10 +150,16 @@ export default createFragmentContainer(
       _id
       body
       created_at
+      discussion_id
+      discussion {
+        id
+        _id
+      }
       user {
         id
         _id
         name
+        username
         profile_picture_name
       }
     }

@@ -13,7 +13,6 @@ import { commitMutation, createFragmentContainer, graphql } from 'react-relay'
 import Markdown from 'react-native-simple-markdown'
 import { imageUrl } from '../utils'
 
-// @withNavigation
 class GroupListItem extends React.Component {
   renderFeaturePhoto() {
     const { header_image } = this.props.group
@@ -40,14 +39,14 @@ class GroupListItem extends React.Component {
   }
 
   render() {
-    const { group, f_width, f_height, openCollection } = this.props
+    const { group, f_width, f_height, openCulture } = this.props
     const width = f_width || 200
     const height = f_height || 100
 
     return (
       <TouchableOpacity
         underlayColor="whitesmoke"
-        onPress={_ => openCollection && openCollection(group)}
+        onPress={_ => openCulture && openCulture(group)}
       >
         <View>
           <View

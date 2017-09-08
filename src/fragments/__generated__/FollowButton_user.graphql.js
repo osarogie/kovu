@@ -8,11 +8,10 @@
 
 /*::
 import type {ConcreteFragment} from 'relay-runtime';
-export type DiscussionLike_discussion = {|
-  +id: string;
+export type FollowButton_user = {|
   +_id: string;
-  +viewer_does_like: ?boolean;
-  +like_count: ?number;
+  +viewer_follows: ?boolean;
+  +follows_viewer: ?boolean;
 |};
 */
 
@@ -21,15 +20,8 @@ const fragment /*: ConcreteFragment*/ = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "DiscussionLike_discussion",
+  "name": "FollowButton_user",
   "selections": [
-    {
-      "kind": "ScalarField",
-      "alias": null,
-      "args": null,
-      "name": "id",
-      "storageKey": null
-    },
     {
       "kind": "ScalarField",
       "alias": null,
@@ -41,18 +33,18 @@ const fragment /*: ConcreteFragment*/ = {
       "kind": "ScalarField",
       "alias": null,
       "args": null,
-      "name": "viewer_does_like",
+      "name": "viewer_follows",
       "storageKey": null
     },
     {
       "kind": "ScalarField",
       "alias": null,
       "args": null,
-      "name": "like_count",
+      "name": "follows_viewer",
       "storageKey": null
     }
   ],
-  "type": "Discussion"
+  "type": "User"
 };
 
 module.exports = fragment;

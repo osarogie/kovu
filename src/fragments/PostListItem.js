@@ -16,12 +16,14 @@ import { createFragmentContainer, graphql } from 'react-relay'
 import Markdown from 'react-native-simple-markdown'
 import { connect } from 'react-redux'
 import Separator from '../components/Separator'
+import Avatar from '../components/Avatar'
 import DiscussionLike from '../fragments/DiscussionLike'
 import { getTimeAgo, imageUrl, getCommentCount } from '../utils'
 import Icon from 'react-native-vector-icons/Ionicons'
 
 const mapStateToProps = state => ({
-  night_mode: state.night_mode
+  night_mode: state.night_mode,
+  current_user: state.user.user
 })
 
 class PostListItem extends React.PureComponent {
@@ -29,7 +31,7 @@ class PostListItem extends React.PureComponent {
     underlayColor: 'whitesmoke'
   }
 
-  collectionNameProps = {
+  cultureNameProps = {
     style: { color: '#05f' }
   }
 
@@ -38,6 +40,24 @@ class PostListItem extends React.PureComponent {
     backgroundColor: '#eee',
     marginTop: 10
   }
+
+  constructor(props) {
+    super(props)
+    this.openProfile = this.openProfile.bind(this)
+    this.openDiscussion = this.openDiscussion.bind(this)
+    this.openProfile = this.openProfile.bind(this)
+    this.openComments = this.openComments.bind(this)
+    this.openCulture = this.openCulture.bind(this)
+    this.openWrite = this.openWrite.bind(this)
+  }
+
+  openProfile = _ => this.props.openProfile(this.props.discussion.user)
+  openDiscussion = _ => this.props.openDiscussion(this.props.discussion)
+  openComments = _ => this.props.openComments(this.props.discussion)
+  openCulture = _ => this.props.openCulture(this.props.discussion.group)
+  openProfile = _ => this.props.openProfile(this.props.discussion.user)
+  openWrite = _ =>
+    this.props.openWrite({ id: this.props.discussion._id, editing_mode: true })
 
   renderFeaturePhoto() {
     const image = this.props.discussion.feature_photo
@@ -48,7 +68,7 @@ class PostListItem extends React.PureComponent {
       } else {
         var { width } = Dimensions.get('window')
         var height = width / 3
-        width -= 34
+        width -= 46
       }
       const f_width = PixelRatio.getPixelSizeForLayoutSize(width)
       const f_height = PixelRatio.getPixelSizeForLayoutSize(height)
@@ -65,122 +85,127 @@ class PostListItem extends React.PureComponent {
     }
   }
 
-  renderCollectionName() {
-    const { discussion, showGroupInfo, openCollection } = this.props
+  renderCultureName() {
+    const { discussion, showGroupInfo } = this.props
 
     if (discussion.group && showGroupInfo !== false) {
       return (
         <TouchableOpacity
           {...this.clickableProps}
           style={{ flex: 1, flexDirection: 'row' }}
-          onPress={_ => openCollection(discussion.group)}
+          onPress={this.openCulture}
         >
           <Text
             style={[excerptStyles.groupInfo, excerptStyles.meta]}
             numberOfLines={1}
           >
             <Text> in </Text>
-            <Text {...this.collectionNameProps}>
+            <Text {...this.cultureNameProps}>
               {discussion.group.name}
             </Text>
-            <Text> collection</Text>
           </Text>
         </TouchableOpacity>
       )
     } else return null
   }
 
-  renderProfilePicture() {
-    const { discussion, openProfile } = this.props
-    const size = PixelRatio.getPixelSizeForLayoutSize(40)
+  renderMeta() {
+    const { discussion } = this.props
 
-    const uri = imageUrl(
-      discussion.user.profile_picture_name,
-      `${size}x${size}`
-    )
-
-    return (
+    return [
       <TouchableOpacity
         {...this.clickableProps}
-        onPress={_ => openProfile(discussion.user)}
+        onPress={this.openProfile}
+        key={`post.m.t.${discussion.id}`}
       >
-        <View
-          style={[excerptStyles.profilePicture, { backgroundColor: '#eee' }]}
-        >
-          <Image source={{ uri }} style={excerptStyles.profilePicture} />
-        </View>
-      </TouchableOpacity>
-    )
+        <Text style={[styles.fill, { color: '#000' }]} numberOfLines={1}>
+          {discussion.user.name}
+        </Text>
+      </TouchableOpacity>,
+      <View style={styles.row} key={`post.m.v.${discussion.id}`}>
+        <Text style={excerptStyles.meta}>
+          {getTimeAgo(discussion.created_at)}
+        </Text>
+        {this.renderCultureName()}
+      </View>
+    ]
   }
 
-  renderMeta() {
-    const { discussion, openProfile } = this.props
-
-    return (
-      <View>
-        <TouchableOpacity
-          {...this.clickableProps}
-          onPress={_ => openProfile(discussion.user)}
-        >
-          <Text style={[styles.fill, { color: '#000' }]} numberOfLines={1}>
-            {discussion.user.name}
-          </Text>
+  renderEdit() {
+    const { discussion } = this.props
+    if (this.props.current_user._id == discussion.user._id) {
+      return (
+        <TouchableOpacity {...this.clickableProps} onPress={this.openWrite}>
+          <Text style={{ marginLeft: 20 }}>Edit</Text>
         </TouchableOpacity>
-        <View style={styles.row}>
-          <Text style={excerptStyles.meta}>
-            {getTimeAgo(discussion.created_at)}
-          </Text>
-          {this.renderCollectionName()}
-        </View>
-      </View>
-    )
+      )
+    }
+
+    return null
   }
 
   renderControls() {
-    const { discussion, openComments } = this.props
+    const { discussion, openLogin } = this.props
     const { comment_count } = discussion
     const comment_count_ = getCommentCount(comment_count)
 
-    return (
-      <View>
-        <Separator styles={{ marginTop: 13, marginBottom: 10 }} />
-        <View style={[styles.row, { alignItems: 'center' }]}>
-          <DiscussionLike discussion={discussion} />
-          <View style={styles.fillRow} />
-          <TouchableOpacity
-            {...this.clickableProps}
-            onPress={_ => openComments(discussion)}
-          >
-            <Text style={{ marginLeft: 20 }}>
-              {`${comment_count_} Contribution${comment_count == 1 ? '' : 's'}`}
-            </Text>
-          </TouchableOpacity>
-          {/* <Icon
+    return [
+      <Separator
+        styles={{ marginTop: 13 }}
+        key={`post.c.separator.${discussion.id}`}
+      />,
+      <View
+        style={[styles.row, { alignItems: 'center' }]}
+        key={`post.c.viewholder.${discussion.id}`}
+      >
+        <DiscussionLike discussion={discussion} openLogin={openLogin} />
+        <View style={styles.fillRow} />
+        {this.renderEdit()}
+        <TouchableOpacity {...this.clickableProps} onPress={this.openComments}>
+          <Text style={{ marginLeft: 20 }}>
+            {`${comment_count_} Contribution${comment_count == 1 ? '' : 's'}`}
+          </Text>
+        </TouchableOpacity>
+        {/* <Icon
             name="md-more"
             style={excerptStyles.control}
             size={25}
             color="#777"
           /> */}
-        </View>
       </View>
-    )
+    ]
   }
 
   render() {
-    const { discussion, openDiscussion } = this.props
-    const { name, excerpt, word_count } = discussion
+    const { discussion } = this.props
+    const { name, excerpt, word_count, user } = discussion
     // console.log(this.props);
     // console.log(discussion.created_at)
     return (
       <View>
         <TouchableHighlight
           {...this.clickableProps}
-          style={{ backgroundColor: '#fff', elevation: 2, marginBottom: 10 }}
-          onPress={_ => openDiscussion(discussion)}
+          style={{
+            backgroundColor: '#fff',
+            elevation: 2,
+            marginBottom: 15,
+            marginTop: 2,
+            borderRadius: 5,
+            marginRight: 8,
+            marginLeft: 8
+          }}
+          onPress={this.openDiscussion}
         >
-          <View style={excerptStyles.container}>
+          <View style={[excerptStyles.container, { marginBottom: 0 }]}>
             <View style={{ flexDirection: 'row', marginBottom: 8 }}>
-              {this.renderProfilePicture()}
+              <Avatar
+                width={40}
+                radius={5}
+                source={user}
+                title={user.name}
+                onPress={this.openProfile}
+                activeOpacity={0.7}
+              />
               <View style={{ marginLeft: 15, marginRight: 15, flex: 1 }}>
                 {this.renderMeta()}
               </View>
@@ -196,7 +221,7 @@ class PostListItem extends React.PureComponent {
             {this.renderControls()}
           </View>
         </TouchableHighlight>
-        <Separator />
+        {/* <Separator /> */}
       </View>
     )
   }
