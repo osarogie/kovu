@@ -8,7 +8,7 @@
 
 /*::
 import type {ConcreteFragment} from 'relay-runtime';
-export type User = {|
+export type User_user = {|
   +id: string;
   +_id: string;
   +name: ?string;
@@ -26,7 +26,7 @@ const fragment /*: ConcreteFragment*/ = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "User",
+  "name": "User_user",
   "selections": [
     {
       "kind": "ScalarField",
@@ -90,6 +90,11 @@ const fragment /*: ConcreteFragment*/ = {
       "args": null,
       "name": "following_count",
       "storageKey": null
+    },
+    {
+      "kind": "FragmentSpread",
+      "name": "FollowButton_user",
+      "args": null
     }
   ],
   "type": "User"

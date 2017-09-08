@@ -4,6 +4,7 @@ import React from 'react'
 import { View, Text } from 'react-native'
 import PostList from '../fragments/PostList'
 import QueryRendererProxy from './QueryRendererProxy'
+import styles from '../styles'
 
 import { createPaginationContainer, graphql } from 'react-relay'
 
@@ -12,8 +13,8 @@ const FeedPaginationContainer = createPaginationContainer(
   {
     discussionList: graphql`
       fragment Feed_discussionList on Feed {
-        discussions(first: $count, after: $cursor)
-          @connection(key: "Feed_discussions") {
+        top_stories(first: $count, after: $cursor)
+          @connection(key: "Feed_top_stories") {
           pageInfo {
             hasNextPage
             endCursor
@@ -31,7 +32,7 @@ const FeedPaginationContainer = createPaginationContainer(
   {
     direction: 'forward',
     getConnectionFromProps(props) {
-      return props.discussionList && props.discussionList.discussions
+      return props.discussionList && props.discussionList.top_stories
     },
     getFragmentVariables(prevVars, totalCount) {
       return {
@@ -42,11 +43,10 @@ const FeedPaginationContainer = createPaginationContainer(
     getVariables(props, { count, cursor, size }, fragmentVariables) {
       return {
         count,
-        cursor,
-        itemProps: props.itemProps
+        cursor
       }
     },
-    variables: { cursor: null, size: '30x39' },
+    variables: { cursor: null },
     query: graphql`
       query FeedPaginationQuery($count: Int!, $cursor: String) {
         feed {
@@ -74,23 +74,13 @@ export default (FeedQueryRenderer = props => {
       render={data =>
         <FeedPaginationContainer
           discussionList={data.props.feed}
-          renderHeader={_ =>
-            <Text
-              style={{
-                fontSize: 15,
-                color: '#000',
-                fontWeight: 'bold',
-                padding: 20,
-                paddingBottom: 8,
-                borderBottomColor: '#ddd',
-                borderBottomWidth: 1,
-                backgroundColor: '#eee'
-              }}
-            >
-              {"Today's Top Stories"}
-            </Text>}
+          renderHeader={renderPostsHeader}
           itemProps={{ ...props /*, feature_photo: { width, height }*/ }}
         />}
     />
   )
 })
+const renderPostsHeader = _ =>
+  <Text style={[styles.postsHeader, { marginTop: 53 }]}>
+    {"Today's Top Stories"}
+  </Text>

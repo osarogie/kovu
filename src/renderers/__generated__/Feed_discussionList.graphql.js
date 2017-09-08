@@ -9,7 +9,7 @@
 /*::
 import type {ConcreteFragment} from 'relay-runtime';
 export type Feed_discussionList = {|
-  +discussions: ?{|
+  +top_stories: ?{|
     +pageInfo: {|
       +hasNextPage: boolean;
       +endCursor: ?string;
@@ -45,7 +45,7 @@ const fragment /*: ConcreteFragment*/ = {
         "cursor": "cursor",
         "direction": "forward",
         "path": [
-          "discussions"
+          "top_stories"
         ]
       }
     ]
@@ -54,10 +54,10 @@ const fragment /*: ConcreteFragment*/ = {
   "selections": [
     {
       "kind": "LinkedField",
-      "alias": "discussions",
+      "alias": "top_stories",
       "args": null,
       "concreteType": "DiscussionConnection",
-      "name": "__Feed_discussions_connection",
+      "name": "__Feed_top_stories_connection",
       "plural": false,
       "selections": [
         {
@@ -112,8 +112,22 @@ const fragment /*: ConcreteFragment*/ = {
                   "kind": "FragmentSpread",
                   "name": "PostListItem_discussion",
                   "args": null
+                },
+                {
+                  "kind": "ScalarField",
+                  "alias": null,
+                  "args": null,
+                  "name": "__typename",
+                  "storageKey": null
                 }
               ],
+              "storageKey": null
+            },
+            {
+              "kind": "ScalarField",
+              "alias": null,
+              "args": null,
+              "name": "cursor",
               "storageKey": null
             }
           ],

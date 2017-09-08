@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash d2596ebd47d0b6065cc19bc324071411
+ * @relayHash 3699106778af063ab83d01eff0582e9c
  */
 
 /* eslint-disable */
@@ -22,16 +22,20 @@ query PostQuery(
 
 fragment Post on Query {
   discussion(id: $id) {
+    ...DiscussionLike_discussion
     id
-    _id
     name
     body
+    created_at
+    _id
+    comment_count
     feature_photo {
       url
       height
       width
       id
     }
+    public_url
     group {
       _id
       id
@@ -40,12 +44,20 @@ fragment Post on Query {
     }
     user {
       id
+      _id
       username
       name
-      profile_picture(size: 50)
+      profile_picture_name
       bio
     }
   }
+}
+
+fragment DiscussionLike_discussion on Discussion {
+  id
+  _id
+  viewer_does_like
+  like_count
 }
 */
 
@@ -107,6 +119,13 @@ const batch /*: ConcreteBatch*/ = {
             "kind": "ScalarField",
             "alias": null,
             "args": null,
+            "name": "created_at",
+            "storageKey": null
+          },
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "args": null,
             "name": "id",
             "storageKey": null
           },
@@ -114,7 +133,14 @@ const batch /*: ConcreteBatch*/ = {
             "kind": "ScalarField",
             "alias": null,
             "args": null,
-            "name": "_id",
+            "name": "viewer_does_like",
+            "storageKey": null
+          },
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "args": null,
+            "name": "like_count",
             "storageKey": null
           },
           {
@@ -129,6 +155,20 @@ const batch /*: ConcreteBatch*/ = {
             "alias": null,
             "args": null,
             "name": "body",
+            "storageKey": null
+          },
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "args": null,
+            "name": "_id",
+            "storageKey": null
+          },
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "args": null,
+            "name": "comment_count",
             "storageKey": null
           },
           {
@@ -168,6 +208,13 @@ const batch /*: ConcreteBatch*/ = {
                 "storageKey": null
               }
             ],
+            "storageKey": null
+          },
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "args": null,
+            "name": "public_url",
             "storageKey": null
           },
           {
@@ -228,6 +275,13 @@ const batch /*: ConcreteBatch*/ = {
                 "kind": "ScalarField",
                 "alias": null,
                 "args": null,
+                "name": "_id",
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "args": null,
                 "name": "username",
                 "storageKey": null
               },
@@ -241,16 +295,9 @@ const batch /*: ConcreteBatch*/ = {
               {
                 "kind": "ScalarField",
                 "alias": null,
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "size",
-                    "value": 50,
-                    "type": "Int"
-                  }
-                ],
-                "name": "profile_picture",
-                "storageKey": "profile_picture{\"size\":50}"
+                "args": null,
+                "name": "profile_picture_name",
+                "storageKey": null
               },
               {
                 "kind": "ScalarField",
@@ -267,7 +314,7 @@ const batch /*: ConcreteBatch*/ = {
       }
     ]
   },
-  "text": "query PostQuery(\n  $id: ID!\n) {\n  ...Post\n}\n\nfragment Post on Query {\n  discussion(id: $id) {\n    id\n    _id\n    name\n    body\n    feature_photo {\n      url\n      height\n      width\n      id\n    }\n    group {\n      _id\n      id\n      name\n      permalink\n    }\n    user {\n      id\n      username\n      name\n      profile_picture(size: 50)\n      bio\n    }\n  }\n}\n"
+  "text": "query PostQuery(\n  $id: ID!\n) {\n  ...Post\n}\n\nfragment Post on Query {\n  discussion(id: $id) {\n    ...DiscussionLike_discussion\n    id\n    name\n    body\n    created_at\n    _id\n    comment_count\n    feature_photo {\n      url\n      height\n      width\n      id\n    }\n    public_url\n    group {\n      _id\n      id\n      name\n      permalink\n    }\n    user {\n      id\n      _id\n      username\n      name\n      profile_picture_name\n      bio\n    }\n  }\n}\n\nfragment DiscussionLike_discussion on Discussion {\n  id\n  _id\n  viewer_does_like\n  like_count\n}\n"
 };
 
 module.exports = batch;

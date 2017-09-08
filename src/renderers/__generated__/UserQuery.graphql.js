@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash ac429e5328b6277cac28f23fb5540d55
+ * @relayHash c8236ab4e5acd7bd3bd7eedab1a26d6d
  */
 
 /* eslint-disable */
@@ -22,14 +22,14 @@ query UserQuery(
   $id: ID!
 ) {
   user(id: $id) {
-    ...User
+    ...User_user
     ...User_discussionList
     ...User_groupList
     id
   }
 }
 
-fragment User on User {
+fragment User_user on User {
   id
   _id
   name
@@ -39,6 +39,7 @@ fragment User on User {
   discussion_count
   follower_count
   following_count
+  ...FollowButton_user
 }
 
 fragment User_discussionList on User {
@@ -46,8 +47,6 @@ fragment User_discussionList on User {
     pageInfo {
       hasNextPage
       endCursor
-      hasPreviousPage
-      startCursor
     }
     edges {
       node {
@@ -65,8 +64,6 @@ fragment User_groupList on User {
     pageInfo {
       hasNextPage
       endCursor
-      hasPreviousPage
-      startCursor
     }
     edges {
       node {
@@ -125,8 +122,14 @@ fragment PostListItem_discussion on Discussion {
 fragment DiscussionLike_discussion on Discussion {
   id
   _id
-  is_liked_by_viewer
+  viewer_does_like
   like_count
+}
+
+fragment FollowButton_user on User {
+  _id
+  viewer_follows
+  follows_viewer
 }
 */
 
@@ -173,7 +176,7 @@ const batch /*: ConcreteBatch*/ = {
         "selections": [
           {
             "kind": "FragmentSpread",
-            "name": "User",
+            "name": "User_user",
             "args": null
           },
           {
@@ -240,7 +243,7 @@ const batch /*: ConcreteBatch*/ = {
             "kind": "ScalarField",
             "alias": null,
             "args": null,
-            "name": "profile_picture_name",
+            "name": "discussion_count",
             "storageKey": null
           },
           {
@@ -275,14 +278,14 @@ const batch /*: ConcreteBatch*/ = {
             "kind": "ScalarField",
             "alias": null,
             "args": null,
-            "name": "_id",
+            "name": "profile_picture_name",
             "storageKey": null
           },
           {
             "kind": "ScalarField",
             "alias": null,
             "args": null,
-            "name": "discussion_count",
+            "name": "_id",
             "storageKey": null
           },
           {
@@ -297,6 +300,20 @@ const batch /*: ConcreteBatch*/ = {
             "alias": null,
             "args": null,
             "name": "following_count",
+            "storageKey": null
+          },
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "args": null,
+            "name": "viewer_follows",
+            "storageKey": null
+          },
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "args": null,
+            "name": "follows_viewer",
             "storageKey": null
           },
           {
@@ -346,20 +363,6 @@ const batch /*: ConcreteBatch*/ = {
                     "alias": null,
                     "args": null,
                     "name": "endCursor",
-                    "storageKey": null
-                  },
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "hasPreviousPage",
-                    "storageKey": null
-                  },
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "startCursor",
                     "storageKey": null
                   }
                 ],
@@ -572,7 +575,7 @@ const batch /*: ConcreteBatch*/ = {
                         "kind": "ScalarField",
                         "alias": null,
                         "args": null,
-                        "name": "is_liked_by_viewer",
+                        "name": "viewer_does_like",
                         "storageKey": null
                       },
                       {
@@ -676,20 +679,6 @@ const batch /*: ConcreteBatch*/ = {
                     "alias": null,
                     "args": null,
                     "name": "endCursor",
-                    "storageKey": null
-                  },
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "hasPreviousPage",
-                    "storageKey": null
-                  },
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "startCursor",
                     "storageKey": null
                   }
                 ],
@@ -821,7 +810,7 @@ const batch /*: ConcreteBatch*/ = {
       }
     ]
   },
-  "text": "query UserQuery(\n  $count: Int!\n  $cursor: String\n  $id: ID!\n) {\n  user(id: $id) {\n    ...User\n    ...User_discussionList\n    ...User_groupList\n    id\n  }\n}\n\nfragment User on User {\n  id\n  _id\n  name\n  bio\n  username\n  profile_picture_name\n  discussion_count\n  follower_count\n  following_count\n}\n\nfragment User_discussionList on User {\n  discussions(first: $count, after: $cursor, by_latest: true) {\n    pageInfo {\n      hasNextPage\n      endCursor\n      hasPreviousPage\n      startCursor\n    }\n    edges {\n      node {\n        id\n        ...PostListItem_discussion\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment User_groupList on User {\n  groups_in(first: $count, after: $cursor) {\n    pageInfo {\n      hasNextPage\n      endCursor\n      hasPreviousPage\n      startCursor\n    }\n    edges {\n      node {\n        id\n        ...GroupListItem_group\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment GroupListItem_group on Group {\n  id\n  _id\n  name\n  permalink\n  body\n  header_image {\n    name\n    id\n  }\n}\n\nfragment PostListItem_discussion on Discussion {\n  id\n  _id\n  name\n  excerpt(size: 30)\n  word_count\n  comment_count\n  created_at\n  user {\n    id\n    _id\n    name\n    username\n    profile_picture_name\n  }\n  group {\n    id\n    _id\n    name\n    permalink\n  }\n  feature_photo {\n    id\n    _id\n    height\n    width\n    name\n  }\n  ...DiscussionLike_discussion\n}\n\nfragment DiscussionLike_discussion on Discussion {\n  id\n  _id\n  is_liked_by_viewer\n  like_count\n}\n"
+  "text": "query UserQuery(\n  $count: Int!\n  $cursor: String\n  $id: ID!\n) {\n  user(id: $id) {\n    ...User_user\n    ...User_discussionList\n    ...User_groupList\n    id\n  }\n}\n\nfragment User_user on User {\n  id\n  _id\n  name\n  bio\n  username\n  profile_picture_name\n  discussion_count\n  follower_count\n  following_count\n  ...FollowButton_user\n}\n\nfragment User_discussionList on User {\n  discussions(first: $count, after: $cursor, by_latest: true) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        ...PostListItem_discussion\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment User_groupList on User {\n  groups_in(first: $count, after: $cursor) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        ...GroupListItem_group\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment GroupListItem_group on Group {\n  id\n  _id\n  name\n  permalink\n  body\n  header_image {\n    name\n    id\n  }\n}\n\nfragment PostListItem_discussion on Discussion {\n  id\n  _id\n  name\n  excerpt(size: 30)\n  word_count\n  comment_count\n  created_at\n  user {\n    id\n    _id\n    name\n    username\n    profile_picture_name\n  }\n  group {\n    id\n    _id\n    name\n    permalink\n  }\n  feature_photo {\n    id\n    _id\n    height\n    width\n    name\n  }\n  ...DiscussionLike_discussion\n}\n\nfragment DiscussionLike_discussion on Discussion {\n  id\n  _id\n  viewer_does_like\n  like_count\n}\n\nfragment FollowButton_user on User {\n  _id\n  viewer_follows\n  follows_viewer\n}\n"
 };
 
 module.exports = batch;

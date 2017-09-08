@@ -14,11 +14,14 @@ export type Post = {|
     +_id: string;
     +name: ?string;
     +body: ?string;
+    +created_at: ?number;
+    +comment_count: ?number;
     +feature_photo: ?{|
       +url: ?string;
       +height: ?number;
       +width: ?number;
     |};
+    +public_url: ?string;
     +group: ?{|
       +_id: string;
       +id: string;
@@ -27,9 +30,10 @@ export type Post = {|
     |};
     +user: ?{|
       +id: string;
+      +_id: string;
       +username: ?string;
       +name: ?string;
-      +profile_picture: ?string;
+      +profile_picture_name: ?string;
       +bio: ?string;
     |};
   |};
@@ -65,17 +69,15 @@ const fragment /*: ConcreteFragment*/ = {
       "plural": false,
       "selections": [
         {
-          "kind": "ScalarField",
-          "alias": null,
-          "args": null,
-          "name": "id",
-          "storageKey": null
+          "kind": "FragmentSpread",
+          "name": "DiscussionLike_discussion",
+          "args": null
         },
         {
           "kind": "ScalarField",
           "alias": null,
           "args": null,
-          "name": "_id",
+          "name": "id",
           "storageKey": null
         },
         {
@@ -90,6 +92,27 @@ const fragment /*: ConcreteFragment*/ = {
           "alias": null,
           "args": null,
           "name": "body",
+          "storageKey": null
+        },
+        {
+          "kind": "ScalarField",
+          "alias": null,
+          "args": null,
+          "name": "created_at",
+          "storageKey": null
+        },
+        {
+          "kind": "ScalarField",
+          "alias": null,
+          "args": null,
+          "name": "_id",
+          "storageKey": null
+        },
+        {
+          "kind": "ScalarField",
+          "alias": null,
+          "args": null,
+          "name": "comment_count",
           "storageKey": null
         },
         {
@@ -122,6 +145,13 @@ const fragment /*: ConcreteFragment*/ = {
               "storageKey": null
             }
           ],
+          "storageKey": null
+        },
+        {
+          "kind": "ScalarField",
+          "alias": null,
+          "args": null,
+          "name": "public_url",
           "storageKey": null
         },
         {
@@ -182,6 +212,13 @@ const fragment /*: ConcreteFragment*/ = {
               "kind": "ScalarField",
               "alias": null,
               "args": null,
+              "name": "_id",
+              "storageKey": null
+            },
+            {
+              "kind": "ScalarField",
+              "alias": null,
+              "args": null,
               "name": "username",
               "storageKey": null
             },
@@ -195,16 +232,9 @@ const fragment /*: ConcreteFragment*/ = {
             {
               "kind": "ScalarField",
               "alias": null,
-              "args": [
-                {
-                  "kind": "Literal",
-                  "name": "size",
-                  "value": 50,
-                  "type": "Int"
-                }
-              ],
-              "name": "profile_picture",
-              "storageKey": "profile_picture{\"size\":50}"
+              "args": null,
+              "name": "profile_picture_name",
+              "storageKey": null
             },
             {
               "kind": "ScalarField",

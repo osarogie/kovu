@@ -11,11 +11,13 @@ import {
 } from 'react-native'
 import environment from '../../relay-environment'
 import Separator from '../components/Separator'
+import Button from '../components/Button'
 import PostList from '../fragments/PostList'
+import JoinButton from '../fragments/JoinButton'
 import UserList from '../fragments/UserList'
 import styles from '../styles'
 import colors from '../colors'
-import { Avatar } from 'react-native-elements'
+import Avatar from '../components/Avatar'
 import QueryRendererProxy from './QueryRendererProxy'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { imageUrl } from '../utils'
@@ -27,12 +29,28 @@ import {
 import { connect } from 'react-redux'
 
 const mapStateToProps = state => ({
-  night_mode: state.night_mode
+  night_mode: state.night_mode,
+  current_user: state.user.user
 })
 
 class Group extends React.Component<void, Props, any> {
+  constructor(props) {
+    super(props)
+    this.openProfile = this.openProfile.bind(this)
+    this.openWrite = this.openWrite.bind(this)
+    this.openEditCulture = this.openEditCulture.bind(this)
+  }
+
+  openProfile = _ => this.props.openProfile(this.props.data.user)
+  openWrite = _ => this.props.openWrite({ culture: this.props.data })
+  openEditCulture = _ =>
+    this.props.openStartCulture({
+      id: this.props.data._id,
+      editing_mode: true
+    })
+
   renderFeaturePhoto() {
-    console.log(this.props)
+    // console.log(this.props)
     const { header_image } = this.props.data
 
     if (header_image) {
@@ -68,7 +86,7 @@ class Group extends React.Component<void, Props, any> {
     return (
       <TouchableOpacity
         style={{ flex: 1, flexDirection: 'row' }}
-        onPress={_ => this.props.openProfile(user)}
+        onPress={this.openProfile}
       >
         <Text
           style={{
@@ -88,6 +106,54 @@ class Group extends React.Component<void, Props, any> {
     )
   }
 
+  renderOptions() {
+    const group = this.props.data
+    const { current_user } = this.props
+
+    if (current_user._id == group.user._id) {
+      return (
+        <Button
+          onPress={this.openEditCulture}
+          title="Edit"
+          textStyle={{ color: '#05f' }}
+          buttonStyle={{
+            backgroundColor: '#fff',
+            borderRadius: 5,
+            borderWidth: 1,
+            borderColor: '#05f'
+          }}
+        />
+      )
+    }
+
+    return <JoinButton group={group} openLogin={this.props.openLogin} />
+  }
+
+  renderWriteButton() {
+    const group = this.props.data
+    const backgroundColor = '#fff'
+    const color = '#05f'
+
+    if (group.viewer_is_a_member) {
+      return (
+        <Button
+          onPress={this.openWrite}
+          title="Write Here"
+          textStyle={{ color }}
+          buttonStyle={{
+            marginLeft: 10,
+            backgroundColor,
+            borderRadius: 5,
+            borderWidth: 1,
+            borderColor: color
+          }}
+        />
+      )
+    }
+
+    return null
+  }
+
   render() {
     const { data: group, night_mode } = this.props
 
@@ -98,7 +164,7 @@ class Group extends React.Component<void, Props, any> {
           style={{
             padding: 30,
             flexDirection: 'row',
-            backgroundColor: colors.get('container', night_mode)
+            backgroundColor: colors.get('white', night_mode)
           }}
         >
           <View style={{ marginRight: 20, flex: 1 }}>
@@ -126,35 +192,28 @@ class Group extends React.Component<void, Props, any> {
             >
               {group.body}
             </Text>
+            <View style={{ flexDirection: 'row' }}>
+              {this.renderOptions()}
+              {this.renderWriteButton()}
+            </View>
           </View>
-          {this.renderProfilePicture()}
+          <Avatar
+            medium
+            rounded
+            source={group.user}
+            onPress={this.openProfile}
+            title={group.user.name}
+            activeOpacity={0.7}
+          />
         </View>
       </View>
-    )
-  }
-
-  renderProfilePicture() {
-    // console.log(this.props)
-    const { data: { user }, openProfile } = this.props
-    const size = PixelRatio.getPixelSizeForLayoutSize(50)
-    const image = user.profile_picture_name
-
-    return (
-      <Avatar
-        medium
-        rounded
-        source={{ uri: imageUrl(image, `${size}x${size}`) }}
-        onPress={_ => openProfile(user)}
-        title={user.name}
-        activeOpacity={0.7}
-      />
     )
   }
 }
 
 // GroupFragmentContainer
 const GroupFragmentContainer = createFragmentContainer(
-  Group,
+  connect(mapStateToProps)(Group),
   graphql`
     fragment Group on Group {
       id
@@ -162,6 +221,8 @@ const GroupFragmentContainer = createFragmentContainer(
       name
       permalink
       body
+      viewer_is_a_member
+      ...JoinButton_group
       header_image {
         name
         height
@@ -194,6 +255,7 @@ export default (GroupQueryRenderer = ({ id, api_key, ...props }) => {
       variables={{ cursor: null, count: 5, id }}
       render={({ error, props, retry }) =>
         <GroupPostsPaginationContainer
+          id={id}
           discussionList={props.group}
           itemProps={itemProps}
           renderHeader={() =>
@@ -201,6 +263,7 @@ export default (GroupQueryRenderer = ({ id, api_key, ...props }) => {
               <GroupFragmentContainer data={props.group} {...itemProps} />
               <Separator />
               <GroupUsersPaginationContainer
+                id={id}
                 userList={props.group}
                 renderHeader={renderUsersHeader}
                 itemProps={{ showGroupInfo: false, ...itemProps }}
@@ -257,18 +320,10 @@ const GroupPostsPaginationContainer = createPaginationContainer(
       return props.discussionList && props.discussionList.discussions
     },
     getFragmentVariables(prevVars, totalCount) {
-      return {
-        ...prevVars,
-        count: totalCount
-      }
+      return { ...prevVars, count: totalCount }
     },
-    getVariables(props, { count, cursor, id }, fragmentVariables) {
-      return {
-        count,
-        cursor,
-        id,
-        itemProps: props.itemProps
-      }
+    getVariables(props, { count, cursor }, fragmentVariables) {
+      return { count, cursor, id: props.id }
     },
     variables: { cursor: null },
     query: graphql`
@@ -312,13 +367,8 @@ const GroupUsersPaginationContainer = createPaginationContainer(
         count: totalCount
       }
     },
-    getVariables(props, { count, cursor, id }, fragmentVariables) {
-      return {
-        count,
-        cursor,
-        id,
-        itemProps: props.itemProps
-      }
+    getVariables(props, { count, cursor }, fragmentVariables) {
+      return { count, cursor, id: props.id }
     },
     variables: { cursor: null },
     query: graphql`

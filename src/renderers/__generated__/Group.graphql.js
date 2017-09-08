@@ -14,6 +14,7 @@ export type Group = {|
   +name: ?string;
   +permalink: ?string;
   +body: ?string;
+  +viewer_is_a_member: ?boolean;
   +header_image: ?{|
     +name: ?string;
     +height: ?number;
@@ -70,6 +71,18 @@ const fragment /*: ConcreteFragment*/ = {
       "args": null,
       "name": "body",
       "storageKey": null
+    },
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "args": null,
+      "name": "viewer_is_a_member",
+      "storageKey": null
+    },
+    {
+      "kind": "FragmentSpread",
+      "name": "JoinButton_group",
+      "args": null
     },
     {
       "kind": "LinkedField",

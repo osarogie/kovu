@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash b0cfec97520e3b80b83e82c008d2c0f6
+ * @relayHash d438d072e596a4ffee4df88602f55d43
  */
 
 /* eslint-disable */
@@ -28,12 +28,10 @@ query CommentsPaginationQuery(
 }
 
 fragment Comments_commentList on Discussion {
-  comments(first: $count, after: $cursor) {
+  comments(first: $count, after: $cursor, by_latest: true) {
     pageInfo {
       hasNextPage
       endCursor
-      hasPreviousPage
-      startCursor
     }
     edges {
       node {
@@ -51,10 +49,16 @@ fragment CommentListItem_comment on Comment {
   _id
   body
   created_at
+  discussion_id
+  discussion {
+    id
+    _id
+  }
   user {
     id
     _id
     name
+    username
     profile_picture_name
   }
 }
@@ -167,6 +171,12 @@ const batch /*: ConcreteBatch*/ = {
                 "type": "String"
               },
               {
+                "kind": "Literal",
+                "name": "by_latest",
+                "value": true,
+                "type": "Boolean"
+              },
+              {
                 "kind": "Variable",
                 "name": "first",
                 "variableName": "count",
@@ -197,20 +207,6 @@ const batch /*: ConcreteBatch*/ = {
                     "alias": null,
                     "args": null,
                     "name": "endCursor",
-                    "storageKey": null
-                  },
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "hasPreviousPage",
-                    "storageKey": null
-                  },
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "startCursor",
                     "storageKey": null
                   }
                 ],
@@ -261,6 +257,38 @@ const batch /*: ConcreteBatch*/ = {
                         "storageKey": null
                       },
                       {
+                        "kind": "ScalarField",
+                        "alias": null,
+                        "args": null,
+                        "name": "discussion_id",
+                        "storageKey": null
+                      },
+                      {
+                        "kind": "LinkedField",
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "Discussion",
+                        "name": "discussion",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "kind": "ScalarField",
+                            "alias": null,
+                            "args": null,
+                            "name": "id",
+                            "storageKey": null
+                          },
+                          {
+                            "kind": "ScalarField",
+                            "alias": null,
+                            "args": null,
+                            "name": "_id",
+                            "storageKey": null
+                          }
+                        ],
+                        "storageKey": null
+                      },
+                      {
                         "kind": "LinkedField",
                         "alias": null,
                         "args": null,
@@ -287,6 +315,13 @@ const batch /*: ConcreteBatch*/ = {
                             "alias": null,
                             "args": null,
                             "name": "name",
+                            "storageKey": null
+                          },
+                          {
+                            "kind": "ScalarField",
+                            "alias": null,
+                            "args": null,
+                            "name": "username",
                             "storageKey": null
                           },
                           {
@@ -333,6 +368,12 @@ const batch /*: ConcreteBatch*/ = {
                 "type": "String"
               },
               {
+                "kind": "Literal",
+                "name": "by_latest",
+                "value": true,
+                "type": "Boolean"
+              },
+              {
                 "kind": "Variable",
                 "name": "first",
                 "variableName": "count",
@@ -342,7 +383,7 @@ const batch /*: ConcreteBatch*/ = {
             "handle": "connection",
             "name": "comments",
             "key": "Comment_comments",
-            "filters": null
+            "filters": []
           },
           {
             "kind": "ScalarField",
@@ -356,7 +397,7 @@ const batch /*: ConcreteBatch*/ = {
       }
     ]
   },
-  "text": "query CommentsPaginationQuery(\n  $count: Int!\n  $cursor: String\n  $id: ID!\n) {\n  discussion(id: $id) {\n    ...Comments_commentList\n    id\n  }\n}\n\nfragment Comments_commentList on Discussion {\n  comments(first: $count, after: $cursor) {\n    pageInfo {\n      hasNextPage\n      endCursor\n      hasPreviousPage\n      startCursor\n    }\n    edges {\n      node {\n        id\n        ...CommentListItem_comment\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment CommentListItem_comment on Comment {\n  id\n  _id\n  body\n  created_at\n  user {\n    id\n    _id\n    name\n    profile_picture_name\n  }\n}\n"
+  "text": "query CommentsPaginationQuery(\n  $count: Int!\n  $cursor: String\n  $id: ID!\n) {\n  discussion(id: $id) {\n    ...Comments_commentList\n    id\n  }\n}\n\nfragment Comments_commentList on Discussion {\n  comments(first: $count, after: $cursor, by_latest: true) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        ...CommentListItem_comment\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment CommentListItem_comment on Comment {\n  id\n  _id\n  body\n  created_at\n  discussion_id\n  discussion {\n    id\n    _id\n  }\n  user {\n    id\n    _id\n    name\n    username\n    profile_picture_name\n  }\n}\n"
 };
 
 module.exports = batch;

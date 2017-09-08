@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash efb3fb1efff0e53960679fa3a5e75019
+ * @relayHash 26a648402ef17857c82c3b839f602bf0
  */
 
 /* eslint-disable */
@@ -32,8 +32,6 @@ fragment Group_userList on Group {
     pageInfo {
       hasNextPage
       endCursor
-      hasPreviousPage
-      startCursor
     }
     edges {
       node {
@@ -53,6 +51,13 @@ fragment UserListItem_user on User {
   username
   bio
   profile_picture_name
+  ...FollowButton_user
+}
+
+fragment FollowButton_user on User {
+  _id
+  viewer_follows
+  follows_viewer
 }
 */
 
@@ -194,20 +199,6 @@ const batch /*: ConcreteBatch*/ = {
                     "args": null,
                     "name": "endCursor",
                     "storageKey": null
-                  },
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "hasPreviousPage",
-                    "storageKey": null
-                  },
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "startCursor",
-                    "storageKey": null
                   }
                 ],
                 "storageKey": null
@@ -274,6 +265,20 @@ const batch /*: ConcreteBatch*/ = {
                         "kind": "ScalarField",
                         "alias": null,
                         "args": null,
+                        "name": "viewer_follows",
+                        "storageKey": null
+                      },
+                      {
+                        "kind": "ScalarField",
+                        "alias": null,
+                        "args": null,
+                        "name": "follows_viewer",
+                        "storageKey": null
+                      },
+                      {
+                        "kind": "ScalarField",
+                        "alias": null,
+                        "args": null,
                         "name": "__typename",
                         "storageKey": null
                       }
@@ -327,7 +332,7 @@ const batch /*: ConcreteBatch*/ = {
       }
     ]
   },
-  "text": "query GroupUsersPaginationQuery(\n  $count: Int!\n  $cursor: String\n  $id: ID!\n) {\n  group(id: $id) {\n    ...Group_userList\n    id\n  }\n}\n\nfragment Group_userList on Group {\n  users(first: $count, after: $cursor) {\n    pageInfo {\n      hasNextPage\n      endCursor\n      hasPreviousPage\n      startCursor\n    }\n    edges {\n      node {\n        id\n        ...UserListItem_user\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment UserListItem_user on User {\n  id\n  _id\n  name\n  username\n  bio\n  profile_picture_name\n}\n"
+  "text": "query GroupUsersPaginationQuery(\n  $count: Int!\n  $cursor: String\n  $id: ID!\n) {\n  group(id: $id) {\n    ...Group_userList\n    id\n  }\n}\n\nfragment Group_userList on Group {\n  users(first: $count, after: $cursor) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        ...UserListItem_user\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment UserListItem_user on User {\n  id\n  _id\n  name\n  username\n  bio\n  profile_picture_name\n  ...FollowButton_user\n}\n\nfragment FollowButton_user on User {\n  _id\n  viewer_follows\n  follows_viewer\n}\n"
 };
 
 module.exports = batch;

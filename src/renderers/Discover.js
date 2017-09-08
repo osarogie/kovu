@@ -42,8 +42,8 @@ const DiscoverGroupsPaginationContainer = createPaginationContainer(
         count: totalCount
       }
     },
-    getVariables(props, { count, cursor, size }, fragmentVariables) {
-      console.log(props)
+    getVariables(props, { count, cursor }, fragmentVariables) {
+      // console.log(props)
       return {
         count,
         cursor,
@@ -150,7 +150,7 @@ const DiscoverPostsPaginationContainer = createPaginationContainer(
         q: props.q
       }
     },
-    variables: { cursor: null, size: '30x39' },
+    variables: { cursor: null },
     query: graphql`
       query DiscoverPaginationQuery($count: Int!, $cursor: String, $q: String) {
         feed {
@@ -181,16 +181,16 @@ export default (DiscoverQueryRenderer = ({ q, ...props }) => {
           highlight
           itemProps={{ ...props }}
           renderHeader={_ =>
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, backgroundColor: '#eee', marginTop: 53 }}>
               <DiscoverUsersPaginationContainer
                 renderHeader={_ => renderUserHeader(q)}
                 userList={data.props.feed}
                 q={q}
                 itemProps={{ ...props }}
               />
-              <View style={{ flex: 1 }}>
+              <View style={{ flex: 1, backgroundColor: '#fff' }}>
                 <DiscoverGroupsPaginationContainer
-                  renderHeader={_ => renderCollectionHeader(q)}
+                  renderHeader={_ => renderCultureHeader(q)}
                   groupList={data.props.feed}
                   q={q}
                   itemProps={{ ...props, f_width: 300, f_height: 200 }}
@@ -211,9 +211,9 @@ const labelStyle = {
   color: '#000',
   fontWeight: 'bold'
 }
-const renderCollectionHeader = q =>
+const renderCultureHeader = q =>
   <Text style={labelStyle}>
-    Top Collections
+    Top Cultures
     {renderMatch(q)}
   </Text>
 const renderUserHeader = q =>

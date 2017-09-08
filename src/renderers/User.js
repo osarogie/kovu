@@ -3,11 +3,13 @@
 import React from 'react'
 import { View, Image, Text, PixelRatio } from 'react-native'
 import Separator from '../components/Separator'
+import Button from '../components/Button'
 import PostList from '../fragments/PostList'
 import GroupList from '../fragments/GroupList'
+import FollowButton from '../fragments/FollowButton'
 import styles from '../styles'
 import colors from '../colors'
-import { Avatar } from 'react-native-elements'
+import Avatar from '../components/Avatar'
 import QueryRendererProxy from './QueryRendererProxy'
 import { imageUrl } from '../utils'
 import Icon from 'react-native-vector-icons/Ionicons'
@@ -20,19 +22,31 @@ import {
 import { connect } from 'react-redux'
 
 const mapStateToProps = state => ({
-  night_mode: state.night_mode
+  night_mode: state.night_mode,
+  current_user: state.user.user,
+  loggedIn: state.user.loggedIn
 })
 
 class User extends React.Component<void, Props, any> {
-  friendLabelStyle = { color: '#000', textAlign: 'center' }
-  friendValueStyle = { color: '#000', textAlign: 'center', fontSize: 18 }
+  friendLabelStyle = { color: '#000', marginRight: 10 }
+  friendValueStyle = { color: '#000', fontSize: 18 }
+
+  renderFollowButton = _ =>
+    this.props.loggedIn && this.props.user._id == this.props.current_user._id
+      ? null
+      : <FollowButton
+          user={this.props.user}
+          openLogin={this.props.openLogin}
+          buttonStyle={{ marginTop: 10 }}
+        />
+
   renderFriends() {
-    const { data: user, night_mode } = this.props
+    const { user, night_mode } = this.props
 
     return (
       <View style={[styles.fillRow, { marginTop: 20 }]}>
         <View style={{ flex: 1 }}>
-          <Text style={this.friendLabelStyle}>Discussions</Text>
+          <Text style={this.friendLabelStyle}>Posts</Text>
           <Text style={this.friendValueStyle}>
             {user.discussion_count}
           </Text>
@@ -52,10 +66,24 @@ class User extends React.Component<void, Props, any> {
       </View>
     )
   }
-  render() {
-    const { data: user, night_mode } = this.props
-    // alert(PixelRatio.getPixelSizeForLayoutSize(75) + '')
+  renderEditButton = _ =>
+    this.props.loggedIn && this.props.user._id == this.props.current_user._id
+      ? <Button
+          onPress={this.props.openEditProfile}
+          title="Edit Profile"
+          textStyle={{ color: '#05f' }}
+          buttonStyle={{
+            marginTop: 10,
+            backgroundColor: '#fff',
+            borderRadius: 5,
+            borderWidth: 1,
+            borderColor: '#05f'
+          }}
+        />
+      : null
 
+  render() {
+    const { user, night_mode } = this.props
     return (
       <View
         style={{
@@ -87,48 +115,41 @@ class User extends React.Component<void, Props, any> {
           style={{
             padding: 20,
             flex: 1,
-            alignItems: 'center',
+            flexDirection: 'row',
             backgroundColor: '#fffc' /*colors.get('container', night_mode)*/
           }}
         >
-          {this.renderProfilePicture()}
-          <View style={{ margin: 20, flex: 1 }}>
-            <Text style={[styles.title, { textAlign: 'center' }]}>
+          <View style={{ marginRight: 10, flex: 1 }}>
+            <Text style={styles.title}>
               {user.name}
             </Text>
-            <Text style={{ flex: 1, textAlign: 'center' }}>
+            <Text style={{ flex: 1 }}>
               {user.bio}
             </Text>
             {this.renderFriends()}
+            <View style={{ flexDirection: 'row' }}>
+              {this.renderFollowButton()}
+              {this.renderEditButton()}
+            </View>
           </View>
+          <Avatar
+            large
+            rounded
+            source={user}
+            title={user.name}
+            activeOpacity={0.7}
+          />
         </View>
       </View>
-    )
-  }
-
-  renderProfilePicture() {
-    // console.log(this.props)
-    const user = this.props.data
-    const size = PixelRatio.getPixelSizeForLayoutSize(75)
-    const uri = imageUrl(user.profile_picture_name, `${size}x${size}`)
-
-    return (
-      <Avatar
-        large
-        rounded
-        source={{ uri }}
-        title={user.name}
-        activeOpacity={0.7}
-      />
     )
   }
 }
 
 // UserFragmentContainer
 const UserFragmentContainer = createFragmentContainer(
-  User,
+  connect(mapStateToProps)(User),
   graphql`
-    fragment User on User {
+    fragment User_user on User {
       id
       _id
       name
@@ -138,6 +159,7 @@ const UserFragmentContainer = createFragmentContainer(
       discussion_count
       follower_count
       following_count
+      ...FollowButton_user
     }
   `
 )
@@ -149,7 +171,7 @@ export default (UserQueryRenderer = ({ id, api_key, ...props }) => {
       query={graphql`
         query UserQuery($count: Int!, $cursor: String, $id: ID!) {
           user(id: $id) {
-            ...User
+            ...User_user
             ...User_discussionList
             ...User_groupList
           }
@@ -160,40 +182,40 @@ export default (UserQueryRenderer = ({ id, api_key, ...props }) => {
         <UserPostsPaginationContainer
           discussionList={props.user}
           itemProps={itemProps}
+          id={id}
           renderHeader={_ =>
             <View style={styles.container}>
-              <UserFragmentContainer data={props.user} />
-              <Separator />
-              <View style={[styles.container, { backgroundColor: '#f9f9f9' }]}>
+              <UserFragmentContainer user={props.user} {...itemProps} />
+              <View style={[styles.container, { backgroundColor: '#fff' }]}>
                 <UserGroupsPaginationContainer
-                  renderHeader={renderCollectionHeader}
+                  renderHeader={renderCultureHeader}
+                  id={id}
                   groupList={props.user}
                   itemProps={itemProps}
                 />
+                {renderPostsHeader()}
               </View>
             </View>}
         />}
     />
   )
 })
-const renderCollectionHeader = _ =>
-  <View
+const renderCultureHeader = _ =>
+  <Text
     style={{
-      flexDirection: 'row',
-      marginTop: 17,
-      marginLeft: 20
+      fontSize: 15,
+      color: '#000',
+      fontWeight: 'bold',
+      paddingTop: 17,
+      paddingLeft: 20,
+      borderTopWidth: 1,
+      borderTopColor: '#ddd'
     }}
   >
-    <Text style={{ fontSize: 15, color: '#000', fontWeight: 'bold' }}>
-      Collections
-    </Text>
-    {/* <Icon
-      name="ios-arrow-forward"
-      style={[styles.icon, { marginLeft: 10, marginTop: 2 }]}
-      size={15}
-      color={colors.get('black')}
-    /> */}
-  </View>
+    Cultures
+  </Text>
+
+const renderPostsHeader = _ => <Text style={styles.postsHeader}>Posts</Text>
 // PAGINATION CONTAINERS
 
 const UserPostsPaginationContainer = createPaginationContainer(
@@ -223,18 +245,10 @@ const UserPostsPaginationContainer = createPaginationContainer(
       return props.discussionList && props.discussionList.discussions
     },
     getFragmentVariables(prevVars, totalCount) {
-      return {
-        ...prevVars,
-        count: totalCount
-      }
+      return { ...prevVars, count: totalCount }
     },
-    getVariables(props, { count, cursor, id }, fragmentVariables) {
-      return {
-        count,
-        cursor,
-        id,
-        itemProps: props.itemProps
-      }
+    getVariables(props, { count, cursor }, fragmentVariables) {
+      return { count, cursor, id: props.id }
     },
     variables: { cursor: null },
     query: graphql`
@@ -279,13 +293,8 @@ const UserGroupsPaginationContainer = createPaginationContainer(
         count: totalCount
       }
     },
-    getVariables(props, { count, cursor, id }, fragmentVariables) {
-      return {
-        count,
-        cursor,
-        id,
-        itemProps: props.itemProps
-      }
+    getVariables(props, { count, cursor }, fragmentVariables) {
+      return { count, cursor, id: props.id }
     },
     variables: { cursor: null },
     query: graphql`
