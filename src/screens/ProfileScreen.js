@@ -5,11 +5,9 @@ import { View, StyleSheet, Platform, TabBarIOS } from 'react-native'
 import User from '../renderers/User'
 import { withNavigation } from 'react-navigation'
 import styles from '../styles'
-import Swiper from 'react-native-swiper'
 import AndroidToolbar from '../components/AndroidToolbar'
 import getNavigation from '../helpers/getNavigation'
 
-// @withNavigation
 export default class ProfileScreen extends Component<void, Props, any> {
   renderToolbar() {
     const { user } = this.props.navigation.state.params

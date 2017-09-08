@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, ScrollView, Image } from 'react-native'
-import Authenticate from '../components/Authenticate'
+import Authenticator from '../components/Authenticator'
 import styles from '../styles'
 
 export default class LoginScreen extends React.Component {
@@ -66,7 +66,7 @@ export default class LoginScreen extends React.Component {
                 source={require('../images/welcome.png')}
                 style={styles.logoImage}
               />
-              <Authenticate goBack={this.props.navigation.goBack} />
+              <Authenticator goBack={this.props.navigation.goBack} />
             </View>
           </ScrollView>
         </View>

@@ -2,18 +2,15 @@
 
 import React, { Component } from 'react'
 import { View, StyleSheet, Platform, TabBarIOS } from 'react-native'
-import Group from '../renderers/Group'
+import EditUser from '../renderers/EditUser'
 import { withNavigation } from 'react-navigation'
 import styles from '../styles'
-import Swiper from 'react-native-swiper'
 import AndroidToolbar from '../components/AndroidToolbar'
 import getNavigation from '../helpers/getNavigation'
 
-export default class CollectionScreen extends Component<void, Props, any> {
+export default class EditProfileScreen extends Component<void, Props, any> {
   renderToolbar() {
-    const { collection } = this.props.navigation.state.params
-    const title = (collection && `/c/${collection.permalink}`) || 'Group'
-
+    const title = 'Edit profile'
     return Platform.select({
       android: <AndroidToolbar title={title} navIconName="md-arrow-back" />,
       ios: <TabBarIOS />
@@ -22,16 +19,11 @@ export default class CollectionScreen extends Component<void, Props, any> {
 
   render() {
     const { navigation } = this.props
-    console.log(navigation.state.params.id)
 
     return (
       <View style={{ flex: 1 }}>
         {this.renderToolbar()}
-        <Group
-          id={navigation.state.params.id}
-          {...getNavigation(navigation)}
-          showGroupInfo={false}
-        />
+        <EditUser {...getNavigation(navigation)} />
       </View>
     )
   }

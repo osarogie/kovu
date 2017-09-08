@@ -1,23 +1,19 @@
 // @flow
 
 import React, { Component } from 'react'
-import {
-  View,
-  StyleSheet,
-  Platform,
-  TabBarIOS,
-  KeyboardAvoidingView
-} from 'react-native'
-import Comments from '../renderers/Comments'
+import { View, StyleSheet, Platform, TabBarIOS } from 'react-native'
+import Group from '../renderers/Group'
 import { withNavigation } from 'react-navigation'
 import styles from '../styles'
 import AndroidToolbar from '../components/AndroidToolbar'
 import getNavigation from '../helpers/getNavigation'
 
-export default class ProfileScreen extends Component<void, Props, any> {
+export default class CultureScreen extends Component<void, Props, any> {
   renderToolbar() {
-    const { user } = this.props.navigation.state.params
-    const title = (user && user.username) || 'Contributions'
+    const { culture } = this.props.navigation.state.params
+    // const title = (culture && culture.permalink) || 'Culture'
+    const title = 'Culture'
+
     return Platform.select({
       android: <AndroidToolbar title={title} navIconName="md-arrow-back" />,
       ios: <TabBarIOS />
@@ -26,17 +22,16 @@ export default class ProfileScreen extends Component<void, Props, any> {
 
   render() {
     const { navigation } = this.props
+    // console.log(navigation.state.params.id)
 
     return (
       <View style={{ flex: 1 }}>
         {this.renderToolbar()}
-        {/* <KeyboardAvoidingView> */}
-        <Comments
+        <Group
           id={navigation.state.params.id}
-          gid={navigation.state.params.discussion.id}
           {...getNavigation(navigation)}
+          showGroupInfo={false}
         />
-        {/* </KeyboardAvoidingView> */}
       </View>
     )
   }

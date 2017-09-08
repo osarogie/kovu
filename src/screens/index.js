@@ -6,19 +6,21 @@ import NotificationScreen from './NotificationScreen.js'
 import MenuScreen from './MenuScreen.js'
 import FeedScreen from './FeedScreen.js'
 import WriteScreen from './WriteScreen.js'
-import CollectionScreen from './CollectionScreen.js'
-// import UserCollectionsScreen from './UserCollectionsScreen.js'
+import CultureScreen from './CultureScreen.js'
+import EditProfileScreen from './EditProfileScreen.js'
 import ContributionsScreen from './ContributionsScreen.js'
-// import SearchScreen from './SearchScreen.js'
+import ChangePasswordScreen from './ChangePasswordScreen.js'
+import StartCultureScreen from './StartCultureScreen.js'
 
 export {
   LoginScreen,
   FeedScreen,
   WriteScreen,
-  CollectionScreen,
-  // UserCollectionsScreen,
+  CultureScreen,
+  EditProfileScreen,
   ContributionsScreen,
-  // SearchScreen,
+  ChangePasswordScreen,
+  StartCultureScreen,
   DiscussionScreen,
   ProfileScreen,
   DiscoverScreen,

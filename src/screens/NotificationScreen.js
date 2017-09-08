@@ -5,7 +5,6 @@ import { withNavigation } from 'react-navigation'
 import Icon from 'react-native-vector-icons/Ionicons'
 import AndroidToolbar from '../components/AndroidToolbar'
 
-@withNavigation
 export default class NotificationScreen extends React.Component {
   static navigationOptions = {
     tabBarLabel: 'Notifications',

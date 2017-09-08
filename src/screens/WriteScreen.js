@@ -2,25 +2,34 @@
 
 import React, { Component } from 'react'
 import { View, Platform, TabBarIOS } from 'react-native'
-// import { withNavigation } from 'react-navigation'
 import styles from '../styles'
-import AndroidToolbar from '../components/AndroidToolbar'
+import Editor from '../components/Editor'
+import getNavigation from '../helpers/getNavigation'
 
-// @withNavigation
 export default class WriteScreen extends Component<void, Props, any> {
-  renderToolbar() {
-    const title = 'Write'
-    return Platform.select({
-      android: <AndroidToolbar title={title} navIconName="md-arrow-back" />,
-      ios: <TabBarIOS />
-    })
-  }
   render() {
-    const { navigation } = this.props
+    // const { culture } = this.props.navigation.state.params
+    const { params } = this.props.navigation.state
+    var culture = null
+    var id = null
+    var editing_mode = null
+
+    if (params) {
+      culture = params.culture
+      id = params.id
+      editing_mode = params.editing_mode
+    }
 
     return (
       <View style={styles.container}>
-        {this.renderToolbar()}
+        {/* {this.renderToolbar()} */}
+        <Editor
+          culture={culture}
+          // ref={e => (this.editor = e)}
+          editing_mode={editing_mode}
+          id={id}
+          {...getNavigation(this.props.navigation)}
+        />
       </View>
     )
   }

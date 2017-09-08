@@ -10,10 +10,11 @@ import {
   LoginScreen,
   MenuScreen,
   WriteScreen,
-  CollectionScreen,
-  ContributionsScreen
-  // SearchScreen,
-  // UserCollectionsScreen
+  CultureScreen,
+  ContributionsScreen,
+  StartCultureScreen,
+  EditProfileScreen,
+  ChangePasswordScreen
 } from './screens'
 
 export const Tab = TabNavigator(
@@ -33,8 +34,8 @@ export const Tab = TabNavigator(
   },
   {
     tabBarOptions: {
-      // inactiveTintColor: '',
-      activeTintColor: '#05f',
+      inactiveTintColor: '#888',
+      activeTintColor: '#000',
       // labelStyle: {
       //   // fontSize: 15,
       //   // color: '#000'
@@ -43,7 +44,8 @@ export const Tab = TabNavigator(
         backgroundColor: '#fff',
         // paddingBottom: 6,
         // height: 56,
-        elevation: 2
+        // elevation: 10
+        borderWidth: 0
         // borderBottomRightRadius: 10,
         // borderBottomLeftRadius: 10
       },
@@ -55,7 +57,7 @@ export const Tab = TabNavigator(
       showLabel: false
     },
     // swipeEnabled: false,
-    lazy: false,
+    // lazy: true
     tabBarPosition: 'bottom',
     tabBarComponent: TabBarBottom
     // indicatorStyle: {
@@ -68,56 +70,16 @@ export const Tab = TabNavigator(
 export const Root = StackNavigator(
   {
     Tab: { screen: Tab },
+    Write: { screen: WriteScreen },
     Login: { screen: LoginScreen },
     Profile: { screen: ProfileScreen },
     Discussion: { screen: DiscussionScreen },
-    Write: { screen: WriteScreen },
     Notifications: { screen: NotificationScreen },
-    Collection: { screen: CollectionScreen },
-    Comments: { screen: ContributionsScreen }
-    // UserCollections: { screen: UserCollectionsScreen }
-    // Search: { screen: SearchScreen }
+    Culture: { screen: CultureScreen },
+    Comments: { screen: ContributionsScreen },
+    StartCulture: { screen: StartCultureScreen },
+    EditProfile: { screen: EditProfileScreen },
+    ChangePassword: { screen: ChangePasswordScreen }
   },
   { mode: 'modal', headerMode: 'none' }
 )
-
-// export const SearchScreen = TabNavigator(
-//   {
-//     Posts: {
-//       screen: FeedScreen
-//     },
-//     Collections: {
-//       screen: DiscoverScreen
-//     },
-//     People: {
-//       screen: MenuScreen
-//     }
-//   },
-//   {
-//     tabBarOptions: {
-//       // inactiveTintColor: '',
-//       activeTintColor: '#05f',
-//       // labelStyle: {
-//       //   // fontSize: 15,
-//       //   // color: '#000'
-//       // },
-//       style: {
-//         backgroundColor: '#fff'
-//         // paddingBottom: 6,
-//         // height: 56
-//         // borderBottomRightRadius: 10,
-//         // borderBottomLeftRadius: 10
-//       },
-//       // activeBackgroundColor: '#f2f2f2',
-//       showLabel: false
-//     },
-//     // swipeEnabled: false,
-//     lazy: true,
-//     tabBarPosition: 'top',
-//     tabBarComponent: TabBarBottom
-//     // indicatorStyle: {
-//     //   height: 0,
-//     //   color: '#000'
-//     // }
-//   }
-// )

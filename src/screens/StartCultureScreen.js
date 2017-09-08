@@ -1,42 +1,38 @@
 // @flow
 
 import React, { Component } from 'react'
-import {
-  View,
-  StyleSheet,
-  Platform,
-  TabBarIOS,
-  KeyboardAvoidingView
-} from 'react-native'
-import Comments from '../renderers/Comments'
+import { View, StyleSheet, Platform, TabBarIOS } from 'react-native'
+import StartCulture from '../renderers/StartCulture'
 import { withNavigation } from 'react-navigation'
 import styles from '../styles'
-import AndroidToolbar from '../components/AndroidToolbar'
+import Toolbar from '../components/Toolbar'
 import getNavigation from '../helpers/getNavigation'
 
-export default class ProfileScreen extends Component<void, Props, any> {
+export default class StartCultureScreen extends Component<void, Props, any> {
   renderToolbar() {
-    const { user } = this.props.navigation.state.params
-    const title = (user && user.username) || 'Contributions'
-    return Platform.select({
-      android: <AndroidToolbar title={title} navIconName="md-arrow-back" />,
-      ios: <TabBarIOS />
-    })
+    const title = 'Culture Form'
+    return <Toolbar title={title} navIconName="md-arrow-back" />
   }
 
   render() {
     const { navigation } = this.props
+    const { params } = this.props.navigation.state
+    var id = null
+    var editing_mode = null
+
+    if (params) {
+      id = params.id
+      editing_mode = params.editing_mode
+    }
 
     return (
       <View style={{ flex: 1 }}>
-        {this.renderToolbar()}
-        {/* <KeyboardAvoidingView> */}
-        <Comments
-          id={navigation.state.params.id}
-          gid={navigation.state.params.discussion.id}
+        {/* {this.renderToolbar()} */}
+        <StartCulture
+          editing_mode={editing_mode}
+          id={id}
           {...getNavigation(navigation)}
         />
-        {/* </KeyboardAvoidingView> */}
       </View>
     )
   }

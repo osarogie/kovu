@@ -28,26 +28,32 @@ export default class DiscoverScreen extends React.Component {
         color={tintColor}
       />
   }
+
   state = {
     q: '',
     qs: ''
   }
+
+  constructor(props) {
+    super(props)
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  handleSubmit = _ => this.setState({ qs: this._q.state.value })
+
   renderToolbar() {
     const { navigation } = this.props
     return (
       <View
-        style={[
-          styles.toolbar,
-          {
-            // paddingTop: 6,
-            // paddingBottom: 6,
-            paddingRight: 10,
-            paddingLeft: 10,
-            justifyContent: 'center',
-            backgroundColor: '#fff',
-            elevation: 2
-          }
-        ]}
+        style={{
+          paddingRight: 10,
+          paddingLeft: 10,
+          height: 53,
+          width: '100%',
+          position: 'absolute',
+          justifyContent: 'center',
+          backgroundColor: 'transparent'
+        }}
       >
         <View style={searchStyles.container}>
           <TextInput
@@ -57,13 +63,13 @@ export default class DiscoverScreen extends React.Component {
             }}
             inputStyle={{ color: '#000' }}
             iconColor="#000"
-            style={{ backgroundColor: '#eee' }}
+            style={{ backgroundColor: '#fff', elevation: 2 }}
             placeholder="Search TheCommunity"
             ref={component => (this._q = component)}
             androidIcon="search"
             // value={this.state.q}
             // onChangeText={q => this.setState({ q })}
-            onSubmitEditing={() => this.setState({ qs: this._q.state.value })}
+            onSubmitEditing={this.handleSubmit}
           />
         </View>
       </View>
@@ -74,14 +80,15 @@ export default class DiscoverScreen extends React.Component {
     return (
       <View style={[styles.container]}>
         <Discover {...getNavigation(navigation)} q={this.state.qs} />
+        <View style={styles.elevation} />
       </View>
     )
   }
   render() {
     return (
-      <View style={[styles.container, { backgroundColor: '#fff' }]}>
-        {this.renderToolbar()}
+      <View style={styles.container}>
         {this.renderPage()}
+        {this.renderToolbar()}
       </View>
     )
   }
