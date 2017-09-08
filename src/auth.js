@@ -4,6 +4,7 @@ import Constants from './constants'
 
 const apiBaseUrl = 'https://data.thecommunity.ng/v1/'
 // const apiBaseUrl = 'http://localhost:3000/v1/'
+// const apiBaseUrl = 'http://10.42.0.1:3000/v1/'
 
 export default (auth = {
   async login(username, l_password) {
