@@ -1,29 +1,45 @@
 import React from 'react'
-import { View, Image, Text, AsyncStorage, StyleSheet } from 'react-native'
+import {
+  View,
+  Image,
+  Text,
+  AsyncStorage,
+  StyleSheet,
+  Alert
+} from 'react-native'
 import { connect } from 'react-redux'
-import TouchableLoader from './TouchableLoader'
+import ActivityButton from './ActivityButton'
 import TextInput from './TextInput'
 import styles from '../styles'
 import inputStyles from '../styles/inputStyles'
 import Constants from '../constants'
 import auth from '../auth'
 import { setUser } from '../actions'
+import Hyperlink from 'react-native-hyperlink'
 
 // const mapStateToProps = state => ({
 //   user: state.user
 // })
 
-class Authenticate extends React.Component {
+class Authenticator extends React.Component {
   state = {}
 
   buttonProps = {
-    wrapperStyle: styles.button,
+    buttonStyle: styles.button,
     loadingBackground: '#b2b2b2',
     textStyle: {
       textAlign: 'center',
       color: '#fff',
       fontSize: 16
     }
+  }
+
+  infoStyles = {
+    textAlign: 'center',
+    color: '#ccc',
+    fontSize: 14,
+    marginRight: 20,
+    marginLeft: 20
   }
 
   inputProps = {
@@ -57,16 +73,16 @@ class Authenticate extends React.Component {
               this.storeSession(response)
             } else {
               this.setState({ isLoginLoading: false })
-              alert((response && response.message) || 'Login failed')
+              Alert.alert((response && response.message) || 'Login failed')
             }
           })
           .catch(error => {
             this.setState({ isLoginLoading: false })
-            alert('Login failed')
+            Alert.alert('Login failed')
             console.error(error)
           })
       } else {
-        alert('Please type your username and password')
+        Alert.alert('Please type your username and password')
       }
     } else {
       // console.log('Login already initiated');
@@ -89,16 +105,16 @@ class Authenticate extends React.Component {
               this.storeSession(response)
             } else {
               this.setState({ isRegisterLoading: false })
-              alert((response && response.message) || 'Sign Up failed')
+              Alert.alert((response && response.message) || 'Sign Up failed')
             }
           })
           .catch(error => {
             this.setState({ isRegisterLoading: false })
-            alert('Sign Up failed')
+            Alert.alert('Sign Up failed')
             console.error(error)
           })
       } else {
-        alert('Please fill all boxes')
+        Alert.alert('Please fill all boxes')
       }
     } else {
       // console.log('Register already initiated');
@@ -167,10 +183,10 @@ class Authenticate extends React.Component {
           onSubmitEditing={this.attemptRegister}
         />
         <View style={styles.bottomControl}>
-          <TouchableLoader
+          <ActivityButton
             {...this.buttonProps}
             title="Sign Up"
-            onLoadInit={this.attemptRegister}
+            onPress={this.attemptRegister}
             isLoading={this.state.isRegisterLoading}
           />
           <Text
@@ -222,11 +238,11 @@ class Authenticate extends React.Component {
           onSubmitEditing={this.attemptLogin}
         />
         <View style={styles.bottomControl}>
-          <TouchableLoader
+          <ActivityButton
             {...this.buttonProps}
             title="Login"
             isLoading={this.state.isLoginLoading}
-            onLoadInit={this.attemptLogin}
+            onPress={this.attemptLogin}
           />
           <Text
             style={[
@@ -237,6 +253,11 @@ class Authenticate extends React.Component {
           >
             {`or Create Account`}
           </Text>
+          <Hyperlink linkDefault={true} linkText={url => 'Forgot password?'}>
+            <Text style={[this.infoStyles, { marginTop: 10, padding: 10 }]}>
+              {`https://thecommunity.ng/a/recover`}
+            </Text>
+          </Hyperlink>
         </View>
       </View>
     )
@@ -251,4 +272,4 @@ class Authenticate extends React.Component {
   }
 }
 
-export default connect()(Authenticate)
+export default connect()(Authenticator)

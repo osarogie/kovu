@@ -3,7 +3,7 @@ import React from 'react'
 import {
   View,
   Text as NativeText,
-  Image,
+  Image as NativeImage,
   Platform,
   StyleSheet,
   TouchableOpacity,
@@ -21,7 +21,7 @@ import { imageUrl } from '../utils'
 
 const DEFAULT_COLORS = ['#000', '#333', '#555', '#888', '#aaa', '#ddd']
 
-const Avatar = props => {
+const Image = props => {
   const {
     component,
     onPress,
@@ -120,11 +120,10 @@ const Avatar = props => {
 
       const uri = imageUrl(source.profile_picture_name, `${size}x${size}`)
       return (
-        <Image
+        <NativeImage
           style={[
             styles.avatar,
             rounded && { borderRadius: width / 2 },
-            radius && { borderRadius: radius },
             avatarStyle && avatarStyle
           ]}
           source={{ uri }}
@@ -241,7 +240,7 @@ const defaultProps = {
   }
 }
 
-Avatar.propTypes = {
+Image.propTypes = {
   component: PropTypes.oneOf([
     View,
     TouchableOpacity,
@@ -255,7 +254,7 @@ Avatar.propTypes = {
   onPress: PropTypes.func,
   onLongPress: PropTypes.func,
   containerStyle: PropTypes.any,
-  source: PropTypes.any,
+  source: PropTypes.any, //NativeImage.propTypes.source,
   avatarStyle: PropTypes.any,
   rounded: PropTypes.bool,
   title: PropTypes.string,
@@ -280,6 +279,6 @@ Avatar.propTypes = {
   })
 }
 
-Avatar.defaultProps = defaultProps
+Image.defaultProps = defaultProps
 
-export default Avatar
+export default Image

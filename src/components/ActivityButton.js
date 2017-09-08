@@ -8,13 +8,12 @@ import {
   TouchableOpacity,
   View
 } from 'react-native'
-var keyOf = require('fbjs/lib/keyOf')
 
-export default class TouchableLoader extends React.Component {
+export default class ActivityButton extends React.Component {
   renderLoading() {
     const { icon } = this.props
     // console.log(this.props)
-    if (icon) {
+    if (this.props.isLoading === false && icon) {
       return icon
     } else if (this.props.isLoading === false) {
       return (
@@ -46,17 +45,12 @@ export default class TouchableLoader extends React.Component {
 
     return (
       <TouchableOpacity
-        onPress={() => {
-          if (this.props.onLoadInit) {
-            this.props.onLoadInit()
-          }
-        }}
+        onPress={this.props.onPress}
         disabled={this.props.isLoading === true}
         accessibilityTraits="button"
+        style={[styles.wrapper, this.props.buttonStyle, extraStyles]}
       >
-        <View style={[styles.wrapper, this.props.wrapperStyle, extraStyles]}>
-          {this.renderLoading()}
-        </View>
+        {this.renderLoading()}
       </TouchableOpacity>
     )
   }
@@ -74,43 +68,45 @@ const styles = StyleSheet.create({
     backgroundColor: '#b2b2b2',
     borderRadius: 15,
     height: 30,
-    paddingLeft: 10,
-    paddingRight: 10
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingRight: 20,
+    paddingLeft: 20
   },
   text: {
     backgroundColor: 'transparent',
     color: '#fff',
-    fontSize: 12
+    fontSize: 15
   },
   activityIndicator: {
     marginTop: Platform.select({
       ios: -14,
-      android: -16
+      android: -18
     })
   }
 })
 
-TouchableLoader.defaultProps = {
-  onLoadInit: () => {},
+ActivityButton.defaultProps = {
+  onPress: () => {},
   isLoading: false,
   title: 'Button',
   indicatorColor: 'white',
   indicatorSize: 'small',
   containerStyle: {},
-  wrapperStyle: {},
+  buttonStyle: {},
   textStyle: {},
   activityIndicatorStyle: {}
 }
 
-TouchableLoader.propTypes = {
+ActivityButton.propTypes = {
   ...ViewPropTypes,
-  onLoadInit: React.PropTypes.func,
+  onPress: React.PropTypes.func,
   isLoading: React.PropTypes.bool,
   title: React.PropTypes.string,
   indicatorColor: React.PropTypes.string,
   indicatorSize: React.PropTypes.string,
   containerStyle: View.propTypes.style,
-  wrapperStyle: View.propTypes.style,
+  buttonStyle: View.propTypes.style,
   textStyle: Text.propTypes.style,
   activityIndicatorStyle: View.propTypes.style
 }

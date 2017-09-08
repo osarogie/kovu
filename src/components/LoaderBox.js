@@ -1,6 +1,6 @@
 import React from 'react'
-import { ViewPropTypes, Text, StyleSheet, View } from 'react-native'
-import TouchableLoader from './TouchableLoader'
+import { ViewPropTypes,ToastAndroid, Text, StyleSheet, View } from 'react-native'
+import ActivityButton from './ActivityButton'
 import { connect } from 'react-redux'
 import colors from '../colors'
 import styles from '../styles'
@@ -18,14 +18,16 @@ export default class LoaderBox extends React.Component {
           name="ios-refresh-outline"
           style={[styles.icon, { marginRight: 0 }]}
           size={50}
-          color={'#05f'}
+          color={'#000'}
         />
       )
     }
     return null
   }
   render() {
-    console.log(this.props.error)
+    if(this.props.error){
+      ToastAndroid.show("Network Error",ToastAndroid.SHORT)
+    }
     return (
       <View
         style={[
@@ -37,12 +39,12 @@ export default class LoaderBox extends React.Component {
           { backgroundColor: colors.get('container', this.props.night_mode) }
         ]}
       >
-        <TouchableLoader
-          onLoadInit={this.props.onLoadInit}
+        <ActivityButton
+          onPress={this.props.onPress}
           isLoading={this.props.isLoading}
           title={this.props.error}
           containerStyle={this.props.containerStyle}
-          wrapperStyle={[{ height: 100 }, this.props.wrapperStyle]}
+          buttonStyle={[{ height: 100 }, this.props.buttonStyle]}
           textStyle={this.props.textStyle}
           indicatorSize={this.props.indicatorSize}
           indicatorColor={this.props.indicatorColor}
@@ -55,26 +57,26 @@ export default class LoaderBox extends React.Component {
 }
 
 LoaderBox.defaultProps = {
-  onLoadInit: () => {},
+  onPress: () => {},
   isLoading: false,
   title: 'Tap to load',
-  indicatorColor: '#0366d6',
+  indicatorColor: '#000',
   indicatorSize: 'large',
   containerStyle: {},
-  wrapperStyle: { backgroundColor: 'transparent' },
+  buttonStyle: { backgroundColor: 'transparent' },
   textStyle: { color: '#000', fontSize: 20 },
   activityIndicatorStyle: {}
 }
 
 LoaderBox.propTypes = {
   ...ViewPropTypes,
-  onLoadInit: React.PropTypes.func,
+  onPress: React.PropTypes.func,
   isLoading: React.PropTypes.bool,
   title: React.PropTypes.string,
   indicatorColor: React.PropTypes.string,
   indicatorSize: React.PropTypes.string,
   containerStyle: View.propTypes.style,
-  wrapperStyle: View.propTypes.style,
+  buttonStyle: View.propTypes.style,
   textStyle: Text.propTypes.style,
   activityIndicatorStyle: View.propTypes.style
 }
