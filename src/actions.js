@@ -1,4 +1,4 @@
-export const setUser = (user, api_key) => ({
+export const setUser = (user, api_key = null) => ({
   type: 'SET_USER',
   user,
   api_key
