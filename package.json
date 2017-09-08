@@ -6,7 +6,8 @@
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
     "devtools": "react-devtools",
-    "update-schema": "./node_modules/.bin/fetch-schema http://localhost:3000/_/api -f schema.graphql",
+    "update-schema":
+      "./node_modules/.bin/fetch-schema http://localhost:3000/_/api -f schema.graphql",
     "relay": "relay-compiler --src ./src --schema schema.graphql",
     "relayw": "relay-compiler --src ./src --schema schema.graphql --watch"
   },
@@ -16,6 +17,8 @@
     "react": "16.0.0-alpha.12",
     "react-native": "^0.47.2",
     "react-native-code-push": "^5.0.0-beta",
+    "react-native-htmlview": "^0.12.0",
+    "react-native-hyperlink": "^0.0.10",
     "react-native-markdown-editor": "^1.0.1",
     "react-native-progress": "^3.4.0",
     "react-native-settings-list": "^1.6.1",
