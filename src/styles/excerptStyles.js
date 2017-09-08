@@ -17,7 +17,7 @@ module.exports = {
     color: '#000',
     flex: 1
   },
-  container: { margin: 17 },
+  container: { margin: 15 },
   profilePicture: {
     height: 40,
     width: 40,

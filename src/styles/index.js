@@ -21,7 +21,7 @@ module.exports = StyleSheet.create({
     marginTop: 25
   },
   altText: {
-    color: '#05f',
+    color: '#fff',
     // fontSize: 20
     marginTop: 20
   },
@@ -58,6 +58,12 @@ module.exports = StyleSheet.create({
     marginTop: 5,
     marginBottom: 5
   },
+  toolbarAction: {
+    height: 56,
+    width: 56,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
   loginFieldIcon: {
     // marginTop: 15,
     marginRight: 10
@@ -68,10 +74,16 @@ module.exports = StyleSheet.create({
   },
   toolbar: {
     // borderBottomWidth: 1,
-    borderTopRightRadius: 4,
-    borderTopLeftRadius: 4,
+    // borderTopRightRadius: 4,
+    // borderTopLeftRadius: 4,
     // borderBottomColor: '#ccc',
+    elevation: 2,
     height: 53
+  },
+  elevation: {
+    height: 1,
+    elevation: 10,
+    backgroundColor: '#ddd'
   },
   footerContainer: {
     marginTop: 5,
@@ -130,5 +142,15 @@ module.exports = StyleSheet.create({
   },
   fillRow: { flexDirection: 'row', flex: 1 },
   row: { flexDirection: 'row' },
-  fill: { flex: 1 }
+  fill: { flex: 1 },
+  postsHeader: {
+    fontSize: 15,
+    color: '#000',
+    fontWeight: 'bold',
+    padding: 20,
+    paddingBottom: 8,
+    borderBottomColor: '#ddd',
+    // borderBottomWidth: 1,
+    backgroundColor: '#eee'
+  }
 })
