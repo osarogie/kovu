@@ -254,7 +254,12 @@ class Authenticator extends React.Component {
             {`or Create Account`}
           </Text>
           <Hyperlink linkDefault={true} linkText={url => 'Forgot password?'}>
-            <Text style={[this.infoStyles, { marginTop: 10, padding: 10 }]}>
+            <Text
+              style={[
+                this.infoStyles,
+                { marginTop: 10, padding: 10, textDecorationLine: 'underline' }
+              ]}
+            >
               {`https://thecommunity.ng/a/recover`}
             </Text>
           </Hyperlink>
