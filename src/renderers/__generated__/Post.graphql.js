@@ -36,6 +36,7 @@ export type Post = {|
       +profile_picture_name: ?string;
       +bio: ?string;
     |};
+    +parsed_body: ?string;
   |};
 |};
 */
@@ -69,9 +70,11 @@ const fragment /*: ConcreteFragment*/ = {
       "plural": false,
       "selections": [
         {
-          "kind": "FragmentSpread",
-          "name": "DiscussionLike_discussion",
-          "args": null
+          "kind": "ScalarField",
+          "alias": null,
+          "args": null,
+          "name": "comment_count",
+          "storageKey": null
         },
         {
           "kind": "ScalarField",
@@ -102,17 +105,15 @@ const fragment /*: ConcreteFragment*/ = {
           "storageKey": null
         },
         {
-          "kind": "ScalarField",
-          "alias": null,
-          "args": null,
-          "name": "_id",
-          "storageKey": null
+          "kind": "FragmentSpread",
+          "name": "DiscussionLike_discussion",
+          "args": null
         },
         {
           "kind": "ScalarField",
           "alias": null,
           "args": null,
-          "name": "comment_count",
+          "name": "_id",
           "storageKey": null
         },
         {
@@ -244,6 +245,13 @@ const fragment /*: ConcreteFragment*/ = {
               "storageKey": null
             }
           ],
+          "storageKey": null
+        },
+        {
+          "kind": "ScalarField",
+          "alias": null,
+          "args": null,
+          "name": "parsed_body",
           "storageKey": null
         }
       ],

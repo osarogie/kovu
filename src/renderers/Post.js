@@ -6,6 +6,7 @@ import {
   Text,
   View,
   ScrollView,
+  Platform,
   Image,
   Dimensions,
   Share,
@@ -14,7 +15,6 @@ import {
 } from 'react-native'
 import HTMLView from 'react-native-htmlview'
 import Toolbar from '../components/Toolbar'
-import Markdown from 'react-native-simple-markdown'
 import styles from '../styles'
 import excerptStyles from '../styles/excerptStyles'
 import CommentList from '../fragments/CommentList'
@@ -124,15 +124,7 @@ class Post extends Component<void, Props, any> {
             marginRight: 20
           }}
         >
-          <Avatar
-            width={40}
-            rounded
-            source={discussion.user}
-            title={discussion.user.name}
-            onPress={this.openProfile}
-            activeOpacity={0.7}
-          />
-          <View style={{ marginLeft: 20, marginRight: 20, flex: 1 }}>
+          <View style={{ marginRight: 20, flex: 1 }}>
             <Text style={{ fontWeight: 'bold', color: '#000' }}>
               {discussion.user.name}
             </Text>
@@ -146,6 +138,14 @@ class Post extends Component<void, Props, any> {
               {getTimeAgo(discussion.created_at)}
             </Text>
           </View>
+          <Avatar
+            width={40}
+            rounded
+            source={discussion.user}
+            title={discussion.user.name}
+            onPress={this.openProfile}
+            activeOpacity={0.7}
+          />
         </View>
       </TouchableOpacity>
     )
@@ -295,15 +295,21 @@ class Post extends Component<void, Props, any> {
           <View style={this.containerStyles}>
             {this.renderGroupInfo()}
             {this.renderUserInfo()}
-            <Text style={[styles.title, { margin: 20, fontSize: 25 }]}>
+            <Text style={[styles.title, { margin: 20, fontSize: 36 }]}>
               {discussion.name}
             </Text>
             {this.renderFeaturePhoto()}
-            {/* <Markdown styles={markdownStyles}>{discussion.body}</Markdown> */}
-            <HTMLView
-              value={discussion.parsed_body}
-              // stylesheet={styles}
-            />
+            <View style={{ padding: 20 }}>
+              <HTMLView
+                value={discussion.parsed_body}
+                stylesheet={htmlStyles}
+                selectable={true}
+                textComponentProps={{
+                  selectable: true,
+                  style: { color: '#000', lineHeight: 30 }
+                }}
+              />
+            </View>
             {this.renderControls()}
           </View>
           {this.renderCommentBox()}
@@ -367,24 +373,19 @@ export default (PostQueryRenderer = ({ id, ...props }) => {
     />
   )
 })
-const markdownStyles = StyleSheet.create({
-  heading1: {
-    fontSize: 24,
-    color: 'purple'
-  },
-  link: {
-    color: 'pink'
-  },
-  view: {
-    paddingRight: 20,
-    paddingLeft: 20
-  },
-  mailTo: {
-    color: 'orange'
-  },
-  text: {
-    color: '#000',
-    lineHeight: 25,
-    textAlign: 'justify'
+const codeStyle = {
+  fontFamily: Platform.select({ ios: 'Menlo', android: 'monospace' }),
+  backgroundColor: '#eee'
+  // padding: 2,
+  // borderRadius: 3,
+  // flex: 1
+}
+const htmlStyles = StyleSheet.create({
+  pre: codeStyle,
+  code: codeStyle,
+  a: {
+    color: '#05f',
+    fontWeight: '500',
+    textDecorationLine: 'underline'
   }
 })
