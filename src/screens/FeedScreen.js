@@ -23,13 +23,14 @@ const mapStateToProps = state => ({
 class FeedScreen extends React.Component {
   static navigationOptions = {
     tabBarLabel: 'Reading List',
-    tabBarIcon: ({ tintColor, focused }) =>
+    tabBarIcon: ({ tintColor, focused }) => (
       <Icon
         name={Platform.select({ ios: 'ios-home', android: 'md-home' })}
         style={styles.tabIcon}
         size={focused ? 25 : 23}
         color={tintColor}
       />
+    )
   }
 
   constructor(props) {
@@ -57,14 +58,15 @@ class FeedScreen extends React.Component {
   // })
 
   // }
-  renderIcon = _ =>
+  renderIcon = _ => (
     <Icon
       name="ios-add-circle"
       style={[styles.toolbarIcon, { marginLeft: 10 }]}
       size={20}
       color={'#000'}
     />
-  renderToolbar = _ =>
+  )
+  renderToolbar = _ => (
     <View
       style={{
         flexDirection: 'row',
@@ -112,9 +114,10 @@ class FeedScreen extends React.Component {
         underlayColor="#ddd"
         style={styles.toolbarAction}
       >
-        <Icon name="ios-person" size={25} color="#000" />
+        <Icon name="md-person" size={25} color="#000" />
       </TouchableHighlight>
     </View>
+  )
 
   render() {
     const { navigation } = this.props
