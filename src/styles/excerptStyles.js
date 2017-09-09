@@ -9,7 +9,8 @@ module.exports = {
       color: '#000',
       lineHeight: 25,
       flex: 1
-    }
+    },
+    link: { fontWeight: '500', color: '#19d' }
   },
   title: {
     fontSize: 20,
