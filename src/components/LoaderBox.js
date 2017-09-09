@@ -1,5 +1,11 @@
 import React from 'react'
-import { ViewPropTypes,ToastAndroid, Text, StyleSheet, View } from 'react-native'
+import {
+  ViewPropTypes,
+  ToastAndroid,
+  Text,
+  StyleSheet,
+  View
+} from 'react-native'
 import ActivityButton from './ActivityButton'
 import { connect } from 'react-redux'
 import colors from '../colors'
@@ -9,8 +15,8 @@ import Icon from 'react-native-vector-icons/Ionicons'
 const mapStateToProps = state => ({
   night_mode: state.night_mode
 })
-@connect(mapStateToProps)
-export default class LoaderBox extends React.Component {
+
+class LoaderBox extends React.Component {
   renderIcon() {
     if (!this.props.isLoading) {
       return (
@@ -25,8 +31,8 @@ export default class LoaderBox extends React.Component {
     return null
   }
   render() {
-    if(this.props.error){
-      ToastAndroid.show("Network Error",ToastAndroid.SHORT)
+    if (this.props.error) {
+      ToastAndroid.show('Network Error', ToastAndroid.SHORT)
     }
     return (
       <View
@@ -88,3 +94,5 @@ LoaderBox.propTypes = {
 //   //   justifyContent: 'center'
 //   // }
 // })
+
+export default connect(mapStateToProps)(LoaderBox)

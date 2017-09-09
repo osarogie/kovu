@@ -22,8 +22,6 @@ const mapStateToProps = state => ({
   night_mode: state.night_mode
 })
 
-// @connect(mapStateToProps)
-
 export default class GroupList extends Component<any, Props, State> {
   state = {
     isFetchingTop: false,
@@ -81,8 +79,9 @@ export default class GroupList extends Component<any, Props, State> {
     })
   }
 
-  renderItem = ({ item, itemProps }) =>
+  renderItem = ({ item, itemProps }) => (
     <GroupListItem group={item.node} {...itemProps} />
+  )
 
   renderFooter() {
     if (this.state.hasMore) {

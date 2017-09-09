@@ -7,8 +7,7 @@ const mapStateToProps = state => ({
   night_mode: state.night_mode
 })
 
-@connect(mapStateToProps)
-export default class Separator extends React.PureComponent {
+class Separator extends React.PureComponent {
   render() {
     const { night_mode } = this.props
     return (
@@ -31,3 +30,5 @@ Separator.propTypes = {
   ...ViewPropTypes,
   styles: React.PropTypes.object
 }
+
+export default connect(mapStateToProps)(Separator)
