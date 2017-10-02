@@ -1,15 +1,7 @@
 // @flow
 
 import React, { Component } from 'react'
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableHighlight,
-  VirtualizedList,
-  Image
-} from 'react-native'
-import { withNavigation } from 'react-navigation'
+import { View, VirtualizedList } from 'react-native'
 import environment from '../../relay-environment'
 import styles from '../styles'
 import colors from '../colors'
@@ -78,8 +70,9 @@ export default class PostList extends Component<any, Props, State> {
     })
   }
 
-  renderItem = ({ item, itemProps }) =>
+  renderItem = ({ item, itemProps }) => (
     <PostListItem discussion={item.node} {...itemProps} />
+  )
 
   renderFooter() {
     const { discussionList } = this.props
