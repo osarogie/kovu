@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react'
-import { View, Text } from 'react-native'
+import { Text } from 'react-native'
 import PostList from '../fragments/PostList'
 import QueryRendererProxy from './QueryRendererProxy'
 import styles from '../styles'
@@ -71,16 +71,18 @@ export default (FeedQueryRenderer = props => {
         cursor: null,
         count: 10
       }}
-      render={data =>
+      render={data => (
         <FeedPaginationContainer
           discussionList={data.props.feed}
           renderHeader={renderPostsHeader}
           itemProps={{ ...props /*, feature_photo: { width, height }*/ }}
-        />}
+        />
+      )}
     />
   )
 })
-const renderPostsHeader = _ =>
+const renderPostsHeader = _ => (
   <Text style={[styles.postsHeader, { marginTop: 53 }]}>
     {"Today's Top Stories"}
   </Text>
+)
