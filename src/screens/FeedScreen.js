@@ -11,6 +11,7 @@ import styles from '../styles'
 import Feed from '../renderers/Feed'
 import AndroidToolbar from '../components/AndroidToolbar'
 import Button from '../components/Button'
+import Avatar from '../components/Avatar'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { connect } from 'react-redux'
 import getNavigation from '../helpers/getNavigation'
@@ -99,16 +100,59 @@ class FeedScreen extends React.Component {
         buttonStyle={{
           height: 36,
           width: 100,
-          borderRadius: 20,
-          backgroundColor: '#fff',
-          elevation: 2
+          // borderRadius: 20,
+          backgroundColor: '#6f45d6'
+          // elevation: 2
         }}
-        textStyle={{ fontSize: 17, color: '#000' }}
+        textStyle={{
+          fontSize: 15,
+          color: '#fff'
+          // textDecorationLine: 'underline'
+        }}
         onPress={this.openWrite}
         title="Write"
         // showTitle={false}
-        renderIcon={this.renderIcon}
+        // renderIcon={this.renderIcon}
       />
+
+      {this.renderAvatar()}
+    </View>
+  )
+
+  getPicture() {
+    const { user } = this.props
+
+    if (
+      user.profile_picture_name &&
+      typeof user.profile_picture_name === 'string'
+    ) {
+      return user.profile_picture_name
+    }
+    if (user.profile_pic && typeof user.profile_pic === 'string') {
+      return user.profile_pic.split('/').pop()
+    }
+    return null
+  }
+
+  renderAvatar() {
+    const { user, loggedIn } = this.props
+
+    if (loggedIn) {
+      return (
+        <View style={{ marginLeft: 10, marginRight: 10 }}>
+          <Avatar
+            width={36}
+            radius={15}
+            source={{ profile_picture_name: this.getPicture() }}
+            title={user.name}
+            onPress={this.openProfile}
+            activeOpacity={0.7}
+          />
+        </View>
+      )
+    }
+
+    return (
       <TouchableHighlight
         onPress={this.openProfile}
         underlayColor="#ddd"
@@ -116,8 +160,8 @@ class FeedScreen extends React.Component {
       >
         <Icon name="md-person" size={25} color="#000" />
       </TouchableHighlight>
-    </View>
-  )
+    )
+  }
 
   render() {
     const { navigation } = this.props
