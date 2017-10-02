@@ -58,6 +58,7 @@ class Editor extends React.Component {
   }
 
   notify(message) {
+    this.setState({ sending: false })
     ToastAndroid.show(message, ToastAndroid.SHORT)
   }
 
@@ -302,20 +303,23 @@ const EditorFragmentContainer = createFragmentContainer(
 )
 
 export default (EditorQueryRenderer = props =>
-  props.editing_mode
-    ? <QueryRendererProxy
-        query={graphql`
-          query EditorQuery($id: ID!) {
-            discussion(id: $id) {
-              ...Editor_discussion
-            }
+  props.editing_mode ? (
+    <QueryRendererProxy
+      query={graphql`
+        query EditorQuery($id: ID!) {
+          discussion(id: $id) {
+            ...Editor_discussion
           }
-        `}
-        variables={{ id: props.id }}
-        render={data =>
-          <EditorFragmentContainer
-            discussion={data.props.discussion}
-            {...props}
-          />}
-      />
-    : <ConnectedEditor {...props} />)
+        }
+      `}
+      variables={{ id: props.id }}
+      render={data => (
+        <EditorFragmentContainer
+          discussion={data.props.discussion}
+          {...props}
+        />
+      )}
+    />
+  ) : (
+    <ConnectedEditor {...props} />
+  ))
