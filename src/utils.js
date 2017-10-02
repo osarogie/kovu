@@ -43,15 +43,14 @@ export const getTimeAgo = time => {
   var MONTH = DAY * 30
   var YEAR = DAY * 356
 
+  const t = new Date(time * 1000)
   if (diff >= YEAR) {
-    const t = new Date(time * 1000)
     // time_diff = `${time.getMonth()} ${time.getFullYear()}`
     time_diff = `${t.getDate()}/${t.getMonth()}/${t
       .getYear()
       .toString()
       .slice(1, 3)}`
   } else if (diff >= MONTH) {
-    const t = new Date(time * 1000)
     time_diff = `${getMonth(t.getMonth())} ${t.getDate()}`
   } else if (diff > WEEK) {
     const duration = Math.floor(diff / WEEK)
