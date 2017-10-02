@@ -91,13 +91,13 @@ class Authenticator extends React.Component {
 
   attemptRegister() {
     if (!this.state.isRegisterLoading) {
-      const { full_name, l_username, email, r_password } = this.state
+      const { full_name, r_username, email, r_password } = this.state
 
-      if (email && l_username && r_password && full_name) {
+      if (email && r_username && r_password && full_name) {
         this.setState({ isRegisterLoading: true })
 
         auth
-          .register(full_name, l_username, email, r_password)
+          .register(full_name, r_username, email, r_password)
           .then(response => {
             // console.log(response);
             if (response && response.success === true) {
@@ -147,19 +147,21 @@ class Authenticator extends React.Component {
         </Text> */}
         <TextInput
           {...this.inputProps}
+          key="full_name"
           placeholder="Full name"
           onChangeText={full_name => this.setState({ full_name })}
           androidIcon="text-format"
           value={this.state.full_name}
-          onSubmitEditing={() => this._l_username.focus()}
+          onSubmitEditing={() => this._r_username.focus()}
         />
         <TextInput
           {...this.inputProps}
           placeholder="Username"
-          ref={component => (this._l_username = component)}
+          key="username"
+          ref={component => (this._r_username = component)}
           androidIcon="person"
-          onChangeText={l_username => this.setState({ l_username })}
-          value={this.state.l_username}
+          onChangeText={r_username => this.setState({ r_username })}
+          value={this.state.r_username}
           onSubmitEditing={() => this._email.focus()}
         />
         <TextInput
@@ -198,7 +200,8 @@ class Authenticator extends React.Component {
               this.setState({ action: 'login' })
             }}
           >
-            {`or Login`}
+            {'Existing member? '}
+            <Text style={{ textDecorationLine: 'underline' }}>{'Sign in'}</Text>
           </Text>
         </View>
       </View>
@@ -222,6 +225,7 @@ class Authenticator extends React.Component {
           {...this.inputProps}
           placeholder="Username or Email"
           androidIcon="person"
+          key="login$username"
           onChangeText={username => this.setState({ username })}
           keyboardType="email-address"
           value={this.state.username}
@@ -230,6 +234,7 @@ class Authenticator extends React.Component {
         <TextInput
           {...this.inputProps}
           placeholder="Password"
+          key="login$password"
           androidIcon="lock"
           ref={component => (this._l_password = component)}
           secureTextEntry={true}
@@ -251,9 +256,12 @@ class Authenticator extends React.Component {
             ]}
             onPress={() => this.setState({ action: 'register' })}
           >
-            {`or Create Account`}
+            {'Are you new? '}
+            <Text style={{ textDecorationLine: 'underline' }}>
+              {'Create an account'}
+            </Text>
           </Text>
-          <Hyperlink linkDefault={true} linkText={url => 'Forgot password?'}>
+          <Hyperlink linkDefault={true} linkText={url => 'Forgot password'}>
             <Text
               style={[
                 this.infoStyles,
