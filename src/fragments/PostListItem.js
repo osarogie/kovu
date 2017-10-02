@@ -68,12 +68,11 @@ class PostListItem extends React.PureComponent {
       } else {
         var { width } = Dimensions.get('window')
         var height = width / 3
-        width -= 46
+        width -= 36
       }
       const f_width = PixelRatio.getPixelSizeForLayoutSize(width)
-      const f_height = PixelRatio.getPixelSizeForLayoutSize(height)
-
-      const uri = imageUrl(image.name, `${f_width}x${f_height}`)
+      // const f_height = PixelRatio.getPixelSizeForLayoutSize(height)
+      const uri = imageUrl(image.name, `${f_width}x1000`)
 
       return (
         <View style={[{ height, width }, this.featurePhotoStyles]}>
@@ -100,9 +99,7 @@ class PostListItem extends React.PureComponent {
             numberOfLines={1}
           >
             <Text> in </Text>
-            <Text {...this.cultureNameProps}>
-              {discussion.group.name}
-            </Text>
+            <Text {...this.cultureNameProps}>{discussion.group.name}</Text>
           </Text>
         </TouchableOpacity>
       )
@@ -189,10 +186,7 @@ class PostListItem extends React.PureComponent {
             backgroundColor: '#fff',
             elevation: 2,
             marginBottom: 15,
-            marginTop: 2,
-            borderRadius: 5,
-            marginRight: 8,
-            marginLeft: 8
+            marginTop: 2
           }}
           onPress={this.openDiscussion}
         >
@@ -210,13 +204,11 @@ class PostListItem extends React.PureComponent {
                 {this.renderMeta()}
               </View>
             </View>
-            <Text style={excerptStyles.title}>
-              {name}
-            </Text>
+            <Text style={excerptStyles.title}>{name}</Text>
             {this.renderFeaturePhoto()}
             <Markdown styles={excerptStyles.body}>
               {excerpt}
-              {word_count > 30 ? '***...(Read More)***' : ''}
+              {word_count > 20 ? '...' : ''}
             </Markdown>
             {this.renderControls()}
           </View>
@@ -240,7 +232,7 @@ export default createFragmentContainer(
       id
       _id
       name
-      excerpt(size: 30)
+      excerpt(size: 20)
       word_count
       comment_count
       created_at
