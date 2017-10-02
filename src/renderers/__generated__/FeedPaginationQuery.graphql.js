@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 19ac4f9de98a84fba9d4229c6a2dfdc4
+ * @relayHash 2caff3238acaa889761e05e9feed83fc
  */
 
 /* eslint-disable */
@@ -47,7 +47,7 @@ fragment PostListItem_discussion on Discussion {
   id
   _id
   name
-  excerpt(size: 30)
+  excerpt(size: 20)
   word_count
   comment_count
   created_at
@@ -242,12 +242,12 @@ const batch /*: ConcreteBatch*/ = {
                           {
                             "kind": "Literal",
                             "name": "size",
-                            "value": 30,
+                            "value": 20,
                             "type": "Int"
                           }
                         ],
                         "name": "excerpt",
-                        "storageKey": "excerpt{\"size\":30}"
+                        "storageKey": "excerpt{\"size\":20}"
                       },
                       {
                         "kind": "ScalarField",
@@ -472,7 +472,7 @@ const batch /*: ConcreteBatch*/ = {
       }
     ]
   },
-  "text": "query FeedPaginationQuery(\n  $count: Int!\n  $cursor: String\n) {\n  feed {\n    ...Feed_discussionList\n    id\n  }\n}\n\nfragment Feed_discussionList on Feed {\n  top_stories(first: $count, after: $cursor) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        ...PostListItem_discussion\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment PostListItem_discussion on Discussion {\n  id\n  _id\n  name\n  excerpt(size: 30)\n  word_count\n  comment_count\n  created_at\n  user {\n    id\n    _id\n    name\n    username\n    profile_picture_name\n  }\n  group {\n    id\n    _id\n    name\n    permalink\n  }\n  feature_photo {\n    id\n    _id\n    height\n    width\n    name\n  }\n  ...DiscussionLike_discussion\n}\n\nfragment DiscussionLike_discussion on Discussion {\n  id\n  _id\n  viewer_does_like\n  like_count\n}\n"
+  "text": "query FeedPaginationQuery(\n  $count: Int!\n  $cursor: String\n) {\n  feed {\n    ...Feed_discussionList\n    id\n  }\n}\n\nfragment Feed_discussionList on Feed {\n  top_stories(first: $count, after: $cursor) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        ...PostListItem_discussion\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment PostListItem_discussion on Discussion {\n  id\n  _id\n  name\n  excerpt(size: 20)\n  word_count\n  comment_count\n  created_at\n  user {\n    id\n    _id\n    name\n    username\n    profile_picture_name\n  }\n  group {\n    id\n    _id\n    name\n    permalink\n  }\n  feature_photo {\n    id\n    _id\n    height\n    width\n    name\n  }\n  ...DiscussionLike_discussion\n}\n\nfragment DiscussionLike_discussion on Discussion {\n  id\n  _id\n  viewer_does_like\n  like_count\n}\n"
 };
 
 module.exports = batch;

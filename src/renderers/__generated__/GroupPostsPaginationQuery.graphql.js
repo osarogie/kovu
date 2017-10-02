@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash dac870e945a1569fd61f8aa0b99dc3a2
+ * @relayHash 07c1521ca16674819533e1d0533954ab
  */
 
 /* eslint-disable */
@@ -48,7 +48,7 @@ fragment PostListItem_discussion on Discussion {
   id
   _id
   name
-  excerpt(size: 30)
+  excerpt(size: 20)
   word_count
   comment_count
   created_at
@@ -269,12 +269,12 @@ const batch /*: ConcreteBatch*/ = {
                           {
                             "kind": "Literal",
                             "name": "size",
-                            "value": 30,
+                            "value": 20,
                             "type": "Int"
                           }
                         ],
                         "name": "excerpt",
-                        "storageKey": "excerpt{\"size\":30}"
+                        "storageKey": "excerpt{\"size\":20}"
                       },
                       {
                         "kind": "ScalarField",
@@ -499,7 +499,7 @@ const batch /*: ConcreteBatch*/ = {
       }
     ]
   },
-  "text": "query GroupPostsPaginationQuery(\n  $count: Int!\n  $cursor: String\n  $id: ID!\n) {\n  group(id: $id) {\n    ...Group_discussionList\n    id\n  }\n}\n\nfragment Group_discussionList on Group {\n  discussions(first: $count, after: $cursor) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        ...PostListItem_discussion\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment PostListItem_discussion on Discussion {\n  id\n  _id\n  name\n  excerpt(size: 30)\n  word_count\n  comment_count\n  created_at\n  user {\n    id\n    _id\n    name\n    username\n    profile_picture_name\n  }\n  group {\n    id\n    _id\n    name\n    permalink\n  }\n  feature_photo {\n    id\n    _id\n    height\n    width\n    name\n  }\n  ...DiscussionLike_discussion\n}\n\nfragment DiscussionLike_discussion on Discussion {\n  id\n  _id\n  viewer_does_like\n  like_count\n}\n"
+  "text": "query GroupPostsPaginationQuery(\n  $count: Int!\n  $cursor: String\n  $id: ID!\n) {\n  group(id: $id) {\n    ...Group_discussionList\n    id\n  }\n}\n\nfragment Group_discussionList on Group {\n  discussions(first: $count, after: $cursor) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        ...PostListItem_discussion\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment PostListItem_discussion on Discussion {\n  id\n  _id\n  name\n  excerpt(size: 20)\n  word_count\n  comment_count\n  created_at\n  user {\n    id\n    _id\n    name\n    username\n    profile_picture_name\n  }\n  group {\n    id\n    _id\n    name\n    permalink\n  }\n  feature_photo {\n    id\n    _id\n    height\n    width\n    name\n  }\n  ...DiscussionLike_discussion\n}\n\nfragment DiscussionLike_discussion on Discussion {\n  id\n  _id\n  viewer_does_like\n  like_count\n}\n"
 };
 
 module.exports = batch;

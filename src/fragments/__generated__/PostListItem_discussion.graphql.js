@@ -74,12 +74,12 @@ const fragment /*: ConcreteFragment*/ = {
         {
           "kind": "Literal",
           "name": "size",
-          "value": 30,
+          "value": 20,
           "type": "Int"
         }
       ],
       "name": "excerpt",
-      "storageKey": "excerpt{\"size\":30}"
+      "storageKey": "excerpt{\"size\":20}"
     },
     {
       "kind": "ScalarField",
