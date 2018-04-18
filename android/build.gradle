@@ -28,6 +28,11 @@ allprojects {
         }
         // Add jitpack repository (added by react-native-spinkit)
         maven { url "https://jitpack.io" }
+        configurations.all {
+            resolutionStrategy {
+                force 'com.google.android.gms:play-services-auth:11.6.0'
+            }
+        }
     }
 }
 
