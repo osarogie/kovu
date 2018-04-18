@@ -6,6 +6,7 @@ import {
   AsyncStorage,
   StyleSheet,
   Alert,
+  TouchableOpacity,
   Linking
 } from 'react-native'
 import { connect } from 'react-redux'
@@ -17,7 +18,7 @@ import Constants from '../constants'
 import auth from '../auth'
 import { setUser } from '../actions'
 import Hyperlink from 'react-native-hyperlink'
-import { TouchableOpacity, Screen } from '@shoutem/ui'
+import { Screen } from '@shoutem/ui/components/Screen'
 import { Form } from './Form'
 
 // const mapStateToProps = state => ({

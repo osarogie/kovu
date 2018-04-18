@@ -1,11 +1,10 @@
 import React from 'react'
-import { View, ScrollView, Image } from 'react-native'
+import { View, ScrollView, Image, TouchableOpacity } from 'react-native'
 import Authenticator from '../components/Authenticator'
 import styles from '../styles'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import BACKGROUND from '../images/welcome.png'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { TouchableOpacity } from '@shoutem/ui'
 
 export default class LoginScreen extends React.Component {
   goBack = () => this.props.navigation.goBack()

@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 
 import { Share, Platform } from 'react-native'
 
-import { Button } from '@shoutem/ui'
+import { Button } from '@shoutem/ui/components/Button'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { PURPLE, BLACK } from '../ui'
 

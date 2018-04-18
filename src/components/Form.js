@@ -1,19 +1,10 @@
 import React from 'react'
 import Icon from 'react-native-vector-icons/Entypo'
-import {
-  TouchableOpacity,
-  Text,
-  ImageBackground,
-  ScrollView,
-  View,
-  Title,
-  Button,
-  Caption,
-  Heading
-} from '@shoutem/ui'
+import { Text, Title, Caption, Heading } from '@shoutem/ui/components/Text'
 import {
   Picker,
   Image,
+  View,
   Alert,
   findNodeHandle,
   Platform,

@@ -6,7 +6,8 @@ import {
   AsyncStorage,
   StyleSheet,
   Alert,
-  Linking
+  Linking,
+  TouchableOpacity
 } from 'react-native'
 import { connect } from 'react-redux'
 import ActivityButton from './ActivityButton'
@@ -17,7 +18,6 @@ import Constants from '../constants'
 import auth from '../auth'
 import { setUser } from '../actions'
 import Hyperlink from 'react-native-hyperlink'
-import { TouchableOpacity } from '@shoutem/ui'
 
 // const mapStateToProps = state => ({
 //   user: state.user

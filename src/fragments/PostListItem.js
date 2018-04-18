@@ -22,7 +22,7 @@ import Avatar from '../components/Avatar'
 import DiscussionLike from '../fragments/DiscussionLike'
 import { getTimeAgo, imageUrl, getCommentCount } from '../utils'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { Subtitle, Caption } from '@shoutem/ui'
+import { Subtitle, Caption } from '@shoutem/ui/components/Text'
 import CommentListItem from './CommentListItem'
 
 const mapStateToProps = state => ({

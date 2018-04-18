@@ -9,7 +9,8 @@ import Separator from '../components/Separator'
 import QueryRendererProxy from './QueryRendererProxy'
 import { TabViewAnimated, TabBar, TabViewPagerPan } from 'react-native-tab-view'
 import { createPaginationContainer, graphql } from 'react-relay'
-import { Screen, Title } from '@shoutem/ui'
+import { Title } from '@shoutem/ui/components/Text'
+import { Screen } from '@shoutem/ui/components/Screen'
 import Icon from 'react-native-vector-icons/Feather'
 
 const initialLayout = {

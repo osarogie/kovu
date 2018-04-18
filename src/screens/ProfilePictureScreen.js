@@ -10,15 +10,11 @@ import {
   Share
 } from 'react-native'
 
-import {
-  Button,
-  Text,
-  HorizontalPager,
-  Tile,
-  Subtitle,
-  Caption,
-  Title
-} from '@shoutem/ui'
+import { Button } from '@shoutem/ui/components/Button'
+
+import { HorizontalPager } from '@shoutem/ui/components/HorizontalPager'
+import { Tile } from '@shoutem/ui/components/Tile'
+import { Text, Subtitle, Caption, Title } from '@shoutem/ui/components/Text'
 import Image from '../components/NetworkImage'
 // import { imageUrl, getSecureLink } from '../utils'
 import Icon from 'react-native-vector-icons/Ionicons'
