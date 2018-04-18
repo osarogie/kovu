@@ -187,7 +187,7 @@ dependencies {
     *#    exclude group: "com.google.android.gms"
     *#}
     */ 
-    implementation "com.google.android.gms:play-services-auth:10.0.1" 
+    implementation "com.google.android.gms:play-services-auth:11.6.0" 
     implementation project(':react-native-fbsdk')
     implementation project(':react-native-camera-kit')
     implementation project(':appcenter-crashes')
