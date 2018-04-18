@@ -138,6 +138,7 @@ android {
         releaseStaging {
             buildConfigField "String", "CODEPUSH_KEY", '"6m530U9Y_dT5fiEPhsSJ3yXAy0Ha1b1d2ce9-a650-48ff-9c10-e182b45a236d"'
             signingConfig signingConfigs.release
+            matchingFallbacks = ['release', 'debug']
         }
 
         release {
@@ -164,29 +165,12 @@ android {
 
 dependencies {
     implementation project(':react-native-device-info')
-    // implementation project(':react-native-google-sign-in')
-    // implementation project(':react-native-webview-bridge')
-    // implementation project(':react-native-spinkit')
-    // implementation project(':react-native-image-crop-picker')
-    // implementation project(':react-native-google-sign-in')
-    // implementation project(':react-native-fbsdk')
-    // implementation project(':react-native-code-push')
-    // implementation project(':react-native-camera-kit')
-    // implementation project(':react-native-blur')
-    // implementation project(':lottie-react-native')
-    // implementation project(':appcenter-crashes')
-    // implementation project(':appcenter-analytics')
-    // implementation project(':appcenter')
-    // implementation project(':react-native-photo-view')
-    // implementation project(':react-native-linear-gradient')
-    // implementation project(':react-native-vector-icons')
     implementation project(':react-native-image-crop-picker')
     implementation(project(":react-native-google-sign-in"))
-    /**
-    *# { 
-    *#    exclude group: "com.google.android.gms"
-    *#}
-    */ 
+    // { 
+    //     exclude group: "com.google.android.gms"
+    // }
+    
     implementation "com.google.android.gms:play-services-auth:11.6.0" 
     implementation project(':react-native-fbsdk')
     implementation project(':react-native-camera-kit')
