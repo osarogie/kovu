@@ -12,7 +12,9 @@ import {
 import styles from '../styles'
 import colors from '../colors'
 import Button from '../components/Button'
-import Icon from 'react-native-vector-icons/Ionicons'
+import Ionicon from 'react-native-vector-icons/Ionicons'
+import Feather from 'react-native-vector-icons/Feather'
+// import { Icon } from '@shoutem/ui/components/Icon'
 import SettingsList from 'react-native-settings-list'
 import { connect } from 'react-redux'
 import Hyperlink from 'react-native-hyperlink'
@@ -34,14 +36,18 @@ const mapStateToProps = state => ({
   user: state.user.user,
   loggedIn: state.user.loggedIn
 })
+// import { withNavigation } from 'react-navigation'
 
+// @withNavigation
+// @connect(mapStateToProps)
+// export default
 class MenuScreen extends React.Component {
   static navigationOptions = {
-    tabBarLabel: 'Menus',
+    tabBarLabel: 'Options',
     tabBarIcon: ({ tintColor, focused }) => (
-      <Icon
-        name="ios-options"
-        style={styles.tabIcon}
+      <Feather
+        name="more-horizontal"
+        // style={styles.tabIcon}
         size={focused ? 25 : 23}
         color={tintColor}
       />
@@ -56,24 +62,17 @@ class MenuScreen extends React.Component {
     marginLeft: 20
   }
 
-  constructor(props) {
-    super(props)
-    this.toggleNightMode = this.toggleNightMode.bind(this)
-    this.openLogin = this.openLogin.bind(this)
-    this.openProfile = this.openProfile.bind(this)
-    this.openEditProfile = this.openEditProfile.bind(this)
-    this.openChangePassword = this.openChangePassword.bind(this)
-    this.openStartCulture = this.openStartCulture.bind(this)
-  }
-
   toggleNightMode = mode => this.props.dispatch(setNightMode(mode))
   openProfile = _ => openProfile(this.props.user, this.props.navigation)
   openLogin = _ => openLogin(this.props.navigation)
   openEditProfile = _ => openEditProfile(this.props.user, this.props.navigation)
   openChangePassword = _ => openChangePassword(this.props.navigation)
-  openStartCulture = _ => openStartCulture(this.props.navigation, {})
+  openStartCulture = _ =>
+    this.props.loggedIn
+      ? openStartCulture(this.props.navigation, {})
+      : this.openLogin()
 
-  getPicture() {
+  getPicture = _ => {
     const { user } = this.props
 
     if (
@@ -147,13 +146,11 @@ class MenuScreen extends React.Component {
     }
 
     return (
-      <Icon
+      <Ionicon
         name={
-          variation ? (
-            `${Platform.select({ android: 'md', ios: 'ios' })}-${name}`
-          ) : (
-            name
-          )
+          variation
+            ? `${Platform.select({ android: 'md', ios: 'ios' })}-${name}`
+            : name
         } //{Platform.select({ ios: 'ios-options', android: 'md-options' })}
         {...optionIconProps}
       />
@@ -189,13 +186,6 @@ class MenuScreen extends React.Component {
             title="Logout"
             onPress={_ => dispatch(logout())}
           />
-          <SettingsList.Header headerStyle={{ marginTop: 15 }} />
-          <SettingsList.Item
-            icon={this.getIcon('logo-buffer', false)}
-            hasNavArrow={false}
-            title="Start a new culture"
-            onPress={this.openStartCulture}
-          />
         </SettingsList>
       )
     }
@@ -216,8 +206,8 @@ class MenuScreen extends React.Component {
     return (
       <View style={{ flex: 1 }}>
         {this.renderUserMenu()}
-        {/* <SettingsList borderColor="transparent" defaultItemSize={50}>
-          <SettingsList.Header headerStyle={{ marginTop: 15 }} />
+        <SettingsList borderColor="transparent" defaultItemSize={50}>
+          {/* <SettingsList.Header headerStyle={{ marginTop: 15 }} />
           <SettingsList.Item
             icon={this.getIcon('moon')}
             hasSwitch={true}
@@ -225,8 +215,15 @@ class MenuScreen extends React.Component {
             switchOnValueChange={this.toggleNightMode}
             hasNavArrow={false}
             title="Night Mode"
+          /> */}
+          <SettingsList.Header headerStyle={{ marginTop: 15 }} />
+          <SettingsList.Item
+            icon={this.getIcon('logo-buffer', false)}
+            hasNavArrow={false}
+            title="Start a new culture"
+            onPress={this.openStartCulture}
           />
-        </SettingsList> */}
+        </SettingsList>
       </View>
     )
   }
@@ -277,10 +274,12 @@ class MenuScreen extends React.Component {
             />
           </View>
         </ScrollView>
-        <View style={styles.elevation} />
+        {/* <View style={styles.elevation} /> */}
       </View>
     )
   }
 }
 
 export default connect(mapStateToProps)(MenuScreen)
+
+// export default withNavigation(connect(mapStateToProps)(MenuScreen))

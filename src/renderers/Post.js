@@ -1,6 +1,6 @@
 // @flow
 
-import React, { Component } from 'react'
+import React from 'react'
 import {
   StyleSheet,
   Text,
@@ -34,7 +34,9 @@ const mapStateToProps = state => ({
   current_user: state.user.user
 })
 
-class Post extends Component<void, Props, any> {
+const { width } = Dimensions.get('window')
+
+class Post extends React.Component {
   clickableProps = {
     underlayColor: 'whitesmoke',
     style: { backgroundColor: '#fff' }
@@ -49,14 +51,6 @@ class Post extends Component<void, Props, any> {
     { backgroundColor: '#fff', elevation: 2, paddingBottom: 20 }
   ]
 
-  constructor(props) {
-    super(props)
-    this.openProfile = this.openProfile.bind(this)
-    this.openCulture = this.openCulture.bind(this)
-    this.openComments = this.openComments.bind(this)
-    this.openWrite = this.openWrite.bind(this)
-  }
-
   openWrite = _ =>
     this.props.openWrite({
       id: this.props.data.discussion._id,
@@ -69,7 +63,6 @@ class Post extends Component<void, Props, any> {
   renderFeaturePhoto() {
     const { feature_photo } = this.props.data.discussion
     if (feature_photo) {
-      const { width } = Dimensions.get('window')
       const height = feature_photo.height / feature_photo.width * width
 
       return (
@@ -84,7 +77,9 @@ class Post extends Component<void, Props, any> {
   }
 
   renderGroupInfo() {
-    const { data: { discussion } } = this.props
+    const {
+      data: { discussion }
+    } = this.props
     if (discussion.group) {
       return (
         <TouchableOpacity {...this.clickableProps} onPress={this.openCulture}>
@@ -111,7 +106,9 @@ class Post extends Component<void, Props, any> {
   }
 
   renderUserInfo() {
-    const { data: { discussion } } = this.props
+    const {
+      data: { discussion }
+    } = this.props
     // console.log(this.props)
     return (
       <TouchableOpacity {...this.clickableProps} onPress={this.openProfile}>
@@ -152,7 +149,9 @@ class Post extends Component<void, Props, any> {
   }
 
   renderEdit() {
-    const { data: { discussion } } = this.props
+    const {
+      data: { discussion }
+    } = this.props
     if (this.props.current_user._id == discussion.user._id) {
       return (
         <TouchableOpacity {...this.clickableProps} onPress={this.openWrite}>
@@ -193,11 +192,15 @@ class Post extends Component<void, Props, any> {
   }
 
   _onActionSelected(position) {
-    const { data: { discussion } } = this.props
+    const {
+      data: { discussion }
+    } = this.props
 
     switch (position) {
       case 0:
-        message = `Read "${discussion.name}" on TheCommunity - ${discussion.public_url}`
+        message = `Read "${discussion.name}" on TheCommunity - ${
+          discussion.public_url
+        } by ${discussion.user.name}`
         Share.share(
           { title: discussion.name, message },
           { dialogTitle: 'Share Story' }
@@ -209,7 +212,10 @@ class Post extends Component<void, Props, any> {
   }
 
   renderControls() {
-    const { data: { discussion }, openLogin } = this.props
+    const {
+      data: { discussion },
+      openLogin
+    } = this.props
     const { comment_count } = discussion
     const comment_count_ = getCommentCount(comment_count)
 

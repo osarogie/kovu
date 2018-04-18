@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 30ed1a9710ab4c520a2d3108493baed6
+ * @relayHash 2e951e327972272d3fab631a670ba2d5
  */
 
 /* eslint-disable */
@@ -8,18 +8,20 @@
 'use strict';
 
 /*::
-import type {ConcreteBatch} from 'relay-runtime';
+import type { ConcreteRequest } from 'relay-runtime';
+type DiscussionLike_discussion$ref = any;
 export type DiscussionLikeUnlikeDiscussionMutationVariables = {|
   input: {
-    clientMutationId?: ?string;
-    id: string;
-  };
+    clientMutationId?: ?string,
+    id: string,
+  },
 |};
-
 export type DiscussionLikeUnlikeDiscussionMutationResponse = {|
   +unlikeDiscussion: ?{|
-    +discussion: ?{| |};
-  |};
+    +discussion: ?{|
+      +$fragmentRefs: DiscussionLike_discussion$ref,
+    |},
+  |},
 |};
 */
 
@@ -44,41 +46,53 @@ fragment DiscussionLike_discussion on Discussion {
 }
 */
 
-const batch /*: ConcreteBatch*/ = {
+const node/*: ConcreteRequest*/ = (function(){
+var v0 = [
+  {
+    "kind": "LocalArgument",
+    "name": "input",
+    "type": "UnlikeDiscussionInput!",
+    "defaultValue": null
+  }
+],
+v1 = [
+  {
+    "kind": "Variable",
+    "name": "input",
+    "variableName": "input",
+    "type": "UnlikeDiscussionInput!"
+  }
+];
+return {
+  "kind": "Request",
+  "operationKind": "mutation",
+  "name": "DiscussionLikeUnlikeDiscussionMutation",
+  "id": null,
+  "text": "mutation DiscussionLikeUnlikeDiscussionMutation(\n  $input: UnlikeDiscussionInput!\n) {\n  unlikeDiscussion(input: $input) {\n    discussion {\n      ...DiscussionLike_discussion\n      id\n    }\n  }\n}\n\nfragment DiscussionLike_discussion on Discussion {\n  id\n  _id\n  viewer_does_like\n  like_count\n}\n",
+  "metadata": {},
   "fragment": {
-    "argumentDefinitions": [
-      {
-        "kind": "LocalArgument",
-        "name": "input",
-        "type": "UnlikeDiscussionInput!",
-        "defaultValue": null
-      }
-    ],
     "kind": "Fragment",
-    "metadata": null,
     "name": "DiscussionLikeUnlikeDiscussionMutation",
+    "type": "Mutation",
+    "metadata": null,
+    "argumentDefinitions": v0,
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
-        "args": [
-          {
-            "kind": "Variable",
-            "name": "input",
-            "variableName": "input",
-            "type": "UnlikeDiscussionInput!"
-          }
-        ],
-        "concreteType": "UnlikeDiscussionPayload",
         "name": "unlikeDiscussion",
+        "storageKey": null,
+        "args": v1,
+        "concreteType": "UnlikeDiscussionPayload",
         "plural": false,
         "selections": [
           {
             "kind": "LinkedField",
             "alias": null,
+            "name": "discussion",
+            "storageKey": null,
             "args": null,
             "concreteType": "Discussion",
-            "name": "discussion",
             "plural": false,
             "selections": [
               {
@@ -86,92 +100,70 @@ const batch /*: ConcreteBatch*/ = {
                 "name": "DiscussionLike_discussion",
                 "args": null
               }
-            ],
-            "storageKey": null
+            ]
           }
-        ],
-        "storageKey": null
+        ]
       }
-    ],
-    "type": "Mutation"
+    ]
   },
-  "id": null,
-  "kind": "Batch",
-  "metadata": {},
-  "name": "DiscussionLikeUnlikeDiscussionMutation",
-  "query": {
-    "argumentDefinitions": [
-      {
-        "kind": "LocalArgument",
-        "name": "input",
-        "type": "UnlikeDiscussionInput!",
-        "defaultValue": null
-      }
-    ],
-    "kind": "Root",
+  "operation": {
+    "kind": "Operation",
     "name": "DiscussionLikeUnlikeDiscussionMutation",
-    "operation": "mutation",
+    "argumentDefinitions": v0,
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
-        "args": [
-          {
-            "kind": "Variable",
-            "name": "input",
-            "variableName": "input",
-            "type": "UnlikeDiscussionInput!"
-          }
-        ],
-        "concreteType": "UnlikeDiscussionPayload",
         "name": "unlikeDiscussion",
+        "storageKey": null,
+        "args": v1,
+        "concreteType": "UnlikeDiscussionPayload",
         "plural": false,
         "selections": [
           {
             "kind": "LinkedField",
             "alias": null,
+            "name": "discussion",
+            "storageKey": null,
             "args": null,
             "concreteType": "Discussion",
-            "name": "discussion",
             "plural": false,
             "selections": [
               {
                 "kind": "ScalarField",
                 "alias": null,
-                "args": null,
                 "name": "id",
+                "args": null,
                 "storageKey": null
               },
               {
                 "kind": "ScalarField",
                 "alias": null,
-                "args": null,
                 "name": "_id",
+                "args": null,
                 "storageKey": null
               },
               {
                 "kind": "ScalarField",
                 "alias": null,
-                "args": null,
                 "name": "viewer_does_like",
+                "args": null,
                 "storageKey": null
               },
               {
                 "kind": "ScalarField",
                 "alias": null,
-                "args": null,
                 "name": "like_count",
+                "args": null,
                 "storageKey": null
               }
-            ],
-            "storageKey": null
+            ]
           }
-        ],
-        "storageKey": null
+        ]
       }
     ]
-  },
-  "text": "mutation DiscussionLikeUnlikeDiscussionMutation(\n  $input: UnlikeDiscussionInput!\n) {\n  unlikeDiscussion(input: $input) {\n    discussion {\n      ...DiscussionLike_discussion\n      id\n    }\n  }\n}\n\nfragment DiscussionLike_discussion on Discussion {\n  id\n  _id\n  viewer_does_like\n  like_count\n}\n"
+  }
 };
-
-module.exports = batch;
+})();
+(node/*: any*/).hash = '9d7e088e2d551a5d4b1eb1717182509e';
+module.exports = node;

@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash d7a913b2056c66ee54bd5dd96454a453
+ * @relayHash 2f0d5a0fe074b6dbc5c7e05a2082c028
  */
 
 /* eslint-disable */
@@ -8,18 +8,20 @@
 'use strict';
 
 /*::
-import type {ConcreteBatch} from 'relay-runtime';
+import type { ConcreteRequest } from 'relay-runtime';
+type FollowButton_user$ref = any;
 export type FollowButtonFollowUserMutationVariables = {|
   input: {
-    clientMutationId?: ?string;
-    id: string;
-  };
+    clientMutationId?: ?string,
+    id: string,
+  },
 |};
-
 export type FollowButtonFollowUserMutationResponse = {|
   +followUser: ?{|
-    +user: ?{| |};
-  |};
+    +user: ?{|
+      +$fragmentRefs: FollowButton_user$ref,
+    |},
+  |},
 |};
 */
 
@@ -43,41 +45,53 @@ fragment FollowButton_user on User {
 }
 */
 
-const batch /*: ConcreteBatch*/ = {
+const node/*: ConcreteRequest*/ = (function(){
+var v0 = [
+  {
+    "kind": "LocalArgument",
+    "name": "input",
+    "type": "FollowUserInput!",
+    "defaultValue": null
+  }
+],
+v1 = [
+  {
+    "kind": "Variable",
+    "name": "input",
+    "variableName": "input",
+    "type": "FollowUserInput!"
+  }
+];
+return {
+  "kind": "Request",
+  "operationKind": "mutation",
+  "name": "FollowButtonFollowUserMutation",
+  "id": null,
+  "text": "mutation FollowButtonFollowUserMutation(\n  $input: FollowUserInput!\n) {\n  followUser(input: $input) {\n    user {\n      ...FollowButton_user\n      id\n    }\n  }\n}\n\nfragment FollowButton_user on User {\n  _id\n  viewer_follows\n  follows_viewer\n}\n",
+  "metadata": {},
   "fragment": {
-    "argumentDefinitions": [
-      {
-        "kind": "LocalArgument",
-        "name": "input",
-        "type": "FollowUserInput!",
-        "defaultValue": null
-      }
-    ],
     "kind": "Fragment",
-    "metadata": null,
     "name": "FollowButtonFollowUserMutation",
+    "type": "Mutation",
+    "metadata": null,
+    "argumentDefinitions": v0,
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
-        "args": [
-          {
-            "kind": "Variable",
-            "name": "input",
-            "variableName": "input",
-            "type": "FollowUserInput!"
-          }
-        ],
-        "concreteType": "FollowUserPayload",
         "name": "followUser",
+        "storageKey": null,
+        "args": v1,
+        "concreteType": "FollowUserPayload",
         "plural": false,
         "selections": [
           {
             "kind": "LinkedField",
             "alias": null,
+            "name": "user",
+            "storageKey": null,
             "args": null,
             "concreteType": "User",
-            "name": "user",
             "plural": false,
             "selections": [
               {
@@ -85,92 +99,70 @@ const batch /*: ConcreteBatch*/ = {
                 "name": "FollowButton_user",
                 "args": null
               }
-            ],
-            "storageKey": null
+            ]
           }
-        ],
-        "storageKey": null
+        ]
       }
-    ],
-    "type": "Mutation"
+    ]
   },
-  "id": null,
-  "kind": "Batch",
-  "metadata": {},
-  "name": "FollowButtonFollowUserMutation",
-  "query": {
-    "argumentDefinitions": [
-      {
-        "kind": "LocalArgument",
-        "name": "input",
-        "type": "FollowUserInput!",
-        "defaultValue": null
-      }
-    ],
-    "kind": "Root",
+  "operation": {
+    "kind": "Operation",
     "name": "FollowButtonFollowUserMutation",
-    "operation": "mutation",
+    "argumentDefinitions": v0,
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
-        "args": [
-          {
-            "kind": "Variable",
-            "name": "input",
-            "variableName": "input",
-            "type": "FollowUserInput!"
-          }
-        ],
-        "concreteType": "FollowUserPayload",
         "name": "followUser",
+        "storageKey": null,
+        "args": v1,
+        "concreteType": "FollowUserPayload",
         "plural": false,
         "selections": [
           {
             "kind": "LinkedField",
             "alias": null,
+            "name": "user",
+            "storageKey": null,
             "args": null,
             "concreteType": "User",
-            "name": "user",
             "plural": false,
             "selections": [
               {
                 "kind": "ScalarField",
                 "alias": null,
-                "args": null,
                 "name": "_id",
+                "args": null,
                 "storageKey": null
               },
               {
                 "kind": "ScalarField",
                 "alias": null,
-                "args": null,
                 "name": "viewer_follows",
+                "args": null,
                 "storageKey": null
               },
               {
                 "kind": "ScalarField",
                 "alias": null,
-                "args": null,
                 "name": "follows_viewer",
+                "args": null,
                 "storageKey": null
               },
               {
                 "kind": "ScalarField",
                 "alias": null,
-                "args": null,
                 "name": "id",
+                "args": null,
                 "storageKey": null
               }
-            ],
-            "storageKey": null
+            ]
           }
-        ],
-        "storageKey": null
+        ]
       }
     ]
-  },
-  "text": "mutation FollowButtonFollowUserMutation(\n  $input: FollowUserInput!\n) {\n  followUser(input: $input) {\n    user {\n      ...FollowButton_user\n      id\n    }\n  }\n}\n\nfragment FollowButton_user on User {\n  _id\n  viewer_follows\n  follows_viewer\n}\n"
+  }
 };
-
-module.exports = batch;
+})();
+(node/*: any*/).hash = 'ba0002ae30c4a3eea5bc71b7ef9658c8';
+module.exports = node;

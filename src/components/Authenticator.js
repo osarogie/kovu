@@ -5,7 +5,8 @@ import {
   Text,
   AsyncStorage,
   StyleSheet,
-  Alert
+  Alert,
+  Linking
 } from 'react-native'
 import { connect } from 'react-redux'
 import ActivityButton from './ActivityButton'
@@ -16,6 +17,8 @@ import Constants from '../constants'
 import auth from '../auth'
 import { setUser } from '../actions'
 import Hyperlink from 'react-native-hyperlink'
+import { TouchableOpacity, Screen } from '@shoutem/ui'
+import { Form } from './Form'
 
 // const mapStateToProps = state => ({
 //   user: state.user
@@ -57,6 +60,9 @@ class Authenticator extends React.Component {
     this.attemptLogin = this.attemptLogin.bind(this)
     this.attemptRegister = this.attemptRegister.bind(this)
   }
+
+  openForgotPassword = () =>
+    Linking.openURL('https://thecommunity.ng/a/recover')
 
   attemptLogin() {
     if (!this.state.isLoginLoading) {
@@ -132,7 +138,7 @@ class Authenticator extends React.Component {
     goBack()
   }
 
-  renderRegister() {
+  renderRegister2() {
     return (
       <View style={{ flex: 1 }}>
         {/* <Text
@@ -208,7 +214,7 @@ class Authenticator extends React.Component {
     )
   }
 
-  renderLogin() {
+  renderLogin2() {
     return (
       <View style={{ flex: 1 }}>
         {/* <Text
@@ -261,18 +267,208 @@ class Authenticator extends React.Component {
               {'Create an account'}
             </Text>
           </Text>
-          <Hyperlink linkDefault={true} linkText={url => 'Forgot password'}>
+
+          <TouchableOpacity onPress={this.openForgotPassword}>
             <Text
               style={[
                 this.infoStyles,
                 { marginTop: 10, padding: 10, textDecorationLine: 'underline' }
               ]}
             >
-              {`https://thecommunity.ng/a/recover`}
+              Forgot password
             </Text>
-          </Hyperlink>
+          </TouchableOpacity>
         </View>
       </View>
+    )
+  }
+  login = async ({ username, password }) => {
+    if (username && password) {
+      // this.setState({ isLoginLoading: true })
+
+      // auth
+      //   .login(username, password)
+      //   .then(response => {
+      //     if (response && response.success === true) {
+      //       // console.log(response);
+      //       this.storeSession(response)
+      //     } else {
+      //       this.setState({ isLoginLoading: false })
+      //       Alert.alert((response && response.message) || 'Login failed')
+      //     }
+      //   })
+      //   .catch(error => {
+      //     this.setState({ isLoginLoading: false })
+      //     Alert.alert('Login failed')
+      //     console.error(error)
+      //   })
+
+      try {
+        const response = await auth.login(username, password)
+        if (response && response.success === true) {
+          // console.log(response);
+          this.storeSession(response)
+        } else {
+          this.setState({ isLoginLoading: false })
+          Alert.alert('Sorry', (response && response.message) || 'Login failed')
+        }
+      } catch (error) {
+        Alert.alert('Login failed')
+        console.warn(error)
+      }
+    } else {
+      Alert.alert('Please type your username and password')
+    }
+  }
+
+  register = async ({ fullname, username, email, password }) => {
+    if (email && username && password && fullname) {
+      try {
+        const response = await auth.register(
+          fullname,
+          username,
+          email,
+          password
+        )
+        process.env.NODE_ENV === 'development' ? console.log(response) : null
+        if (response && response.success === true) {
+          // console.log(response);
+          this.storeSession(response)
+        } else {
+          // this.setState({ isRegisterLoading: false })
+          Alert.alert(
+            'Sorry',
+            (response && response.message) || 'Sign Up failed'
+          )
+          if (response.errors)
+            this.setState({ registerErrors: response.errors })
+        }
+      } catch (error) {
+        Alert.alert('Sign Up failed')
+        console.warn(error)
+      }
+    } else {
+      Alert.alert('Please fill all boxes')
+    }
+  }
+
+  renderLogin() {
+    return (
+      <Form
+        key="login"
+        onSubmit={this.login}
+        fields={{
+          username: {
+            type: 'text',
+            label: 'Username or Email',
+            required: true
+          },
+
+          password: {
+            type: 'text',
+            label: 'Password',
+            required: true,
+            secure: true
+          }
+        }}
+        errors={this.state.loginErrors}
+        submitText="Login"
+        bottomContent={
+          <View style={styles.bottomControl}>
+            <Text
+              style={[
+                styles.altText,
+                {
+                  color: '#000',
+                  // marginTop: 20,
+                  opacity: this.state.isLoginLoading ? 0 : 1
+                }
+              ]}
+              onPress={() => this.setState({ action: 'register' })}
+            >
+              {'Are you new? '}
+              <Text style={{ textDecorationLine: 'underline' }}>
+                {'Create an account'}
+              </Text>
+            </Text>
+
+            <TouchableOpacity onPress={this.openForgotPassword}>
+              <Text
+                style={[
+                  this.infoStyles,
+                  {
+                    color: '#000',
+                    marginTop: 10,
+                    padding: 10,
+                    textDecorationLine: 'underline'
+                  }
+                ]}
+              >
+                Forgot password
+              </Text>
+            </TouchableOpacity>
+          </View>
+        }
+      />
+    )
+  }
+
+  renderRegister() {
+    return (
+      <Form
+        key="register"
+        onSubmit={this.register}
+        fields={{
+          fullname: {
+            type: 'text',
+            label: 'Fullname',
+            required: true
+          },
+          username: {
+            type: 'text',
+            label: 'Username',
+            required: true,
+            title: 'minimum is 6 character'
+          },
+          email: {
+            type: 'text',
+            label: 'Email',
+            required: true
+          },
+          password: {
+            type: 'text',
+            label: 'Password',
+            required: true,
+            secure: true,
+            characterRestriction: 32,
+            title: 'minimum is 8 characters'
+          }
+        }}
+        errors={this.state.registerErrors}
+        submitText="Sign Up"
+        bottomContent={
+          <View style={styles.bottomControl}>
+            <Text
+              style={[
+                styles.altText,
+                {
+                  color: '#000',
+                  // marginTop: 20,
+                  opacity: this.state.isRegisterLoading ? 0 : 1
+                }
+              ]}
+              onPress={() => {
+                this.setState({ action: 'login' })
+              }}
+            >
+              {'Existing member? '}
+              <Text style={{ textDecorationLine: 'underline' }}>
+                {'Sign in'}
+              </Text>
+            </Text>
+          </View>
+        }
+      />
     )
   }
 

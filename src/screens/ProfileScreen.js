@@ -1,21 +1,18 @@
 // @flow
 
-import React, { Component } from 'react'
+import React from 'react'
 import { View, StyleSheet, Platform, TabBarIOS } from 'react-native'
 import User from '../renderers/User'
 import { withNavigation } from 'react-navigation'
 import styles from '../styles'
-import AndroidToolbar from '../components/AndroidToolbar'
+import Toolbar from '../components/Toolbar'
 import getNavigation from '../helpers/getNavigation'
 
-export default class ProfileScreen extends Component<void, Props, any> {
+export default class ProfileScreen extends React.Component {
   renderToolbar() {
     const { user } = this.props.navigation.state.params
     const title = (user && `@${user.username}`) || 'Profile'
-    return Platform.select({
-      android: <AndroidToolbar title={title} navIconName="md-arrow-back" />,
-      ios: <TabBarIOS />
-    })
+    return <Toolbar title={title} navIconName="md-arrow-back" showNavIcon />
   }
 
   render() {

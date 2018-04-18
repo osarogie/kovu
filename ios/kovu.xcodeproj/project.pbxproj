@@ -75,6 +75,26 @@
 		7D9C08A47F28449388ED4F4F /* libAppCenterReactNativeAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D186D708A10E4F15970430A3 /* libAppCenterReactNativeAnalytics.a */; };
 		8E83CD770ECF487C8F6295CA /* libAppCenterReactNativeCrashes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 86ABAD77EF434700A7A8727F /* libAppCenterReactNativeCrashes.a */; };
 		FF8FA7E2A31D485AB640C784 /* libReact-Native-Webview-Bridge.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4794D209208D49ADA0ECAC7A /* libReact-Native-Webview-Bridge.a */; };
+		C04007D58F62439893F1CEE7 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A7788F8FFEE34E17BFD81FD9 /* Feather.ttf */; };
+		A3A5825DD0E449FA8AEE16B8 /* libReactNativeCameraKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E2395B4833A94C549D42E408 /* libReactNativeCameraKit.a */; };
+		41D36C278FE8490B8250FA0B /* libRCTFBSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A134990034A4D4481EB6ECF /* libRCTFBSDK.a */; };
+		51851E934CA14E5CBB7E53E7 /* libimageCropPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CE9300222E24B28BB42CE29 /* libimageCropPicker.a */; };
+		EDF47F68C3E842179C0ABF40 /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D2A7483E5A73481CA64838BA /* Roboto-Black.ttf */; };
+		7A21E5D324DF4CBB93426727 /* Roboto-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6E01621A6EBB4FEC90A71B99 /* Roboto-BlackItalic.ttf */; };
+		75D42AF78FD745B8B2A0E453 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F32F6D65AE83410B9B39A1E4 /* Roboto-Bold.ttf */; };
+		9761FD572A8F4E21B2C4D0D8 /* Roboto-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AC15D9BCCA4F45AE83A5945F /* Roboto-BoldItalic.ttf */; };
+		F23B00A1A92241DC8224BBFC /* Roboto-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 693C085DACE84C3485CEF499 /* Roboto-Italic.ttf */; };
+		C71925E5200C4C2C99E9C927 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 38443D7836354E668F817091 /* Roboto-Light.ttf */; };
+		E5EBF6ECA94945DE98F580D4 /* Roboto-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E28B09E64CA49C380350264 /* Roboto-LightItalic.ttf */; };
+		4DB63FFF839D4744B39D5C0E /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1802431A7F9C4869A77BDFEC /* Roboto-Medium.ttf */; };
+		DEF0297358F740D886B2AE70 /* Roboto-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 658681D0167C44BB9EDF61DF /* Roboto-MediumItalic.ttf */; };
+		CC040BCE5874478E95D1AE6F /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AB38D83A83754F19BB597F8F /* Roboto-Regular.ttf */; };
+		2D72F779ED594C0B9A001A02 /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8C1DE1A655CF4C9ABC6BD422 /* Roboto-Thin.ttf */; };
+		87A2C11DE1D34AD28B76B1AD /* Roboto-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A96FEA129B844CC3A2B552D7 /* Roboto-ThinItalic.ttf */; };
+		495448DE2F3F424A8A760ED9 /* BlackHanSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DC9093EF0F744A5DB392D165 /* BlackHanSans-Regular.ttf */; };
+		57DF826AB12B438C884B7592 /* libReactNativePermissions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD6CBC48E8B44119A4DBF4F /* libReactNativePermissions.a */; };
+		8CDE30BAA5554241912F6748 /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B59126CDA16240B6AFB01A9E /* libRNDeviceInfo.a */; };
+		EDFFFCE341ED400E98B3A6D9 /* libRNDeviceInfo-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 974003501EAE431890CE71C9 /* libRNDeviceInfo-tvOS.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -486,6 +506,31 @@
 		BD359EFABED742AB87A08411 /* CodePush.xcodeproj */ = {isa = PBXFileReference; name = "CodePush.xcodeproj"; path = "../node_modules/react-native-code-push/ios/CodePush.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		DC772510F9B649459FA324AE /* React-Native-Webview-Bridge.xcodeproj */ = {isa = PBXFileReference; name = "React-Native-Webview-Bridge.xcodeproj"; path = "../node_modules/react-native-webview-bridge/ios/React-Native-Webview-Bridge.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		4794D209208D49ADA0ECAC7A /* libReact-Native-Webview-Bridge.a */ = {isa = PBXFileReference; name = "libReact-Native-Webview-Bridge.a"; path = "libReact-Native-Webview-Bridge.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		A7788F8FFEE34E17BFD81FD9 /* Feather.ttf */ = {isa = PBXFileReference; name = "Feather.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		375EEAAF6F614BBC9F8F6431 /* ReactNativeCameraKit.xcodeproj */ = {isa = PBXFileReference; name = "ReactNativeCameraKit.xcodeproj"; path = "../node_modules/react-native-camera-kit/ios/lib/ReactNativeCameraKit.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		E2395B4833A94C549D42E408 /* libReactNativeCameraKit.a */ = {isa = PBXFileReference; name = "libReactNativeCameraKit.a"; path = "libReactNativeCameraKit.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		B17EEC9D2C624B84BE2CC100 /* RCTFBSDK.xcodeproj */ = {isa = PBXFileReference; name = "RCTFBSDK.xcodeproj"; path = "../node_modules/react-native-fbsdk/ios/RCTFBSDK.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		1A134990034A4D4481EB6ECF /* libRCTFBSDK.a */ = {isa = PBXFileReference; name = "libRCTFBSDK.a"; path = "libRCTFBSDK.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		3ADA643C71B94A80BA7B0662 /* imageCropPicker.xcodeproj */ = {isa = PBXFileReference; name = "imageCropPicker.xcodeproj"; path = "../node_modules/react-native-image-crop-picker/ios/imageCropPicker.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		4CE9300222E24B28BB42CE29 /* libimageCropPicker.a */ = {isa = PBXFileReference; name = "libimageCropPicker.a"; path = "libimageCropPicker.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		D2A7483E5A73481CA64838BA /* Roboto-Black.ttf */ = {isa = PBXFileReference; name = "Roboto-Black.ttf"; path = "../src/assets/fonts/Roboto-Black.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		6E01621A6EBB4FEC90A71B99 /* Roboto-BlackItalic.ttf */ = {isa = PBXFileReference; name = "Roboto-BlackItalic.ttf"; path = "../src/assets/fonts/Roboto-BlackItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F32F6D65AE83410B9B39A1E4 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; name = "Roboto-Bold.ttf"; path = "../src/assets/fonts/Roboto-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		AC15D9BCCA4F45AE83A5945F /* Roboto-BoldItalic.ttf */ = {isa = PBXFileReference; name = "Roboto-BoldItalic.ttf"; path = "../src/assets/fonts/Roboto-BoldItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		693C085DACE84C3485CEF499 /* Roboto-Italic.ttf */ = {isa = PBXFileReference; name = "Roboto-Italic.ttf"; path = "../src/assets/fonts/Roboto-Italic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		38443D7836354E668F817091 /* Roboto-Light.ttf */ = {isa = PBXFileReference; name = "Roboto-Light.ttf"; path = "../src/assets/fonts/Roboto-Light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		0E28B09E64CA49C380350264 /* Roboto-LightItalic.ttf */ = {isa = PBXFileReference; name = "Roboto-LightItalic.ttf"; path = "../src/assets/fonts/Roboto-LightItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		1802431A7F9C4869A77BDFEC /* Roboto-Medium.ttf */ = {isa = PBXFileReference; name = "Roboto-Medium.ttf"; path = "../src/assets/fonts/Roboto-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		658681D0167C44BB9EDF61DF /* Roboto-MediumItalic.ttf */ = {isa = PBXFileReference; name = "Roboto-MediumItalic.ttf"; path = "../src/assets/fonts/Roboto-MediumItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		AB38D83A83754F19BB597F8F /* Roboto-Regular.ttf */ = {isa = PBXFileReference; name = "Roboto-Regular.ttf"; path = "../src/assets/fonts/Roboto-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		8C1DE1A655CF4C9ABC6BD422 /* Roboto-Thin.ttf */ = {isa = PBXFileReference; name = "Roboto-Thin.ttf"; path = "../src/assets/fonts/Roboto-Thin.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		A96FEA129B844CC3A2B552D7 /* Roboto-ThinItalic.ttf */ = {isa = PBXFileReference; name = "Roboto-ThinItalic.ttf"; path = "../src/assets/fonts/Roboto-ThinItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		DC9093EF0F744A5DB392D165 /* BlackHanSans-Regular.ttf */ = {isa = PBXFileReference; name = "BlackHanSans-Regular.ttf"; path = "../src/assets/fonts/BlackHanSans-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		A6742841E7804DED88C1E786 /* ReactNativePermissions.xcodeproj */ = {isa = PBXFileReference; name = "ReactNativePermissions.xcodeproj"; path = "../node_modules/react-native-permissions/ios/ReactNativePermissions.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		5BD6CBC48E8B44119A4DBF4F /* libReactNativePermissions.a */ = {isa = PBXFileReference; name = "libReactNativePermissions.a"; path = "libReactNativePermissions.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		176CA70FE9A34A9783C69890 /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; name = "RNDeviceInfo.xcodeproj"; path = "../node_modules/react-native-device-info/ios/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		B59126CDA16240B6AFB01A9E /* libRNDeviceInfo.a */ = {isa = PBXFileReference; name = "libRNDeviceInfo.a"; path = "libRNDeviceInfo.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		974003501EAE431890CE71C9 /* libRNDeviceInfo-tvOS.a */ = {isa = PBXFileReference; name = "libRNDeviceInfo-tvOS.a"; path = "libRNDeviceInfo-tvOS.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -528,6 +573,12 @@
 				7D9C08A47F28449388ED4F4F /* libAppCenterReactNativeAnalytics.a in Frameworks */,
 				8E83CD770ECF487C8F6295CA /* libAppCenterReactNativeCrashes.a in Frameworks */,
 				FF8FA7E2A31D485AB640C784 /* libReact-Native-Webview-Bridge.a in Frameworks */,
+				A3A5825DD0E449FA8AEE16B8 /* libReactNativeCameraKit.a in Frameworks */,
+				41D36C278FE8490B8250FA0B /* libRCTFBSDK.a in Frameworks */,
+				51851E934CA14E5CBB7E53E7 /* libimageCropPicker.a in Frameworks */,
+				57DF826AB12B438C884B7592 /* libReactNativePermissions.a in Frameworks */,
+				8CDE30BAA5554241912F6748 /* libRNDeviceInfo.a in Frameworks */,
+				EDFFFCE341ED400E98B3A6D9 /* libRNDeviceInfo-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -705,6 +756,20 @@
 				D45D850F53434808A76D6A12 /* Rubik-Medium.ttf */,
 				AB032D6F10054AFFBF9D2019 /* Rubik-MediumItalic.ttf */,
 				301F4D162ED94F3CB5F8F126 /* Rubik-Regular.ttf */,
+				A7788F8FFEE34E17BFD81FD9 /* Feather.ttf */,
+				D2A7483E5A73481CA64838BA /* Roboto-Black.ttf */,
+				6E01621A6EBB4FEC90A71B99 /* Roboto-BlackItalic.ttf */,
+				F32F6D65AE83410B9B39A1E4 /* Roboto-Bold.ttf */,
+				AC15D9BCCA4F45AE83A5945F /* Roboto-BoldItalic.ttf */,
+				693C085DACE84C3485CEF499 /* Roboto-Italic.ttf */,
+				38443D7836354E668F817091 /* Roboto-Light.ttf */,
+				0E28B09E64CA49C380350264 /* Roboto-LightItalic.ttf */,
+				1802431A7F9C4869A77BDFEC /* Roboto-Medium.ttf */,
+				658681D0167C44BB9EDF61DF /* Roboto-MediumItalic.ttf */,
+				AB38D83A83754F19BB597F8F /* Roboto-Regular.ttf */,
+				8C1DE1A655CF4C9ABC6BD422 /* Roboto-Thin.ttf */,
+				A96FEA129B844CC3A2B552D7 /* Roboto-ThinItalic.ttf */,
+				DC9093EF0F744A5DB392D165 /* BlackHanSans-Regular.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -753,6 +818,11 @@
 				97C7EF4A2702459191A88E39 /* AppCenterReactNativeCrashes.xcodeproj */,
 				BD359EFABED742AB87A08411 /* CodePush.xcodeproj */,
 				DC772510F9B649459FA324AE /* React-Native-Webview-Bridge.xcodeproj */,
+				375EEAAF6F614BBC9F8F6431 /* ReactNativeCameraKit.xcodeproj */,
+				B17EEC9D2C624B84BE2CC100 /* RCTFBSDK.xcodeproj */,
+				3ADA643C71B94A80BA7B0662 /* imageCropPicker.xcodeproj */,
+				A6742841E7804DED88C1E786 /* ReactNativePermissions.xcodeproj */,
+				176CA70FE9A34A9783C69890 /* RNDeviceInfo.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1455,6 +1525,20 @@
 				0EA48275C1814ED0ACA9A5CC /* Rubik-MediumItalic.ttf in Resources */,
 				94DE91367597458E82B528F6 /* Rubik-Regular.ttf in Resources */,
 				0FB665E80A89479289602C64 /* AppCenter-Config.plist in Resources */,
+				C04007D58F62439893F1CEE7 /* Feather.ttf in Resources */,
+				EDF47F68C3E842179C0ABF40 /* Roboto-Black.ttf in Resources */,
+				7A21E5D324DF4CBB93426727 /* Roboto-BlackItalic.ttf in Resources */,
+				75D42AF78FD745B8B2A0E453 /* Roboto-Bold.ttf in Resources */,
+				9761FD572A8F4E21B2C4D0D8 /* Roboto-BoldItalic.ttf in Resources */,
+				F23B00A1A92241DC8224BBFC /* Roboto-Italic.ttf in Resources */,
+				C71925E5200C4C2C99E9C927 /* Roboto-Light.ttf in Resources */,
+				E5EBF6ECA94945DE98F580D4 /* Roboto-LightItalic.ttf in Resources */,
+				4DB63FFF839D4744B39D5C0E /* Roboto-Medium.ttf in Resources */,
+				DEF0297358F740D886B2AE70 /* Roboto-MediumItalic.ttf in Resources */,
+				CC040BCE5874478E95D1AE6F /* Roboto-Regular.ttf in Resources */,
+				2D72F779ED594C0B9A001A02 /* Roboto-Thin.ttf in Resources */,
+				87A2C11DE1D34AD28B76B1AD /* Roboto-ThinItalic.ttf in Resources */,
+				495448DE2F3F424A8A760ED9 /* BlackHanSans-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1663,12 +1747,23 @@
 					"$(SRCROOT)/../node_modules/appcenter-crashes/ios/AppCenterReactNativeCrashes",
 					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
 					"$(SRCROOT)/../node_modules/react-native-webview-bridge/ios",
+					"$(SRCROOT)/../node_modules/react-native-camera-kit/ios/lib/ReactNativeCameraKit",
+					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
+					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-permissions/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 				);
 				INFOPLIST_FILE = kovuTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1712,12 +1807,23 @@
 					"$(SRCROOT)/../node_modules/appcenter-crashes/ios/AppCenterReactNativeCrashes",
 					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
 					"$(SRCROOT)/../node_modules/react-native-webview-bridge/ios",
+					"$(SRCROOT)/../node_modules/react-native-camera-kit/ios/lib/ReactNativeCameraKit",
+					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
+					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-permissions/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 				);
 				INFOPLIST_FILE = kovuTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1762,6 +1868,11 @@
 					"$(SRCROOT)/../node_modules/appcenter-crashes/ios/AppCenterReactNativeCrashes",
 					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
 					"$(SRCROOT)/../node_modules/react-native-webview-bridge/ios",
+					"$(SRCROOT)/../node_modules/react-native-camera-kit/ios/lib/ReactNativeCameraKit",
+					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
+					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-permissions/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 				);
 				INFOPLIST_FILE = kovu/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1795,6 +1906,11 @@
 					"$(SRCROOT)/../node_modules/appcenter-crashes/ios/AppCenterReactNativeCrashes",
 					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
 					"$(SRCROOT)/../node_modules/react-native-webview-bridge/ios",
+					"$(SRCROOT)/../node_modules/react-native-camera-kit/ios/lib/ReactNativeCameraKit",
+					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
+					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-permissions/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 				);
 				INFOPLIST_FILE = kovu/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1835,11 +1951,22 @@
 					"$(SRCROOT)/../node_modules/appcenter-crashes/ios/AppCenterReactNativeCrashes",
 					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
 					"$(SRCROOT)/../node_modules/react-native-webview-bridge/ios",
+					"$(SRCROOT)/../node_modules/react-native-camera-kit/ios/lib/ReactNativeCameraKit",
+					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
+					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-permissions/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 				);
 				INFOPLIST_FILE = "kovu-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1892,11 +2019,22 @@
 					"$(SRCROOT)/../node_modules/appcenter-crashes/ios/AppCenterReactNativeCrashes",
 					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
 					"$(SRCROOT)/../node_modules/react-native-webview-bridge/ios",
+					"$(SRCROOT)/../node_modules/react-native-camera-kit/ios/lib/ReactNativeCameraKit",
+					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
+					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-permissions/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 				);
 				INFOPLIST_FILE = "kovu-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1952,6 +2090,12 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.kovu-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1977,6 +2121,12 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",

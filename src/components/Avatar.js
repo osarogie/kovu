@@ -12,14 +12,15 @@ import {
   TouchableWithoutFeedback,
   PixelRatio
 } from 'react-native'
-import ViewPropTypes from '../config//ViewPropTypes'
+// import ViewPropTypes from "../config/ViewPropTypes"
 
 import Icon from './Icon'
 import Text from './Text'
 
 import { imageUrl } from '../utils'
+import { PURPLE } from '../ui'
 
-const DEFAULT_COLORS = ['#000', '#333', '#555', '#888', '#aaa', '#ddd']
+const DEFAULT_COLORS = ['#000', '#333', '#555', '#888', '#05f', '#ddd']
 
 const Avatar = props => {
   const {
@@ -89,7 +90,7 @@ const Avatar = props => {
         height: editButtonSize,
         borderRadius: editButtonSize / 2
       }
-      const editButtonIconSize = editButtonSize * 0.8
+      const editButtonIconSize = editButtonSize * 0.6
 
       return (
         <TouchableHighlight
@@ -114,11 +115,25 @@ const Avatar = props => {
     }
   }
 
+  const getPicture = () => {
+    if (
+      source.profile_picture_name &&
+      typeof source.profile_picture_name === 'string'
+    ) {
+      return source.profile_picture_name
+    }
+    if (source.profile_pic && typeof source.profile_pic === 'string') {
+      return source.profile_pic.split('/').pop()
+    }
+    return null
+  }
+
   const renderContent = () => {
-    if (source && source.profile_picture_name) {
+    if ((source && source.profile_picture_name) || source.profile_pic) {
       const size = PixelRatio.getPixelSizeForLayoutSize(width)
 
-      const uri = imageUrl(source.profile_picture_name, `${size}x${size}`)
+      const uri = imageUrl(getPicture(), `${size}x${size}`)
+
       return (
         <Image
           style={[
@@ -132,9 +147,7 @@ const Avatar = props => {
       )
     } else if (title) {
       return (
-        <Text style={[styles.title, titleStyle && titleStyle]}>
-          {title}
-        </Text>
+        <Text style={[styles.title, titleStyle && titleStyle]}>{title}</Text>
       )
     } else if (icon) {
       return (
@@ -155,8 +168,9 @@ const Avatar = props => {
       paddingRight: 10,
       paddingBottom: 10,
       backgroundColor: 'transparent',
-      width: width,
-      height: height
+      width,
+      height,
+      overflow: 'hidden'
     },
     avatar: {
       width: width,
@@ -165,7 +179,7 @@ const Avatar = props => {
     overlayContainer: {
       flex: 1,
       alignItems: 'center',
-      backgroundColor: 'rgba(0,0,0,0.1)',
+      backgroundColor: PURPLE || 'rgba(0,0,0,0.1)',
       alignSelf: 'stretch',
       justifyContent: 'center',
       position: 'absolute',
@@ -233,8 +247,8 @@ const defaultProps = {
   onEditPress: null,
   editButton: {
     size: null,
-    iconName: 'mode-edit',
-    iconType: 'material',
+    iconName: 'md-camera',
+    iconType: 'ionicon',
     iconColor: '#fff',
     underlayColor: DEFAULT_COLORS[0],
     style: null
@@ -275,8 +289,8 @@ Avatar.propTypes = {
     iconName: PropTypes.string,
     iconType: PropTypes.string,
     iconColor: PropTypes.string,
-    underlayColor: PropTypes.string,
-    style: ViewPropTypes.style
+    underlayColor: PropTypes.string
+    // style: ViewPropTypes.style
   })
 }
 

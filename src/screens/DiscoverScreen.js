@@ -6,7 +6,6 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  ToolbarAndroid,
   Platform,
   TabBarIOS
 } from 'react-native'
@@ -14,19 +13,24 @@ import styles from '../styles'
 import searchStyles from '../styles/search'
 import TextInput from '../components/TextInput'
 import Discover from '../renderers/Discover'
-import Icon from 'react-native-vector-icons/Ionicons'
+import Icon from 'react-native-vector-icons/Feather'
+// import { Icon } from '@shoutem/ui/components/Icon'
 import getNavigation from '../helpers/getNavigation'
+import { PURPLE } from '../ui'
+// import { withNavigation } from 'react-navigation'
 
+// @withNavigation
 export default class DiscoverScreen extends React.Component {
   static navigationOptions = {
     tabBarLabel: 'Discover',
-    tabBarIcon: ({ tintColor, focused }) =>
+    tabBarIcon: ({ tintColor, focused }) => (
       <Icon
-        name="ios-search"
-        style={styles.tabIcon}
+        name="search"
+        // style={styles.tabIcon}
         size={focused ? 25 : 23}
         color={tintColor}
       />
+    )
   }
 
   state = {
@@ -40,7 +44,9 @@ export default class DiscoverScreen extends React.Component {
   }
 
   handleSubmit = _ => this.setState({ qs: this._q.state.value })
-
+  shouldComponentUpdate(p, s) {
+    return s.qs !== this.state.qs
+  }
   renderToolbar() {
     const { navigation } = this.props
     return (
@@ -50,9 +56,9 @@ export default class DiscoverScreen extends React.Component {
           paddingLeft: 10,
           height: 53,
           width: '100%',
-          position: 'absolute',
+          // position: 'absolute',
           justifyContent: 'center',
-          backgroundColor: 'transparent'
+          backgroundColor: PURPLE
         }}
       >
         <View style={searchStyles.container}>
@@ -61,9 +67,11 @@ export default class DiscoverScreen extends React.Component {
               returnKeyLabel: 'search',
               returnKeyType: 'search'
             }}
-            inputStyle={{ color: '#000' }}
-            iconColor="#000"
-            style={{ backgroundColor: '#fff', elevation: 2 }}
+            // placeholderTextColor="#fff"
+            // placeholderStyle={{ color: '#fff' }}
+            inputStyle={{ color: '#fff' }}
+            iconColor="#fff"
+            style={{ backgroundColor: '#fff4', elevation: 0 }}
             placeholder="Search TheCommunity"
             ref={component => (this._q = component)}
             androidIcon="search"
@@ -80,7 +88,7 @@ export default class DiscoverScreen extends React.Component {
     return (
       <View style={[styles.container]}>
         <Discover {...getNavigation(navigation)} q={this.state.qs} />
-        <View style={styles.elevation} />
+        {/* <View style={styles.elevation} /> */}
       </View>
     )
   }

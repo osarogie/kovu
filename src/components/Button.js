@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-  ViewPropTypes,
+  // ViewPropTypes,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -66,12 +66,12 @@ Button.defaultProps = {
 }
 
 Button.propTypes = {
-  ...ViewPropTypes,
-  title: React.PropTypes.string,
-  containerStyle: View.propTypes.style,
-  buttonStyle: View.propTypes.style,
-  textStyle: Text.propTypes.style,
-  disable: React.PropTypes.bool,
-  showTitle: React.PropTypes.bool,
-  renderIcon: React.PropTypes.func
+  // ...ViewPropTypes,
+  // title: React.PropTypes.string,
+  // containerStyle: View.propTypes.style,
+  // buttonStyle: View.propTypes.style,
+  // textStyle: Text.propTypes.style,
+  // disable: React.PropTypes.bool,
+  // showTitle: React.PropTypes.bool,
+  // renderIcon: React.PropTypes.func
 }

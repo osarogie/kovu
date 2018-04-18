@@ -1,121 +1,89 @@
 import React from 'react'
 import {
-  View,
   ScrollView,
   Image,
   Platform,
-  TouchableHighlight
+  TouchableHighlight,
+  Dimensions
 } from 'react-native'
 import Authenticator from '../components/Authenticator'
-import styles from '../styles'
+// import styles from '../styles'
 import Feed from '../renderers/Feed'
-import AndroidToolbar from '../components/AndroidToolbar'
-import Button from '../components/Button'
 import Avatar from '../components/Avatar'
-import Icon from 'react-native-vector-icons/Ionicons'
-import { connect } from 'react-redux'
+import Appbar from '../components/Appbar'
+import Ionicon from 'react-native-vector-icons/Ionicons'
+import Entypo from 'react-native-vector-icons/Entypo'
+import EvilIcon from 'react-native-vector-icons/EvilIcons'
+
+import { Icon } from '@shoutem/ui/components/Icon'
+import { NavigationBar } from '@shoutem/ui/components/NavigationBar'
+import { Title, Text, Heading } from '@shoutem/ui/components/Text'
+import { Button } from '@shoutem/ui/components/Button'
+// import { connectDecorator } from '../lib'
 import getNavigation from '../helpers/getNavigation'
+import { View, Screen } from '@shoutem/ui'
+import { withNavigation } from 'react-navigation'
+import { connect } from 'react-redux'
 
 const mapStateToProps = state => ({
   user: state.user.user,
   loggedIn: state.user.loggedIn
 })
+const { width } = Dimensions.get('window')
 
-class FeedScreen extends React.Component {
-  static navigationOptions = {
-    tabBarLabel: 'Reading List',
-    tabBarIcon: ({ tintColor, focused }) => (
-      <Icon
-        name={Platform.select({ ios: 'ios-home', android: 'md-home' })}
-        style={styles.tabIcon}
-        size={focused ? 25 : 23}
-        color={tintColor}
-      />
-    )
-  }
-
-  constructor(props) {
-    super(props)
-    this.openProfile = this.openProfile.bind(this)
-    this.openWrite = this.openWrite.bind(this)
-    this.renderIcon = this.renderIcon.bind(this)
-  }
-
+// @withNavigation
+@connect(mapStateToProps)
+class TopBar extends React.Component {
   openWrite = _ => this._onActionSelected(0)
   openProfile = _ => this._onActionSelected(1)
 
-  // renderToolbar() {
-  // return Platform.select({
-  //   android: (
-  //     <AndroidToolbar
-  //       actions={this.toolbarActions()}
-  //       onActionSelected={this._onActionSelected.bind(this)}
-  //       // title="Read"
-  //       contentInsetStart={0}
-  //       logo={require('../images/ic_logo.png')}
-  //     />
-  //   ),
-  //   ios: <TabBarIOS />
-  // })
-
-  // }
-  renderIcon = _ => (
-    <Icon
-      name="ios-add-circle"
-      style={[styles.toolbarIcon, { marginLeft: 10 }]}
-      size={20}
-      color={'#000'}
-    />
-  )
-  renderToolbar = _ => (
+  render = _ => (
     <View
       style={{
         flexDirection: 'row',
-        backgroundColor: '#eeec',
         flex: 1,
         height: 53,
-        paddingLeft: 17,
+        backgroundColor: '#fff8',
         position: 'absolute',
+        alignItems: 'center',
         width: '100%',
         top: 0,
-        left: 0,
-        paddingRight: 3,
-        alignItems: 'center'
+        left: 0
       }}
     >
-      <Image
-        source={require('../images/ic_logo.png')}
-        width={45}
-        height={45}
-        style={{ width: 45, height: 45 }}
-      />
-      <View style={{ flex: 1 }} />
-      {/* <Icon
-        name="ios-add-circle"
-        style={styles.toolbarIcon}
-        size={25}
-        color="#05f"
+      {/* <Appbar
+        // leftElement={this.renderAvatar()}
+        // onLeftElementPress={this.props.navigation.goBack}
+        centerElement="TheCommunity"
+        rightElement={
+          <View styleName="horizontal" style={{ alignItems: 'center' }}>
+            <Button styleName="" onPress={this.openWrite}>
+              <Text style={{ marginRight: 10, fontSize: 15 }}>Write</Text>
+            </Button>
+            {this.renderAvatar()}
+          </View>
+        }
+        style={{ container: { width } }}
+        // onRightElementPress={() =>
+        //   this.props.navigation.navigate('DrawerToggle')
+        // }
       /> */}
-      <Button
-        buttonStyle={{
-          height: 36,
-          width: 100,
-          // borderRadius: 20,
-          backgroundColor: '#6f45d6'
-          // elevation: 2
-        }}
-        textStyle={{
-          fontSize: 15,
-          color: '#fff'
-          // textDecorationLine: 'underline'
-        }}
-        onPress={this.openWrite}
-        title="Write"
-        // showTitle={false}
-        // renderIcon={this.renderIcon}
-      />
-
-      {this.renderAvatar()}
+      <View styleName="flexible">{this.renderAvatar()}</View>
+      <Heading
+        styleName="flexible"
+        style={{ textAlign: 'center', fontFamily: 'BlackHanSans-Regular' }}
+      >
+        -TC-
+      </Heading>
+      <View styleName="flexible">
+        <Button
+          styleName="clear"
+          style={{ alignSelf: 'flex-end' }}
+          onPress={this.openWrite}
+        >
+          <Text style={{ marginRight: 10, fontSize: 15 }}>Write</Text>
+        </Button>
+      </View>
     </View>
   )
 
@@ -139,16 +107,15 @@ class FeedScreen extends React.Component {
 
     if (loggedIn) {
       return (
-        <View style={{ marginLeft: 10, marginRight: 10 }}>
-          <Avatar
-            width={36}
-            radius={15}
-            source={{ profile_picture_name: this.getPicture() }}
-            title={user.name}
-            onPress={this.openProfile}
-            activeOpacity={0.7}
-          />
-        </View>
+        <Avatar
+          width={36}
+          radius={15}
+          source={{ profile_picture_name: this.getPicture() }}
+          title={user.name}
+          containerStyle={{ marginHorizontal: 17 }}
+          onPress={this.openProfile}
+          activeOpacity={0.7}
+        />
       )
     }
 
@@ -156,21 +123,15 @@ class FeedScreen extends React.Component {
       <TouchableHighlight
         onPress={this.openProfile}
         underlayColor="#ddd"
-        style={styles.toolbarAction}
+        style={{
+          height: 56,
+          width: 56,
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
       >
-        <Icon name="md-person" size={25} color="#000" />
+        <EvilIcon name="user" size={35} color="#000" />
       </TouchableHighlight>
-    )
-  }
-
-  render() {
-    const { navigation } = this.props
-    return (
-      <View style={styles.container}>
-        <Feed {...getNavigation(navigation)} />
-        <View style={styles.elevation} />
-        {this.renderToolbar()}
-      </View>
     )
   }
 
@@ -187,7 +148,11 @@ class FeedScreen extends React.Component {
   }
 
   _onActionSelected(position) {
-    const { user, navigation: { navigate }, loggedIn } = this.props
+    const {
+      user,
+      navigation: { navigate },
+      loggedIn
+    } = this.props
     if (loggedIn) {
       switch (position) {
         case 0:
@@ -206,4 +171,27 @@ class FeedScreen extends React.Component {
   }
 }
 
-export default connect(mapStateToProps)(FeedScreen)
+export default class FeedScreen extends React.Component {
+  static navigationOptions = {
+    tabBarLabel: 'Reading List',
+    tabBarIcon: ({ tintColor, focused }) => (
+      <Entypo
+        // name={Platform.select({ ios: "ios-home", android: "md-home" })}
+        name="home"
+        // style={styles.tabIcon}
+        size={focused ? 25 : 23}
+        color={tintColor}
+      />
+    )
+  }
+
+  render() {
+    const { navigation } = this.props
+    return (
+      <Screen styleName="paper">
+        <Feed {...getNavigation(navigation)} />
+        <TopBar navigation={this.props.navigation} />
+      </Screen>
+    )
+  }
+}

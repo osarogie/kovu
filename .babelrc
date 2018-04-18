@@ -1,5 +1,5 @@
 {
   "passPerPreset": true,
   "presets": ["flow", "react-native"],
-  "plugins": ["relay"]
+  "plugins": ["relay", "transform-decorators-legacy"]
 }

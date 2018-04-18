@@ -20,6 +20,8 @@ class QueryRendererProxy extends React.PureComponent {
     this.setState({ environment: this.updateEnvironment(props) })
   }
 
+  // shouldComponentUpdate(p)
+
   updateEnvironment(props) {
     const { api_key } = props
 

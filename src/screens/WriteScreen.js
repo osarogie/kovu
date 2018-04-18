@@ -1,12 +1,12 @@
 // @flow
 
-import React, { Component } from 'react'
+import React from 'react'
 import { View, Platform, TabBarIOS } from 'react-native'
 import styles from '../styles'
 import Editor from '../components/Editor'
 import getNavigation from '../helpers/getNavigation'
 
-export default class WriteScreen extends Component<void, Props, any> {
+export default class WriteScreen extends React.Component {
   render() {
     // const { culture } = this.props.navigation.state.params
     const { params } = this.props.navigation.state

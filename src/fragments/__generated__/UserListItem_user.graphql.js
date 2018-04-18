@@ -7,64 +7,70 @@
 'use strict';
 
 /*::
-import type {ConcreteFragment} from 'relay-runtime';
+import type { ConcreteFragment } from 'relay-runtime';
+type FollowButton_user$ref = any;
+import type { FragmentReference } from 'relay-runtime';
+declare export opaque type UserListItem_user$ref: FragmentReference;
 export type UserListItem_user = {|
-  +id: string;
-  +_id: string;
-  +name: ?string;
-  +username: ?string;
-  +bio: ?string;
-  +profile_picture_name: ?string;
+  +id: string,
+  +_id: string,
+  +name: ?string,
+  +username: ?string,
+  +bio: ?string,
+  +profile_picture_name: ?string,
+  +$fragmentRefs: FollowButton_user$ref,
+  +$refType: UserListItem_user$ref,
 |};
 */
 
 
-const fragment /*: ConcreteFragment*/ = {
-  "argumentDefinitions": [],
+const node/*: ConcreteFragment*/ = {
   "kind": "Fragment",
-  "metadata": null,
   "name": "UserListItem_user",
+  "type": "User",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     {
       "kind": "ScalarField",
       "alias": null,
-      "args": null,
       "name": "id",
+      "args": null,
       "storageKey": null
     },
     {
       "kind": "ScalarField",
       "alias": null,
-      "args": null,
       "name": "_id",
+      "args": null,
       "storageKey": null
     },
     {
       "kind": "ScalarField",
       "alias": null,
-      "args": null,
       "name": "name",
+      "args": null,
       "storageKey": null
     },
     {
       "kind": "ScalarField",
       "alias": null,
-      "args": null,
       "name": "username",
+      "args": null,
       "storageKey": null
     },
     {
       "kind": "ScalarField",
       "alias": null,
-      "args": null,
       "name": "bio",
+      "args": null,
       "storageKey": null
     },
     {
       "kind": "ScalarField",
       "alias": null,
-      "args": null,
       "name": "profile_picture_name",
+      "args": null,
       "storageKey": null
     },
     {
@@ -72,8 +78,7 @@ const fragment /*: ConcreteFragment*/ = {
       "name": "FollowButton_user",
       "args": null
     }
-  ],
-  "type": "User"
+  ]
 };
-
-module.exports = fragment;
+(node/*: any*/).hash = '4f91409e255c6a7e5c56527a07269ad2';
+module.exports = node;

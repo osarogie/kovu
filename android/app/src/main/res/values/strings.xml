@@ -1,6 +1,9 @@
 <resources>
+    <string moduleConfig="true" name="reactNativeCodePush_androidDeploymentKey">f15b105b-a635-47c2-951b-de502dbc81ae</string>
 
     <string name="app_name">The Community</string>
     <string name="appCenterAnalytics_whenToEnableAnalytics" moduleConfig="true">ALWAYS_SEND</string>
     <string name="appCenterCrashes_whenToSendCrashes" moduleConfig="true">ALWAYS_SEND</string>
+    <string name="facebook_app_id">104378210322467</string>
+    <string name="fb_login_protocol_scheme">fb104378210322467</string>
 </resources>

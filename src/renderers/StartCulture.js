@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-  ViewPropTypes,
+  // ViewPropTypes,
   Text,
   View,
   KeyboardAvoidingView,

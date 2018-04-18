@@ -3,7 +3,7 @@ import {
   View,
   Text,
   TextInput as OTextInput,
-  ViewPropTypes
+  // ViewPropTypes
 } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import styles from '../styles'
@@ -130,14 +130,14 @@ TextInput.defaultProps = {
 }
 
 TextInput.propTypes = {
-  ...ViewPropTypes,
-  secureTextEntry: React.PropTypes.bool,
-  onSubmitEditing: React.PropTypes.func,
-  placeholder: React.PropTypes.string,
-  // onChangeText: React.PropTypes.func,
-  androidIcon: React.PropTypes.string,
-  sideText: React.PropTypes.string,
-  value: React.PropTypes.string,
-  inputPropstyle: React.PropTypes.object,
-  keyboardType: React.PropTypes.string
+  // ...ViewPropTypes,
+  // secureTextEntry: React.PropTypes.bool,
+  // onSubmitEditing: React.PropTypes.func,
+  // placeholder: React.PropTypes.string,
+  // // onChangeText: React.PropTypes.func,
+  // androidIcon: React.PropTypes.string,
+  // sideText: React.PropTypes.string,
+  // value: React.PropTypes.string,
+  // inputPropstyle: React.PropTypes.object,
+  // keyboardType: React.PropTypes.string
 }

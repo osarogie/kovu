@@ -1,12 +1,20 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import ActivityButton from './ActivityButton'
-import { View, Text, TextInput, ToastAndroid } from 'react-native'
+import {
+  View,
+  Text,
+  TextInput,
+  ToastAndroid
+  // KeyboardAvoidingView
+} from 'react-native'
 import styles from '../styles'
 import colors from '../colors'
 import Avatar from './Avatar'
 import CreateCommentMutation from '../mutations/CreateCommentMutation'
 import Icon from 'react-native-vector-icons/Ionicons'
+import { withNavigation } from 'react-navigation'
+import { navHelper } from '../helpers/getNavigation'
 
 const mapStateToProps = state => ({
   loggedIn: state.user.loggedIn,
@@ -58,7 +66,7 @@ class CommentBox extends React.Component {
     } else {
       this.setState({ isSending: false })
 
-      this.props.openLogin()
+      navHelper(this).openLogin()
     }
   }
 
@@ -71,12 +79,13 @@ class CommentBox extends React.Component {
           flexDirection: 'row',
           backgroundColor: '#fff',
           elevation: 2,
-          flex: 1,
+          // flex: 1,
+          width: '100%',
           paddingLeft: 20,
           paddingRight: 20,
           paddingBottom: 10,
-          paddingTop: 10,
-          marginBottom: 20
+          paddingTop: 10
+          // marginBottom: 20
           // padding: 20,
           // borderRadius: 8
         }}
@@ -90,7 +99,8 @@ class CommentBox extends React.Component {
           ref={c => (this.commentBox = c)}
           underlineColorAndroid="#05f"
           onContentSizeChange={e =>
-            this.setState({ inputSize: e.nativeEvent.contentSize.height })}
+            this.setState({ inputSize: e.nativeEvent.contentSize.height })
+          }
           keyboardType={this.props.keyboardType}
           value={this.state.body}
           multiline={true}
@@ -126,8 +136,9 @@ class CommentBox extends React.Component {
         </View>
         {/* </View> */}
       </View>
+      // </KeyboardAvoidingView>
     )
   }
 }
 
-export default connect(mapStateToProps)(CommentBox)
+export default withNavigation(connect(mapStateToProps)(CommentBox))

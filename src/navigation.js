@@ -16,6 +16,41 @@ import {
   EditProfileScreen,
   ChangePasswordScreen
 } from './screens'
+import SearchScreen from './screens/SearchScreen'
+import { PURPLE } from './ui'
+import ProfilePictureScreen from './screens/ProfilePictureScreen'
+// import { Examples } from '@shoutem/ui'
+
+// import { BottomNavigation } from 'react-native-paper'
+
+// export default class Tabs extends React.Component {
+//   state = {
+//     index: 0,
+//     routes: [
+//       { key: 'home', title: 'Home', icon: 'featured-play-list' },
+//       { key: 'discover', title: 'Discover', icon: 'search' },
+//       { key: 'menu', title: 'Menu', icon: 'menu' }
+//     ]
+//   }
+
+//   _handleIndexChange = index => this.setState({ index })
+
+//   _renderScene = BottomNavigation.SceneMap({
+//     home: FeedScreen,
+//     discover: SearchScreen,
+//     menu: MenuScreen
+//   })
+
+//   render() {
+//     return (
+//       <BottomNavigation
+//         navigationState={this.state}
+//         onIndexChange={this._handleIndexChange}
+//         renderScene={this._renderScene}
+//       />
+//     )
+//   }
+// }
 
 export const Tab = TabNavigator(
   {
@@ -34,29 +69,32 @@ export const Tab = TabNavigator(
   },
   {
     tabBarOptions: {
-      inactiveTintColor: '#888',
-      activeTintColor: '#000',
+      inactiveTintColor: '#fffc',
+      activeTintColor: '#fff',
       // labelStyle: {
-      //   // fontSize: 15,
+      //   fontSize: 13
       //   // color: '#000'
       // },
       style: {
-        backgroundColor: '#fff',
+        backgroundColor: PURPLE,
         // paddingBottom: 6,
         // height: 56,
-        // elevation: 10
-        borderWidth: 0
+        elevation: 10,
+        borderTopWidth: 0,
+        borderTopColor: '#ddd',
+        borderBottomWidth: 0
         // borderBottomRightRadius: 10,
         // borderBottomLeftRadius: 10
       },
-      // tabBarShadowStyle: {
-      //   height: 3
-      // },
+      tabBarShadowStyle: {
+        height: 3
+      },
       // position: 1,
       // activeBackgroundColor: '#f2f2f2',
+      showIcon: true,
       showLabel: false
     },
-    // swipeEnabled: false,
+    swipeEnabled: false,
     // lazy: true
     tabBarPosition: 'bottom',
     tabBarComponent: TabBarBottom
@@ -69,10 +107,12 @@ export const Tab = TabNavigator(
 
 export const Root = StackNavigator(
   {
+    // Examples: { screen: Examples },
     Tab: { screen: Tab },
     Write: { screen: WriteScreen },
     Login: { screen: LoginScreen },
     Profile: { screen: ProfileScreen },
+    ProfilePicture: { screen: ProfilePictureScreen },
     Discussion: { screen: DiscussionScreen },
     Notifications: { screen: NotificationScreen },
     Culture: { screen: CultureScreen },

@@ -4,11 +4,10 @@ import {
   StyleSheet,
   View,
   Image,
-  ViewPropTypes,
+  // ViewPropTypes,
   Dimensions,
-  TouchableHighlight,
-  PixelRatio,
-  TouchableOpacity
+  TouchableOpacity,
+  PixelRatio
 } from 'react-native'
 import styles from '../styles'
 import excerptStyles from '../styles/excerptStyles'
@@ -19,11 +18,17 @@ import Separator from '../components/Separator'
 import DiscussionLike from '../fragments/DiscussionLike'
 import { getTimeAgo, imageUrl } from '../utils'
 import Icon from 'react-native-vector-icons/Ionicons'
+import { Subtitle, Caption } from '@shoutem/ui'
+import Avatar from '../components/Avatar'
+// import { connectDecorator } from '../lib'
+import { withNavigation } from 'react-navigation'
+import { navHelper } from '../helpers/getNavigation'
 
 const mapStateToProps = state => ({
   night_mode: state.night_mode
 })
 
+@withNavigation
 class CommentListItem extends React.PureComponent {
   clickableProps = {
     underlayColor: 'whitesmoke'
@@ -38,6 +43,8 @@ class CommentListItem extends React.PureComponent {
     backgroundColor: '#eee',
     marginTop: 10
   }
+  openComments = () =>
+    navHelper(this).openComments(this.props.comment.discussion)
 
   renderFeaturePhoto() {
     const image = this.props.comment.feature_photo
@@ -99,21 +106,19 @@ class CommentListItem extends React.PureComponent {
           </Text>
         </TouchableOpacity>
         <View style={styles.row}>
-          <Text>
-            {getTimeAgo(comment.created_at)}
-          </Text>
+          <Text>{getTimeAgo(comment.created_at)}</Text>
         </View>
       </View>
     )
   }
 
-  render() {
+  renderNormal() {
     const { comment, openDiscussion } = this.props
     // console.log(this.props);
     // console.log(comment.created_at)
     return (
       <View>
-        <TouchableHighlight
+        <TouchableOpacity
           {...this.clickableProps}
           style={{ backgroundColor: '#fff' }}
         >
@@ -122,24 +127,77 @@ class CommentListItem extends React.PureComponent {
               {this.renderProfilePicture()}
               <View style={{ marginLeft: 15, flex: 1 }}>
                 {this.renderMeta()}
-                <Markdown styles={excerptStyles.body}>
+                {/* <Markdown styles={excerptStyles.body}> */}
+                <Subtitle>
                   {comment.body}
                   {comment.word_count > 30 ? '***...(Read More)***' : ''}
-                </Markdown>
+                </Subtitle>
+                {/* </Markdown> */}
               </View>
             </View>
           </View>
-        </TouchableHighlight>
+        </TouchableOpacity>
         <Separator />
       </View>
     )
+  }
+
+  renderStrip() {
+    const { comment, openDiscussion, openProfile } = this.props
+    // console.log(this.props);
+    // console.log(comment.created_at)
+    return (
+      <TouchableOpacity
+        style={{ backgroundColor: '#f2f2f2', borderRadius: 5 }}
+        onPress={this.openComments}
+      >
+        <View style={{ margin: 10 }}>
+          <View style={{ flexDirection: 'row' }}>
+            <Avatar
+              size={30}
+              rounded
+              source={comment.user}
+              title={comment.user.name}
+              activeOpacity={0.7}
+              onPress={_ => openProfile(comment.user)}
+            />
+            <View style={{ marginLeft: 10, flex: 1 }}>
+              {/* <TouchableOpacity
+                {...this.clickableProps}
+                onPress={_ => openProfile(comment.user)}
+              >
+                <Text style={[styles.fill, { color: '#000' }]}>
+                  {comment.user.name}
+                </Text>
+              </TouchableOpacity> */}
+              {/* <Markdown styles={excerptStyles.body}> */}
+              <Text style={{ fontSize: 12 }} numberOfLines={2}>
+                <Text style={{ color: '#000', fontWeight: 'bold' }}>
+                  {comment.user.name}
+                </Text>{' '}
+                {comment.excerpt}
+                {comment.word_count > 30 ? '***...(Read More)***' : ''}
+              </Text>
+              <View style={styles.row}>
+                <Caption>{getTimeAgo(comment.created_at)}</Caption>
+              </View>
+              {/* </Markdown> */}
+            </View>
+          </View>
+        </View>
+      </TouchableOpacity>
+    )
+  }
+
+  render() {
+    return this.props.strip ? this.renderStrip() : this.renderNormal()
   }
 }
 
 CommentListItem.defaultProps = {}
 
 CommentListItem.propTypes = {
-  ...ViewPropTypes
+  // ...ViewPropTypes
 }
 
 export default createFragmentContainer(
@@ -151,6 +209,7 @@ export default createFragmentContainer(
       body
       created_at
       discussion_id
+      excerpt
       discussion {
         id
         _id

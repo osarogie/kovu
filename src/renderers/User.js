@@ -1,7 +1,15 @@
 // @flow
 
 import React from 'react'
-import { View, Image, Text, PixelRatio } from 'react-native'
+import {
+  View,
+  Image,
+  Text,
+  PixelRatio,
+  StyleSheet,
+  findNodeHandle,
+  Dimensions
+} from 'react-native'
 import Separator from '../components/Separator'
 import Button from '../components/Button'
 import PostList from '../fragments/PostList'
@@ -13,6 +21,9 @@ import Avatar from '../components/Avatar'
 import QueryRendererProxy from './QueryRendererProxy'
 import { imageUrl } from '../utils'
 import Icon from 'react-native-vector-icons/Ionicons'
+import { Image as StyledImage } from '@shoutem/ui/components/Image'
+import { BlurView } from 'react-native-blur'
+import { withNavigation } from 'react-navigation'
 
 import {
   createFragmentContainer,
@@ -20,6 +31,7 @@ import {
   graphql
 } from 'react-relay'
 import { connect } from 'react-redux'
+import { navHelper } from '../helpers/getNavigation'
 
 const mapStateToProps = state => ({
   night_mode: state.night_mode,
@@ -27,18 +39,42 @@ const mapStateToProps = state => ({
   loggedIn: state.user.loggedIn
 })
 
-class User extends React.Component<void, Props, any> {
+const { width } = Dimensions.get('window')
+const coverWidth = Math.min(1000, PixelRatio.getPixelSizeForLayoutSize(width))
+
+@withNavigation
+class User extends React.Component {
   friendLabelStyle = { color: '#000', marginRight: 10 }
   friendValueStyle = { color: '#000', fontSize: 18 }
+  state = { coverImageRef: null }
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      isSameUser:
+        props.loggedIn && props.user._id == props.current_user._id
+          ? true
+          : false
+    }
+  }
+
+  imageLoaded = () => {
+    this.setState({ coverImageRef: findNodeHandle(this.coverImage) })
+  }
+
+  openPicture = () => {
+    navHelper(this).openProfilePicture(this.props.user)
+  }
 
   renderFollowButton = _ =>
-    this.props.loggedIn && this.props.user._id == this.props.current_user._id
-      ? null
-      : <FollowButton
-          user={this.props.user}
-          openLogin={this.props.openLogin}
-          buttonStyle={{ marginTop: 10 }}
-        />
+    this.props.loggedIn &&
+    this.props.user._id == this.props.current_user._id ? null : (
+      <FollowButton
+        user={this.props.user}
+        openLogin={this.props.openLogin}
+        buttonStyle={{ marginTop: 10 }}
+      />
+    )
 
   renderFriends() {
     const { user, night_mode } = this.props
@@ -47,40 +83,35 @@ class User extends React.Component<void, Props, any> {
       <View style={[styles.fillRow, { marginTop: 20 }]}>
         <View style={{ flex: 1 }}>
           <Text style={this.friendLabelStyle}>Posts</Text>
-          <Text style={this.friendValueStyle}>
-            {user.discussion_count}
-          </Text>
+          <Text style={this.friendValueStyle}>{user.discussion_count}</Text>
         </View>
         <View style={{ flex: 1 }}>
           <Text style={this.friendLabelStyle}>Followers</Text>
-          <Text style={this.friendValueStyle}>
-            {user.follower_count}
-          </Text>
+          <Text style={this.friendValueStyle}>{user.follower_count}</Text>
         </View>
         <View style={{ flex: 1 }}>
           <Text style={this.friendLabelStyle}>Following</Text>
-          <Text style={this.friendValueStyle}>
-            {user.following_count}
-          </Text>
+          <Text style={this.friendValueStyle}>{user.following_count}</Text>
         </View>
       </View>
     )
   }
   renderEditButton = _ =>
-    this.props.loggedIn && this.props.user._id == this.props.current_user._id
-      ? <Button
-          onPress={this.props.openEditProfile}
-          title="Edit Profile"
-          textStyle={{ color: '#05f' }}
-          buttonStyle={{
-            marginTop: 10,
-            backgroundColor: '#fff',
-            borderRadius: 5,
-            borderWidth: 1,
-            borderColor: '#05f'
-          }}
-        />
-      : null
+    this.props.loggedIn &&
+    this.props.user._id == this.props.current_user._id ? (
+      <Button
+        onPress={this.props.openEditProfile}
+        title="Edit Profile"
+        textStyle={{ color: '#05f' }}
+        buttonStyle={{
+          marginTop: 10,
+          backgroundColor: 'transparent',
+          borderRadius: 5,
+          borderWidth: 1,
+          borderColor: '#05f'
+        }}
+      />
+    ) : null
 
   render() {
     const { user, night_mode } = this.props
@@ -91,7 +122,7 @@ class User extends React.Component<void, Props, any> {
           backgroundColor: '#fff'
         }}
       >
-        <View
+        {/* <View
           style={{
             position: 'absolute',
             top: 0,
@@ -110,7 +141,27 @@ class User extends React.Component<void, Props, any> {
             }}
             source={require('../images/welcome.png')}
           />
-        </View>
+        </View> */}
+        <Image
+          style={[
+            { height: '100%', backgroundColor: '#f9f9f9' },
+            _styles.coverImageBlur
+          ]}
+          ref={img => {
+            this.coverImage = img
+          }}
+          source={{
+            uri: imageUrl(user.profile_picture_name, `${coverWidth}x1000`)
+          }}
+          onLoadEnd={this.imageLoaded}
+        />
+        <BlurView
+          style={_styles.coverImageBlur}
+          viewRef={this.state.coverImageRef}
+          blurType="light"
+          blurAmount={1}
+        />
+
         <View
           style={{
             padding: 20,
@@ -120,12 +171,8 @@ class User extends React.Component<void, Props, any> {
           }}
         >
           <View style={{ marginRight: 10, flex: 1 }}>
-            <Text style={styles.title}>
-              {user.name}
-            </Text>
-            <Text style={{ flex: 1 }}>
-              {user.bio}
-            </Text>
+            <Text style={styles.title}>{user.name}</Text>
+            <Text style={{ flex: 1 }}>{user.bio}</Text>
             {this.renderFriends()}
             <View style={{ flexDirection: 'row' }}>
               {this.renderFollowButton()}
@@ -133,17 +180,30 @@ class User extends React.Component<void, Props, any> {
             </View>
           </View>
           <Avatar
-            large
+            width={100}
             rounded
             source={user}
             title={user.name}
             activeOpacity={0.7}
+            onPress={this.openPicture}
+            // showEditButton={this.state.isSameUser}
+            // onEditPress={this.getPicture}
           />
         </View>
       </View>
     )
   }
 }
+
+const _styles = StyleSheet.create({
+  coverImageBlur: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0
+  }
+})
 
 // UserFragmentContainer
 const UserFragmentContainer = createFragmentContainer(
@@ -178,12 +238,12 @@ export default (UserQueryRenderer = ({ id, api_key, ...props }) => {
         }
       `}
       variables={{ cursor: null, count: 5, id }}
-      render={({ error, props, retry }) =>
+      render={({ error, props, retry }) => (
         <UserPostsPaginationContainer
           discussionList={props.user}
           itemProps={itemProps}
           id={id}
-          renderHeader={_ =>
+          renderHeader={_ => (
             <View style={styles.container}>
               <UserFragmentContainer user={props.user} {...itemProps} />
               <View style={[styles.container, { backgroundColor: '#fff' }]}>
@@ -195,12 +255,14 @@ export default (UserQueryRenderer = ({ id, api_key, ...props }) => {
                 />
                 {renderPostsHeader()}
               </View>
-            </View>}
-        />}
+            </View>
+          )}
+        />
+      )}
     />
   )
 })
-const renderCultureHeader = _ =>
+const renderCultureHeader = _ => (
   <Text
     style={{
       fontSize: 15,
@@ -214,6 +276,7 @@ const renderCultureHeader = _ =>
   >
     Cultures
   </Text>
+)
 
 const renderPostsHeader = _ => <Text style={styles.postsHeader}>Posts</Text>
 // PAGINATION CONTAINERS

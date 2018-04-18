@@ -7,81 +7,81 @@
 'use strict';
 
 /*::
-import type {ConcreteFragment} from 'relay-runtime';
+import type { ConcreteFragment } from 'relay-runtime';
+import type { FragmentReference } from 'relay-runtime';
+declare export opaque type GroupListItem_group$ref: FragmentReference;
 export type GroupListItem_group = {|
-  +id: string;
-  +_id: string;
-  +name: ?string;
-  +permalink: ?string;
-  +body: ?string;
+  +id: string,
+  +_id: string,
+  +name: ?string,
+  +permalink: ?string,
+  +body: ?string,
   +header_image: ?{|
-    +name: ?string;
-  |};
+    +name: ?string,
+  |},
+  +$refType: GroupListItem_group$ref,
 |};
 */
 
 
-const fragment /*: ConcreteFragment*/ = {
-  "argumentDefinitions": [],
+const node/*: ConcreteFragment*/ = (function(){
+var v0 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "name",
+  "args": null,
+  "storageKey": null
+};
+return {
   "kind": "Fragment",
-  "metadata": null,
   "name": "GroupListItem_group",
+  "type": "Group",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     {
       "kind": "ScalarField",
       "alias": null,
-      "args": null,
       "name": "id",
+      "args": null,
       "storageKey": null
     },
     {
       "kind": "ScalarField",
       "alias": null,
-      "args": null,
       "name": "_id",
+      "args": null,
       "storageKey": null
     },
+    v0,
     {
       "kind": "ScalarField",
       "alias": null,
-      "args": null,
-      "name": "name",
-      "storageKey": null
-    },
-    {
-      "kind": "ScalarField",
-      "alias": null,
-      "args": null,
       "name": "permalink",
+      "args": null,
       "storageKey": null
     },
     {
       "kind": "ScalarField",
       "alias": null,
-      "args": null,
       "name": "body",
+      "args": null,
       "storageKey": null
     },
     {
       "kind": "LinkedField",
       "alias": null,
+      "name": "header_image",
+      "storageKey": null,
       "args": null,
       "concreteType": "Photo",
-      "name": "header_image",
       "plural": false,
       "selections": [
-        {
-          "kind": "ScalarField",
-          "alias": null,
-          "args": null,
-          "name": "name",
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
+        v0
+      ]
     }
-  ],
-  "type": "Group"
+  ]
 };
-
-module.exports = fragment;
+})();
+(node/*: any*/).hash = '18f3cda89f0d51396dc9a044644c798d';
+module.exports = node;

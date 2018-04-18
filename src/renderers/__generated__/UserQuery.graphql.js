@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash e9c4fd2b2de9bacc39fd0c849098a45b
+ * @relayHash c6f19418bc7f7f2bf93861065df887d1
  */
 
 /* eslint-disable */
@@ -8,9 +8,19 @@
 'use strict';
 
 /*::
-import type {ConcreteBatch} from 'relay-runtime';
+import type { ConcreteRequest } from 'relay-runtime';
+type User_discussionList$ref = any;
+type User_groupList$ref = any;
+type User_user$ref = any;
+export type UserQueryVariables = {|
+  count: number,
+  cursor?: ?string,
+  id: string,
+|};
 export type UserQueryResponse = {|
-  +user: ?{| |};
+  +user: ?{|
+    +$fragmentRefs: (User_user$ref & User_discussionList$ref & User_groupList$ref),
+  |},
 |};
 */
 
@@ -92,9 +102,25 @@ fragment PostListItem_discussion on Discussion {
   id
   _id
   name
+  public_url
   excerpt(size: 20)
   word_count
   comment_count
+  comments(by_latest: true, first: 3) {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    edges {
+      node {
+        id
+        excerpt
+        ...CommentListItem_comment
+        __typename
+      }
+      cursor
+    }
+  }
   created_at
   user {
     id
@@ -119,6 +145,26 @@ fragment PostListItem_discussion on Discussion {
   ...DiscussionLike_discussion
 }
 
+fragment CommentListItem_comment on Comment {
+  id
+  _id
+  body
+  created_at
+  discussion_id
+  excerpt
+  discussion {
+    id
+    _id
+  }
+  user {
+    id
+    _id
+    name
+    username
+    profile_picture_name
+  }
+}
+
 fragment DiscussionLike_discussion on Discussion {
   id
   _id
@@ -133,45 +179,185 @@ fragment FollowButton_user on User {
 }
 */
 
-const batch /*: ConcreteBatch*/ = {
+const node/*: ConcreteRequest*/ = (function(){
+var v0 = [
+  {
+    "kind": "LocalArgument",
+    "name": "count",
+    "type": "Int!",
+    "defaultValue": null
+  },
+  {
+    "kind": "LocalArgument",
+    "name": "cursor",
+    "type": "String",
+    "defaultValue": null
+  },
+  {
+    "kind": "LocalArgument",
+    "name": "id",
+    "type": "ID!",
+    "defaultValue": null
+  }
+],
+v1 = [
+  {
+    "kind": "Variable",
+    "name": "id",
+    "variableName": "id",
+    "type": "ID!"
+  }
+],
+v2 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "id",
+  "args": null,
+  "storageKey": null
+},
+v3 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "name",
+  "args": null,
+  "storageKey": null
+},
+v4 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "username",
+  "args": null,
+  "storageKey": null
+},
+v5 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "profile_picture_name",
+  "args": null,
+  "storageKey": null
+},
+v6 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "_id",
+  "args": null,
+  "storageKey": null
+},
+v7 = {
+  "kind": "Variable",
+  "name": "after",
+  "variableName": "cursor",
+  "type": "String"
+},
+v8 = {
+  "kind": "Literal",
+  "name": "by_latest",
+  "value": true,
+  "type": "Boolean"
+},
+v9 = {
+  "kind": "Variable",
+  "name": "first",
+  "variableName": "count",
+  "type": "Int"
+},
+v10 = {
+  "kind": "LinkedField",
+  "alias": null,
+  "name": "pageInfo",
+  "storageKey": null,
+  "args": null,
+  "concreteType": "PageInfo",
+  "plural": false,
+  "selections": [
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "hasNextPage",
+      "args": null,
+      "storageKey": null
+    },
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "endCursor",
+      "args": null,
+      "storageKey": null
+    }
+  ]
+},
+v11 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "body",
+  "args": null,
+  "storageKey": null
+},
+v12 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "created_at",
+  "args": null,
+  "storageKey": null
+},
+v13 = {
+  "kind": "LinkedField",
+  "alias": null,
+  "name": "user",
+  "storageKey": null,
+  "args": null,
+  "concreteType": "User",
+  "plural": false,
+  "selections": [
+    v2,
+    v6,
+    v3,
+    v4,
+    v5
+  ]
+},
+v14 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "__typename",
+  "args": null,
+  "storageKey": null
+},
+v15 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "cursor",
+  "args": null,
+  "storageKey": null
+},
+v16 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "permalink",
+  "args": null,
+  "storageKey": null
+};
+return {
+  "kind": "Request",
+  "operationKind": "query",
+  "name": "UserQuery",
+  "id": null,
+  "text": "query UserQuery(\n  $count: Int!\n  $cursor: String\n  $id: ID!\n) {\n  user(id: $id) {\n    ...User_user\n    ...User_discussionList\n    ...User_groupList\n    id\n  }\n}\n\nfragment User_user on User {\n  id\n  _id\n  name\n  bio\n  username\n  profile_picture_name\n  discussion_count\n  follower_count\n  following_count\n  ...FollowButton_user\n}\n\nfragment User_discussionList on User {\n  discussions(first: $count, after: $cursor, by_latest: true) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        ...PostListItem_discussion\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment User_groupList on User {\n  groups_in(first: $count, after: $cursor) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        ...GroupListItem_group\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment GroupListItem_group on Group {\n  id\n  _id\n  name\n  permalink\n  body\n  header_image {\n    name\n    id\n  }\n}\n\nfragment PostListItem_discussion on Discussion {\n  id\n  _id\n  name\n  public_url\n  excerpt(size: 20)\n  word_count\n  comment_count\n  comments(by_latest: true, first: 3) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        excerpt\n        ...CommentListItem_comment\n        __typename\n      }\n      cursor\n    }\n  }\n  created_at\n  user {\n    id\n    _id\n    name\n    username\n    profile_picture_name\n  }\n  group {\n    id\n    _id\n    name\n    permalink\n  }\n  feature_photo {\n    id\n    _id\n    height\n    width\n    name\n  }\n  ...DiscussionLike_discussion\n}\n\nfragment CommentListItem_comment on Comment {\n  id\n  _id\n  body\n  created_at\n  discussion_id\n  excerpt\n  discussion {\n    id\n    _id\n  }\n  user {\n    id\n    _id\n    name\n    username\n    profile_picture_name\n  }\n}\n\nfragment DiscussionLike_discussion on Discussion {\n  id\n  _id\n  viewer_does_like\n  like_count\n}\n\nfragment FollowButton_user on User {\n  _id\n  viewer_follows\n  follows_viewer\n}\n",
+  "metadata": {},
   "fragment": {
-    "argumentDefinitions": [
-      {
-        "kind": "LocalArgument",
-        "name": "count",
-        "type": "Int!",
-        "defaultValue": null
-      },
-      {
-        "kind": "LocalArgument",
-        "name": "cursor",
-        "type": "String",
-        "defaultValue": null
-      },
-      {
-        "kind": "LocalArgument",
-        "name": "id",
-        "type": "ID!",
-        "defaultValue": null
-      }
-    ],
     "kind": "Fragment",
-    "metadata": null,
     "name": "UserQuery",
+    "type": "Query",
+    "metadata": null,
+    "argumentDefinitions": v0,
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
-        "args": [
-          {
-            "kind": "Variable",
-            "name": "id",
-            "variableName": "id",
-            "type": "ID!"
-          }
-        ],
-        "concreteType": "User",
         "name": "user",
+        "storageKey": null,
+        "args": v1,
+        "concreteType": "User",
         "plural": false,
         "selections": [
           {
@@ -189,225 +375,209 @@ const batch /*: ConcreteBatch*/ = {
             "name": "User_groupList",
             "args": null
           }
-        ],
-        "storageKey": null
+        ]
       }
-    ],
-    "type": "Query"
+    ]
   },
-  "id": null,
-  "kind": "Batch",
-  "metadata": {},
-  "name": "UserQuery",
-  "query": {
-    "argumentDefinitions": [
-      {
-        "kind": "LocalArgument",
-        "name": "count",
-        "type": "Int!",
-        "defaultValue": null
-      },
-      {
-        "kind": "LocalArgument",
-        "name": "cursor",
-        "type": "String",
-        "defaultValue": null
-      },
-      {
-        "kind": "LocalArgument",
-        "name": "id",
-        "type": "ID!",
-        "defaultValue": null
-      }
-    ],
-    "kind": "Root",
+  "operation": {
+    "kind": "Operation",
     "name": "UserQuery",
-    "operation": "query",
+    "argumentDefinitions": v0,
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
-        "args": [
-          {
-            "kind": "Variable",
-            "name": "id",
-            "variableName": "id",
-            "type": "ID!"
-          }
-        ],
-        "concreteType": "User",
         "name": "user",
+        "storageKey": null,
+        "args": v1,
+        "concreteType": "User",
         "plural": false,
         "selections": [
           {
             "kind": "ScalarField",
             "alias": null,
-            "args": null,
             "name": "discussion_count",
+            "args": null,
             "storageKey": null
           },
+          v2,
+          v3,
           {
             "kind": "ScalarField",
             "alias": null,
-            "args": null,
-            "name": "id",
-            "storageKey": null
-          },
-          {
-            "kind": "ScalarField",
-            "alias": null,
-            "args": null,
-            "name": "name",
-            "storageKey": null
-          },
-          {
-            "kind": "ScalarField",
-            "alias": null,
-            "args": null,
             "name": "bio",
+            "args": null,
             "storageKey": null
           },
+          v4,
+          v5,
+          v6,
           {
             "kind": "ScalarField",
             "alias": null,
-            "args": null,
-            "name": "username",
-            "storageKey": null
-          },
-          {
-            "kind": "ScalarField",
-            "alias": null,
-            "args": null,
-            "name": "profile_picture_name",
-            "storageKey": null
-          },
-          {
-            "kind": "ScalarField",
-            "alias": null,
-            "args": null,
-            "name": "_id",
-            "storageKey": null
-          },
-          {
-            "kind": "ScalarField",
-            "alias": null,
-            "args": null,
             "name": "follower_count",
+            "args": null,
             "storageKey": null
           },
           {
             "kind": "ScalarField",
             "alias": null,
-            "args": null,
             "name": "following_count",
+            "args": null,
             "storageKey": null
           },
           {
             "kind": "ScalarField",
             "alias": null,
-            "args": null,
             "name": "viewer_follows",
+            "args": null,
             "storageKey": null
           },
           {
             "kind": "ScalarField",
             "alias": null,
-            "args": null,
             "name": "follows_viewer",
+            "args": null,
             "storageKey": null
           },
           {
             "kind": "LinkedField",
             "alias": null,
+            "name": "discussions",
+            "storageKey": null,
             "args": [
-              {
-                "kind": "Variable",
-                "name": "after",
-                "variableName": "cursor",
-                "type": "String"
-              },
-              {
-                "kind": "Literal",
-                "name": "by_latest",
-                "value": true,
-                "type": "Boolean"
-              },
-              {
-                "kind": "Variable",
-                "name": "first",
-                "variableName": "count",
-                "type": "Int"
-              }
+              v7,
+              v8,
+              v9
             ],
             "concreteType": "DiscussionConnection",
-            "name": "discussions",
             "plural": false,
             "selections": [
+              v10,
               {
                 "kind": "LinkedField",
                 "alias": null,
-                "args": null,
-                "concreteType": "PageInfo",
-                "name": "pageInfo",
-                "plural": false,
-                "selections": [
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "hasNextPage",
-                    "storageKey": null
-                  },
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "endCursor",
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              },
-              {
-                "kind": "LinkedField",
-                "alias": null,
+                "name": "edges",
+                "storageKey": null,
                 "args": null,
                 "concreteType": "DiscussionEdge",
-                "name": "edges",
                 "plural": true,
                 "selections": [
                   {
                     "kind": "LinkedField",
                     "alias": null,
+                    "name": "node",
+                    "storageKey": null,
                     "args": null,
                     "concreteType": "Discussion",
-                    "name": "node",
                     "plural": false,
                     "selections": [
                       {
+                        "kind": "LinkedField",
+                        "alias": null,
+                        "name": "comments",
+                        "storageKey": "comments(by_latest:true,first:3)",
+                        "args": [
+                          v8,
+                          {
+                            "kind": "Literal",
+                            "name": "first",
+                            "value": 3,
+                            "type": "Int"
+                          }
+                        ],
+                        "concreteType": "CommentConnection",
+                        "plural": false,
+                        "selections": [
+                          v10,
+                          {
+                            "kind": "LinkedField",
+                            "alias": null,
+                            "name": "edges",
+                            "storageKey": null,
+                            "args": null,
+                            "concreteType": "CommentEdge",
+                            "plural": true,
+                            "selections": [
+                              {
+                                "kind": "LinkedField",
+                                "alias": null,
+                                "name": "node",
+                                "storageKey": null,
+                                "args": null,
+                                "concreteType": "Comment",
+                                "plural": false,
+                                "selections": [
+                                  v2,
+                                  {
+                                    "kind": "ScalarField",
+                                    "alias": null,
+                                    "name": "excerpt",
+                                    "args": null,
+                                    "storageKey": null
+                                  },
+                                  v6,
+                                  v11,
+                                  v12,
+                                  {
+                                    "kind": "ScalarField",
+                                    "alias": null,
+                                    "name": "discussion_id",
+                                    "args": null,
+                                    "storageKey": null
+                                  },
+                                  {
+                                    "kind": "LinkedField",
+                                    "alias": null,
+                                    "name": "discussion",
+                                    "storageKey": null,
+                                    "args": null,
+                                    "concreteType": "Discussion",
+                                    "plural": false,
+                                    "selections": [
+                                      v2,
+                                      v6
+                                    ]
+                                  },
+                                  v13,
+                                  v14
+                                ]
+                              },
+                              v15
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "LinkedHandle",
+                        "alias": null,
+                        "name": "comments",
+                        "args": [
+                          v8,
+                          {
+                            "kind": "Literal",
+                            "name": "first",
+                            "value": 3,
+                            "type": "Int"
+                          }
+                        ],
+                        "handle": "connection",
+                        "key": "PostListItem_comments",
+                        "filters": []
+                      },
+                      v2,
+                      v3,
+                      {
                         "kind": "ScalarField",
                         "alias": null,
+                        "name": "public_url",
                         "args": null,
-                        "name": "created_at",
                         "storageKey": null
                       },
                       {
                         "kind": "ScalarField",
                         "alias": null,
-                        "args": null,
-                        "name": "id",
-                        "storageKey": null
-                      },
-                      {
-                        "kind": "ScalarField",
-                        "alias": null,
-                        "args": null,
-                        "name": "name",
-                        "storageKey": null
-                      },
-                      {
-                        "kind": "ScalarField",
-                        "alias": null,
+                        "name": "excerpt",
                         "args": [
                           {
                             "kind": "Literal",
@@ -416,223 +586,100 @@ const batch /*: ConcreteBatch*/ = {
                             "type": "Int"
                           }
                         ],
-                        "name": "excerpt",
-                        "storageKey": "excerpt{\"size\":20}"
+                        "storageKey": "excerpt(size:20)"
                       },
                       {
                         "kind": "ScalarField",
                         "alias": null,
-                        "args": null,
                         "name": "word_count",
+                        "args": null,
                         "storageKey": null
                       },
                       {
                         "kind": "ScalarField",
                         "alias": null,
-                        "args": null,
                         "name": "comment_count",
-                        "storageKey": null
-                      },
-                      {
-                        "kind": "ScalarField",
-                        "alias": null,
                         "args": null,
-                        "name": "_id",
                         "storageKey": null
                       },
+                      v6,
+                      v12,
+                      v13,
                       {
                         "kind": "LinkedField",
                         "alias": null,
-                        "args": null,
-                        "concreteType": "User",
-                        "name": "user",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "kind": "ScalarField",
-                            "alias": null,
-                            "args": null,
-                            "name": "id",
-                            "storageKey": null
-                          },
-                          {
-                            "kind": "ScalarField",
-                            "alias": null,
-                            "args": null,
-                            "name": "_id",
-                            "storageKey": null
-                          },
-                          {
-                            "kind": "ScalarField",
-                            "alias": null,
-                            "args": null,
-                            "name": "name",
-                            "storageKey": null
-                          },
-                          {
-                            "kind": "ScalarField",
-                            "alias": null,
-                            "args": null,
-                            "name": "username",
-                            "storageKey": null
-                          },
-                          {
-                            "kind": "ScalarField",
-                            "alias": null,
-                            "args": null,
-                            "name": "profile_picture_name",
-                            "storageKey": null
-                          }
-                        ],
-                        "storageKey": null
-                      },
-                      {
-                        "kind": "LinkedField",
-                        "alias": null,
+                        "name": "group",
+                        "storageKey": null,
                         "args": null,
                         "concreteType": "Group",
-                        "name": "group",
                         "plural": false,
                         "selections": [
-                          {
-                            "kind": "ScalarField",
-                            "alias": null,
-                            "args": null,
-                            "name": "id",
-                            "storageKey": null
-                          },
-                          {
-                            "kind": "ScalarField",
-                            "alias": null,
-                            "args": null,
-                            "name": "_id",
-                            "storageKey": null
-                          },
-                          {
-                            "kind": "ScalarField",
-                            "alias": null,
-                            "args": null,
-                            "name": "name",
-                            "storageKey": null
-                          },
-                          {
-                            "kind": "ScalarField",
-                            "alias": null,
-                            "args": null,
-                            "name": "permalink",
-                            "storageKey": null
-                          }
-                        ],
-                        "storageKey": null
+                          v2,
+                          v6,
+                          v3,
+                          v16
+                        ]
                       },
                       {
                         "kind": "LinkedField",
                         "alias": null,
+                        "name": "feature_photo",
+                        "storageKey": null,
                         "args": null,
                         "concreteType": "Photo",
-                        "name": "feature_photo",
                         "plural": false,
                         "selections": [
+                          v2,
+                          v6,
                           {
                             "kind": "ScalarField",
                             "alias": null,
-                            "args": null,
-                            "name": "id",
-                            "storageKey": null
-                          },
-                          {
-                            "kind": "ScalarField",
-                            "alias": null,
-                            "args": null,
-                            "name": "_id",
-                            "storageKey": null
-                          },
-                          {
-                            "kind": "ScalarField",
-                            "alias": null,
-                            "args": null,
                             "name": "height",
+                            "args": null,
                             "storageKey": null
                           },
                           {
                             "kind": "ScalarField",
                             "alias": null,
-                            "args": null,
                             "name": "width",
+                            "args": null,
                             "storageKey": null
                           },
-                          {
-                            "kind": "ScalarField",
-                            "alias": null,
-                            "args": null,
-                            "name": "name",
-                            "storageKey": null
-                          }
-                        ],
-                        "storageKey": null
+                          v3
+                        ]
                       },
                       {
                         "kind": "ScalarField",
                         "alias": null,
-                        "args": null,
                         "name": "viewer_does_like",
+                        "args": null,
                         "storageKey": null
                       },
                       {
                         "kind": "ScalarField",
                         "alias": null,
-                        "args": null,
                         "name": "like_count",
+                        "args": null,
                         "storageKey": null
                       },
-                      {
-                        "kind": "ScalarField",
-                        "alias": null,
-                        "args": null,
-                        "name": "__typename",
-                        "storageKey": null
-                      }
-                    ],
-                    "storageKey": null
+                      v14
+                    ]
                   },
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "cursor",
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
+                  v15
+                ]
               }
-            ],
-            "storageKey": null
+            ]
           },
           {
             "kind": "LinkedHandle",
             "alias": null,
+            "name": "discussions",
             "args": [
-              {
-                "kind": "Variable",
-                "name": "after",
-                "variableName": "cursor",
-                "type": "String"
-              },
-              {
-                "kind": "Literal",
-                "name": "by_latest",
-                "value": true,
-                "type": "Boolean"
-              },
-              {
-                "kind": "Variable",
-                "name": "first",
-                "variableName": "count",
-                "type": "Int"
-              }
+              v7,
+              v8,
+              v9
             ],
             "handle": "connection",
-            "name": "discussions",
             "key": "User_discussions",
             "filters": [
               "by_latest"
@@ -641,176 +688,77 @@ const batch /*: ConcreteBatch*/ = {
           {
             "kind": "LinkedField",
             "alias": null,
+            "name": "groups_in",
+            "storageKey": null,
             "args": [
-              {
-                "kind": "Variable",
-                "name": "after",
-                "variableName": "cursor",
-                "type": "String"
-              },
-              {
-                "kind": "Variable",
-                "name": "first",
-                "variableName": "count",
-                "type": "Int"
-              }
+              v7,
+              v9
             ],
             "concreteType": "GroupConnection",
-            "name": "groups_in",
             "plural": false,
             "selections": [
+              v10,
               {
                 "kind": "LinkedField",
                 "alias": null,
-                "args": null,
-                "concreteType": "PageInfo",
-                "name": "pageInfo",
-                "plural": false,
-                "selections": [
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "hasNextPage",
-                    "storageKey": null
-                  },
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "endCursor",
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              },
-              {
-                "kind": "LinkedField",
-                "alias": null,
+                "name": "edges",
+                "storageKey": null,
                 "args": null,
                 "concreteType": "GroupEdge",
-                "name": "edges",
                 "plural": true,
                 "selections": [
                   {
                     "kind": "LinkedField",
                     "alias": null,
+                    "name": "node",
+                    "storageKey": null,
                     "args": null,
                     "concreteType": "Group",
-                    "name": "node",
                     "plural": false,
                     "selections": [
-                      {
-                        "kind": "ScalarField",
-                        "alias": null,
-                        "args": null,
-                        "name": "id",
-                        "storageKey": null
-                      },
-                      {
-                        "kind": "ScalarField",
-                        "alias": null,
-                        "args": null,
-                        "name": "_id",
-                        "storageKey": null
-                      },
-                      {
-                        "kind": "ScalarField",
-                        "alias": null,
-                        "args": null,
-                        "name": "name",
-                        "storageKey": null
-                      },
-                      {
-                        "kind": "ScalarField",
-                        "alias": null,
-                        "args": null,
-                        "name": "permalink",
-                        "storageKey": null
-                      },
-                      {
-                        "kind": "ScalarField",
-                        "alias": null,
-                        "args": null,
-                        "name": "body",
-                        "storageKey": null
-                      },
+                      v2,
+                      v6,
+                      v3,
+                      v16,
+                      v11,
                       {
                         "kind": "LinkedField",
                         "alias": null,
+                        "name": "header_image",
+                        "storageKey": null,
                         "args": null,
                         "concreteType": "Photo",
-                        "name": "header_image",
                         "plural": false,
                         "selections": [
-                          {
-                            "kind": "ScalarField",
-                            "alias": null,
-                            "args": null,
-                            "name": "name",
-                            "storageKey": null
-                          },
-                          {
-                            "kind": "ScalarField",
-                            "alias": null,
-                            "args": null,
-                            "name": "id",
-                            "storageKey": null
-                          }
-                        ],
-                        "storageKey": null
+                          v3,
+                          v2
+                        ]
                       },
-                      {
-                        "kind": "ScalarField",
-                        "alias": null,
-                        "args": null,
-                        "name": "__typename",
-                        "storageKey": null
-                      }
-                    ],
-                    "storageKey": null
+                      v14
+                    ]
                   },
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "cursor",
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
+                  v15
+                ]
               }
-            ],
-            "storageKey": null
+            ]
           },
           {
             "kind": "LinkedHandle",
             "alias": null,
+            "name": "groups_in",
             "args": [
-              {
-                "kind": "Variable",
-                "name": "after",
-                "variableName": "cursor",
-                "type": "String"
-              },
-              {
-                "kind": "Variable",
-                "name": "first",
-                "variableName": "count",
-                "type": "Int"
-              }
+              v7,
+              v9
             ],
             "handle": "connection",
-            "name": "groups_in",
             "key": "User_groups_in",
             "filters": null
           }
-        ],
-        "storageKey": null
+        ]
       }
     ]
-  },
-  "text": "query UserQuery(\n  $count: Int!\n  $cursor: String\n  $id: ID!\n) {\n  user(id: $id) {\n    ...User_user\n    ...User_discussionList\n    ...User_groupList\n    id\n  }\n}\n\nfragment User_user on User {\n  id\n  _id\n  name\n  bio\n  username\n  profile_picture_name\n  discussion_count\n  follower_count\n  following_count\n  ...FollowButton_user\n}\n\nfragment User_discussionList on User {\n  discussions(first: $count, after: $cursor, by_latest: true) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        ...PostListItem_discussion\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment User_groupList on User {\n  groups_in(first: $count, after: $cursor) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        ...GroupListItem_group\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment GroupListItem_group on Group {\n  id\n  _id\n  name\n  permalink\n  body\n  header_image {\n    name\n    id\n  }\n}\n\nfragment PostListItem_discussion on Discussion {\n  id\n  _id\n  name\n  excerpt(size: 20)\n  word_count\n  comment_count\n  created_at\n  user {\n    id\n    _id\n    name\n    username\n    profile_picture_name\n  }\n  group {\n    id\n    _id\n    name\n    permalink\n  }\n  feature_photo {\n    id\n    _id\n    height\n    width\n    name\n  }\n  ...DiscussionLike_discussion\n}\n\nfragment DiscussionLike_discussion on Discussion {\n  id\n  _id\n  viewer_does_like\n  like_count\n}\n\nfragment FollowButton_user on User {\n  _id\n  viewer_follows\n  follows_viewer\n}\n"
+  }
 };
-
-module.exports = batch;
+})();
+(node/*: any*/).hash = '6ef40dd494aa11d02c68e9f8dcb9686a';
+module.exports = node;

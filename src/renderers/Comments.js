@@ -1,7 +1,13 @@
 // @flow
 
 import React from 'react'
-import { View, Image, Text, PixelRatio } from 'react-native'
+import {
+  View,
+  Image,
+  Text,
+  PixelRatio,
+  KeyboardAvoidingView
+} from 'react-native'
 import Separator from '../components/Separator'
 import CommentList from '../fragments/CommentList'
 import PostThumb from '../fragments/PostThumb'
@@ -19,6 +25,7 @@ import {
   graphql
 } from 'react-relay'
 import { connect } from 'react-redux'
+// import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const mapStateToProps = state => ({
   night_mode: state.night_mode,
@@ -43,26 +50,49 @@ export default (CommentsQueryRenderer = ({ id, gid, api_key, ...props }) => {
       render={({ error, props, retry, environment }) => {
         // console.log(props)
         return (
-          <View style={{ flex: 1 }}>
-            <CommentPaginationContainer
-              commentList={props.discussion}
-              itemProps={itemProps}
-              id={id}
-              renderHeader={_ =>
-                <View style={styles.container}>
-                  <PostThumb discussion={props.discussion} {...itemProps} />
-                  {/* <Separator /> */}
-                  <CommentBox
-                    {...itemProps}
-                    environment={environment}
-                    gid={gid}
-                    id={id}
-                  />
-                </View>}
-            />
-            {/* <View style={{ flex: 1 }}>
+          <View
+            style={{ flex: 1 }}
+            // behavior="padding"
+            // onKeyboardWillShow={frames => {
+            //   console.log('Keyboard event', frames)
+            // }}
+            // ref={ref => (this.scroll = ref)}
+            // resetScrollToCoords={{ x: 0, y: 0 }}
+            // // contentContainerStyle={{ alignItems: 'center' }}
+            // style={{ flex: 1 }}
+          >
+            <KeyboardAvoidingView
+              style={{ flex: 1 }}
+              // behavior="padding"
+              // onKeyboardWillShow={frames => {
+              //   console.log('Keyboard event', frames)
+              // }}
+              // ref={ref => (this.scroll = ref)}
+              // resetScrollToCoords={{ x: 0, y: 0 }}
+              // // contentContainerStyle={{ alignItems: 'center' }}
+              // style={{ flex: 1 }}
+            >
+              <CommentPaginationContainer
+                commentList={props.discussion}
+                itemProps={itemProps}
+                id={id}
+                renderHeader={_ => (
+                  <View style={[styles.container, { marginBottom: 20 }]}>
+                    <PostThumb discussion={props.discussion} {...itemProps} />
+                    {/* <Separator /> */}
+                  </View>
+                )}
+              />
+              <CommentBox
+                {...itemProps}
+                environment={environment}
+                gid={gid}
+                id={id}
+              />
+              {/* <View style={{ flex: 1 }}>
 
             </View> */}
+            </KeyboardAvoidingView>
           </View>
         )
       }}

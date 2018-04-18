@@ -1,10 +1,12 @@
 import React from 'react'
 import { View, Text } from 'react-native'
-import Icon from 'react-native-vector-icons/Ionicons'
+import Icon from 'react-native-vector-icons/Feather'
 import excerptStyles from '../styles/excerptStyles'
 import ActivityButton from '../components/ActivityButton'
 import { connect } from 'react-redux'
 import { commitMutation, createFragmentContainer, graphql } from 'react-relay'
+import { navHelper } from '../helpers/getNavigation'
+import { withNavigation } from 'react-navigation'
 
 const mapStateToProps = state => ({
   night_mode: state.night_mode,
@@ -55,15 +57,12 @@ function unfollowMutation({ _id }, environment, config) {
   })
 }
 
+// @withNavigation
 class FollowButton extends React.Component {
   state = { isLoading: false }
-  constructor(props) {
-    super(props)
-    this.toggleFollow = this.toggleFollow.bind(this)
-  }
-  toggleFollow() {
+  toggleFollow = () => {
     if (!this.props.loggedIn) {
-      this.props.openLogin()
+      navHelper(this).openLogin()
       return
     }
     this.setState({ isLoading: true })
@@ -89,13 +88,26 @@ class FollowButton extends React.Component {
           }
         })
   }
+  renderIcon() {
+    const { viewer_follows, follows_viewer } = this.props.user
+    return (
+      <Icon
+        name={viewer_follows ? 'user-check' : 'user-plus'}
+        size={18}
+        color={viewer_follows ? '#fff' : '#05f'}
+      />
+    )
+  }
   render() {
+    const { icon } = this.props
     const { viewer_follows, follows_viewer } = this.props.user
     const color = viewer_follows ? '#fff' : '#05f'
-    const backgroundColor = viewer_follows ? '#05f' : '#fff'
+    const backgroundColor = viewer_follows ? '#05f' : 'transparent'
     title = viewer_follows
       ? 'Following'
-      : follows_viewer ? 'Follow Back' : 'Follow'
+      : follows_viewer
+        ? 'Follow Back'
+        : 'Follow'
     return (
       <ActivityButton
         onPress={this.toggleFollow}
@@ -111,13 +123,14 @@ class FollowButton extends React.Component {
           ...this.props.buttonStyle
         }}
         isLoading={this.state.isLoading}
+        icon={icon ? this.renderIcon() : null}
       />
     )
   }
 }
 
 export default createFragmentContainer(
-  connect(mapStateToProps)(FollowButton),
+  withNavigation(connect(mapStateToProps)(FollowButton)),
   graphql`
     fragment FollowButton_user on User {
       _id

@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 59c26a8c9f98a7e766472fa9df151f70
+ * @relayHash 257d75a9cba0263fa3a0328efe4070d9
  */
 
 /* eslint-disable */
@@ -8,22 +8,24 @@
 'use strict';
 
 /*::
-import type {ConcreteBatch} from 'relay-runtime';
+import type { ConcreteRequest } from 'relay-runtime';
+type GroupListItem_group$ref = any;
 export type CreateGroupMutationVariables = {|
   input: {
-    clientMutationId?: ?string;
-    name: string;
-    body?: ?string;
-    is_private?: ?boolean;
-    header_image?: ?string;
-  };
+    clientMutationId?: ?string,
+    name: string,
+    body?: ?string,
+    is_private?: ?boolean,
+    header_image?: ?string,
+  },
 |};
-
 export type CreateGroupMutationResponse = {|
   +createGroup: ?{|
-    +success: ?boolean;
-    +group: ?{| |};
-  |};
+    +success: ?boolean,
+    +group: ?{|
+      +$fragmentRefs: GroupListItem_group$ref,
+    |},
+  |},
 |};
 */
 
@@ -54,48 +56,75 @@ fragment GroupListItem_group on Group {
 }
 */
 
-const batch /*: ConcreteBatch*/ = {
+const node/*: ConcreteRequest*/ = (function(){
+var v0 = [
+  {
+    "kind": "LocalArgument",
+    "name": "input",
+    "type": "CreateGroupInput!",
+    "defaultValue": null
+  }
+],
+v1 = [
+  {
+    "kind": "Variable",
+    "name": "input",
+    "variableName": "input",
+    "type": "CreateGroupInput!"
+  }
+],
+v2 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "success",
+  "args": null,
+  "storageKey": null
+},
+v3 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "id",
+  "args": null,
+  "storageKey": null
+},
+v4 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "name",
+  "args": null,
+  "storageKey": null
+};
+return {
+  "kind": "Request",
+  "operationKind": "mutation",
+  "name": "CreateGroupMutation",
+  "id": null,
+  "text": "mutation CreateGroupMutation(\n  $input: CreateGroupInput!\n) {\n  createGroup(input: $input) {\n    success\n    group {\n      ...GroupListItem_group\n      id\n    }\n  }\n}\n\nfragment GroupListItem_group on Group {\n  id\n  _id\n  name\n  permalink\n  body\n  header_image {\n    name\n    id\n  }\n}\n",
+  "metadata": {},
   "fragment": {
-    "argumentDefinitions": [
-      {
-        "kind": "LocalArgument",
-        "name": "input",
-        "type": "CreateGroupInput!",
-        "defaultValue": null
-      }
-    ],
     "kind": "Fragment",
-    "metadata": null,
     "name": "CreateGroupMutation",
+    "type": "Mutation",
+    "metadata": null,
+    "argumentDefinitions": v0,
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
-        "args": [
-          {
-            "kind": "Variable",
-            "name": "input",
-            "variableName": "input",
-            "type": "CreateGroupInput!"
-          }
-        ],
-        "concreteType": "CreateGroupPayload",
         "name": "createGroup",
+        "storageKey": null,
+        "args": v1,
+        "concreteType": "CreateGroupPayload",
         "plural": false,
         "selections": [
-          {
-            "kind": "ScalarField",
-            "alias": null,
-            "args": null,
-            "name": "success",
-            "storageKey": null
-          },
+          v2,
           {
             "kind": "LinkedField",
             "alias": null,
+            "name": "group",
+            "storageKey": null,
             "args": null,
             "concreteType": "Group",
-            "name": "group",
             "plural": false,
             "selections": [
               {
@@ -103,131 +132,79 @@ const batch /*: ConcreteBatch*/ = {
                 "name": "GroupListItem_group",
                 "args": null
               }
-            ],
-            "storageKey": null
+            ]
           }
-        ],
-        "storageKey": null
+        ]
       }
-    ],
-    "type": "Mutation"
+    ]
   },
-  "id": null,
-  "kind": "Batch",
-  "metadata": {},
-  "name": "CreateGroupMutation",
-  "query": {
-    "argumentDefinitions": [
-      {
-        "kind": "LocalArgument",
-        "name": "input",
-        "type": "CreateGroupInput!",
-        "defaultValue": null
-      }
-    ],
-    "kind": "Root",
+  "operation": {
+    "kind": "Operation",
     "name": "CreateGroupMutation",
-    "operation": "mutation",
+    "argumentDefinitions": v0,
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
-        "args": [
-          {
-            "kind": "Variable",
-            "name": "input",
-            "variableName": "input",
-            "type": "CreateGroupInput!"
-          }
-        ],
-        "concreteType": "CreateGroupPayload",
         "name": "createGroup",
+        "storageKey": null,
+        "args": v1,
+        "concreteType": "CreateGroupPayload",
         "plural": false,
         "selections": [
-          {
-            "kind": "ScalarField",
-            "alias": null,
-            "args": null,
-            "name": "success",
-            "storageKey": null
-          },
+          v2,
           {
             "kind": "LinkedField",
             "alias": null,
+            "name": "group",
+            "storageKey": null,
             "args": null,
             "concreteType": "Group",
-            "name": "group",
             "plural": false,
             "selections": [
+              v3,
               {
                 "kind": "ScalarField",
                 "alias": null,
-                "args": null,
-                "name": "id",
-                "storageKey": null
-              },
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "args": null,
                 "name": "_id",
+                "args": null,
                 "storageKey": null
               },
+              v4,
               {
                 "kind": "ScalarField",
                 "alias": null,
-                "args": null,
-                "name": "name",
-                "storageKey": null
-              },
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "args": null,
                 "name": "permalink",
+                "args": null,
                 "storageKey": null
               },
               {
                 "kind": "ScalarField",
                 "alias": null,
-                "args": null,
                 "name": "body",
+                "args": null,
                 "storageKey": null
               },
               {
                 "kind": "LinkedField",
                 "alias": null,
+                "name": "header_image",
+                "storageKey": null,
                 "args": null,
                 "concreteType": "Photo",
-                "name": "header_image",
                 "plural": false,
                 "selections": [
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "name",
-                    "storageKey": null
-                  },
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "id",
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
+                  v4,
+                  v3
+                ]
               }
-            ],
-            "storageKey": null
+            ]
           }
-        ],
-        "storageKey": null
+        ]
       }
     ]
-  },
-  "text": "mutation CreateGroupMutation(\n  $input: CreateGroupInput!\n) {\n  createGroup(input: $input) {\n    success\n    group {\n      ...GroupListItem_group\n      id\n    }\n  }\n}\n\nfragment GroupListItem_group on Group {\n  id\n  _id\n  name\n  permalink\n  body\n  header_image {\n    name\n    id\n  }\n}\n"
+  }
 };
-
-module.exports = batch;
+})();
+(node/*: any*/).hash = 'c6b3b4f376e689aa5c2c8a9e026db017';
+module.exports = node;

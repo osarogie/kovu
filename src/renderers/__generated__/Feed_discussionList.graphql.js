@@ -7,37 +7,32 @@
 'use strict';
 
 /*::
-import type {ConcreteFragment} from 'relay-runtime';
+import type { ConcreteFragment } from 'relay-runtime';
+type PostListItem_discussion$ref = any;
+import type { FragmentReference } from 'relay-runtime';
+declare export opaque type Feed_discussionList$ref: FragmentReference;
 export type Feed_discussionList = {|
   +top_stories: ?{|
     +pageInfo: {|
-      +hasNextPage: boolean;
-      +endCursor: ?string;
-    |};
+      +hasNextPage: boolean,
+      +endCursor: ?string,
+    |},
     +edges: ?$ReadOnlyArray<?{|
       +node: ?{|
-        +id: string;
-      |};
-    |}>;
-  |};
+        +id: string,
+        +$fragmentRefs: PostListItem_discussion$ref,
+      |},
+    |}>,
+  |},
+  +$refType: Feed_discussionList$ref,
 |};
 */
 
 
-const fragment /*: ConcreteFragment*/ = {
-  "argumentDefinitions": [
-    {
-      "kind": "RootArgument",
-      "name": "count",
-      "type": "Int"
-    },
-    {
-      "kind": "RootArgument",
-      "name": "cursor",
-      "type": "String"
-    }
-  ],
+const node/*: ConcreteFragment*/ = {
   "kind": "Fragment",
+  "name": "Feed_discussionList",
+  "type": "Feed",
   "metadata": {
     "connection": [
       {
@@ -50,62 +45,76 @@ const fragment /*: ConcreteFragment*/ = {
       }
     ]
   },
-  "name": "Feed_discussionList",
+  "argumentDefinitions": [
+    {
+      "kind": "RootArgument",
+      "name": "count",
+      "type": "Int"
+    },
+    {
+      "kind": "RootArgument",
+      "name": "cursor",
+      "type": "String"
+    }
+  ],
   "selections": [
     {
       "kind": "LinkedField",
       "alias": "top_stories",
+      "name": "__Feed_top_stories_connection",
+      "storageKey": null,
       "args": null,
       "concreteType": "DiscussionConnection",
-      "name": "__Feed_top_stories_connection",
       "plural": false,
       "selections": [
         {
           "kind": "LinkedField",
           "alias": null,
+          "name": "pageInfo",
+          "storageKey": null,
           "args": null,
           "concreteType": "PageInfo",
-          "name": "pageInfo",
           "plural": false,
           "selections": [
             {
               "kind": "ScalarField",
               "alias": null,
-              "args": null,
               "name": "hasNextPage",
+              "args": null,
               "storageKey": null
             },
             {
               "kind": "ScalarField",
               "alias": null,
-              "args": null,
               "name": "endCursor",
+              "args": null,
               "storageKey": null
             }
-          ],
-          "storageKey": null
+          ]
         },
         {
           "kind": "LinkedField",
           "alias": null,
+          "name": "edges",
+          "storageKey": null,
           "args": null,
           "concreteType": "DiscussionEdge",
-          "name": "edges",
           "plural": true,
           "selections": [
             {
               "kind": "LinkedField",
               "alias": null,
+              "name": "node",
+              "storageKey": null,
               "args": null,
               "concreteType": "Discussion",
-              "name": "node",
               "plural": false,
               "selections": [
                 {
                   "kind": "ScalarField",
                   "alias": null,
-                  "args": null,
                   "name": "id",
+                  "args": null,
                   "storageKey": null
                 },
                 {
@@ -116,28 +125,24 @@ const fragment /*: ConcreteFragment*/ = {
                 {
                   "kind": "ScalarField",
                   "alias": null,
-                  "args": null,
                   "name": "__typename",
+                  "args": null,
                   "storageKey": null
                 }
-              ],
-              "storageKey": null
+              ]
             },
             {
               "kind": "ScalarField",
               "alias": null,
-              "args": null,
               "name": "cursor",
+              "args": null,
               "storageKey": null
             }
-          ],
-          "storageKey": null
+          ]
         }
-      ],
-      "storageKey": null
+      ]
     }
-  ],
-  "type": "Feed"
+  ]
 };
-
-module.exports = fragment;
+(node/*: any*/).hash = '2d3f86a0041eb9468f46b88354475ac4';
+module.exports = node;

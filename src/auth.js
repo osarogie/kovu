@@ -18,7 +18,12 @@ export default (auth = {
         'Content-Type': 'application/json',
         Accept: 'application/json'
       }
-    }).then(response => response.json())
+    }).then(response => {
+      // console.log(response.text())
+      const r = response.json()
+      process.env.NODE_ENV === 'development' ? console.log(r) : null
+      return r
+    })
   },
 
   async register(name, username, email, r_password) {
@@ -35,7 +40,12 @@ export default (auth = {
         name: name,
         username: username
       })
-    }).then(response => response.json())
+    }).then(response => {
+      // console.log(response.text())
+      const r = response.json()
+      process.env.NODE_ENV === 'development' ? console.log(r) : null
+      return r
+    })
   },
 
   logout() {

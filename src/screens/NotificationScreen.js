@@ -1,25 +1,26 @@
-import React from 'react'
-import { View, ScrollView, Image, Platform } from 'react-native'
-import styles from '../styles'
-import { withNavigation } from 'react-navigation'
-import Icon from 'react-native-vector-icons/Ionicons'
-import AndroidToolbar from '../components/AndroidToolbar'
+import React from "react"
+import { View, ScrollView, Image, Platform } from "react-native"
+import styles from "../styles"
+import { withNavigation } from "react-navigation"
+import Icon from "react-native-vector-icons/Ionicons"
+import Toolbar from "../components/Toolbar"
 
 export default class NotificationScreen extends React.Component {
   static navigationOptions = {
-    tabBarLabel: 'Notifications',
-    tabBarIcon: ({ tintColor }) =>
+    tabBarLabel: "Notifications",
+    tabBarIcon: ({ tintColor }) => (
       <Icon
-        name={Platform.select({ ios: 'ios-at', android: 'md-at' })}
+        name={Platform.select({ ios: "ios-at", android: "md-at" })}
         style={[styles.icon, { marginRight: 0 }]}
         size={23}
         color={tintColor}
       />
+    )
   }
   renderToolbar() {
     return Platform.select({
       android: (
-        <AndroidToolbar
+        <Toolbar
           // {...this.state.colorProps}
           // titleColor={this.state.dark ? '#fff' : '#05f'}
           // actions={this.toolbarActions()}

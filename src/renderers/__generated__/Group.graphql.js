@@ -7,76 +7,86 @@
 'use strict';
 
 /*::
-import type {ConcreteFragment} from 'relay-runtime';
+import type { ConcreteFragment } from 'relay-runtime';
+type JoinButton_group$ref = any;
+import type { FragmentReference } from 'relay-runtime';
+declare export opaque type Group$ref: FragmentReference;
 export type Group = {|
-  +id: string;
-  +_id: string;
-  +name: ?string;
-  +permalink: ?string;
-  +body: ?string;
-  +viewer_is_a_member: ?boolean;
+  +id: string,
+  +_id: string,
+  +name: ?string,
+  +permalink: ?string,
+  +body: ?string,
+  +viewer_is_a_member: ?boolean,
   +header_image: ?{|
-    +name: ?string;
-    +height: ?number;
-    +width: ?number;
-  |};
+    +name: ?string,
+    +height: ?number,
+    +width: ?number,
+  |},
   +user: ?{|
-    +id: string;
-    +_id: string;
-    +name: ?string;
-    +username: ?string;
-    +profile_picture_name: ?string;
-  |};
+    +id: string,
+    +_id: string,
+    +name: ?string,
+    +username: ?string,
+    +profile_picture_name: ?string,
+  |},
+  +$fragmentRefs: JoinButton_group$ref,
+  +$refType: Group$ref,
 |};
 */
 
 
-const fragment /*: ConcreteFragment*/ = {
-  "argumentDefinitions": [],
+const node/*: ConcreteFragment*/ = (function(){
+var v0 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "id",
+  "args": null,
+  "storageKey": null
+},
+v1 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "_id",
+  "args": null,
+  "storageKey": null
+},
+v2 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "name",
+  "args": null,
+  "storageKey": null
+};
+return {
   "kind": "Fragment",
-  "metadata": null,
   "name": "Group",
+  "type": "Group",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
+    v0,
+    v1,
+    v2,
     {
       "kind": "ScalarField",
       "alias": null,
-      "args": null,
-      "name": "id",
-      "storageKey": null
-    },
-    {
-      "kind": "ScalarField",
-      "alias": null,
-      "args": null,
-      "name": "_id",
-      "storageKey": null
-    },
-    {
-      "kind": "ScalarField",
-      "alias": null,
-      "args": null,
-      "name": "name",
-      "storageKey": null
-    },
-    {
-      "kind": "ScalarField",
-      "alias": null,
-      "args": null,
       "name": "permalink",
+      "args": null,
       "storageKey": null
     },
     {
       "kind": "ScalarField",
       "alias": null,
-      "args": null,
       "name": "body",
+      "args": null,
       "storageKey": null
     },
     {
       "kind": "ScalarField",
       "alias": null,
-      "args": null,
       "name": "viewer_is_a_member",
+      "args": null,
       "storageKey": null
     },
     {
@@ -87,83 +97,59 @@ const fragment /*: ConcreteFragment*/ = {
     {
       "kind": "LinkedField",
       "alias": null,
+      "name": "header_image",
+      "storageKey": null,
       "args": null,
       "concreteType": "Photo",
-      "name": "header_image",
       "plural": false,
       "selections": [
+        v2,
         {
           "kind": "ScalarField",
           "alias": null,
-          "args": null,
-          "name": "name",
-          "storageKey": null
-        },
-        {
-          "kind": "ScalarField",
-          "alias": null,
-          "args": null,
           "name": "height",
+          "args": null,
           "storageKey": null
         },
         {
           "kind": "ScalarField",
           "alias": null,
-          "args": null,
           "name": "width",
+          "args": null,
           "storageKey": null
         }
-      ],
-      "storageKey": null
+      ]
     },
     {
       "kind": "LinkedField",
       "alias": null,
+      "name": "user",
+      "storageKey": null,
       "args": null,
       "concreteType": "User",
-      "name": "user",
       "plural": false,
       "selections": [
+        v0,
+        v1,
+        v2,
         {
           "kind": "ScalarField",
           "alias": null,
-          "args": null,
-          "name": "id",
-          "storageKey": null
-        },
-        {
-          "kind": "ScalarField",
-          "alias": null,
-          "args": null,
-          "name": "_id",
-          "storageKey": null
-        },
-        {
-          "kind": "ScalarField",
-          "alias": null,
-          "args": null,
-          "name": "name",
-          "storageKey": null
-        },
-        {
-          "kind": "ScalarField",
-          "alias": null,
-          "args": null,
           "name": "username",
+          "args": null,
           "storageKey": null
         },
         {
           "kind": "ScalarField",
           "alias": null,
-          "args": null,
           "name": "profile_picture_name",
+          "args": null,
           "storageKey": null
         }
-      ],
-      "storageKey": null
+      ]
     }
-  ],
-  "type": "Group"
+  ]
 };
-
-module.exports = fragment;
+})();
+(node/*: any*/).hash = '827e4004c8f3f43d8ee302ef672e5322';
+module.exports = node;

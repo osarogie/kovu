@@ -7,44 +7,47 @@
 'use strict';
 
 /*::
-import type {ConcreteFragment} from 'relay-runtime';
+import type { ConcreteFragment } from 'relay-runtime';
+import type { FragmentReference } from 'relay-runtime';
+declare export opaque type FollowButton_user$ref: FragmentReference;
 export type FollowButton_user = {|
-  +_id: string;
-  +viewer_follows: ?boolean;
-  +follows_viewer: ?boolean;
+  +_id: string,
+  +viewer_follows: ?boolean,
+  +follows_viewer: ?boolean,
+  +$refType: FollowButton_user$ref,
 |};
 */
 
 
-const fragment /*: ConcreteFragment*/ = {
-  "argumentDefinitions": [],
+const node/*: ConcreteFragment*/ = {
   "kind": "Fragment",
-  "metadata": null,
   "name": "FollowButton_user",
+  "type": "User",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     {
       "kind": "ScalarField",
       "alias": null,
-      "args": null,
       "name": "_id",
+      "args": null,
       "storageKey": null
     },
     {
       "kind": "ScalarField",
       "alias": null,
-      "args": null,
       "name": "viewer_follows",
+      "args": null,
       "storageKey": null
     },
     {
       "kind": "ScalarField",
       "alias": null,
-      "args": null,
       "name": "follows_viewer",
+      "args": null,
       "storageKey": null
     }
-  ],
-  "type": "User"
+  ]
 };
-
-module.exports = fragment;
+(node/*: any*/).hash = 'c62b3f7032c6f3d9549c436a1313e4a3';
+module.exports = node;

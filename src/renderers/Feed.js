@@ -82,7 +82,9 @@ export default (FeedQueryRenderer = props => {
   )
 })
 const renderPostsHeader = _ => (
-  <Text style={[styles.postsHeader, { marginTop: 53 }]}>
-    {"Today's Top Stories"}
+  <Text
+    style={[styles.postsHeader, { marginTop: 53, fontSize: 20, padding: 15 }]}
+  >
+    Top Stories
   </Text>
 )

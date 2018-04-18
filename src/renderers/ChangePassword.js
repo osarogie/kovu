@@ -32,7 +32,7 @@ function UpdatePassword(input, environment, config) {
     ...config
   })
 }
-class ChangePassword extends React.Component<void, Props, any> {
+class ChangePassword extends React.Component {
   state = {
     current_password: null,
     new_password: null,
@@ -138,9 +138,7 @@ class ChangePassword extends React.Component<void, Props, any> {
     return (
       <View style={styles.container}>
         {this.renderToolbar()}
-        <View style={{ height: 2 }}>
-          {this.renderProgress()}
-        </View>
+        <View style={{ height: 2 }}>{this.renderProgress()}</View>
         <ScrollView
           style={{ flex: 1, backgroundColor }}
           contentContainerStyle={{ alignItems: 'center' }}
@@ -151,7 +149,8 @@ class ChangePassword extends React.Component<void, Props, any> {
               secureTextEntry={true}
               placeholder="Your Current Password"
               onChangeText={current_password =>
-                this.setState({ current_password })}
+                this.setState({ current_password })
+              }
               value={this.state.current_password}
               onSubmitEditing={() => this._new_password_confirmation.focus()}
             />
@@ -161,7 +160,8 @@ class ChangePassword extends React.Component<void, Props, any> {
               placeholder="New Password"
               ref={component => (this._new_password_confirmation = component)}
               onChangeText={new_password_confirmation =>
-                this.setState({ new_password_confirmation })}
+                this.setState({ new_password_confirmation })
+              }
               value={this.state.new_password_confirmation}
               onSubmitEditing={() => this._new_password.focus()}
             />
@@ -198,7 +198,7 @@ const ChangePasswordFragmentContainer = createFragmentContainer(
   `
 )
 
-export default (ChangePasswordQueryRenderer = ({ api_key, ...props }) =>
+export default (ChangePasswordQueryRenderer = ({ api_key, ...props }) => (
   <QueryRendererProxy
     query={graphql`
       query ChangePasswordQuery {
@@ -207,6 +207,8 @@ export default (ChangePasswordQueryRenderer = ({ api_key, ...props }) =>
         }
       }
     `}
-    render={data =>
-      <ChangePasswordFragmentContainer viewer={data.props.viewer} {...props} />}
-  />)
+    render={data => (
+      <ChangePasswordFragmentContainer viewer={data.props.viewer} {...props} />
+    )}
+  />
+))

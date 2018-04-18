@@ -1,6 +1,6 @@
 // @flow
 
-import React, { Component } from 'react'
+import React from 'react'
 import { View, VirtualizedList } from 'react-native'
 import environment from '../../relay-environment'
 import styles from '../styles'
@@ -9,7 +9,7 @@ import LoaderBox from '../components/LoaderBox'
 import EmptyList from '../components/EmptyList'
 import PostListItem from '../fragments/PostListItem'
 
-export default class PostList extends Component<any, Props, State> {
+export default class PostList extends React.Component {
   state = {
     isFetchingTop: false,
     isLoading: false,
@@ -91,10 +91,12 @@ export default class PostList extends Component<any, Props, State> {
 
   render() {
     const { discussionList, itemProps } = this.props
-    const discussions = discussionList.discussions || discussionList.top_stories
+    const discussions = discussionList
+      ? discussionList.discussions || discussionList.top_stories
+      : { edges: [] }
 
     return (
-      <View style={{ flex: 1, backgroundColor: '#eee' }}>
+      <View style={{ flex: 1 }}>
         {this.props.renderTopHeader && this.props.renderTopHeader()}
         <VirtualizedList
           data={discussions.edges}

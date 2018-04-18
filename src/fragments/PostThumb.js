@@ -4,7 +4,7 @@ import {
   StyleSheet,
   View,
   Image,
-  ViewPropTypes,
+  // ViewPropTypes,
   Dimensions,
   TouchableHighlight,
   PixelRatio,
@@ -61,9 +61,7 @@ class PostThumb extends React.PureComponent {
         >
           <Text style={excerptStyles.groupInfo} numberOfLines={1}>
             <Text> in </Text>
-            <Text {...this.cultureNameProps}>
-              {discussion.group.name}
-            </Text>
+            <Text {...this.cultureNameProps}>{discussion.group.name}</Text>
             <Text> culture</Text>
           </Text>
         </TouchableOpacity>
@@ -99,23 +97,19 @@ class PostThumb extends React.PureComponent {
 
     return (
       <View>
-        <Text style={excerptStyles.title}>
+        <Text style={[excerptStyles.title, { marginTop: 0 }]}>
           {discussion.name}
         </Text>
         <TouchableOpacity {...this.clickableProps} onPress={this.openProfile}>
           <Text style={[styles.fill]} numberOfLines={1}>
-            <Text style={{ fontStyle: 'italic' }}>
-              {'by '}
-            </Text>
+            <Text style={{ fontStyle: 'italic' }}>{'by '}</Text>
             <Text style={[styles.fill, { color: '#000' }]} numberOfLines={1}>
               {discussion.user.name}
             </Text>
           </Text>
         </TouchableOpacity>
         <View style={styles.row}>
-          <Text>
-            {getTimeAgo(discussion.created_at)}
-          </Text>
+          <Text>{getTimeAgo(discussion.created_at)}</Text>
           {this.renderCultureName()}
         </View>
       </View>
@@ -131,10 +125,10 @@ class PostThumb extends React.PureComponent {
         <TouchableHighlight
           {...this.clickableProps}
           style={{
-            backgroundColor: '#fff',
-            margin: 20,
-            elevation: 2,
-            borderRadius: 5
+            backgroundColor: '#fff'
+            // margin: 20,
+            // elevation: 2,
+            // borderRadius: 5
             // borderWidth: 1,
             // borderColor: '#ddd'
           }}
@@ -165,7 +159,7 @@ class PostThumb extends React.PureComponent {
 PostThumb.defaultProps = {}
 
 PostThumb.propTypes = {
-  ...ViewPropTypes
+  // ...ViewPropTypes
 }
 
 export default (PostFragmentContainer = createFragmentContainer(
@@ -186,6 +180,8 @@ export default (PostFragmentContainer = createFragmentContainer(
         profile_picture_name
       }
       group {
+        id
+        _id
         name
         permalink
       }

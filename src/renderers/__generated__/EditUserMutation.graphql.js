@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 8b1b57af3ebd1ef885f7e00dff860e3e
+ * @relayHash 38ce8230bf4eed07952bf21bc79c0120
  */
 
 /* eslint-disable */
@@ -8,23 +8,25 @@
 'use strict';
 
 /*::
-import type {ConcreteBatch} from 'relay-runtime';
+import type { ConcreteRequest } from 'relay-runtime';
+type EditUser_viewer$ref = any;
 export type EditUserMutationVariables = {|
   input: {
-    clientMutationId?: ?string;
-    name?: ?string;
-    username?: ?string;
-    email?: ?string;
-    photo?: ?string;
-    bio?: ?string;
-  };
+    clientMutationId?: ?string,
+    name?: ?string,
+    username?: ?string,
+    email?: ?string,
+    photo?: ?string,
+    bio?: ?string,
+  },
 |};
-
 export type EditUserMutationResponse = {|
   +editUser: ?{|
-    +user: ?{| |};
-    +success: ?boolean;
-  |};
+    +user: ?{|
+      +$fragmentRefs: EditUser_viewer$ref,
+    |},
+    +success: ?boolean,
+  |},
 |};
 */
 
@@ -52,41 +54,60 @@ fragment EditUser_viewer on User {
 }
 */
 
-const batch /*: ConcreteBatch*/ = {
+const node/*: ConcreteRequest*/ = (function(){
+var v0 = [
+  {
+    "kind": "LocalArgument",
+    "name": "input",
+    "type": "EditUserInput!",
+    "defaultValue": null
+  }
+],
+v1 = [
+  {
+    "kind": "Variable",
+    "name": "input",
+    "variableName": "input",
+    "type": "EditUserInput!"
+  }
+],
+v2 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "success",
+  "args": null,
+  "storageKey": null
+};
+return {
+  "kind": "Request",
+  "operationKind": "mutation",
+  "name": "EditUserMutation",
+  "id": null,
+  "text": "mutation EditUserMutation(\n  $input: EditUserInput!\n) {\n  editUser(input: $input) {\n    user {\n      ...EditUser_viewer\n      id\n    }\n    success\n  }\n}\n\nfragment EditUser_viewer on User {\n  id\n  _id\n  name\n  bio\n  username\n  profile_picture_name\n}\n",
+  "metadata": {},
   "fragment": {
-    "argumentDefinitions": [
-      {
-        "kind": "LocalArgument",
-        "name": "input",
-        "type": "EditUserInput!",
-        "defaultValue": null
-      }
-    ],
     "kind": "Fragment",
-    "metadata": null,
     "name": "EditUserMutation",
+    "type": "Mutation",
+    "metadata": null,
+    "argumentDefinitions": v0,
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
-        "args": [
-          {
-            "kind": "Variable",
-            "name": "input",
-            "variableName": "input",
-            "type": "EditUserInput!"
-          }
-        ],
-        "concreteType": "EditUserPayload",
         "name": "editUser",
+        "storageKey": null,
+        "args": v1,
+        "concreteType": "EditUserPayload",
         "plural": false,
         "selections": [
           {
             "kind": "LinkedField",
             "alias": null,
+            "name": "user",
+            "storageKey": null,
             "args": null,
             "concreteType": "User",
-            "name": "user",
             "plural": false,
             "selections": [
               {
@@ -94,120 +115,86 @@ const batch /*: ConcreteBatch*/ = {
                 "name": "EditUser_viewer",
                 "args": null
               }
-            ],
-            "storageKey": null
+            ]
           },
-          {
-            "kind": "ScalarField",
-            "alias": null,
-            "args": null,
-            "name": "success",
-            "storageKey": null
-          }
-        ],
-        "storageKey": null
+          v2
+        ]
       }
-    ],
-    "type": "Mutation"
+    ]
   },
-  "id": null,
-  "kind": "Batch",
-  "metadata": {},
-  "name": "EditUserMutation",
-  "query": {
-    "argumentDefinitions": [
-      {
-        "kind": "LocalArgument",
-        "name": "input",
-        "type": "EditUserInput!",
-        "defaultValue": null
-      }
-    ],
-    "kind": "Root",
+  "operation": {
+    "kind": "Operation",
     "name": "EditUserMutation",
-    "operation": "mutation",
+    "argumentDefinitions": v0,
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
-        "args": [
-          {
-            "kind": "Variable",
-            "name": "input",
-            "variableName": "input",
-            "type": "EditUserInput!"
-          }
-        ],
-        "concreteType": "EditUserPayload",
         "name": "editUser",
+        "storageKey": null,
+        "args": v1,
+        "concreteType": "EditUserPayload",
         "plural": false,
         "selections": [
           {
             "kind": "LinkedField",
             "alias": null,
+            "name": "user",
+            "storageKey": null,
             "args": null,
             "concreteType": "User",
-            "name": "user",
             "plural": false,
             "selections": [
               {
                 "kind": "ScalarField",
                 "alias": null,
-                "args": null,
                 "name": "id",
+                "args": null,
                 "storageKey": null
               },
               {
                 "kind": "ScalarField",
                 "alias": null,
-                "args": null,
                 "name": "_id",
+                "args": null,
                 "storageKey": null
               },
               {
                 "kind": "ScalarField",
                 "alias": null,
-                "args": null,
                 "name": "name",
+                "args": null,
                 "storageKey": null
               },
               {
                 "kind": "ScalarField",
                 "alias": null,
-                "args": null,
                 "name": "bio",
+                "args": null,
                 "storageKey": null
               },
               {
                 "kind": "ScalarField",
                 "alias": null,
-                "args": null,
                 "name": "username",
+                "args": null,
                 "storageKey": null
               },
               {
                 "kind": "ScalarField",
                 "alias": null,
-                "args": null,
                 "name": "profile_picture_name",
+                "args": null,
                 "storageKey": null
               }
-            ],
-            "storageKey": null
+            ]
           },
-          {
-            "kind": "ScalarField",
-            "alias": null,
-            "args": null,
-            "name": "success",
-            "storageKey": null
-          }
-        ],
-        "storageKey": null
+          v2
+        ]
       }
     ]
-  },
-  "text": "mutation EditUserMutation(\n  $input: EditUserInput!\n) {\n  editUser(input: $input) {\n    user {\n      ...EditUser_viewer\n      id\n    }\n    success\n  }\n}\n\nfragment EditUser_viewer on User {\n  id\n  _id\n  name\n  bio\n  username\n  profile_picture_name\n}\n"
+  }
 };
-
-module.exports = batch;
+})();
+(node/*: any*/).hash = '3af9692558502f94b05d61d42e7933f6';
+module.exports = node;

@@ -1,17 +1,24 @@
 // @flow
 
 import React from 'react'
-import { View, Text } from 'react-native'
-import GroupList from '../fragments/GroupList'
-import UserList from '../fragments/UserList'
+import { View, Text, Dimensions } from 'react-native'
+import { VerticalGroupList } from '../fragments/VerticalGroupList'
+import { VerticalUserList } from '../fragments/VerticalUserList'
 import PostList from '../fragments/PostList'
 import Separator from '../components/Separator'
 import QueryRendererProxy from './QueryRendererProxy'
-
+import { TabViewAnimated, TabBar, TabViewPagerPan } from 'react-native-tab-view'
 import { createPaginationContainer, graphql } from 'react-relay'
+import { Screen, Title } from '@shoutem/ui'
+import Icon from 'react-native-vector-icons/Feather'
+
+const initialLayout = {
+  height: 0,
+  width: Dimensions.get('window').width
+}
 
 const DiscoverGroupsPaginationContainer = createPaginationContainer(
-  GroupList,
+  VerticalGroupList,
   {
     groupList: graphql`
       fragment Discover_groupList on Feed {
@@ -52,7 +59,11 @@ const DiscoverGroupsPaginationContainer = createPaginationContainer(
     },
     variables: { cursor: null, q: '' },
     query: graphql`
-      query DiscoverPaginationQuery($count: Int!, $cursor: String, $q: String) {
+      query DiscoverGroupsPaginationQuery(
+        $count: Int!
+        $cursor: String
+        $q: String
+      ) {
         feed {
           ...Discover_groupList
         }
@@ -62,7 +73,7 @@ const DiscoverGroupsPaginationContainer = createPaginationContainer(
 )
 
 const DiscoverUsersPaginationContainer = createPaginationContainer(
-  UserList,
+  VerticalUserList,
   {
     userList: graphql`
       fragment Discover_userList on Feed {
@@ -102,7 +113,11 @@ const DiscoverUsersPaginationContainer = createPaginationContainer(
     },
     variables: { cursor: null, size: '30x39' },
     query: graphql`
-      query DiscoverPaginationQuery($count: Int!, $cursor: String, $q: String) {
+      query DiscoverUsersPaginationQuery(
+        $count: Int!
+        $cursor: String
+        $q: String
+      ) {
         feed {
           ...Discover_userList
         }
@@ -152,7 +167,11 @@ const DiscoverPostsPaginationContainer = createPaginationContainer(
     },
     variables: { cursor: null },
     query: graphql`
-      query DiscoverPaginationQuery($count: Int!, $cursor: String, $q: String) {
+      query DiscoverPostsPaginationQuery(
+        $count: Int!
+        $cursor: String
+        $q: String
+      ) {
         feed {
           ...Discover_discussionList
         }
@@ -161,47 +180,212 @@ const DiscoverPostsPaginationContainer = createPaginationContainer(
   }
 )
 
-export default (DiscoverQueryRenderer = ({ q, ...props }) => {
-  return (
-    <QueryRendererProxy
-      query={graphql`
-        query DiscoverQuery($count: Int!, $cursor: String, $q: String) {
-          feed {
-            ...Discover_userList
-            ...Discover_discussionList
-            ...Discover_groupList
+class Cultures extends React.Component {
+  shouldComponentUpdate = (p, s) => p.q !== this.props.q
+
+  render() {
+    const { q, ...props } = this.props
+    return (
+      <QueryRendererProxy
+        query={graphql`
+          query DiscoverCQuery($count: Int!, $cursor: String, $q: String) {
+            feed {
+              ...Discover_groupList
+            }
           }
-        }
-      `}
-      variables={{ cursor: null, count: 10, q }}
-      render={data =>
-        <DiscoverPostsPaginationContainer
-          discussionList={data.props.feed}
-          q={q}
-          highlight
-          itemProps={{ ...props }}
-          renderHeader={_ =>
-            <View style={{ flex: 1, backgroundColor: '#eee', marginTop: 53 }}>
-              <DiscoverUsersPaginationContainer
-                renderHeader={_ => renderUserHeader(q)}
-                userList={data.props.feed}
-                q={q}
-                itemProps={{ ...props }}
-              />
-              <View style={{ flex: 1, backgroundColor: '#fff' }}>
-                <DiscoverGroupsPaginationContainer
-                  renderHeader={_ => renderCultureHeader(q)}
-                  groupList={data.props.feed}
-                  q={q}
-                  itemProps={{ ...props, f_width: 300, f_height: 200 }}
-                />
-              </View>
-              {renderPostsLabel(q)}
-            </View>}
-        />}
+        `}
+        variables={{ cursor: null, count: 10, q }}
+        render={data => (
+          <View style={{ flex: 1, backgroundColor: '#fff' }}>
+            <DiscoverGroupsPaginationContainer
+              // renderHeader={_ => renderCultureHeader(q)}
+              groupList={data.props.feed}
+              q={q}
+              itemProps={{ ...props, f_width: 300, f_height: 200 }}
+            />
+          </View>
+        )}
+      />
+    )
+  }
+}
+
+class Users extends React.Component {
+  shouldComponentUpdate = (p, s) => p.q !== this.props.q
+
+  render() {
+    const { q, ...props } = this.props
+    return (
+      <QueryRendererProxy
+        query={graphql`
+          query DiscoverUQuery($count: Int!, $cursor: String, $q: String) {
+            feed {
+              ...Discover_userList
+            }
+          }
+        `}
+        variables={{ cursor: null, count: 10, q }}
+        render={data => (
+          <View style={{ flex: 1, backgroundColor: '#fff' }}>
+            <DiscoverUsersPaginationContainer
+              // renderHeader={_ => renderUserHeader(q)}
+              userList={data.props.feed}
+              q={q}
+              itemProps={{ ...props }}
+            />
+          </View>
+        )}
+      />
+    )
+  }
+}
+
+class Stories extends React.Component {
+  shouldComponentUpdate = (p, s) => p.q !== this.props.q
+
+  render() {
+    const { q, ...props } = this.props
+
+    if (!q)
+      return (
+        <Screen styleName="middleCenter paper">
+          <Icon name="search" size={100} color="#ddd" />
+          <Title>Use the search bar to find stories</Title>
+        </Screen>
+      )
+
+    return (
+      <QueryRendererProxy
+        query={graphql`
+          query DiscoverSQuery($count: Int!, $cursor: String, $q: String) {
+            feed {
+              ...Discover_discussionList
+            }
+          }
+        `}
+        variables={{ cursor: null, count: 10, q }}
+        render={data => (
+          <View style={{ flex: 1, backgroundColor: '#fff' }}>
+            <DiscoverPostsPaginationContainer
+              discussionList={data.props.feed}
+              q={q}
+              highlight
+              itemProps={{ ...props }}
+            />
+          </View>
+        )}
+      />
+    )
+  }
+}
+
+///////
+
+export default class VideoPager extends React.Component {
+  state = {
+    index: 0,
+    routes: [
+      { key: 'cultures', title: 'Cultures' },
+      { key: 'users', title: 'People' },
+      { key: 'stories', title: 'Stories' }
+    ]
+  }
+  _handleIndexChange = index =>
+    this.setState({
+      index
+    })
+
+  _renderScene = ({ route }) => {
+    const { q, ...props } = this.props
+    switch (route.key) {
+      case 'cultures':
+        return <Cultures q={q} {...props} />
+      case 'stories':
+        return <Stories q={q} {...props} />
+      case 'users':
+        return <Users q={q} {...props} />
+
+      default:
+        return null
+    }
+  }
+
+  _renderHeader = props => (
+    <TabBar
+      {...props}
+      onTabPress={this.onTabPress}
+      // scrollEnabled
+      indicatorStyle={styles.indicator}
+      style={styles.tabbar}
+      tabStyle={styles.tab}
+      labelStyle={styles.label}
     />
   )
-})
+  render() {
+    // const { loading, error, selected } = this.state
+    // const categories = this.props.data
+
+    return (
+      <View style={{ flex: 1 /*marginTop: 53*/ }}>
+        <TabViewAnimated
+          style={[styles.container, this.props.style]}
+          navigationState={this.state}
+          renderScene={this._renderScene}
+          renderHeader={this._renderHeader}
+          onIndexChange={this._handleIndexChange}
+          initialLayout={initialLayout}
+          renderPager={props => <TabViewPagerPan {...props} />}
+        />
+      </View>
+    )
+  }
+}
+
+//////////
+
+//  (DiscoverQueryRenderer = ({ q, ...props }) => {
+//   return (
+//     <QueryRendererProxy
+//       query={graphql`
+//         query DiscoverQuery($count: Int!, $cursor: String, $q: String) {
+//           feed {
+//             ...Discover_userList
+//             ...Discover_discussionList
+//             ...Discover_groupList
+//           }
+//         }
+//       `}
+//       variables={{ cursor: null, count: 10, q }}
+//       render={data => (
+//         <DiscoverPostsPaginationContainer
+//           discussionList={data.props.feed}
+//           q={q}
+//           highlight
+//           itemProps={{ ...props }}
+//           renderHeader={_ => (
+//             <View style={{ flex: 1, backgroundColor: '#eee', marginTop: 53 }}>
+//               <DiscoverUsersPaginationContainer
+//                 renderHeader={_ => renderUserHeader(q)}
+//                 userList={data.props.feed}
+//                 q={q}
+//                 itemProps={{ ...props }}
+//               />
+//               <View style={{ flex: 1, backgroundColor: '#fff' }}>
+//                 <DiscoverGroupsPaginationContainer
+//                   renderHeader={_ => renderCultureHeader(q)}
+//                   groupList={data.props.feed}
+//                   q={q}
+//                   itemProps={{ ...props, f_width: 300, f_height: 200 }}
+//                 />
+//               </View>
+//               {renderPostsLabel(q)}
+//             </View>
+//           )}
+//         />
+//       )}
+//     />
+//   )
+// })
 const labelStyle = {
   flexDirection: 'row',
   alignItems: 'flex-end',
@@ -211,30 +395,51 @@ const labelStyle = {
   color: '#000',
   fontWeight: 'bold'
 }
-const renderCultureHeader = q =>
+
+const styles = {
+  white: { color: '#fff', paddingVertical: 5 },
+  tabbar: {
+    backgroundColor: '#fff'
+  },
+  tab: {
+    // width: 'auto',
+    height: 50
+  },
+  indicator: {
+    backgroundColor: '#50f',
+    height: 2
+  },
+  label: {
+    color: '#000',
+    fontWeight: '400'
+  }
+}
+
+const renderCultureHeader = q => (
   <Text style={labelStyle}>
     Top Cultures
     {renderMatch(q)}
   </Text>
-const renderUserHeader = q =>
+)
+const renderUserHeader = q => (
   <Text style={labelStyle}>
     People
     {renderMatch(q)}
   </Text>
-const renderPostsLabel = q =>
+)
+const renderPostsLabel = q => (
   <Text style={[labelStyle, { backgroundColor: '#eee' }]}>
     Stories
     {renderMatch(q)}
   </Text>
+)
 
 const renderMatch = q => {
   if (q) {
     return (
       <Text style={{ fontSize: 13, color: '#777', fontStyle: 'italic' }}>
         {` that match `}
-        <Text style={{ color: '#000' }}>
-          {q}
-        </Text>
+        <Text style={{ color: '#000' }}>{q}</Text>
       </Text>
     )
   }

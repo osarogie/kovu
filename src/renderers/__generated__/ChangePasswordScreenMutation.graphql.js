@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 01f82fca7172628cc0a19a403527c26e
+ * @relayHash 96039d50b6718c23622ede7df71a2309
  */
 
 /* eslint-disable */
@@ -8,20 +8,19 @@
 'use strict';
 
 /*::
-import type {ConcreteBatch} from 'relay-runtime';
+import type { ConcreteRequest } from 'relay-runtime';
 export type ChangePasswordScreenMutationVariables = {|
   input: {
-    clientMutationId?: ?string;
-    current_password: string;
-    new_password: string;
-    new_password_confirmation?: ?string;
-  };
+    clientMutationId?: ?string,
+    current_password: string,
+    new_password: string,
+    new_password_confirmation?: ?string,
+  },
 |};
-
 export type ChangePasswordScreenMutationResponse = {|
   +changePassword: ?{|
-    +success: ?boolean;
-  |};
+    +success: ?boolean,
+  |},
 |};
 */
 
@@ -36,93 +35,64 @@ mutation ChangePasswordScreenMutation(
 }
 */
 
-const batch /*: ConcreteBatch*/ = {
-  "fragment": {
-    "argumentDefinitions": [
+const node/*: ConcreteRequest*/ = (function(){
+var v0 = [
+  {
+    "kind": "LocalArgument",
+    "name": "input",
+    "type": "ChangePasswordInput!",
+    "defaultValue": null
+  }
+],
+v1 = [
+  {
+    "kind": "LinkedField",
+    "alias": null,
+    "name": "changePassword",
+    "storageKey": null,
+    "args": [
       {
-        "kind": "LocalArgument",
+        "kind": "Variable",
         "name": "input",
-        "type": "ChangePasswordInput!",
-        "defaultValue": null
+        "variableName": "input",
+        "type": "ChangePasswordInput!"
       }
     ],
-    "kind": "Fragment",
-    "metadata": null,
-    "name": "ChangePasswordScreenMutation",
+    "concreteType": "ChangePasswordPayload",
+    "plural": false,
     "selections": [
       {
-        "kind": "LinkedField",
+        "kind": "ScalarField",
         "alias": null,
-        "args": [
-          {
-            "kind": "Variable",
-            "name": "input",
-            "variableName": "input",
-            "type": "ChangePasswordInput!"
-          }
-        ],
-        "concreteType": "ChangePasswordPayload",
-        "name": "changePassword",
-        "plural": false,
-        "selections": [
-          {
-            "kind": "ScalarField",
-            "alias": null,
-            "args": null,
-            "name": "success",
-            "storageKey": null
-          }
-        ],
-        "storageKey": null
-      }
-    ],
-    "type": "Mutation"
-  },
-  "id": null,
-  "kind": "Batch",
-  "metadata": {},
-  "name": "ChangePasswordScreenMutation",
-  "query": {
-    "argumentDefinitions": [
-      {
-        "kind": "LocalArgument",
-        "name": "input",
-        "type": "ChangePasswordInput!",
-        "defaultValue": null
-      }
-    ],
-    "kind": "Root",
-    "name": "ChangePasswordScreenMutation",
-    "operation": "mutation",
-    "selections": [
-      {
-        "kind": "LinkedField",
-        "alias": null,
-        "args": [
-          {
-            "kind": "Variable",
-            "name": "input",
-            "variableName": "input",
-            "type": "ChangePasswordInput!"
-          }
-        ],
-        "concreteType": "ChangePasswordPayload",
-        "name": "changePassword",
-        "plural": false,
-        "selections": [
-          {
-            "kind": "ScalarField",
-            "alias": null,
-            "args": null,
-            "name": "success",
-            "storageKey": null
-          }
-        ],
+        "name": "success",
+        "args": null,
         "storageKey": null
       }
     ]
+  }
+];
+return {
+  "kind": "Request",
+  "operationKind": "mutation",
+  "name": "ChangePasswordScreenMutation",
+  "id": null,
+  "text": "mutation ChangePasswordScreenMutation(\n  $input: ChangePasswordInput!\n) {\n  changePassword(input: $input) {\n    success\n  }\n}\n",
+  "metadata": {},
+  "fragment": {
+    "kind": "Fragment",
+    "name": "ChangePasswordScreenMutation",
+    "type": "Mutation",
+    "metadata": null,
+    "argumentDefinitions": v0,
+    "selections": v1
   },
-  "text": "mutation ChangePasswordScreenMutation(\n  $input: ChangePasswordInput!\n) {\n  changePassword(input: $input) {\n    success\n  }\n}\n"
+  "operation": {
+    "kind": "Operation",
+    "name": "ChangePasswordScreenMutation",
+    "argumentDefinitions": v0,
+    "selections": v1
+  }
 };
-
-module.exports = batch;
+})();
+(node/*: any*/).hash = '4648e9042b5367f26a73cc83a596b469';
+module.exports = node;

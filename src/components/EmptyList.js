@@ -1,5 +1,5 @@
 import React from 'react'
-import { ViewPropTypes, Text, StyleSheet, View } from 'react-native'
+import {  Text, StyleSheet, View } from 'react-native'
 import { connect } from 'react-redux'
 import colors from '../colors'
 
@@ -31,8 +31,8 @@ EmptyList.defaultProps = {
 }
 
 EmptyList.propTypes = {
-  ...ViewPropTypes,
-  message: React.PropTypes.string
+  // ...ViewPropTypes,
+  // message: React.PropTypes.string
 }
 export default connect(mapStateToProps)(EmptyList)
 // const styles = StyleSheet.create({

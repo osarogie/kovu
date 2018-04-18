@@ -12,7 +12,7 @@ import {
   TouchableWithoutFeedback,
   PixelRatio
 } from 'react-native'
-import ViewPropTypes from '../config//ViewPropTypes'
+// import ViewPropTypes from '../config//ViewPropTypes'
 
 import Icon from './Icon'
 import Text from './Text'
@@ -275,7 +275,7 @@ Image.propTypes = {
     iconType: PropTypes.string,
     iconColor: PropTypes.string,
     underlayColor: PropTypes.string,
-    style: ViewPropTypes.style
+    // style: ViewPropTypes.style
   })
 }
 

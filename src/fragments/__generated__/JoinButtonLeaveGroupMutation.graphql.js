@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 442431711206000858bf8934d755cf28
+ * @relayHash 1dc8fe8697aa94b6e47a222e698d2af4
  */
 
 /* eslint-disable */
@@ -8,18 +8,20 @@
 'use strict';
 
 /*::
-import type {ConcreteBatch} from 'relay-runtime';
+import type { ConcreteRequest } from 'relay-runtime';
+type JoinButton_group$ref = any;
 export type JoinButtonLeaveGroupMutationVariables = {|
   input: {
-    clientMutationId?: ?string;
-    id: string;
-  };
+    clientMutationId?: ?string,
+    id: string,
+  },
 |};
-
 export type JoinButtonLeaveGroupMutationResponse = {|
   +leaveGroup: ?{|
-    +group: ?{| |};
-  |};
+    +group: ?{|
+      +$fragmentRefs: JoinButton_group$ref,
+    |},
+  |},
 |};
 */
 
@@ -43,41 +45,53 @@ fragment JoinButton_group on Group {
 }
 */
 
-const batch /*: ConcreteBatch*/ = {
+const node/*: ConcreteRequest*/ = (function(){
+var v0 = [
+  {
+    "kind": "LocalArgument",
+    "name": "input",
+    "type": "LeaveGroupInput!",
+    "defaultValue": null
+  }
+],
+v1 = [
+  {
+    "kind": "Variable",
+    "name": "input",
+    "variableName": "input",
+    "type": "LeaveGroupInput!"
+  }
+];
+return {
+  "kind": "Request",
+  "operationKind": "mutation",
+  "name": "JoinButtonLeaveGroupMutation",
+  "id": null,
+  "text": "mutation JoinButtonLeaveGroupMutation(\n  $input: LeaveGroupInput!\n) {\n  leaveGroup(input: $input) {\n    group {\n      ...JoinButton_group\n      id\n    }\n  }\n}\n\nfragment JoinButton_group on Group {\n  _id\n  viewer_is_a_member\n  is_private\n}\n",
+  "metadata": {},
   "fragment": {
-    "argumentDefinitions": [
-      {
-        "kind": "LocalArgument",
-        "name": "input",
-        "type": "LeaveGroupInput!",
-        "defaultValue": null
-      }
-    ],
     "kind": "Fragment",
-    "metadata": null,
     "name": "JoinButtonLeaveGroupMutation",
+    "type": "Mutation",
+    "metadata": null,
+    "argumentDefinitions": v0,
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
-        "args": [
-          {
-            "kind": "Variable",
-            "name": "input",
-            "variableName": "input",
-            "type": "LeaveGroupInput!"
-          }
-        ],
-        "concreteType": "LeaveGroupPayload",
         "name": "leaveGroup",
+        "storageKey": null,
+        "args": v1,
+        "concreteType": "LeaveGroupPayload",
         "plural": false,
         "selections": [
           {
             "kind": "LinkedField",
             "alias": null,
+            "name": "group",
+            "storageKey": null,
             "args": null,
             "concreteType": "Group",
-            "name": "group",
             "plural": false,
             "selections": [
               {
@@ -85,92 +99,70 @@ const batch /*: ConcreteBatch*/ = {
                 "name": "JoinButton_group",
                 "args": null
               }
-            ],
-            "storageKey": null
+            ]
           }
-        ],
-        "storageKey": null
+        ]
       }
-    ],
-    "type": "Mutation"
+    ]
   },
-  "id": null,
-  "kind": "Batch",
-  "metadata": {},
-  "name": "JoinButtonLeaveGroupMutation",
-  "query": {
-    "argumentDefinitions": [
-      {
-        "kind": "LocalArgument",
-        "name": "input",
-        "type": "LeaveGroupInput!",
-        "defaultValue": null
-      }
-    ],
-    "kind": "Root",
+  "operation": {
+    "kind": "Operation",
     "name": "JoinButtonLeaveGroupMutation",
-    "operation": "mutation",
+    "argumentDefinitions": v0,
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
-        "args": [
-          {
-            "kind": "Variable",
-            "name": "input",
-            "variableName": "input",
-            "type": "LeaveGroupInput!"
-          }
-        ],
-        "concreteType": "LeaveGroupPayload",
         "name": "leaveGroup",
+        "storageKey": null,
+        "args": v1,
+        "concreteType": "LeaveGroupPayload",
         "plural": false,
         "selections": [
           {
             "kind": "LinkedField",
             "alias": null,
+            "name": "group",
+            "storageKey": null,
             "args": null,
             "concreteType": "Group",
-            "name": "group",
             "plural": false,
             "selections": [
               {
                 "kind": "ScalarField",
                 "alias": null,
-                "args": null,
                 "name": "_id",
+                "args": null,
                 "storageKey": null
               },
               {
                 "kind": "ScalarField",
                 "alias": null,
-                "args": null,
                 "name": "viewer_is_a_member",
+                "args": null,
                 "storageKey": null
               },
               {
                 "kind": "ScalarField",
                 "alias": null,
-                "args": null,
                 "name": "is_private",
+                "args": null,
                 "storageKey": null
               },
               {
                 "kind": "ScalarField",
                 "alias": null,
-                "args": null,
                 "name": "id",
+                "args": null,
                 "storageKey": null
               }
-            ],
-            "storageKey": null
+            ]
           }
-        ],
-        "storageKey": null
+        ]
       }
     ]
-  },
-  "text": "mutation JoinButtonLeaveGroupMutation(\n  $input: LeaveGroupInput!\n) {\n  leaveGroup(input: $input) {\n    group {\n      ...JoinButton_group\n      id\n    }\n  }\n}\n\nfragment JoinButton_group on Group {\n  _id\n  viewer_is_a_member\n  is_private\n}\n"
+  }
 };
-
-module.exports = batch;
+})();
+(node/*: any*/).hash = '9137dafaf683b0f4df4d9964b55365ba';
+module.exports = node;

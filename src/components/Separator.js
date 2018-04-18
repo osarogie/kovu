@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, ViewPropTypes } from 'react-native'
+import { View } from 'react-native'
 import { connect } from 'react-redux'
 import styles from '../styles'
 
@@ -27,8 +27,8 @@ Separator.defaultProps = {
 }
 
 Separator.propTypes = {
-  ...ViewPropTypes,
-  styles: React.PropTypes.object
+  // ...ViewPropTypes,
+  // styles: React.PropTypes.object
 }
 
 export default connect(mapStateToProps)(Separator)

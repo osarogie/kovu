@@ -4,6 +4,9 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import excerptStyles from '../styles/excerptStyles'
 import { connect } from 'react-redux'
 import { commitMutation, createFragmentContainer, graphql } from 'react-relay'
+import { navHelper } from '../helpers/getNavigation'
+import { withNavigation } from 'react-navigation'
+import { PURPLE, BLACK } from '../ui'
 
 const mapStateToProps = state => ({
   night_mode: state.night_mode,
@@ -82,13 +85,9 @@ function unlikeMutation(
   })
 }
 class DiscussionLike extends React.Component {
-  constructor(props) {
-    super(props)
-    this.toggleLike = this.toggleLike.bind(this)
-  }
-  toggleLike() {
+  toggleLike = () => {
     if (!this.props.loggedIn) {
-      this.props.openLogin()
+      navHelper(this).openLogin()
       return
     }
 
@@ -100,34 +99,41 @@ class DiscussionLike extends React.Component {
       : likeMutation(discussion, environment)
   }
   render() {
-    const { viewer_does_like, like_count } = this.props.discussion
-    const color = viewer_does_like ? '#05fc' : '#05fc'
+    const { style, size, hideCount, discussion, stacked } = this.props
+    const { viewer_does_like, like_count } = discussion
+
+    const color = viewer_does_like ? BLACK : BLACK
     return (
       <TouchableOpacity
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          paddingTop: 10,
-          paddingBottom: 10
-        }}
+        style={[
+          {
+            flexDirection: stacked ? 'column' : 'row',
+            alignItems: 'center',
+            paddingTop: 10,
+            paddingBottom: 10
+          },
+          style
+        ]}
         onPress={this.toggleLike}
       >
         <Icon
           name={viewer_does_like ? 'md-heart' : 'md-heart-outline'}
           style={excerptStyles.controlIcon}
-          size={23}
+          size={size || 23}
           color={color}
         />
-        <Text style={{ marginLeft: 7, fontSize: 15, color }}>
-          {like_count}
-        </Text>
+        {hideCount ? null : (
+          <Text style={{ marginLeft: stacked ? 0 : 7, fontSize: 15, color }}>
+            {like_count}
+          </Text>
+        )}
       </TouchableOpacity>
     )
   }
 }
 
 export default createFragmentContainer(
-  connect(mapStateToProps)(DiscussionLike),
+  withNavigation(connect(mapStateToProps)(DiscussionLike)),
   graphql`
     fragment DiscussionLike_discussion on Discussion {
       id

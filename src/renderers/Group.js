@@ -33,7 +33,7 @@ const mapStateToProps = state => ({
   current_user: state.user.user
 })
 
-class Group extends React.Component<void, Props, any> {
+class Group extends React.Component {
   constructor(props) {
     super(props)
     this.openProfile = this.openProfile.bind(this)

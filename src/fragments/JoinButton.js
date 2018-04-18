@@ -1,10 +1,12 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, Alert } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import excerptStyles from '../styles/excerptStyles'
 import ActivityButton from '../components/ActivityButton'
 import { connect } from 'react-redux'
 import { commitMutation, createFragmentContainer, graphql } from 'react-relay'
+import { navHelper } from '../helpers/getNavigation'
+import { withNavigation } from 'react-navigation'
 
 const mapStateToProps = state => ({
   night_mode: state.night_mode,
@@ -62,16 +64,25 @@ class JoinButton extends React.Component {
     this.toggleJoin = this.toggleJoin.bind(this)
   }
   toggleJoin() {
+    const { group } = this.props
+    const { environment } = this.props.relay
+    const { viewer_is_a_member, is_private } = group
+
+    if (!viewer_is_a_member && is_private) {
+      Alert.alert(
+        'Cannot join',
+        'You cannot join this unless you are added by the admin'
+      )
+      return
+    }
+
     if (!this.props.loggedIn) {
-      this.props.openLogin()
+      navHelper(this).openLogin()
       return
     }
 
     this.setState({ isLoading: true })
 
-    const { group } = this.props
-    const { environment } = this.props.relay
-    const { viewer_is_a_member } = group
     viewer_is_a_member
       ? leaveMutation(group, environment, {
           onCompleted: _ => {
@@ -113,7 +124,7 @@ class JoinButton extends React.Component {
 }
 
 export default createFragmentContainer(
-  connect(mapStateToProps)(JoinButton),
+  withNavigation(connect(mapStateToProps)(JoinButton)),
   graphql`
     fragment JoinButton_group on Group {
       _id

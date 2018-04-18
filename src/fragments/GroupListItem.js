@@ -4,22 +4,34 @@ import {
   StyleSheet,
   View,
   Image,
-  ViewPropTypes,
+  // ViewPropTypes,
   TouchableOpacity,
-  PixelRatio
+  PixelRatio,
+  Dimensions
 } from 'react-native'
 import styles from '../styles'
 import { commitMutation, createFragmentContainer, graphql } from 'react-relay'
 import Markdown from 'react-native-simple-markdown'
 import { imageUrl } from '../utils'
+import { withNavigation } from 'react-navigation'
+import { navHelper } from '../helpers/getNavigation'
+
+const vertical_width = Dimensions.get('window').width - 34
 
 class GroupListItem extends React.Component {
   renderFeaturePhoto() {
-    const { header_image } = this.props.group
-    const width = this.props.f_width || 200
+    const { group: { header_image }, vertical } = this.props
+    // const { header_image } = this.props.group
+    const width = vertical ? vertical_width : this.props.f_width || 200
     const height = this.props.f_height || 100
-    const f_width = PixelRatio.getPixelSizeForLayoutSize(width)
-    const f_height = PixelRatio.getPixelSizeForLayoutSize(height)
+    const f_width = Math.min(
+      1000,
+      vertical ? 1000 : PixelRatio.getPixelSizeForLayoutSize(width)
+    )
+    const f_height = Math.min(
+      1000,
+      PixelRatio.getPixelSizeForLayoutSize(height)
+    )
 
     if (header_image) {
       return (
@@ -28,6 +40,7 @@ class GroupListItem extends React.Component {
             uri: imageUrl(header_image.name, `${f_width}x${f_height}`)
           }}
           style={{
+            flex: 1,
             borderRadius: 5,
             height,
             width
@@ -39,24 +52,25 @@ class GroupListItem extends React.Component {
   }
 
   render() {
-    const { group, f_width, f_height, openCulture } = this.props
-    const width = f_width || 200
+    const { group, f_width, f_height, openCulture, vertical } = this.props
+    const width = vertical ? 'auto' : f_width || 200
     const height = f_height || 100
 
     return (
       <TouchableOpacity
         underlayColor="whitesmoke"
-        onPress={_ => openCulture && openCulture(group)}
+        onPress={_ => navHelper(this).openCulture(group)}
       >
         <View>
           <View
             style={{
+              flex: 1,
               marginLeft: 17,
               marginTop: 17,
               width,
               height,
               borderRadius: 5,
-              marginRight: 15,
+              marginRight: 17,
               elevation: 2,
               backgroundColor: '#05f'
             }}
@@ -67,6 +81,7 @@ class GroupListItem extends React.Component {
                 {
                   height,
                   width,
+                  flex: 1,
                   backgroundColor: '#05f',
                   position: 'absolute',
                   top: 0,
@@ -128,11 +143,11 @@ class GroupListItem extends React.Component {
 GroupListItem.defaultProps = {}
 
 GroupListItem.propTypes = {
-  ...ViewPropTypes
+  // ...ViewPropTypes
 }
 
 export default createFragmentContainer(
-  GroupListItem,
+  withNavigation(GroupListItem),
   graphql`
     fragment GroupListItem_group on Group {
       id

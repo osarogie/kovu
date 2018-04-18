@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-  ViewPropTypes,
+  // ViewPropTypes,
   ActivityIndicator,
   Platform,
   StyleSheet,
@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   View
 } from 'react-native'
+import PropTypes from 'prop-types'
 
 export default class ActivityButton extends React.Component {
   renderLoading() {
@@ -99,14 +100,14 @@ ActivityButton.defaultProps = {
 }
 
 ActivityButton.propTypes = {
-  ...ViewPropTypes,
-  onPress: React.PropTypes.func,
-  isLoading: React.PropTypes.bool,
-  title: React.PropTypes.string,
-  indicatorColor: React.PropTypes.string,
-  indicatorSize: React.PropTypes.string,
-  containerStyle: View.propTypes.style,
-  buttonStyle: View.propTypes.style,
-  textStyle: Text.propTypes.style,
-  activityIndicatorStyle: View.propTypes.style
+  // ...ViewPropTypes,
+  // onPress: PropTypes.func,
+  // isLoading: PropTypes.bool,
+  // title: PropTypes.string,
+  // indicatorColor: PropTypes.string,
+  // indicatorSize: PropTypes.string,
+  // containerStyle: PropTypes.style,
+  // buttonStyle: PropTypes.style,
+  // textStyle: PropTypes.style,
+  // activityIndicatorStyle: PropTypes.style
 }

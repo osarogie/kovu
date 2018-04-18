@@ -7,60 +7,63 @@
 'use strict';
 
 /*::
-import type {ConcreteFragment} from 'relay-runtime';
+import type { ConcreteFragment } from 'relay-runtime';
+import type { FragmentReference } from 'relay-runtime';
+declare export opaque type StartCulture_group$ref: FragmentReference;
 export type StartCulture_group = {|
-  +id: string;
-  +_id: string;
-  +name: ?string;
-  +body: ?string;
-  +is_private: ?boolean;
+  +id: string,
+  +_id: string,
+  +name: ?string,
+  +body: ?string,
+  +is_private: ?boolean,
+  +$refType: StartCulture_group$ref,
 |};
 */
 
 
-const fragment /*: ConcreteFragment*/ = {
-  "argumentDefinitions": [],
+const node/*: ConcreteFragment*/ = {
   "kind": "Fragment",
-  "metadata": null,
   "name": "StartCulture_group",
+  "type": "Group",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     {
       "kind": "ScalarField",
       "alias": null,
-      "args": null,
       "name": "id",
+      "args": null,
       "storageKey": null
     },
     {
       "kind": "ScalarField",
       "alias": null,
-      "args": null,
       "name": "_id",
+      "args": null,
       "storageKey": null
     },
     {
       "kind": "ScalarField",
       "alias": null,
-      "args": null,
       "name": "name",
+      "args": null,
       "storageKey": null
     },
     {
       "kind": "ScalarField",
       "alias": null,
-      "args": null,
       "name": "body",
+      "args": null,
       "storageKey": null
     },
     {
       "kind": "ScalarField",
       "alias": null,
-      "args": null,
       "name": "is_private",
+      "args": null,
       "storageKey": null
     }
-  ],
-  "type": "Group"
+  ]
 };
-
-module.exports = fragment;
+(node/*: any*/).hash = '6b82b694d4cd885ddb5ce624a82761f6';
+module.exports = node;

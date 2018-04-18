@@ -4,7 +4,7 @@ import {
   StyleSheet,
   View,
   Image,
-  ViewPropTypes,
+  // ViewPropTypes,
   PixelRatio,
   TouchableHighlight
 } from 'react-native'
@@ -15,6 +15,8 @@ import { imageUrl } from '../utils'
 import Avatar from '../components/Avatar'
 import FollowButton from './FollowButton'
 import { connect } from 'react-redux'
+import { navHelper } from '../helpers/getNavigation'
+import { withNavigation } from 'react-navigation'
 
 const mapStateToProps = state => ({
   night_mode: state.night_mode,
@@ -26,20 +28,78 @@ class UserListItem extends React.Component {
     underlayColor: 'whitesmoke'
   }
 
-  constructor(props) {
-    super(props)
-    this.openProfile = this.openProfile.bind(this)
-  }
-
-  openProfile = _ => this.props.openProfile(this.props.user)
+  openProfile = _ => navHelper(this).openProfile(this.props.user)
 
   renderFollowButton = _ =>
-    this.props.loggedIn && this.props.user._id == this.props.current_user._id
-      ? null
-      : <FollowButton user={this.props.user} openLogin={this.props.openLogin} />
+    this.props.loggedIn &&
+    this.props.user._id == this.props.current_user._id ? null : (
+      <FollowButton
+        user={this.props.user}
+        openLogin={this.props.openLogin}
+        icon={this.props.vertical ? true : false}
+      />
+    )
 
   render() {
-    const { user } = this.props
+    const { user, vertical } = this.props
+
+    if (vertical)
+      return (
+        <TouchableHighlight
+          {...this.clickableProps}
+          onPress={this.openProfile}
+          style={{
+            // padding: 17,
+            // marginTop: 10,
+            backgroundColor: '#fff',
+            flex: 1
+            // elevation: 3,
+            // borderRadius: 5
+          }}
+        >
+          <View style={{ paddingHorizontal: 17, paddingVertical: 14, flex: 1 }}>
+            <View style={{ flexDirection: 'row', flex: 1 }}>
+              <Avatar
+                medium
+                rounded
+                source={user}
+                title={user.name}
+                activeOpacity={0.7}
+              />
+              <View style={{ flex: 1, marginLeft: 17 }}>
+                <Text
+                  numberOfLines={2}
+                  style={{
+                    flex: 1,
+                    marginRight: 5,
+                    color: '#000',
+                    fontSize: 16,
+                    fontWeight: 'bold'
+                    // textAlign: 'center'
+                  }}
+                >
+                  {user.name}
+                </Text>
+                <Text
+                  numberOfLines={2}
+                  style={{
+                    marginTop: 10,
+                    marginBottom: 10,
+                    // marginLeft: 10,
+                    flex: 1,
+                    marginRight: 5,
+                    fontSize: 14
+                    // textAlign: 'center'
+                  }}
+                >
+                  {user.bio}
+                </Text>
+              </View>
+              {this.renderFollowButton()}
+            </View>
+          </View>
+        </TouchableHighlight>
+      )
 
     return (
       <TouchableHighlight
@@ -103,14 +163,8 @@ class UserListItem extends React.Component {
   }
 }
 
-UserListItem.defaultProps = {}
-
-UserListItem.propTypes = {
-  ...ViewPropTypes
-}
-
 export default createFragmentContainer(
-  connect(mapStateToProps)(UserListItem),
+  withNavigation(connect(mapStateToProps)(UserListItem)),
   graphql`
     fragment UserListItem_user on User {
       id

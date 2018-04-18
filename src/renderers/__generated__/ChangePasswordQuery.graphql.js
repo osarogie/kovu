@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 3b61dc44c363a06c9795bf2a3cb596ad
+ * @relayHash 1b33174c0e5ebdf45f964885917f9eb7
  */
 
 /* eslint-disable */
@@ -8,9 +8,13 @@
 'use strict';
 
 /*::
-import type {ConcreteBatch} from 'relay-runtime';
+import type { ConcreteRequest } from 'relay-runtime';
+type ChangePassword_viewer$ref = any;
+export type ChangePasswordQueryVariables = {| |};
 export type ChangePasswordQueryResponse = {|
-  +viewer: ?{| |};
+  +viewer: ?{|
+    +$fragmentRefs: ChangePassword_viewer$ref,
+  |},
 |};
 */
 
@@ -29,19 +33,27 @@ fragment ChangePassword_viewer on User {
 }
 */
 
-const batch /*: ConcreteBatch*/ = {
+const node/*: ConcreteRequest*/ = {
+  "kind": "Request",
+  "operationKind": "query",
+  "name": "ChangePasswordQuery",
+  "id": null,
+  "text": "query ChangePasswordQuery {\n  viewer {\n    ...ChangePassword_viewer\n    id\n  }\n}\n\nfragment ChangePassword_viewer on User {\n  id\n  _id\n}\n",
+  "metadata": {},
   "fragment": {
-    "argumentDefinitions": [],
     "kind": "Fragment",
-    "metadata": null,
     "name": "ChangePasswordQuery",
+    "type": "Query",
+    "metadata": null,
+    "argumentDefinitions": [],
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
+        "name": "viewer",
+        "storageKey": null,
         "args": null,
         "concreteType": "User",
-        "name": "viewer",
         "plural": false,
         "selections": [
           {
@@ -49,50 +61,42 @@ const batch /*: ConcreteBatch*/ = {
             "name": "ChangePassword_viewer",
             "args": null
           }
-        ],
-        "storageKey": null
+        ]
       }
-    ],
-    "type": "Query"
+    ]
   },
-  "id": null,
-  "kind": "Batch",
-  "metadata": {},
-  "name": "ChangePasswordQuery",
-  "query": {
-    "argumentDefinitions": [],
-    "kind": "Root",
+  "operation": {
+    "kind": "Operation",
     "name": "ChangePasswordQuery",
-    "operation": "query",
+    "argumentDefinitions": [],
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
+        "name": "viewer",
+        "storageKey": null,
         "args": null,
         "concreteType": "User",
-        "name": "viewer",
         "plural": false,
         "selections": [
           {
             "kind": "ScalarField",
             "alias": null,
-            "args": null,
             "name": "id",
+            "args": null,
             "storageKey": null
           },
           {
             "kind": "ScalarField",
             "alias": null,
-            "args": null,
             "name": "_id",
+            "args": null,
             "storageKey": null
           }
-        ],
-        "storageKey": null
+        ]
       }
     ]
-  },
-  "text": "query ChangePasswordQuery {\n  viewer {\n    ...ChangePassword_viewer\n    id\n  }\n}\n\nfragment ChangePassword_viewer on User {\n  id\n  _id\n}\n"
+  }
 };
-
-module.exports = batch;
+(node/*: any*/).hash = 'a905aa8136c9811c2f003a4e74d4f9ff';
+module.exports = node;

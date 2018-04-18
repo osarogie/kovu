@@ -7,37 +7,32 @@
 'use strict';
 
 /*::
-import type {ConcreteFragment} from 'relay-runtime';
+import type { ConcreteFragment } from 'relay-runtime';
+type UserListItem_user$ref = any;
+import type { FragmentReference } from 'relay-runtime';
+declare export opaque type Group_userList$ref: FragmentReference;
 export type Group_userList = {|
   +users: ?{|
     +pageInfo: {|
-      +hasNextPage: boolean;
-      +endCursor: ?string;
-    |};
+      +hasNextPage: boolean,
+      +endCursor: ?string,
+    |},
     +edges: ?$ReadOnlyArray<?{|
       +node: ?{|
-        +id: string;
-      |};
-    |}>;
-  |};
+        +id: string,
+        +$fragmentRefs: UserListItem_user$ref,
+      |},
+    |}>,
+  |},
+  +$refType: Group_userList$ref,
 |};
 */
 
 
-const fragment /*: ConcreteFragment*/ = {
-  "argumentDefinitions": [
-    {
-      "kind": "RootArgument",
-      "name": "count",
-      "type": "Int"
-    },
-    {
-      "kind": "RootArgument",
-      "name": "cursor",
-      "type": "String"
-    }
-  ],
+const node/*: ConcreteFragment*/ = {
   "kind": "Fragment",
+  "name": "Group_userList",
+  "type": "Group",
   "metadata": {
     "connection": [
       {
@@ -50,62 +45,76 @@ const fragment /*: ConcreteFragment*/ = {
       }
     ]
   },
-  "name": "Group_userList",
+  "argumentDefinitions": [
+    {
+      "kind": "RootArgument",
+      "name": "count",
+      "type": "Int"
+    },
+    {
+      "kind": "RootArgument",
+      "name": "cursor",
+      "type": "String"
+    }
+  ],
   "selections": [
     {
       "kind": "LinkedField",
       "alias": "users",
+      "name": "__Group_users_connection",
+      "storageKey": null,
       "args": null,
       "concreteType": "UserConnection",
-      "name": "__Group_users_connection",
       "plural": false,
       "selections": [
         {
           "kind": "LinkedField",
           "alias": null,
+          "name": "pageInfo",
+          "storageKey": null,
           "args": null,
           "concreteType": "PageInfo",
-          "name": "pageInfo",
           "plural": false,
           "selections": [
             {
               "kind": "ScalarField",
               "alias": null,
-              "args": null,
               "name": "hasNextPage",
+              "args": null,
               "storageKey": null
             },
             {
               "kind": "ScalarField",
               "alias": null,
-              "args": null,
               "name": "endCursor",
+              "args": null,
               "storageKey": null
             }
-          ],
-          "storageKey": null
+          ]
         },
         {
           "kind": "LinkedField",
           "alias": null,
+          "name": "edges",
+          "storageKey": null,
           "args": null,
           "concreteType": "UserEdge",
-          "name": "edges",
           "plural": true,
           "selections": [
             {
               "kind": "LinkedField",
               "alias": null,
+              "name": "node",
+              "storageKey": null,
               "args": null,
               "concreteType": "User",
-              "name": "node",
               "plural": false,
               "selections": [
                 {
                   "kind": "ScalarField",
                   "alias": null,
-                  "args": null,
                   "name": "id",
+                  "args": null,
                   "storageKey": null
                 },
                 {
@@ -116,28 +125,24 @@ const fragment /*: ConcreteFragment*/ = {
                 {
                   "kind": "ScalarField",
                   "alias": null,
-                  "args": null,
                   "name": "__typename",
+                  "args": null,
                   "storageKey": null
                 }
-              ],
-              "storageKey": null
+              ]
             },
             {
               "kind": "ScalarField",
               "alias": null,
-              "args": null,
               "name": "cursor",
+              "args": null,
               "storageKey": null
             }
-          ],
-          "storageKey": null
+          ]
         }
-      ],
-      "storageKey": null
+      ]
     }
-  ],
-  "type": "Group"
+  ]
 };
-
-module.exports = fragment;
+(node/*: any*/).hash = 'c31001bcad48cf6771f77c431d53ab39';
+module.exports = node;

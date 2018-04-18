@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 0020b31d4b3addf0b1107b3dc907f85a
+ * @relayHash df652852f4583af46ac595af7876e0f8
  */
 
 /* eslint-disable */
@@ -8,22 +8,26 @@
 'use strict';
 
 /*::
-import type {ConcreteBatch} from 'relay-runtime';
+import type { ConcreteRequest } from 'relay-runtime';
+type CommentListItem_comment$ref = any;
+type UserListItem_user$ref = any;
 export type CreateCommentMutationVariables = {|
   input: {
-    clientMutationId?: ?string;
-    body: string;
-    discussion_id: string;
-  };
+    clientMutationId?: ?string,
+    body: string,
+    discussion_id: string,
+  },
 |};
-
 export type CreateCommentMutationResponse = {|
   +createComment: ?{|
-    +success: ?boolean;
+    +success: ?boolean,
     +comment: ?{|
-      +user: ?{| |};
-    |};
-  |};
+      +user: ?{|
+        +$fragmentRefs: UserListItem_user$ref,
+      |},
+      +$fragmentRefs: CommentListItem_comment$ref,
+    |},
+  |},
 |};
 */
 
@@ -51,6 +55,7 @@ fragment CommentListItem_comment on Comment {
   body
   created_at
   discussion_id
+  excerpt
   discussion {
     id
     _id
@@ -81,48 +86,75 @@ fragment FollowButton_user on User {
 }
 */
 
-const batch /*: ConcreteBatch*/ = {
+const node/*: ConcreteRequest*/ = (function(){
+var v0 = [
+  {
+    "kind": "LocalArgument",
+    "name": "input",
+    "type": "CreateCommentInput!",
+    "defaultValue": null
+  }
+],
+v1 = [
+  {
+    "kind": "Variable",
+    "name": "input",
+    "variableName": "input",
+    "type": "CreateCommentInput!"
+  }
+],
+v2 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "success",
+  "args": null,
+  "storageKey": null
+},
+v3 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "id",
+  "args": null,
+  "storageKey": null
+},
+v4 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "_id",
+  "args": null,
+  "storageKey": null
+};
+return {
+  "kind": "Request",
+  "operationKind": "mutation",
+  "name": "CreateCommentMutation",
+  "id": null,
+  "text": "mutation CreateCommentMutation(\n  $input: CreateCommentInput!\n) {\n  createComment(input: $input) {\n    success\n    comment {\n      ...CommentListItem_comment\n      user {\n        ...UserListItem_user\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment CommentListItem_comment on Comment {\n  id\n  _id\n  body\n  created_at\n  discussion_id\n  excerpt\n  discussion {\n    id\n    _id\n  }\n  user {\n    id\n    _id\n    name\n    username\n    profile_picture_name\n  }\n}\n\nfragment UserListItem_user on User {\n  id\n  _id\n  name\n  username\n  bio\n  profile_picture_name\n  ...FollowButton_user\n}\n\nfragment FollowButton_user on User {\n  _id\n  viewer_follows\n  follows_viewer\n}\n",
+  "metadata": {},
   "fragment": {
-    "argumentDefinitions": [
-      {
-        "kind": "LocalArgument",
-        "name": "input",
-        "type": "CreateCommentInput!",
-        "defaultValue": null
-      }
-    ],
     "kind": "Fragment",
-    "metadata": null,
     "name": "CreateCommentMutation",
+    "type": "Mutation",
+    "metadata": null,
+    "argumentDefinitions": v0,
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
-        "args": [
-          {
-            "kind": "Variable",
-            "name": "input",
-            "variableName": "input",
-            "type": "CreateCommentInput!"
-          }
-        ],
-        "concreteType": "CreateCommentPayload",
         "name": "createComment",
+        "storageKey": null,
+        "args": v1,
+        "concreteType": "CreateCommentPayload",
         "plural": false,
         "selections": [
-          {
-            "kind": "ScalarField",
-            "alias": null,
-            "args": null,
-            "name": "success",
-            "storageKey": null
-          },
+          v2,
           {
             "kind": "LinkedField",
             "alias": null,
+            "name": "comment",
+            "storageKey": null,
             "args": null,
             "concreteType": "Comment",
-            "name": "comment",
             "plural": false,
             "selections": [
               {
@@ -133,9 +165,10 @@ const batch /*: ConcreteBatch*/ = {
               {
                 "kind": "LinkedField",
                 "alias": null,
+                "name": "user",
+                "storageKey": null,
                 "args": null,
                 "concreteType": "User",
-                "name": "user",
                 "plural": false,
                 "selections": [
                   {
@@ -143,201 +176,143 @@ const batch /*: ConcreteBatch*/ = {
                     "name": "UserListItem_user",
                     "args": null
                   }
-                ],
-                "storageKey": null
+                ]
               }
-            ],
-            "storageKey": null
+            ]
           }
-        ],
-        "storageKey": null
+        ]
       }
-    ],
-    "type": "Mutation"
+    ]
   },
-  "id": null,
-  "kind": "Batch",
-  "metadata": {},
-  "name": "CreateCommentMutation",
-  "query": {
-    "argumentDefinitions": [
-      {
-        "kind": "LocalArgument",
-        "name": "input",
-        "type": "CreateCommentInput!",
-        "defaultValue": null
-      }
-    ],
-    "kind": "Root",
+  "operation": {
+    "kind": "Operation",
     "name": "CreateCommentMutation",
-    "operation": "mutation",
+    "argumentDefinitions": v0,
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
-        "args": [
-          {
-            "kind": "Variable",
-            "name": "input",
-            "variableName": "input",
-            "type": "CreateCommentInput!"
-          }
-        ],
-        "concreteType": "CreateCommentPayload",
         "name": "createComment",
+        "storageKey": null,
+        "args": v1,
+        "concreteType": "CreateCommentPayload",
         "plural": false,
         "selections": [
-          {
-            "kind": "ScalarField",
-            "alias": null,
-            "args": null,
-            "name": "success",
-            "storageKey": null
-          },
+          v2,
           {
             "kind": "LinkedField",
             "alias": null,
+            "name": "comment",
+            "storageKey": null,
             "args": null,
             "concreteType": "Comment",
-            "name": "comment",
             "plural": false,
             "selections": [
+              v3,
+              v4,
               {
                 "kind": "ScalarField",
                 "alias": null,
-                "args": null,
-                "name": "id",
-                "storageKey": null
-              },
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "args": null,
-                "name": "_id",
-                "storageKey": null
-              },
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "args": null,
                 "name": "body",
+                "args": null,
                 "storageKey": null
               },
               {
                 "kind": "ScalarField",
                 "alias": null,
-                "args": null,
                 "name": "created_at",
+                "args": null,
                 "storageKey": null
               },
               {
                 "kind": "ScalarField",
                 "alias": null,
-                "args": null,
                 "name": "discussion_id",
+                "args": null,
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "name": "excerpt",
+                "args": null,
                 "storageKey": null
               },
               {
                 "kind": "LinkedField",
                 "alias": null,
+                "name": "discussion",
+                "storageKey": null,
                 "args": null,
                 "concreteType": "Discussion",
-                "name": "discussion",
                 "plural": false,
                 "selections": [
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "id",
-                    "storageKey": null
-                  },
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "_id",
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
+                  v3,
+                  v4
+                ]
               },
               {
                 "kind": "LinkedField",
                 "alias": null,
+                "name": "user",
+                "storageKey": null,
                 "args": null,
                 "concreteType": "User",
-                "name": "user",
                 "plural": false,
                 "selections": [
+                  v3,
+                  v4,
                   {
                     "kind": "ScalarField",
                     "alias": null,
-                    "args": null,
-                    "name": "id",
-                    "storageKey": null
-                  },
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "_id",
-                    "storageKey": null
-                  },
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
                     "name": "name",
+                    "args": null,
                     "storageKey": null
                   },
                   {
                     "kind": "ScalarField",
                     "alias": null,
-                    "args": null,
                     "name": "username",
+                    "args": null,
                     "storageKey": null
                   },
                   {
                     "kind": "ScalarField",
                     "alias": null,
-                    "args": null,
                     "name": "profile_picture_name",
+                    "args": null,
                     "storageKey": null
                   },
                   {
                     "kind": "ScalarField",
                     "alias": null,
-                    "args": null,
                     "name": "bio",
+                    "args": null,
                     "storageKey": null
                   },
                   {
                     "kind": "ScalarField",
                     "alias": null,
-                    "args": null,
                     "name": "viewer_follows",
+                    "args": null,
                     "storageKey": null
                   },
                   {
                     "kind": "ScalarField",
                     "alias": null,
-                    "args": null,
                     "name": "follows_viewer",
+                    "args": null,
                     "storageKey": null
                   }
-                ],
-                "storageKey": null
+                ]
               }
-            ],
-            "storageKey": null
+            ]
           }
-        ],
-        "storageKey": null
+        ]
       }
     ]
-  },
-  "text": "mutation CreateCommentMutation(\n  $input: CreateCommentInput!\n) {\n  createComment(input: $input) {\n    success\n    comment {\n      ...CommentListItem_comment\n      user {\n        ...UserListItem_user\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment CommentListItem_comment on Comment {\n  id\n  _id\n  body\n  created_at\n  discussion_id\n  discussion {\n    id\n    _id\n  }\n  user {\n    id\n    _id\n    name\n    username\n    profile_picture_name\n  }\n}\n\nfragment UserListItem_user on User {\n  id\n  _id\n  name\n  username\n  bio\n  profile_picture_name\n  ...FollowButton_user\n}\n\nfragment FollowButton_user on User {\n  _id\n  viewer_follows\n  follows_viewer\n}\n"
+  }
 };
-
-module.exports = batch;
+})();
+(node/*: any*/).hash = '623be6820831007db53eb8d4c4282802';
+module.exports = node;

@@ -7,24 +7,44 @@
 'use strict';
 
 /*::
-import type {ConcreteFragment} from 'relay-runtime';
+import type { ConcreteFragment } from 'relay-runtime';
+type GroupListItem_group$ref = any;
+import type { FragmentReference } from 'relay-runtime';
+declare export opaque type Discover_groupList$ref: FragmentReference;
 export type Discover_groupList = {|
   +groups: ?{|
     +pageInfo: {|
-      +hasNextPage: boolean;
-      +endCursor: ?string;
-    |};
+      +hasNextPage: boolean,
+      +endCursor: ?string,
+    |},
     +edges: ?$ReadOnlyArray<?{|
       +node: ?{|
-        +id: string;
-      |};
-    |}>;
-  |};
+        +id: string,
+        +$fragmentRefs: GroupListItem_group$ref,
+      |},
+    |}>,
+  |},
+  +$refType: Discover_groupList$ref,
 |};
 */
 
 
-const fragment /*: ConcreteFragment*/ = {
+const node/*: ConcreteFragment*/ = {
+  "kind": "Fragment",
+  "name": "Discover_groupList",
+  "type": "Feed",
+  "metadata": {
+    "connection": [
+      {
+        "count": "count",
+        "cursor": "cursor",
+        "direction": "forward",
+        "path": [
+          "groups"
+        ]
+      }
+    ]
+  },
   "argumentDefinitions": [
     {
       "kind": "RootArgument",
@@ -42,24 +62,12 @@ const fragment /*: ConcreteFragment*/ = {
       "type": "String"
     }
   ],
-  "kind": "Fragment",
-  "metadata": {
-    "connection": [
-      {
-        "count": "count",
-        "cursor": "cursor",
-        "direction": "forward",
-        "path": [
-          "groups"
-        ]
-      }
-    ]
-  },
-  "name": "Discover_groupList",
   "selections": [
     {
       "kind": "LinkedField",
       "alias": "groups",
+      "name": "__Discover_groups_connection",
+      "storageKey": null,
       "args": [
         {
           "kind": "Variable",
@@ -69,55 +77,56 @@ const fragment /*: ConcreteFragment*/ = {
         }
       ],
       "concreteType": "GroupConnection",
-      "name": "__Discover_groups_connection",
       "plural": false,
       "selections": [
         {
           "kind": "LinkedField",
           "alias": null,
+          "name": "pageInfo",
+          "storageKey": null,
           "args": null,
           "concreteType": "PageInfo",
-          "name": "pageInfo",
           "plural": false,
           "selections": [
             {
               "kind": "ScalarField",
               "alias": null,
-              "args": null,
               "name": "hasNextPage",
+              "args": null,
               "storageKey": null
             },
             {
               "kind": "ScalarField",
               "alias": null,
-              "args": null,
               "name": "endCursor",
+              "args": null,
               "storageKey": null
             }
-          ],
-          "storageKey": null
+          ]
         },
         {
           "kind": "LinkedField",
           "alias": null,
+          "name": "edges",
+          "storageKey": null,
           "args": null,
           "concreteType": "GroupEdge",
-          "name": "edges",
           "plural": true,
           "selections": [
             {
               "kind": "LinkedField",
               "alias": null,
+              "name": "node",
+              "storageKey": null,
               "args": null,
               "concreteType": "Group",
-              "name": "node",
               "plural": false,
               "selections": [
                 {
                   "kind": "ScalarField",
                   "alias": null,
-                  "args": null,
                   "name": "id",
+                  "args": null,
                   "storageKey": null
                 },
                 {
@@ -128,28 +137,24 @@ const fragment /*: ConcreteFragment*/ = {
                 {
                   "kind": "ScalarField",
                   "alias": null,
-                  "args": null,
                   "name": "__typename",
+                  "args": null,
                   "storageKey": null
                 }
-              ],
-              "storageKey": null
+              ]
             },
             {
               "kind": "ScalarField",
               "alias": null,
-              "args": null,
               "name": "cursor",
+              "args": null,
               "storageKey": null
             }
-          ],
-          "storageKey": null
+          ]
         }
-      ],
-      "storageKey": null
+      ]
     }
-  ],
-  "type": "Feed"
+  ]
 };
-
-module.exports = fragment;
+(node/*: any*/).hash = 'ba0c823a1d40460c3a9bbcd4b2634627';
+module.exports = node;

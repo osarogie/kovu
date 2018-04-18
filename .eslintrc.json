@@ -1,0 +1,27 @@
+{
+  "env": {
+    "es6": true,
+    "node": true
+  },
+  "extends": "eslint:recommended",
+  "parserOptions": {
+    "ecmaVersion": 7,
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true,
+      "experimentalDecorators": true,
+      "jsx": true
+    },
+    "sourceType": "module"
+  },
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "target": "es5"
+  },
+  "plugins": ["react"],
+  "rules": {
+    "indent": ["error", 4],
+    "linebreak-style": ["error", "unix"],
+    "quotes": ["error", "double"],
+    "semi": ["error", "never"]
+  }
+}

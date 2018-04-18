@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 34b1527032266bfe9e92e8a84ec70a6b
+ * @relayHash 366dc571fe9e89a404b6be313ffbd61e
  */
 
 /* eslint-disable */
@@ -8,18 +8,20 @@
 'use strict';
 
 /*::
-import type {ConcreteBatch} from 'relay-runtime';
+import type { ConcreteRequest } from 'relay-runtime';
+type FollowButton_user$ref = any;
 export type FollowButtonUnfollowUserMutationVariables = {|
   input: {
-    clientMutationId?: ?string;
-    id: string;
-  };
+    clientMutationId?: ?string,
+    id: string,
+  },
 |};
-
 export type FollowButtonUnfollowUserMutationResponse = {|
   +unfollowUser: ?{|
-    +user: ?{| |};
-  |};
+    +user: ?{|
+      +$fragmentRefs: FollowButton_user$ref,
+    |},
+  |},
 |};
 */
 
@@ -43,41 +45,53 @@ fragment FollowButton_user on User {
 }
 */
 
-const batch /*: ConcreteBatch*/ = {
+const node/*: ConcreteRequest*/ = (function(){
+var v0 = [
+  {
+    "kind": "LocalArgument",
+    "name": "input",
+    "type": "UnfollowUserInput!",
+    "defaultValue": null
+  }
+],
+v1 = [
+  {
+    "kind": "Variable",
+    "name": "input",
+    "variableName": "input",
+    "type": "UnfollowUserInput!"
+  }
+];
+return {
+  "kind": "Request",
+  "operationKind": "mutation",
+  "name": "FollowButtonUnfollowUserMutation",
+  "id": null,
+  "text": "mutation FollowButtonUnfollowUserMutation(\n  $input: UnfollowUserInput!\n) {\n  unfollowUser(input: $input) {\n    user {\n      ...FollowButton_user\n      id\n    }\n  }\n}\n\nfragment FollowButton_user on User {\n  _id\n  viewer_follows\n  follows_viewer\n}\n",
+  "metadata": {},
   "fragment": {
-    "argumentDefinitions": [
-      {
-        "kind": "LocalArgument",
-        "name": "input",
-        "type": "UnfollowUserInput!",
-        "defaultValue": null
-      }
-    ],
     "kind": "Fragment",
-    "metadata": null,
     "name": "FollowButtonUnfollowUserMutation",
+    "type": "Mutation",
+    "metadata": null,
+    "argumentDefinitions": v0,
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
-        "args": [
-          {
-            "kind": "Variable",
-            "name": "input",
-            "variableName": "input",
-            "type": "UnfollowUserInput!"
-          }
-        ],
-        "concreteType": "UnfollowUserPayload",
         "name": "unfollowUser",
+        "storageKey": null,
+        "args": v1,
+        "concreteType": "UnfollowUserPayload",
         "plural": false,
         "selections": [
           {
             "kind": "LinkedField",
             "alias": null,
+            "name": "user",
+            "storageKey": null,
             "args": null,
             "concreteType": "User",
-            "name": "user",
             "plural": false,
             "selections": [
               {
@@ -85,92 +99,70 @@ const batch /*: ConcreteBatch*/ = {
                 "name": "FollowButton_user",
                 "args": null
               }
-            ],
-            "storageKey": null
+            ]
           }
-        ],
-        "storageKey": null
+        ]
       }
-    ],
-    "type": "Mutation"
+    ]
   },
-  "id": null,
-  "kind": "Batch",
-  "metadata": {},
-  "name": "FollowButtonUnfollowUserMutation",
-  "query": {
-    "argumentDefinitions": [
-      {
-        "kind": "LocalArgument",
-        "name": "input",
-        "type": "UnfollowUserInput!",
-        "defaultValue": null
-      }
-    ],
-    "kind": "Root",
+  "operation": {
+    "kind": "Operation",
     "name": "FollowButtonUnfollowUserMutation",
-    "operation": "mutation",
+    "argumentDefinitions": v0,
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
-        "args": [
-          {
-            "kind": "Variable",
-            "name": "input",
-            "variableName": "input",
-            "type": "UnfollowUserInput!"
-          }
-        ],
-        "concreteType": "UnfollowUserPayload",
         "name": "unfollowUser",
+        "storageKey": null,
+        "args": v1,
+        "concreteType": "UnfollowUserPayload",
         "plural": false,
         "selections": [
           {
             "kind": "LinkedField",
             "alias": null,
+            "name": "user",
+            "storageKey": null,
             "args": null,
             "concreteType": "User",
-            "name": "user",
             "plural": false,
             "selections": [
               {
                 "kind": "ScalarField",
                 "alias": null,
-                "args": null,
                 "name": "_id",
+                "args": null,
                 "storageKey": null
               },
               {
                 "kind": "ScalarField",
                 "alias": null,
-                "args": null,
                 "name": "viewer_follows",
+                "args": null,
                 "storageKey": null
               },
               {
                 "kind": "ScalarField",
                 "alias": null,
-                "args": null,
                 "name": "follows_viewer",
+                "args": null,
                 "storageKey": null
               },
               {
                 "kind": "ScalarField",
                 "alias": null,
-                "args": null,
                 "name": "id",
+                "args": null,
                 "storageKey": null
               }
-            ],
-            "storageKey": null
+            ]
           }
-        ],
-        "storageKey": null
+        ]
       }
     ]
-  },
-  "text": "mutation FollowButtonUnfollowUserMutation(\n  $input: UnfollowUserInput!\n) {\n  unfollowUser(input: $input) {\n    user {\n      ...FollowButton_user\n      id\n    }\n  }\n}\n\nfragment FollowButton_user on User {\n  _id\n  viewer_follows\n  follows_viewer\n}\n"
+  }
 };
-
-module.exports = batch;
+})();
+(node/*: any*/).hash = '3c6c2aec1c72980d864f8ddb41b64650';
+module.exports = node;

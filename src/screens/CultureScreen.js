@@ -1,21 +1,21 @@
 // @flow
 
-import React, { Component } from 'react'
+import React from 'react'
 import { View, StyleSheet, Platform, TabBarIOS } from 'react-native'
 import Group from '../renderers/Group'
 import { withNavigation } from 'react-navigation'
 import styles from '../styles'
-import AndroidToolbar from '../components/AndroidToolbar'
+import Toolbar from '../components/Toolbar'
 import getNavigation from '../helpers/getNavigation'
 
-export default class CultureScreen extends Component<void, Props, any> {
+export default class CultureScreen extends React.Component {
   renderToolbar() {
     const { culture } = this.props.navigation.state.params
     // const title = (culture && culture.permalink) || 'Culture'
     const title = 'Culture'
 
     return Platform.select({
-      android: <AndroidToolbar title={title} navIconName="md-arrow-back" />,
+      android: <Toolbar title={title} navIconName="md-arrow-back" />,
       ios: <TabBarIOS />
     })
   }

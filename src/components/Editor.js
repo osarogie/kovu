@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-  ViewPropTypes,
+  // ViewPropTypes,
   Text,
   StyleSheet,
   View,
@@ -8,6 +8,7 @@ import {
   ToastAndroid
 } from 'react-native'
 import QueryRendererProxy from '../renderers/QueryRendererProxy'
+import { withNavigation } from 'react-navigation'
 
 import { createFragmentContainer } from 'react-relay'
 
@@ -17,13 +18,14 @@ import { connect } from 'react-redux'
 import colors from '../colors'
 import CreateDiscussionMutation from '../mutations/CreateDiscussionMutation'
 import EditDiscussionMutation from '../mutations/EditDiscussionMutation'
-// import CreateCommentMutation from '../mutations/CreateCommentMutation'
+import CreateCommentMutation from '../mutations/CreateCommentMutation'
 import {
   RichTextEditor,
   RichTextToolbar,
   actions
 } from 'react-native-zss-rich-text-editor'
 import Toolbar from './Toolbar'
+import { navHelper } from '../helpers/getNavigation'
 
 const mapStateToProps = state => ({
   // night_mode: state.night_mode,
@@ -80,7 +82,7 @@ class Editor extends React.Component {
           { id: this.props.id, ...inputs },
           {
             onCompleted: _ => {
-              this.props.openDiscussion({ _id: this.props.id })
+              navHelper(this).openDiscussion({ _id: this.props.id })
             },
             onError: _ => {
               this.notify('Your post could not be saved')
@@ -99,7 +101,7 @@ class Editor extends React.Component {
         CreateDiscussionMutation.commit(this.environment, inputs, {
           onCompleted: _ => {
             if (this.new_id) {
-              this.props.openDiscussion({ _id: this.new_id })
+              navHelper(this).openDiscussion({ _id: this.new_id })
             } else this.notify('Your post could not be published')
           },
           onError: _ => {
@@ -121,28 +123,28 @@ class Editor extends React.Component {
       this.notify('Your post needs a title and a body')
     }
   }
-  // async publishComment() {
-  //   this.setState({ sending: true })
-  //
-  //   const body = await this.richtext.getContentHtml()
-  //
-  //   if (body) {
-  //     inputs = { body }
-  //     CreateCommentMutation.commit(this.environment, inputs, {
-  //       onCompleted: _ => {
-  //         // this.props.goBack()
-  //         this.setState({ sending: false })
-  //       },
-  //       onError: _ => {
-  //         this.notify('Your comment could not be sent')
-  //       }
-  //     })
-  //   } else {
-  //     this.setState({ sending: false })
-  //
-  //     this.notify('You cannot post an empty comment')
-  //   }
-  // }
+  async publishComment() {
+    this.setState({ sending: true })
+
+    const body = await this.richtext.getContentHtml()
+
+    if (body) {
+      inputs = { body }
+      CreateCommentMutation.commit(this.environment, inputs, {
+        onCompleted: _ => {
+          // this.props.goBack()
+          this.setState({ sending: false })
+        },
+        onError: _ => {
+          this.notify('Your comment could not be sent')
+        }
+      })
+    } else {
+      this.setState({ sending: false })
+
+      this.notify('You cannot post an empty comment')
+    }
+  }
   getEditor = _ => this.richtext
 
   renderToolbar() {
@@ -286,7 +288,7 @@ class Editor extends React.Component {
   }
 }
 
-const ConnectedEditor = connect(mapStateToProps)(Editor)
+const ConnectedEditor = withNavigation(connect(mapStateToProps)(Editor))
 // export default connect(mapStateToProps)(Editor)
 
 const EditorFragmentContainer = createFragmentContainer(

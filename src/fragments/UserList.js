@@ -1,6 +1,6 @@
 // @flow
 
-import React, { Component } from 'react'
+import React from "react"
 import {
   StyleSheet,
   Text,
@@ -8,16 +8,16 @@ import {
   TouchableHighlight,
   VirtualizedList,
   Image
-} from 'react-native'
-import { withNavigation } from 'react-navigation'
-import environment from '../../relay-environment'
-import styles from '../styles'
-import colors from '../colors'
-import LoaderBox from '../components/LoaderBox'
-import UserListItem from '../fragments/UserListItem'
-import Separator from '../components/Separator'
+} from "react-native"
+import { withNavigation } from "react-navigation"
+import environment from "../../relay-environment"
+import styles from "../styles"
+import colors from "../colors"
+import LoaderBox from "../components/LoaderBox"
+import UserListItem from "../fragments/UserListItem"
+import Separator from "../components/Separator"
 
-export default class UserList extends Component<any, Props, State> {
+export default class UserList extends React.Component {
   state = {
     isFetchingTop: false,
     isLoading: false,
@@ -73,8 +73,9 @@ export default class UserList extends Component<any, Props, State> {
     })
   }
 
-  renderItem = ({ item, itemProps }) =>
+  renderItem = ({ item, itemProps }) => (
     <UserListItem user={item.node} {...itemProps} />
+  )
 
   renderFooter() {
     if (this.state.hasMore) {

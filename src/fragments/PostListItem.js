@@ -4,7 +4,8 @@ import {
   StyleSheet,
   View,
   Image,
-  ViewPropTypes,
+  FlatList,
+  // ViewPropTypes,
   Dimensions,
   TouchableHighlight,
   PixelRatio,
@@ -16,10 +17,13 @@ import { createFragmentContainer, graphql } from 'react-relay'
 import Markdown from 'react-native-simple-markdown'
 import { connect } from 'react-redux'
 import Separator from '../components/Separator'
+import ShareButton from '../components/ShareButton'
 import Avatar from '../components/Avatar'
 import DiscussionLike from '../fragments/DiscussionLike'
 import { getTimeAgo, imageUrl, getCommentCount } from '../utils'
 import Icon from 'react-native-vector-icons/Ionicons'
+import { Subtitle, Caption } from '@shoutem/ui'
+import CommentListItem from './CommentListItem'
 
 const mapStateToProps = state => ({
   night_mode: state.night_mode,
@@ -68,9 +72,12 @@ class PostListItem extends React.PureComponent {
       } else {
         var { width } = Dimensions.get('window')
         var height = width / 3
-        width -= 36
+        width -= 85
       }
-      const f_width = PixelRatio.getPixelSizeForLayoutSize(width)
+      const f_width = Math.min(
+        1000,
+        PixelRatio.getPixelSizeForLayoutSize(width)
+      )
       // const f_height = PixelRatio.getPixelSizeForLayoutSize(height)
       const uri = imageUrl(image.name, `${f_width}x1000`)
 
@@ -147,21 +154,21 @@ class PostListItem extends React.PureComponent {
     const comment_count_ = getCommentCount(comment_count)
 
     return [
-      <Separator
-        styles={{ marginTop: 13 }}
-        key={`post.c.separator.${discussion.id}`}
-      />,
+      // <Separator
+      //   styles={{ marginTop: 13 }}
+      //   key={`post.c.separator.${discussion.id}`}
+      // />,
       <View
-        style={[styles.row, { alignItems: 'center' }]}
+        style={[styles.row, { alignItems: 'center', marginTop: 10 }]}
         key={`post.c.viewholder.${discussion.id}`}
       >
-        <DiscussionLike discussion={discussion} openLogin={openLogin} />
+        {/* <DiscussionLike discussion={discussion} openLogin={openLogin} /> */}
         <View style={styles.fillRow} />
         {this.renderEdit()}
         <TouchableOpacity {...this.clickableProps} onPress={this.openComments}>
-          <Text style={{ marginLeft: 20 }}>
+          <Caption style={{ marginLeft: 20 }}>
             {`${comment_count_} Contribution${comment_count == 1 ? '' : 's'}`}
-          </Text>
+          </Caption>
         </TouchableOpacity>
         {/* <Icon
             name="md-more"
@@ -173,7 +180,7 @@ class PostListItem extends React.PureComponent {
     ]
   }
 
-  render() {
+  render2() {
     const { discussion } = this.props
     const { name, excerpt, word_count, user } = discussion
     // console.log(this.props);
@@ -184,8 +191,10 @@ class PostListItem extends React.PureComponent {
           {...this.clickableProps}
           style={{
             backgroundColor: '#fff',
-            elevation: 2,
-            marginBottom: 15,
+            // elevation: 2,
+            borderBottomColor: '#ddd',
+            borderBottomWidth: 1,
+            paddingBottom: 15,
             marginTop: 2
           }}
           onPress={this.openDiscussion}
@@ -206,11 +215,93 @@ class PostListItem extends React.PureComponent {
             </View>
             <Text style={excerptStyles.title}>{name}</Text>
             {this.renderFeaturePhoto()}
-            <Markdown styles={excerptStyles.body}>
+            {/* <Markdown styles={excerptStyles.body}> */}
+            <Text>
               {excerpt}
               {word_count > 20 ? '...' : ''}
-            </Markdown>
-            {this.renderControls()}
+              {/* </Markdown> */}
+              {/* {this.renderControls()} */}
+            </Text>
+          </View>
+        </TouchableHighlight>
+        {/* <Separator /> */}
+      </View>
+    )
+  }
+
+  renderComments() {
+    const { discussion } = this.props
+    const { comments } = discussion
+
+    return (
+      <FlatList
+        data={comments.edges}
+        ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
+        keyExtractor={item => item.node.id}
+        renderItem={({ item }) => <CommentListItem strip comment={item.node} />}
+      />
+    )
+  }
+
+  render() {
+    const { discussion } = this.props
+    const { name, excerpt, word_count, user } = discussion
+    // console.log(this.props);
+    // console.log(discussion.created_at)
+    return (
+      <View>
+        <TouchableHighlight
+          {...this.clickableProps}
+          style={{
+            backgroundColor: '#fff',
+            // elevation: 2,
+            borderBottomColor: '#ddd',
+            borderBottomWidth: 1,
+            paddingBottom: 15,
+            marginTop: 2
+          }}
+          onPress={this.openDiscussion}
+        >
+          <View style={[excerptStyles.container, { marginBottom: 0 }]}>
+            <View style={{ flexDirection: 'row', marginBottom: 8 }}>
+              <View style={{ alignItems: 'center' }}>
+                <Avatar
+                  width={40}
+                  radius={5}
+                  source={user}
+                  title={user.name}
+                  onPress={this.openProfile}
+                  activeOpacity={0.7}
+                />
+                <DiscussionLike
+                  discussion={discussion}
+                  stacked
+                  size={25}
+                  // style={{ marginTop: 10 }}
+                />
+                <ShareButton
+                  title={discussion.name}
+                  url={discussion.public_url}
+                  message={`Read "${discussion.name}" on TheCommunity - ${
+                    discussion.public_url
+                  } by ${discussion.user.name}`}
+                  style={{ marginTop: 5 }}
+                />
+              </View>
+              <View style={{ marginLeft: 15, flex: 1 }}>
+                {this.renderMeta()}
+                {this.renderFeaturePhoto()}
+                <Text style={excerptStyles.title}>{name}</Text>
+                {/* <Markdown styles={excerptStyles.body}> */}
+                <Subtitle>
+                  {excerpt}
+                  {word_count > 20 ? '...' : ''}
+                </Subtitle>
+                {/* </Markdown> */}
+                {this.renderControls()}
+                {this.renderComments()}
+              </View>
+            </View>
           </View>
         </TouchableHighlight>
         {/* <Separator /> */}
@@ -222,7 +313,7 @@ class PostListItem extends React.PureComponent {
 PostListItem.defaultProps = {}
 
 PostListItem.propTypes = {
-  ...ViewPropTypes
+  // ...ViewPropTypes
 }
 
 export default createFragmentContainer(
@@ -232,9 +323,24 @@ export default createFragmentContainer(
       id
       _id
       name
+      public_url
       excerpt(size: 20)
       word_count
       comment_count
+      comments(by_latest: true, first: 3)
+        @connection(key: "PostListItem_comments", filters: []) {
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+        edges {
+          node {
+            id
+            excerpt
+            ...CommentListItem_comment
+          }
+        }
+      }
       created_at
       user {
         id

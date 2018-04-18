@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 3dd235e372ee449bace25a1df9ddd6c5
+ * @relayHash e810ad8272958ddd9c4c2ab9a9dfbb26
  */
 
 /* eslint-disable */
@@ -8,18 +8,20 @@
 'use strict';
 
 /*::
-import type {ConcreteBatch} from 'relay-runtime';
+import type { ConcreteRequest } from 'relay-runtime';
+type DiscussionLike_discussion$ref = any;
 export type DiscussionLikeLikeDiscussionMutationVariables = {|
   input: {
-    clientMutationId?: ?string;
-    id: string;
-  };
+    clientMutationId?: ?string,
+    id: string,
+  },
 |};
-
 export type DiscussionLikeLikeDiscussionMutationResponse = {|
   +likeDiscussion: ?{|
-    +discussion: ?{| |};
-  |};
+    +discussion: ?{|
+      +$fragmentRefs: DiscussionLike_discussion$ref,
+    |},
+  |},
 |};
 */
 
@@ -44,41 +46,53 @@ fragment DiscussionLike_discussion on Discussion {
 }
 */
 
-const batch /*: ConcreteBatch*/ = {
+const node/*: ConcreteRequest*/ = (function(){
+var v0 = [
+  {
+    "kind": "LocalArgument",
+    "name": "input",
+    "type": "LikeDiscussionInput!",
+    "defaultValue": null
+  }
+],
+v1 = [
+  {
+    "kind": "Variable",
+    "name": "input",
+    "variableName": "input",
+    "type": "LikeDiscussionInput!"
+  }
+];
+return {
+  "kind": "Request",
+  "operationKind": "mutation",
+  "name": "DiscussionLikeLikeDiscussionMutation",
+  "id": null,
+  "text": "mutation DiscussionLikeLikeDiscussionMutation(\n  $input: LikeDiscussionInput!\n) {\n  likeDiscussion(input: $input) {\n    discussion {\n      ...DiscussionLike_discussion\n      id\n    }\n  }\n}\n\nfragment DiscussionLike_discussion on Discussion {\n  id\n  _id\n  viewer_does_like\n  like_count\n}\n",
+  "metadata": {},
   "fragment": {
-    "argumentDefinitions": [
-      {
-        "kind": "LocalArgument",
-        "name": "input",
-        "type": "LikeDiscussionInput!",
-        "defaultValue": null
-      }
-    ],
     "kind": "Fragment",
-    "metadata": null,
     "name": "DiscussionLikeLikeDiscussionMutation",
+    "type": "Mutation",
+    "metadata": null,
+    "argumentDefinitions": v0,
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
-        "args": [
-          {
-            "kind": "Variable",
-            "name": "input",
-            "variableName": "input",
-            "type": "LikeDiscussionInput!"
-          }
-        ],
-        "concreteType": "LikeDiscussionPayload",
         "name": "likeDiscussion",
+        "storageKey": null,
+        "args": v1,
+        "concreteType": "LikeDiscussionPayload",
         "plural": false,
         "selections": [
           {
             "kind": "LinkedField",
             "alias": null,
+            "name": "discussion",
+            "storageKey": null,
             "args": null,
             "concreteType": "Discussion",
-            "name": "discussion",
             "plural": false,
             "selections": [
               {
@@ -86,92 +100,70 @@ const batch /*: ConcreteBatch*/ = {
                 "name": "DiscussionLike_discussion",
                 "args": null
               }
-            ],
-            "storageKey": null
+            ]
           }
-        ],
-        "storageKey": null
+        ]
       }
-    ],
-    "type": "Mutation"
+    ]
   },
-  "id": null,
-  "kind": "Batch",
-  "metadata": {},
-  "name": "DiscussionLikeLikeDiscussionMutation",
-  "query": {
-    "argumentDefinitions": [
-      {
-        "kind": "LocalArgument",
-        "name": "input",
-        "type": "LikeDiscussionInput!",
-        "defaultValue": null
-      }
-    ],
-    "kind": "Root",
+  "operation": {
+    "kind": "Operation",
     "name": "DiscussionLikeLikeDiscussionMutation",
-    "operation": "mutation",
+    "argumentDefinitions": v0,
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
-        "args": [
-          {
-            "kind": "Variable",
-            "name": "input",
-            "variableName": "input",
-            "type": "LikeDiscussionInput!"
-          }
-        ],
-        "concreteType": "LikeDiscussionPayload",
         "name": "likeDiscussion",
+        "storageKey": null,
+        "args": v1,
+        "concreteType": "LikeDiscussionPayload",
         "plural": false,
         "selections": [
           {
             "kind": "LinkedField",
             "alias": null,
+            "name": "discussion",
+            "storageKey": null,
             "args": null,
             "concreteType": "Discussion",
-            "name": "discussion",
             "plural": false,
             "selections": [
               {
                 "kind": "ScalarField",
                 "alias": null,
-                "args": null,
                 "name": "id",
+                "args": null,
                 "storageKey": null
               },
               {
                 "kind": "ScalarField",
                 "alias": null,
-                "args": null,
                 "name": "_id",
+                "args": null,
                 "storageKey": null
               },
               {
                 "kind": "ScalarField",
                 "alias": null,
-                "args": null,
                 "name": "viewer_does_like",
+                "args": null,
                 "storageKey": null
               },
               {
                 "kind": "ScalarField",
                 "alias": null,
-                "args": null,
                 "name": "like_count",
+                "args": null,
                 "storageKey": null
               }
-            ],
-            "storageKey": null
+            ]
           }
-        ],
-        "storageKey": null
+        ]
       }
     ]
-  },
-  "text": "mutation DiscussionLikeLikeDiscussionMutation(\n  $input: LikeDiscussionInput!\n) {\n  likeDiscussion(input: $input) {\n    discussion {\n      ...DiscussionLike_discussion\n      id\n    }\n  }\n}\n\nfragment DiscussionLike_discussion on Discussion {\n  id\n  _id\n  viewer_does_like\n  like_count\n}\n"
+  }
 };
-
-module.exports = batch;
+})();
+(node/*: any*/).hash = '67df771c86b87af49ca9f734b79d14ac';
+module.exports = node;

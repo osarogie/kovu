@@ -35,5 +35,10 @@ export default (getNavigation = navigation => ({
 
   openStartCulture({ id, editing_mode = false }) {
     navigation.navigate('StartCulture', { editing_mode, id })
+  },
+  openProfilePicture(user) {
+    navigation.navigate('ProfilePicture', user)
   }
 }))
+
+export const navHelper = component => getNavigation(component.props.navigation)

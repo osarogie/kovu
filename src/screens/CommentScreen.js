@@ -1,12 +1,12 @@
 // @flow
 
-import React, { Component } from 'react'
+import React from 'react'
 import { View, Platform, TabBarIOS } from 'react-native'
 import styles from '../styles'
 import Editor from '../components/Editor'
 import PostThumb from '../fragments/PostThumb'
 
-export default class CommentScreen extends Component<void, Props, any> {
+export default class CommentScreen extends React.Component {
   render() {
     const { discussion } = this.props.navigation.state.params
 

@@ -1,18 +1,18 @@
 // @flow
 
-import React, { Component } from 'react'
+import React from 'react'
 import { View, StyleSheet, Platform, TabBarIOS } from 'react-native'
 import EditUser from '../renderers/EditUser'
 import { withNavigation } from 'react-navigation'
 import styles from '../styles'
-import AndroidToolbar from '../components/AndroidToolbar'
+import Toolbar from '../components/Toolbar'
 import getNavigation from '../helpers/getNavigation'
 
-export default class EditProfileScreen extends Component<void, Props, any> {
+export default class EditProfileScreen extends React.Component {
   renderToolbar() {
     const title = 'Edit profile'
     return Platform.select({
-      android: <AndroidToolbar title={title} navIconName="md-arrow-back" />,
+      android: <Toolbar title={title} navIconName="md-arrow-back" />,
       ios: <TabBarIOS />
     })
   }

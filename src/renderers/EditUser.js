@@ -36,7 +36,7 @@ function UpdateProfile(input, environment, config) {
     ...config
   })
 }
-class EditUser extends React.Component<void, Props, any> {
+class EditUser extends React.Component {
   inputProps = {
     wrapperStyle: {
       marginBottom: 15
@@ -160,9 +160,7 @@ class EditUser extends React.Component<void, Props, any> {
 
     return (
       <View style={{ flex: 1 }}>
-        <View style={{ height: 2 }}>
-          {this.renderProgress()}
-        </View>
+        <View style={{ height: 2 }}>{this.renderProgress()}</View>
         <ScrollView
           style={{ flex: 1, backgroundColor }}
           contentContainerStyle={{ alignItems: 'center' }}
@@ -236,7 +234,7 @@ const EditUserFragmentContainer = createFragmentContainer(
   `
 )
 
-export default (EditUserQueryRenderer = props =>
+export default (EditUserQueryRenderer = props => (
   <QueryRendererProxy
     query={graphql`
       query EditUserQuery {
@@ -245,6 +243,8 @@ export default (EditUserQueryRenderer = props =>
         }
       }
     `}
-    render={data =>
-      <EditUserFragmentContainer viewer={data.props.viewer} {...props} />}
-  />)
+    render={data => (
+      <EditUserFragmentContainer viewer={data.props.viewer} {...props} />
+    )}
+  />
+))

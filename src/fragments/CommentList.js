@@ -1,6 +1,6 @@
 // @flow
 
-import React, { Component } from 'react'
+import React from 'react'
 import {
   StyleSheet,
   Text,
@@ -17,7 +17,7 @@ import LoaderBox from '../components/LoaderBox'
 import EmptyList from '../components/EmptyList'
 import CommentListItem from '../fragments/CommentListItem'
 
-export default class PostList extends Component<any, Props, State> {
+export default class CommentList extends React.Component {
   state = {
     isFetchingTop: false,
     isLoading: false,
@@ -73,8 +73,9 @@ export default class PostList extends Component<any, Props, State> {
     })
   }
 
-  renderItem = ({ item, itemProps }) =>
+  renderItem = ({ item, itemProps }) => (
     <CommentListItem comment={item.node} {...itemProps} />
+  )
 
   renderFooter() {
     const comments = this.props.commentList.comments

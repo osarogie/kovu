@@ -1,6 +1,6 @@
 // @flow
 
-import React, { Component } from 'react'
+import React from 'react'
 import { View, StyleSheet, Platform, TabBarIOS } from 'react-native'
 import StartCulture from '../renderers/StartCulture'
 import { withNavigation } from 'react-navigation'
@@ -8,7 +8,7 @@ import styles from '../styles'
 import Toolbar from '../components/Toolbar'
 import getNavigation from '../helpers/getNavigation'
 
-export default class StartCultureScreen extends Component<void, Props, any> {
+export default class StartCultureScreen extends React.Component {
   renderToolbar() {
     const title = 'Culture Form'
     return <Toolbar title={title} navIconName="md-arrow-back" />

@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native'
 
-module.exports = StyleSheet.create({
+export default StyleSheet.create({
   inner: {
     maxWidth: 400,
     alignItems: 'center',
@@ -17,8 +17,8 @@ module.exports = StyleSheet.create({
     marginBottom: 20
   },
   bottomControl: {
-    alignItems: 'center',
-    marginTop: 25
+    alignItems: 'center'
+    // marginTop: 25
   },
   altText: {
     color: '#fff',
@@ -96,8 +96,8 @@ module.exports = StyleSheet.create({
     color: '#aaa'
   },
   container: {
-    flex: 1
-    // backgroundColor: '#fff'
+    flex: 1,
+    backgroundColor: '#fff'
   },
   title: {
     fontSize: 20,
@@ -149,8 +149,8 @@ module.exports = StyleSheet.create({
     fontWeight: 'bold',
     padding: 20,
     paddingBottom: 8,
-    borderBottomColor: '#ddd',
+    borderBottomColor: '#ddd'
     // borderBottomWidth: 1,
-    backgroundColor: '#eee'
+    // backgroundColor: '#eee'
   }
 })

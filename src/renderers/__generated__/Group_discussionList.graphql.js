@@ -7,37 +7,32 @@
 'use strict';
 
 /*::
-import type {ConcreteFragment} from 'relay-runtime';
+import type { ConcreteFragment } from 'relay-runtime';
+type PostListItem_discussion$ref = any;
+import type { FragmentReference } from 'relay-runtime';
+declare export opaque type Group_discussionList$ref: FragmentReference;
 export type Group_discussionList = {|
   +discussions: ?{|
     +pageInfo: {|
-      +hasNextPage: boolean;
-      +endCursor: ?string;
-    |};
+      +hasNextPage: boolean,
+      +endCursor: ?string,
+    |},
     +edges: ?$ReadOnlyArray<?{|
       +node: ?{|
-        +id: string;
-      |};
-    |}>;
-  |};
+        +id: string,
+        +$fragmentRefs: PostListItem_discussion$ref,
+      |},
+    |}>,
+  |},
+  +$refType: Group_discussionList$ref,
 |};
 */
 
 
-const fragment /*: ConcreteFragment*/ = {
-  "argumentDefinitions": [
-    {
-      "kind": "RootArgument",
-      "name": "count",
-      "type": "Int"
-    },
-    {
-      "kind": "RootArgument",
-      "name": "cursor",
-      "type": "String"
-    }
-  ],
+const node/*: ConcreteFragment*/ = {
   "kind": "Fragment",
+  "name": "Group_discussionList",
+  "type": "Group",
   "metadata": {
     "connection": [
       {
@@ -50,62 +45,76 @@ const fragment /*: ConcreteFragment*/ = {
       }
     ]
   },
-  "name": "Group_discussionList",
+  "argumentDefinitions": [
+    {
+      "kind": "RootArgument",
+      "name": "count",
+      "type": "Int"
+    },
+    {
+      "kind": "RootArgument",
+      "name": "cursor",
+      "type": "String"
+    }
+  ],
   "selections": [
     {
       "kind": "LinkedField",
       "alias": "discussions",
+      "name": "__Group_discussions_connection",
+      "storageKey": null,
       "args": null,
       "concreteType": "DiscussionConnection",
-      "name": "__Group_discussions_connection",
       "plural": false,
       "selections": [
         {
           "kind": "LinkedField",
           "alias": null,
+          "name": "pageInfo",
+          "storageKey": null,
           "args": null,
           "concreteType": "PageInfo",
-          "name": "pageInfo",
           "plural": false,
           "selections": [
             {
               "kind": "ScalarField",
               "alias": null,
-              "args": null,
               "name": "hasNextPage",
+              "args": null,
               "storageKey": null
             },
             {
               "kind": "ScalarField",
               "alias": null,
-              "args": null,
               "name": "endCursor",
+              "args": null,
               "storageKey": null
             }
-          ],
-          "storageKey": null
+          ]
         },
         {
           "kind": "LinkedField",
           "alias": null,
+          "name": "edges",
+          "storageKey": null,
           "args": null,
           "concreteType": "DiscussionEdge",
-          "name": "edges",
           "plural": true,
           "selections": [
             {
               "kind": "LinkedField",
               "alias": null,
+              "name": "node",
+              "storageKey": null,
               "args": null,
               "concreteType": "Discussion",
-              "name": "node",
               "plural": false,
               "selections": [
                 {
                   "kind": "ScalarField",
                   "alias": null,
-                  "args": null,
                   "name": "id",
+                  "args": null,
                   "storageKey": null
                 },
                 {
@@ -116,28 +125,24 @@ const fragment /*: ConcreteFragment*/ = {
                 {
                   "kind": "ScalarField",
                   "alias": null,
-                  "args": null,
                   "name": "__typename",
+                  "args": null,
                   "storageKey": null
                 }
-              ],
-              "storageKey": null
+              ]
             },
             {
               "kind": "ScalarField",
               "alias": null,
-              "args": null,
               "name": "cursor",
+              "args": null,
               "storageKey": null
             }
-          ],
-          "storageKey": null
+          ]
         }
-      ],
-      "storageKey": null
+      ]
     }
-  ],
-  "type": "Group"
+  ]
 };
-
-module.exports = fragment;
+(node/*: any*/).hash = 'fd4f3e1c6876d8bd590ea2aef3457805';
+module.exports = node;
