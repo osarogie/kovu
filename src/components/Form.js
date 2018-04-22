@@ -67,7 +67,7 @@ export class Form extends React.Component {
       }
     }
 
-    this.props.onSubmit && this.props.onSubmit(data)
+    // this.props.onSubmit && this.props.onSubmit(data)
 
     if (onSubmit) {
       this.setState({ isSaving: true })
