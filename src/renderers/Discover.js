@@ -249,9 +249,19 @@ class Stories extends React.Component {
 
     if (!q)
       return (
-        <Screen styleName="middleCenter paper">
-          <Icon name="search" size={100} color="#ddd" />
-          <Title>Use the search bar to find stories</Title>
+        <Screen
+          styleName="paper"
+          style={{ alignItems: 'center', justifyContent: 'center' }}
+        >
+          <Icon
+            name="search"
+            size={100}
+            color="#ddd"
+            style={{ marginBottom: 10 }}
+          />
+          <Title style={{ color: '#ddd' }}>
+            Use the search bar to find stories
+          </Title>
         </Screen>
       )
 
