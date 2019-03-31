@@ -65,10 +65,8 @@ public class MainApplication extends Application implements ReactApplication {
     @Override
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
-              new MainReactPackage(),
+            new MainReactPackage(),
             new RNDeviceInfo(),
-            // new CodePush(null, getApplicationContext(), BuildConfig.DEBUG),
-
             new PhotoViewPackage(),
             new LinearGradientPackage(),
             new WebViewBridgePackage(),
@@ -76,18 +74,14 @@ public class MainApplication extends Application implements ReactApplication {
             new PickerPackage(),
             new RNGoogleSignInPackage(),
             new FBSDKPackage(mCallbackManager),
-            // new CodePush(getResources().getString(R.string.reactNativeCodePush_androidDeploymentKey), getApplicationContext(), BuildConfig.DEBUG),
             new RNCameraKitPackage(),
             new BlurViewPackage(),
-
-
-
             new AppCenterReactNativeCrashesPackage(MainApplication.this, getResources().getString(R.string.appCenterCrashes_whenToSendCrashes)),
             new AppCenterReactNativeAnalyticsPackage(MainApplication.this, getResources().getString(R.string.appCenterAnalytics_whenToEnableAnalytics)),
             new AppCenterReactNativePackage(MainApplication.this),
             new LottiePackage(),
-              new VectorIconsPackage(),
-              new CodePush(BuildConfig.CODEPUSH_KEY, MainApplication.this, BuildConfig.DEBUG)
+            new VectorIconsPackage(),
+            new CodePush(BuildConfig.CODEPUSH_KEY, MainApplication.this, BuildConfig.DEBUG)
       );
     }
   }
