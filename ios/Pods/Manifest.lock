@@ -87,11 +87,26 @@ PODS:
     - React/cxxreact
     - React/jsi
   - React/jsinspector (0.59.2)
+  - React/RCTActionSheet (0.59.2):
+    - React/Core
+  - React/RCTAnimation (0.59.2):
+    - React/Core
   - React/RCTBlob (0.59.2):
+    - React/Core
+  - React/RCTGeolocation (0.59.2):
+    - React/Core
+  - React/RCTImage (0.59.2):
+    - React/Core
+    - React/RCTNetwork
+  - React/RCTLinkingIOS (0.59.2):
     - React/Core
   - React/RCTNetwork (0.59.2):
     - React/Core
+  - React/RCTSettings (0.59.2):
+    - React/Core
   - React/RCTText (0.59.2):
+    - React/Core
+  - React/RCTVibration (0.59.2):
     - React/Core
   - React/RCTWebSocket (0.59.2):
     - React/Core
@@ -124,8 +139,15 @@ DEPENDENCIES:
   - React/Core (from `../node_modules/react-native`)
   - React/CxxBridge (from `../node_modules/react-native`)
   - React/DevSupport (from `../node_modules/react-native`)
+  - React/RCTActionSheet (from `../node_modules/react-native`)
+  - React/RCTAnimation (from `../node_modules/react-native`)
+  - React/RCTGeolocation (from `../node_modules/react-native`)
+  - React/RCTImage (from `../node_modules/react-native`)
+  - React/RCTLinkingIOS (from `../node_modules/react-native`)
   - React/RCTNetwork (from `../node_modules/react-native`)
+  - React/RCTSettings (from `../node_modules/react-native`)
   - React/RCTText (from `../node_modules/react-native`)
+  - React/RCTVibration (from `../node_modules/react-native`)
   - React/RCTWebSocket (from `../node_modules/react-native`)
   - ReactNativePermissions (from `../node_modules/react-native-permissions`)
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
@@ -187,6 +209,6 @@ SPEC CHECKSUMS:
   RSKImageCropper: 98296ad26b41753f796b6898d015509598f13d97
   yoga: 128daf064cacaede0c3bb27424b6b4c71052e6cd
 
-PODFILE CHECKSUM: dd86c13864494d55c8757d648c2cba5188bf4b50
+PODFILE CHECKSUM: c949a7da41f9c7e863d254075bfcd462813f76a7
 
 COCOAPODS: 1.5.0
