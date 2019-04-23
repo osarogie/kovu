@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 2e951e327972272d3fab631a670ba2d5
+ * @relayHash 3943d6a3127e8446522c377b66334293
  */
 
 /* eslint-disable */
@@ -10,18 +10,23 @@
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
 type DiscussionLike_discussion$ref = any;
+export type UnlikeDiscussionInput = {|
+  clientMutationId?: ?string,
+  id: string,
+|};
 export type DiscussionLikeUnlikeDiscussionMutationVariables = {|
-  input: {
-    clientMutationId?: ?string,
-    id: string,
-  },
+  input: UnlikeDiscussionInput
 |};
 export type DiscussionLikeUnlikeDiscussionMutationResponse = {|
   +unlikeDiscussion: ?{|
     +discussion: ?{|
-      +$fragmentRefs: DiscussionLike_discussion$ref,
-    |},
-  |},
+      +$fragmentRefs: DiscussionLike_discussion$ref
+    |}
+  |}
+|};
+export type DiscussionLikeUnlikeDiscussionMutation = {|
+  variables: DiscussionLikeUnlikeDiscussionMutationVariables,
+  response: DiscussionLikeUnlikeDiscussionMutationResponse,
 |};
 */
 
@@ -65,24 +70,19 @@ v1 = [
 ];
 return {
   "kind": "Request",
-  "operationKind": "mutation",
-  "name": "DiscussionLikeUnlikeDiscussionMutation",
-  "id": null,
-  "text": "mutation DiscussionLikeUnlikeDiscussionMutation(\n  $input: UnlikeDiscussionInput!\n) {\n  unlikeDiscussion(input: $input) {\n    discussion {\n      ...DiscussionLike_discussion\n      id\n    }\n  }\n}\n\nfragment DiscussionLike_discussion on Discussion {\n  id\n  _id\n  viewer_does_like\n  like_count\n}\n",
-  "metadata": {},
   "fragment": {
     "kind": "Fragment",
     "name": "DiscussionLikeUnlikeDiscussionMutation",
     "type": "Mutation",
     "metadata": null,
-    "argumentDefinitions": v0,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
         "name": "unlikeDiscussion",
         "storageKey": null,
-        "args": v1,
+        "args": (v1/*: any*/),
         "concreteType": "UnlikeDiscussionPayload",
         "plural": false,
         "selections": [
@@ -109,14 +109,14 @@ return {
   "operation": {
     "kind": "Operation",
     "name": "DiscussionLikeUnlikeDiscussionMutation",
-    "argumentDefinitions": v0,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
         "name": "unlikeDiscussion",
         "storageKey": null,
-        "args": v1,
+        "args": (v1/*: any*/),
         "concreteType": "UnlikeDiscussionPayload",
         "plural": false,
         "selections": [
@@ -162,8 +162,16 @@ return {
         ]
       }
     ]
+  },
+  "params": {
+    "operationKind": "mutation",
+    "name": "DiscussionLikeUnlikeDiscussionMutation",
+    "id": null,
+    "text": "mutation DiscussionLikeUnlikeDiscussionMutation(\n  $input: UnlikeDiscussionInput!\n) {\n  unlikeDiscussion(input: $input) {\n    discussion {\n      ...DiscussionLike_discussion\n      id\n    }\n  }\n}\n\nfragment DiscussionLike_discussion on Discussion {\n  id\n  _id\n  viewer_does_like\n  like_count\n}\n",
+    "metadata": {}
   }
 };
 })();
+// prettier-ignore
 (node/*: any*/).hash = '9d7e088e2d551a5d4b1eb1717182509e';
 module.exports = node;

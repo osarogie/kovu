@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 1b33174c0e5ebdf45f964885917f9eb7
+ * @relayHash 13d9d1e2d67e5c922e12ef9e55a2955a
  */
 
 /* eslint-disable */
@@ -10,11 +10,15 @@
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
 type ChangePassword_viewer$ref = any;
-export type ChangePasswordQueryVariables = {| |};
+export type ChangePasswordQueryVariables = {||};
 export type ChangePasswordQueryResponse = {|
   +viewer: ?{|
-    +$fragmentRefs: ChangePassword_viewer$ref,
-  |},
+    +$fragmentRefs: ChangePassword_viewer$ref
+  |}
+|};
+export type ChangePasswordQuery = {|
+  variables: ChangePasswordQueryVariables,
+  response: ChangePasswordQueryResponse,
 |};
 */
 
@@ -35,11 +39,6 @@ fragment ChangePassword_viewer on User {
 
 const node/*: ConcreteRequest*/ = {
   "kind": "Request",
-  "operationKind": "query",
-  "name": "ChangePasswordQuery",
-  "id": null,
-  "text": "query ChangePasswordQuery {\n  viewer {\n    ...ChangePassword_viewer\n    id\n  }\n}\n\nfragment ChangePassword_viewer on User {\n  id\n  _id\n}\n",
-  "metadata": {},
   "fragment": {
     "kind": "Fragment",
     "name": "ChangePasswordQuery",
@@ -96,7 +95,15 @@ const node/*: ConcreteRequest*/ = {
         ]
       }
     ]
+  },
+  "params": {
+    "operationKind": "query",
+    "name": "ChangePasswordQuery",
+    "id": null,
+    "text": "query ChangePasswordQuery {\n  viewer {\n    ...ChangePassword_viewer\n    id\n  }\n}\n\nfragment ChangePassword_viewer on User {\n  id\n  _id\n}\n",
+    "metadata": {}
   }
 };
+// prettier-ignore
 (node/*: any*/).hash = 'a905aa8136c9811c2f003a4e74d4f9ff';
 module.exports = node;

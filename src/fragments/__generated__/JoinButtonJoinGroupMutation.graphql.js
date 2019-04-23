@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 2cdaee133f3b06d534060d767d7f01b5
+ * @relayHash 191f18454a7c3086985f56f09e14d720
  */
 
 /* eslint-disable */
@@ -10,18 +10,23 @@
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
 type JoinButton_group$ref = any;
+export type JoinGroupInput = {|
+  clientMutationId?: ?string,
+  id: string,
+|};
 export type JoinButtonJoinGroupMutationVariables = {|
-  input: {
-    clientMutationId?: ?string,
-    id: string,
-  },
+  input: JoinGroupInput
 |};
 export type JoinButtonJoinGroupMutationResponse = {|
   +joinGroup: ?{|
     +group: ?{|
-      +$fragmentRefs: JoinButton_group$ref,
-    |},
-  |},
+      +$fragmentRefs: JoinButton_group$ref
+    |}
+  |}
+|};
+export type JoinButtonJoinGroupMutation = {|
+  variables: JoinButtonJoinGroupMutationVariables,
+  response: JoinButtonJoinGroupMutationResponse,
 |};
 */
 
@@ -64,24 +69,19 @@ v1 = [
 ];
 return {
   "kind": "Request",
-  "operationKind": "mutation",
-  "name": "JoinButtonJoinGroupMutation",
-  "id": null,
-  "text": "mutation JoinButtonJoinGroupMutation(\n  $input: JoinGroupInput!\n) {\n  joinGroup(input: $input) {\n    group {\n      ...JoinButton_group\n      id\n    }\n  }\n}\n\nfragment JoinButton_group on Group {\n  _id\n  viewer_is_a_member\n  is_private\n}\n",
-  "metadata": {},
   "fragment": {
     "kind": "Fragment",
     "name": "JoinButtonJoinGroupMutation",
     "type": "Mutation",
     "metadata": null,
-    "argumentDefinitions": v0,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
         "name": "joinGroup",
         "storageKey": null,
-        "args": v1,
+        "args": (v1/*: any*/),
         "concreteType": "JoinGroupPayload",
         "plural": false,
         "selections": [
@@ -108,14 +108,14 @@ return {
   "operation": {
     "kind": "Operation",
     "name": "JoinButtonJoinGroupMutation",
-    "argumentDefinitions": v0,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
         "name": "joinGroup",
         "storageKey": null,
-        "args": v1,
+        "args": (v1/*: any*/),
         "concreteType": "JoinGroupPayload",
         "plural": false,
         "selections": [
@@ -161,8 +161,16 @@ return {
         ]
       }
     ]
+  },
+  "params": {
+    "operationKind": "mutation",
+    "name": "JoinButtonJoinGroupMutation",
+    "id": null,
+    "text": "mutation JoinButtonJoinGroupMutation(\n  $input: JoinGroupInput!\n) {\n  joinGroup(input: $input) {\n    group {\n      ...JoinButton_group\n      id\n    }\n  }\n}\n\nfragment JoinButton_group on Group {\n  _id\n  viewer_is_a_member\n  is_private\n}\n",
+    "metadata": {}
   }
 };
 })();
+// prettier-ignore
 (node/*: any*/).hash = '06dd10ef3dfec09b6ee3949fba2a8058';
 module.exports = node;

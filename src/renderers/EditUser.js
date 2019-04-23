@@ -154,7 +154,7 @@ class EditUser extends React.Component {
     return null
   }
   render() {
-    const { viewer, night_mode } = this.props
+    const {  night_mode } = this.props
     // alert(PixelRatio.getPixelSizeForLayoutSize(75) + '')
     const backgroundColor = night_mode ? '#000' : '#fff'
 
@@ -234,7 +234,7 @@ const EditUserFragmentContainer = createFragmentContainer(
   `
 )
 
-export default (EditUserQueryRenderer = props => (
+export default props => (
   <QueryRendererProxy
     query={graphql`
       query EditUserQuery {
@@ -247,4 +247,4 @@ export default (EditUserQueryRenderer = props => (
       <EditUserFragmentContainer viewer={data.props.viewer} {...props} />
     )}
   />
-))
+)

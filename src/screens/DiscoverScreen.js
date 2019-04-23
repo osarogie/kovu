@@ -1,14 +1,5 @@
 import React from 'react'
-import {
-  View,
-  ScrollView,
-  Image,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  Platform,
-  TabBarIOS
-} from 'react-native'
+import { View, Platform } from 'react-native'
 import styles from '../styles'
 import searchStyles from '../styles/search'
 import TextInput from '../components/TextInput'
@@ -16,7 +7,7 @@ import Discover from '../renderers/Discover'
 import Icon from 'react-native-vector-icons/Feather'
 // import { Icon } from '@shoutem/ui/components/Icon'
 import getNavigation from '../helpers/getNavigation'
-import { PURPLE } from '../ui'
+import { WHITE } from '../ui'
 // import { withNavigation } from 'react-navigation'
 
 // @withNavigation
@@ -38,17 +29,11 @@ export default class DiscoverScreen extends React.Component {
     qs: ''
   }
 
-  constructor(props) {
-    super(props)
-    this.handleSubmit = this.handleSubmit.bind(this)
-  }
-
   handleSubmit = _ => this.setState({ qs: this._q.state.value })
   shouldComponentUpdate(p, s) {
     return s.qs !== this.state.qs
   }
   renderToolbar() {
-    const { navigation } = this.props
     return (
       <View
         style={{
@@ -58,7 +43,7 @@ export default class DiscoverScreen extends React.Component {
           width: '100%',
           // position: 'absolute',
           justifyContent: 'center',
-          backgroundColor: PURPLE
+          backgroundColor: WHITE
         }}
       >
         <View style={searchStyles.container}>
@@ -69,9 +54,15 @@ export default class DiscoverScreen extends React.Component {
             }}
             // placeholderTextColor="#fff"
             // placeholderStyle={{ color: '#fff' }}
-            inputStyle={{ color: '#fff' }}
-            iconColor="#fff"
-            style={{ backgroundColor: '#fff4', elevation: 0 }}
+            inputStyle={{ color: '#333' }}
+            iconColor="#ddd"
+            style={{
+              backgroundColor: '#f9f9f9',
+              elevation: 0,
+              borderWidth: 1,
+              borderColor: '#eee',
+              ...Platform.select({ web: { borderStyle: 'solid' } })
+            }}
             placeholder="Search TheCommunity"
             ref={component => (this._q = component)}
             androidIcon="search"
@@ -95,36 +86,36 @@ export default class DiscoverScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        {this.renderPage()}
         {this.renderToolbar()}
+        {this.renderPage()}
       </View>
     )
   }
 }
 
-const styles2 = StyleSheet.create({
-  wrapper: { backgroundColor: '#000' },
-  slide1: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#9DD6EB'
-  },
-  slide2: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#97CAE5'
-  },
-  slide3: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#92BBD9'
-  },
-  text: {
-    color: '#fff',
-    fontSize: 30,
-    fontWeight: 'bold'
-  }
-})
+// const styles2 = StyleSheet.create({
+//   wrapper: { backgroundColor: '#000' },
+//   slide1: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     backgroundColor: '#9DD6EB'
+//   },
+//   slide2: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     backgroundColor: '#97CAE5'
+//   },
+//   slide3: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     backgroundColor: '#92BBD9'
+//   },
+//   text: {
+//     color: '#fff',
+//     fontSize: 30,
+//     fontWeight: 'bold'
+//   }
+// })

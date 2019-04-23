@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash c1aa51026552b3c3f19786570fa04aad
+ * @relayHash 8dab373c20b12099149b6256c73b5e36
  */
 
 /* eslint-disable */
@@ -11,21 +11,26 @@
 import type { ConcreteRequest } from 'relay-runtime';
 type PostListItem_discussion$ref = any;
 type UserListItem_user$ref = any;
+export type DeleteDiscussionInput = {|
+  clientMutationId?: ?string,
+  id: string,
+|};
 export type DeleteDiscussionMutationVariables = {|
-  input: {
-    clientMutationId?: ?string,
-    id: string,
-  },
+  input: DeleteDiscussionInput
 |};
 export type DeleteDiscussionMutationResponse = {|
   +deleteDiscussion: ?{|
     +discussion: ?{|
       +user: ?{|
-        +$fragmentRefs: UserListItem_user$ref,
+        +$fragmentRefs: UserListItem_user$ref
       |},
       +$fragmentRefs: PostListItem_discussion$ref,
-    |},
-  |},
+    |}
+  |}
+|};
+export type DeleteDiscussionMutation = {|
+  variables: DeleteDiscussionMutationVariables,
+  response: DeleteDiscussionMutationResponse,
 |};
 */
 
@@ -171,25 +176,39 @@ v3 = {
 v4 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "created_at",
-  "args": null,
-  "storageKey": null
-},
-v5 = {
-  "kind": "ScalarField",
-  "alias": null,
   "name": "name",
   "args": null,
   "storageKey": null
 },
+v5 = [
+  {
+    "kind": "Literal",
+    "name": "by_latest",
+    "value": true,
+    "type": "Boolean"
+  },
+  {
+    "kind": "Literal",
+    "name": "first",
+    "value": 3,
+    "type": "Int"
+  }
+],
 v6 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "created_at",
+  "args": null,
+  "storageKey": null
+},
+v7 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "username",
   "args": null,
   "storageKey": null
 },
-v7 = {
+v8 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "profile_picture_name",
@@ -198,24 +217,19 @@ v7 = {
 };
 return {
   "kind": "Request",
-  "operationKind": "mutation",
-  "name": "DeleteDiscussionMutation",
-  "id": null,
-  "text": "mutation DeleteDiscussionMutation(\n  $input: DeleteDiscussionInput!\n) {\n  deleteDiscussion(input: $input) {\n    discussion {\n      ...PostListItem_discussion\n      user {\n        ...UserListItem_user\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment PostListItem_discussion on Discussion {\n  id\n  _id\n  name\n  public_url\n  excerpt(size: 20)\n  word_count\n  comment_count\n  comments(by_latest: true, first: 3) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        excerpt\n        ...CommentListItem_comment\n        __typename\n      }\n      cursor\n    }\n  }\n  created_at\n  user {\n    id\n    _id\n    name\n    username\n    profile_picture_name\n  }\n  group {\n    id\n    _id\n    name\n    permalink\n  }\n  feature_photo {\n    id\n    _id\n    height\n    width\n    name\n  }\n  ...DiscussionLike_discussion\n}\n\nfragment UserListItem_user on User {\n  id\n  _id\n  name\n  username\n  bio\n  profile_picture_name\n  ...FollowButton_user\n}\n\nfragment FollowButton_user on User {\n  _id\n  viewer_follows\n  follows_viewer\n}\n\nfragment CommentListItem_comment on Comment {\n  id\n  _id\n  body\n  created_at\n  discussion_id\n  excerpt\n  discussion {\n    id\n    _id\n  }\n  user {\n    id\n    _id\n    name\n    username\n    profile_picture_name\n  }\n}\n\nfragment DiscussionLike_discussion on Discussion {\n  id\n  _id\n  viewer_does_like\n  like_count\n}\n",
-  "metadata": {},
   "fragment": {
     "kind": "Fragment",
     "name": "DeleteDiscussionMutation",
     "type": "Mutation",
     "metadata": null,
-    "argumentDefinitions": v0,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
         "name": "deleteDiscussion",
         "storageKey": null,
-        "args": v1,
+        "args": (v1/*: any*/),
         "concreteType": "DeleteDiscussionPayload",
         "plural": false,
         "selections": [
@@ -258,14 +272,14 @@ return {
   "operation": {
     "kind": "Operation",
     "name": "DeleteDiscussionMutation",
-    "argumentDefinitions": v0,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
         "name": "deleteDiscussion",
         "storageKey": null,
-        "args": v1,
+        "args": (v1/*: any*/),
         "concreteType": "DeleteDiscussionPayload",
         "plural": false,
         "selections": [
@@ -278,25 +292,50 @@ return {
             "concreteType": "Discussion",
             "plural": false,
             "selections": [
+              (v2/*: any*/),
+              (v3/*: any*/),
+              (v4/*: any*/),
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "name": "public_url",
+                "args": null,
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "name": "excerpt",
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "size",
+                    "value": 20,
+                    "type": "Int"
+                  }
+                ],
+                "storageKey": "excerpt(size:20)"
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "name": "word_count",
+                "args": null,
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "name": "comment_count",
+                "args": null,
+                "storageKey": null
+              },
               {
                 "kind": "LinkedField",
                 "alias": null,
                 "name": "comments",
                 "storageKey": "comments(by_latest:true,first:3)",
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "by_latest",
-                    "value": true,
-                    "type": "Boolean"
-                  },
-                  {
-                    "kind": "Literal",
-                    "name": "first",
-                    "value": 3,
-                    "type": "Int"
-                  }
-                ],
+                "args": (v5/*: any*/),
                 "concreteType": "CommentConnection",
                 "plural": false,
                 "selections": [
@@ -343,7 +382,7 @@ return {
                         "concreteType": "Comment",
                         "plural": false,
                         "selections": [
-                          v2,
+                          (v2/*: any*/),
                           {
                             "kind": "ScalarField",
                             "alias": null,
@@ -351,7 +390,7 @@ return {
                             "args": null,
                             "storageKey": null
                           },
-                          v3,
+                          (v3/*: any*/),
                           {
                             "kind": "ScalarField",
                             "alias": null,
@@ -359,7 +398,7 @@ return {
                             "args": null,
                             "storageKey": null
                           },
-                          v4,
+                          (v6/*: any*/),
                           {
                             "kind": "ScalarField",
                             "alias": null,
@@ -376,8 +415,8 @@ return {
                             "concreteType": "Discussion",
                             "plural": false,
                             "selections": [
-                              v2,
-                              v3
+                              (v2/*: any*/),
+                              (v3/*: any*/)
                             ]
                           },
                           {
@@ -389,11 +428,11 @@ return {
                             "concreteType": "User",
                             "plural": false,
                             "selections": [
-                              v2,
-                              v3,
-                              v5,
-                              v6,
-                              v7
+                              (v2/*: any*/),
+                              (v3/*: any*/),
+                              (v4/*: any*/),
+                              (v7/*: any*/),
+                              (v8/*: any*/)
                             ]
                           },
                           {
@@ -420,63 +459,12 @@ return {
                 "kind": "LinkedHandle",
                 "alias": null,
                 "name": "comments",
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "by_latest",
-                    "value": true,
-                    "type": "Boolean"
-                  },
-                  {
-                    "kind": "Literal",
-                    "name": "first",
-                    "value": 3,
-                    "type": "Int"
-                  }
-                ],
+                "args": (v5/*: any*/),
                 "handle": "connection",
                 "key": "PostListItem_comments",
                 "filters": []
               },
-              v2,
-              v5,
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "name": "public_url",
-                "args": null,
-                "storageKey": null
-              },
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "name": "excerpt",
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "size",
-                    "value": 20,
-                    "type": "Int"
-                  }
-                ],
-                "storageKey": "excerpt(size:20)"
-              },
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "name": "word_count",
-                "args": null,
-                "storageKey": null
-              },
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "name": "comment_count",
-                "args": null,
-                "storageKey": null
-              },
-              v3,
-              v4,
+              (v6/*: any*/),
               {
                 "kind": "LinkedField",
                 "alias": null,
@@ -486,11 +474,11 @@ return {
                 "concreteType": "User",
                 "plural": false,
                 "selections": [
-                  v2,
-                  v3,
-                  v5,
-                  v6,
-                  v7,
+                  (v2/*: any*/),
+                  (v3/*: any*/),
+                  (v4/*: any*/),
+                  (v7/*: any*/),
+                  (v8/*: any*/),
                   {
                     "kind": "ScalarField",
                     "alias": null,
@@ -523,9 +511,9 @@ return {
                 "concreteType": "Group",
                 "plural": false,
                 "selections": [
-                  v2,
-                  v3,
-                  v5,
+                  (v2/*: any*/),
+                  (v3/*: any*/),
+                  (v4/*: any*/),
                   {
                     "kind": "ScalarField",
                     "alias": null,
@@ -544,8 +532,8 @@ return {
                 "concreteType": "Photo",
                 "plural": false,
                 "selections": [
-                  v2,
-                  v3,
+                  (v2/*: any*/),
+                  (v3/*: any*/),
                   {
                     "kind": "ScalarField",
                     "alias": null,
@@ -560,7 +548,7 @@ return {
                     "args": null,
                     "storageKey": null
                   },
-                  v5
+                  (v4/*: any*/)
                 ]
               },
               {
@@ -582,8 +570,16 @@ return {
         ]
       }
     ]
+  },
+  "params": {
+    "operationKind": "mutation",
+    "name": "DeleteDiscussionMutation",
+    "id": null,
+    "text": "mutation DeleteDiscussionMutation(\n  $input: DeleteDiscussionInput!\n) {\n  deleteDiscussion(input: $input) {\n    discussion {\n      ...PostListItem_discussion\n      user {\n        ...UserListItem_user\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment PostListItem_discussion on Discussion {\n  id\n  _id\n  name\n  public_url\n  excerpt(size: 20)\n  word_count\n  comment_count\n  comments(by_latest: true, first: 3) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        excerpt\n        ...CommentListItem_comment\n        __typename\n      }\n      cursor\n    }\n  }\n  created_at\n  user {\n    id\n    _id\n    name\n    username\n    profile_picture_name\n  }\n  group {\n    id\n    _id\n    name\n    permalink\n  }\n  feature_photo {\n    id\n    _id\n    height\n    width\n    name\n  }\n  ...DiscussionLike_discussion\n}\n\nfragment UserListItem_user on User {\n  id\n  _id\n  name\n  username\n  bio\n  profile_picture_name\n  ...FollowButton_user\n}\n\nfragment FollowButton_user on User {\n  _id\n  viewer_follows\n  follows_viewer\n}\n\nfragment CommentListItem_comment on Comment {\n  id\n  _id\n  body\n  created_at\n  discussion_id\n  excerpt\n  discussion {\n    id\n    _id\n  }\n  user {\n    id\n    _id\n    name\n    username\n    profile_picture_name\n  }\n}\n\nfragment DiscussionLike_discussion on Discussion {\n  id\n  _id\n  viewer_does_like\n  like_count\n}\n",
+    "metadata": {}
   }
 };
 })();
+// prettier-ignore
 (node/*: any*/).hash = '70bb7d48108a623ab9dda73bc1ba8587';
 module.exports = node;

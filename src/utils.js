@@ -55,12 +55,12 @@ export const getTimeAgo = time => {
   } else if (diff > WEEK) {
     const duration = Math.floor(diff / WEEK)
     time_diff = duration.toString() + ` week${duration !== 1 ? 's' : ''} ago`
-  } else if (diff == WEEK) {
+  } else if (diff === WEEK) {
     time_diff = getDay(t.getDay())
   } else if (diff > DAY) {
     const duration = Math.floor(diff / DAY)
     time_diff = duration.toString() + ` day${duration !== 1 ? 's' : ''} ago`
-  } else if (diff == DAY) {
+  } else if (diff === DAY) {
     time_diff = 'Yesterday'
   } else if (diff >= HOUR) {
     const duration = Math.floor(diff / HOUR)
@@ -99,3 +99,5 @@ function getDay(day) {
   const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
   return days[day]
 }
+export const developmentLog = (...args) =>
+  process.env.NODE_ENV === 'development' ? console.log(...args) : null

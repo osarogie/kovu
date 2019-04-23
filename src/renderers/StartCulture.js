@@ -10,12 +10,11 @@ import {
 } from 'react-native'
 import QueryRendererProxy from './QueryRendererProxy'
 
-import { createFragmentContainer } from 'react-relay'
+import { createFragmentContainer, graphql } from 'react-relay'
 
 import { Bar } from 'react-native-progress'
-import createEnvironment from '../../relay-environment'
+import createEnvironment from '../relay-environment'
 import { connect } from 'react-redux'
-import colors from '../colors'
 import styles from '../styles'
 import CreateGroupMutation from '../mutations/CreateGroupMutation'
 import ActivityButton from '../components/ActivityButton'
@@ -103,7 +102,7 @@ class StartCulture extends React.Component {
     const { name, body, is_private } = this.state
 
     if (name && body) {
-      inputs = { name, body, is_private }
+      const inputs = { name, body, is_private }
       if (this.props.editing_mode) {
         EditGroupMutation.commit(
           this.environment,
@@ -152,7 +151,7 @@ class StartCulture extends React.Component {
     }
   }
   renderToolbar() {
-    const { id, editing_mode } = this.props
+    const {  editing_mode } = this.props
     const title = editing_mode ? 'Edit Culture' : 'Create Culture'
     // const subtitle = culture ? { subtitle: culture.name } : {}
     return <Toolbar title={title} navIconName="md-close" />
@@ -180,9 +179,7 @@ class StartCulture extends React.Component {
     return (
       <View style={{ flex: 1, backgroundColor: '#fff' }}>
         {this.renderToolbar()}
-        <View>
-          {this.renderProgress()}
-        </View>
+        <View>{this.renderProgress()}</View>
         <ScrollView style={{ flex: 1 }}>
           <View style={{ flex: 1, padding: 40 }}>
             <TextInput
@@ -262,18 +259,21 @@ const StartCultureFragmentContainer = createFragmentContainer(
   `
 )
 
-export default (StartCultureQueryRenderer = props =>
-  props.editing_mode
-    ? <QueryRendererProxy
-        query={graphql`
-          query StartCultureQuery($id: ID!) {
-            group(id: $id) {
-              ...StartCulture_group
-            }
+export default props =>
+  props.editing_mode ? (
+    <QueryRendererProxy
+      query={graphql`
+        query StartCultureQuery($id: ID!) {
+          group(id: $id) {
+            ...StartCulture_group
           }
-        `}
-        variables={{ id: props.id }}
-        render={data =>
-          <StartCultureFragmentContainer group={data.props.group} {...props} />}
-      />
-    : <ConnectedStartCulture {...props} />)
+        }
+      `}
+      variables={{ id: props.id }}
+      render={data => (
+        <StartCultureFragmentContainer group={data.props.group} {...props} />
+      )}
+    />
+  ) : (
+    <ConnectedStartCulture {...props} />
+  )

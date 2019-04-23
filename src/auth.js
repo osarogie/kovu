@@ -6,7 +6,7 @@ const apiBaseUrl = 'https://data.thecommunity.ng/v1/'
 // const apiBaseUrl = 'http://localhost:3000/v1/'
 // const apiBaseUrl = 'http://10.42.0.1:3000/v1/'
 
-export default (auth = {
+export default {
   async login(username, l_password) {
     const credentials = `${username}:${l_password}`
     const basic = 'Basic ' + Base64.encode(credentials)
@@ -55,4 +55,4 @@ export default (auth = {
       Constants.API_KEY
     ])
   }
-})
+}

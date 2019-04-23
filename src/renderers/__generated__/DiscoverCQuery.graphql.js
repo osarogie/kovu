@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash fc2bcce6bc88db3633e6774625c7321e
+ * @relayHash a3809f80f1d75d0a794d0c1ded08adb2
  */
 
 /* eslint-disable */
@@ -17,8 +17,12 @@ export type DiscoverCQueryVariables = {|
 |};
 export type DiscoverCQueryResponse = {|
   +feed: ?{|
-    +$fragmentRefs: Discover_groupList$ref,
-  |},
+    +$fragmentRefs: Discover_groupList$ref
+  |}
+|};
+export type DiscoverCQuery = {|
+  variables: DiscoverCQueryVariables,
+  response: DiscoverCQueryResponse,
 |};
 */
 
@@ -86,14 +90,34 @@ var v0 = [
     "defaultValue": null
   }
 ],
-v1 = {
+v1 = [
+  {
+    "kind": "Variable",
+    "name": "after",
+    "variableName": "cursor",
+    "type": "String"
+  },
+  {
+    "kind": "Variable",
+    "name": "first",
+    "variableName": "count",
+    "type": "Int"
+  },
+  {
+    "kind": "Variable",
+    "name": "q",
+    "variableName": "q",
+    "type": "String"
+  }
+],
+v2 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "id",
   "args": null,
   "storageKey": null
 },
-v2 = {
+v3 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "name",
@@ -102,17 +126,12 @@ v2 = {
 };
 return {
   "kind": "Request",
-  "operationKind": "query",
-  "name": "DiscoverCQuery",
-  "id": null,
-  "text": "query DiscoverCQuery(\n  $count: Int!\n  $cursor: String\n  $q: String\n) {\n  feed {\n    ...Discover_groupList\n    id\n  }\n}\n\nfragment Discover_groupList on Feed {\n  groups(first: $count, after: $cursor, q: $q) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        ...GroupListItem_group\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment GroupListItem_group on Group {\n  id\n  _id\n  name\n  permalink\n  body\n  header_image {\n    name\n    id\n  }\n}\n",
-  "metadata": {},
   "fragment": {
     "kind": "Fragment",
     "name": "DiscoverCQuery",
     "type": "Query",
     "metadata": null,
-    "argumentDefinitions": v0,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
         "kind": "LinkedField",
@@ -135,7 +154,7 @@ return {
   "operation": {
     "kind": "Operation",
     "name": "DiscoverCQuery",
-    "argumentDefinitions": v0,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
         "kind": "LinkedField",
@@ -151,26 +170,7 @@ return {
             "alias": null,
             "name": "groups",
             "storageKey": null,
-            "args": [
-              {
-                "kind": "Variable",
-                "name": "after",
-                "variableName": "cursor",
-                "type": "String"
-              },
-              {
-                "kind": "Variable",
-                "name": "first",
-                "variableName": "count",
-                "type": "Int"
-              },
-              {
-                "kind": "Variable",
-                "name": "q",
-                "variableName": "q",
-                "type": "String"
-              }
-            ],
+            "args": (v1/*: any*/),
             "concreteType": "GroupConnection",
             "plural": false,
             "selections": [
@@ -217,7 +217,7 @@ return {
                     "concreteType": "Group",
                     "plural": false,
                     "selections": [
-                      v1,
+                      (v2/*: any*/),
                       {
                         "kind": "ScalarField",
                         "alias": null,
@@ -225,7 +225,7 @@ return {
                         "args": null,
                         "storageKey": null
                       },
-                      v2,
+                      (v3/*: any*/),
                       {
                         "kind": "ScalarField",
                         "alias": null,
@@ -249,8 +249,8 @@ return {
                         "concreteType": "Photo",
                         "plural": false,
                         "selections": [
-                          v2,
-                          v1
+                          (v3/*: any*/),
+                          (v2/*: any*/)
                         ]
                       },
                       {
@@ -277,38 +277,27 @@ return {
             "kind": "LinkedHandle",
             "alias": null,
             "name": "groups",
-            "args": [
-              {
-                "kind": "Variable",
-                "name": "after",
-                "variableName": "cursor",
-                "type": "String"
-              },
-              {
-                "kind": "Variable",
-                "name": "first",
-                "variableName": "count",
-                "type": "Int"
-              },
-              {
-                "kind": "Variable",
-                "name": "q",
-                "variableName": "q",
-                "type": "String"
-              }
-            ],
+            "args": (v1/*: any*/),
             "handle": "connection",
             "key": "Discover_groups",
             "filters": [
               "q"
             ]
           },
-          v1
+          (v2/*: any*/)
         ]
       }
     ]
+  },
+  "params": {
+    "operationKind": "query",
+    "name": "DiscoverCQuery",
+    "id": null,
+    "text": "query DiscoverCQuery(\n  $count: Int!\n  $cursor: String\n  $q: String\n) {\n  feed {\n    ...Discover_groupList\n    id\n  }\n}\n\nfragment Discover_groupList on Feed {\n  groups(first: $count, after: $cursor, q: $q) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        ...GroupListItem_group\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment GroupListItem_group on Group {\n  id\n  _id\n  name\n  permalink\n  body\n  header_image {\n    name\n    id\n  }\n}\n",
+    "metadata": {}
   }
 };
 })();
+// prettier-ignore
 (node/*: any*/).hash = '432ae2ce01d8407146beb0f2d171b1cd';
 module.exports = node;

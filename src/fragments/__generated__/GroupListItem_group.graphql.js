@@ -7,8 +7,8 @@
 'use strict';
 
 /*::
-import type { ConcreteFragment } from 'relay-runtime';
-import type { FragmentReference } from 'relay-runtime';
+import type { ReaderFragment } from 'relay-runtime';
+import type { FragmentReference } from "relay-runtime";
 declare export opaque type GroupListItem_group$ref: FragmentReference;
 export type GroupListItem_group = {|
   +id: string,
@@ -17,14 +17,14 @@ export type GroupListItem_group = {|
   +permalink: ?string,
   +body: ?string,
   +header_image: ?{|
-    +name: ?string,
+    +name: ?string
   |},
   +$refType: GroupListItem_group$ref,
 |};
 */
 
 
-const node/*: ConcreteFragment*/ = (function(){
+const node/*: ReaderFragment*/ = (function(){
 var v0 = {
   "kind": "ScalarField",
   "alias": null,
@@ -53,7 +53,7 @@ return {
       "args": null,
       "storageKey": null
     },
-    v0,
+    (v0/*: any*/),
     {
       "kind": "ScalarField",
       "alias": null,
@@ -77,11 +77,12 @@ return {
       "concreteType": "Photo",
       "plural": false,
       "selections": [
-        v0
+        (v0/*: any*/)
       ]
     }
   ]
 };
 })();
+// prettier-ignore
 (node/*: any*/).hash = '18f3cda89f0d51396dc9a044644c798d';
 module.exports = node;

@@ -1,23 +1,16 @@
 import React from 'react'
-import Icon from 'react-native-vector-icons/Entypo'
-import { Text, Title, Caption, Heading } from '@shoutem/ui/components/Text'
+import {  Heading } from '@shoutem/ui/components/Text'
 import {
   Picker,
-  Image,
   View,
-  Alert,
-  findNodeHandle,
-  Platform,
   Animated,
-  Keyboard,
   Dimensions
 } from 'react-native'
 import { TextField } from './TextField'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import ActivityButton from './ActivityButton'
 import { PURPLE } from '../ui'
 
-const { width } = Dimensions.get('window')
+// const { width } = Dimensions.get('window')
 export class Form extends React.Component {
   state = { keyboardHeight: new Animated.Value(0) }
 
@@ -235,11 +228,11 @@ export class Form extends React.Component {
   }
 }
 
-const styles = {
-  button: {
-    marginLeft: 0,
-    marginRight: 0,
-    backgroundColor: PURPLE,
-    borderColor: PURPLE
-  }
-}
+// const styles = {
+//   button: {
+//     marginLeft: 0,
+//     marginRight: 0,
+//     backgroundColor: PURPLE,
+//     borderColor: PURPLE
+//   }
+// }

@@ -7,8 +7,8 @@
 'use strict';
 
 /*::
-import type { ConcreteFragment } from 'relay-runtime';
-import type { FragmentReference } from 'relay-runtime';
+import type { ReaderFragment } from 'relay-runtime';
+import type { FragmentReference } from "relay-runtime";
 declare export opaque type JoinButton_group$ref: FragmentReference;
 export type JoinButton_group = {|
   +_id: string,
@@ -19,7 +19,7 @@ export type JoinButton_group = {|
 */
 
 
-const node/*: ConcreteFragment*/ = {
+const node/*: ReaderFragment*/ = {
   "kind": "Fragment",
   "name": "JoinButton_group",
   "type": "Group",
@@ -49,5 +49,6 @@ const node/*: ConcreteFragment*/ = {
     }
   ]
 };
+// prettier-ignore
 (node/*: any*/).hash = 'ba7b656d16ae30d97588afb72c771b90';
 module.exports = node;

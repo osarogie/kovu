@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash dfbbf118120bf161f81ce39dc3adb768
+ * @relayHash eb5fb2441b0712ed3f795121a821af63
  */
 
 /* eslint-disable */
@@ -17,8 +17,12 @@ export type DiscoverUQueryVariables = {|
 |};
 export type DiscoverUQueryResponse = {|
   +feed: ?{|
-    +$fragmentRefs: Discover_userList$ref,
-  |},
+    +$fragmentRefs: Discover_userList$ref
+  |}
+|};
+export type DiscoverUQuery = {|
+  variables: DiscoverUQueryVariables,
+  response: DiscoverUQueryResponse,
 |};
 */
 
@@ -90,7 +94,27 @@ var v0 = [
     "defaultValue": null
   }
 ],
-v1 = {
+v1 = [
+  {
+    "kind": "Variable",
+    "name": "after",
+    "variableName": "cursor",
+    "type": "String"
+  },
+  {
+    "kind": "Variable",
+    "name": "first",
+    "variableName": "count",
+    "type": "Int"
+  },
+  {
+    "kind": "Variable",
+    "name": "q",
+    "variableName": "q",
+    "type": "String"
+  }
+],
+v2 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "id",
@@ -99,17 +123,12 @@ v1 = {
 };
 return {
   "kind": "Request",
-  "operationKind": "query",
-  "name": "DiscoverUQuery",
-  "id": null,
-  "text": "query DiscoverUQuery(\n  $count: Int!\n  $cursor: String\n  $q: String\n) {\n  feed {\n    ...Discover_userList\n    id\n  }\n}\n\nfragment Discover_userList on Feed {\n  users(first: $count, after: $cursor, q: $q) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        ...UserListItem_user\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment UserListItem_user on User {\n  id\n  _id\n  name\n  username\n  bio\n  profile_picture_name\n  ...FollowButton_user\n}\n\nfragment FollowButton_user on User {\n  _id\n  viewer_follows\n  follows_viewer\n}\n",
-  "metadata": {},
   "fragment": {
     "kind": "Fragment",
     "name": "DiscoverUQuery",
     "type": "Query",
     "metadata": null,
-    "argumentDefinitions": v0,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
         "kind": "LinkedField",
@@ -132,7 +151,7 @@ return {
   "operation": {
     "kind": "Operation",
     "name": "DiscoverUQuery",
-    "argumentDefinitions": v0,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
         "kind": "LinkedField",
@@ -148,26 +167,7 @@ return {
             "alias": null,
             "name": "users",
             "storageKey": null,
-            "args": [
-              {
-                "kind": "Variable",
-                "name": "after",
-                "variableName": "cursor",
-                "type": "String"
-              },
-              {
-                "kind": "Variable",
-                "name": "first",
-                "variableName": "count",
-                "type": "Int"
-              },
-              {
-                "kind": "Variable",
-                "name": "q",
-                "variableName": "q",
-                "type": "String"
-              }
-            ],
+            "args": (v1/*: any*/),
             "concreteType": "UserConnection",
             "plural": false,
             "selections": [
@@ -214,7 +214,7 @@ return {
                     "concreteType": "User",
                     "plural": false,
                     "selections": [
-                      v1,
+                      (v2/*: any*/),
                       {
                         "kind": "ScalarField",
                         "alias": null,
@@ -288,38 +288,27 @@ return {
             "kind": "LinkedHandle",
             "alias": null,
             "name": "users",
-            "args": [
-              {
-                "kind": "Variable",
-                "name": "after",
-                "variableName": "cursor",
-                "type": "String"
-              },
-              {
-                "kind": "Variable",
-                "name": "first",
-                "variableName": "count",
-                "type": "Int"
-              },
-              {
-                "kind": "Variable",
-                "name": "q",
-                "variableName": "q",
-                "type": "String"
-              }
-            ],
+            "args": (v1/*: any*/),
             "handle": "connection",
             "key": "Discover_users",
             "filters": [
               "q"
             ]
           },
-          v1
+          (v2/*: any*/)
         ]
       }
     ]
+  },
+  "params": {
+    "operationKind": "query",
+    "name": "DiscoverUQuery",
+    "id": null,
+    "text": "query DiscoverUQuery(\n  $count: Int!\n  $cursor: String\n  $q: String\n) {\n  feed {\n    ...Discover_userList\n    id\n  }\n}\n\nfragment Discover_userList on Feed {\n  users(first: $count, after: $cursor, q: $q) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        ...UserListItem_user\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment UserListItem_user on User {\n  id\n  _id\n  name\n  username\n  bio\n  profile_picture_name\n  ...FollowButton_user\n}\n\nfragment FollowButton_user on User {\n  _id\n  viewer_follows\n  follows_viewer\n}\n",
+    "metadata": {}
   }
 };
 })();
+// prettier-ignore
 (node/*: any*/).hash = '9f94a1bafce2a2630debf317f2b245b0';
 module.exports = node;

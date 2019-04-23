@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 2beb24fb0924005b7c5265f2ad357747
+ * @relayHash 88dcaec3da14372ece771bff394b1d3f
  */
 
 /* eslint-disable */
@@ -11,10 +11,14 @@
 import type { ConcreteRequest } from 'relay-runtime';
 type Post$ref = any;
 export type PostQueryVariables = {|
-  id: string,
+  id: string
 |};
 export type PostQueryResponse = {|
-  +$fragmentRefs: Post$ref,
+  +$fragmentRefs: Post$ref
+|};
+export type PostQuery = {|
+  variables: PostQueryVariables,
+  response: PostQueryResponse,
 |};
 */
 
@@ -87,30 +91,25 @@ v1 = {
 v2 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "name",
+  "name": "_id",
   "args": null,
   "storageKey": null
 },
 v3 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "_id",
+  "name": "name",
   "args": null,
   "storageKey": null
 };
 return {
   "kind": "Request",
-  "operationKind": "query",
-  "name": "PostQuery",
-  "id": null,
-  "text": "query PostQuery(\n  $id: ID!\n) {\n  ...Post\n}\n\nfragment Post on Query {\n  discussion(id: $id) {\n    id\n    _id\n    name\n    body\n    created_at\n    ...DiscussionLike_discussion\n    comment_count\n    feature_photo {\n      url\n      height\n      width\n      id\n    }\n    public_url\n    group {\n      _id\n      id\n      name\n      permalink\n    }\n    user {\n      id\n      _id\n      username\n      name\n      profile_picture_name\n      bio\n    }\n    parsed_body\n  }\n}\n\nfragment DiscussionLike_discussion on Discussion {\n  id\n  _id\n  viewer_does_like\n  like_count\n}\n",
-  "metadata": {},
   "fragment": {
     "kind": "Fragment",
     "name": "PostQuery",
     "type": "Query",
     "metadata": null,
-    "argumentDefinitions": v0,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
         "kind": "FragmentSpread",
@@ -122,7 +121,7 @@ return {
   "operation": {
     "kind": "Operation",
     "name": "PostQuery",
-    "argumentDefinitions": v0,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
         "kind": "LinkedField",
@@ -140,15 +139,9 @@ return {
         "concreteType": "Discussion",
         "plural": false,
         "selections": [
-          {
-            "kind": "ScalarField",
-            "alias": null,
-            "name": "like_count",
-            "args": null,
-            "storageKey": null
-          },
-          v1,
-          v2,
+          (v1/*: any*/),
+          (v2/*: any*/),
+          (v3/*: any*/),
           {
             "kind": "ScalarField",
             "alias": null,
@@ -170,7 +163,13 @@ return {
             "args": null,
             "storageKey": null
           },
-          v3,
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "name": "like_count",
+            "args": null,
+            "storageKey": null
+          },
           {
             "kind": "ScalarField",
             "alias": null,
@@ -208,7 +207,7 @@ return {
                 "args": null,
                 "storageKey": null
               },
-              v1
+              (v1/*: any*/)
             ]
           },
           {
@@ -227,9 +226,9 @@ return {
             "concreteType": "Group",
             "plural": false,
             "selections": [
-              v3,
-              v1,
-              v2,
+              (v2/*: any*/),
+              (v1/*: any*/),
+              (v3/*: any*/),
               {
                 "kind": "ScalarField",
                 "alias": null,
@@ -248,8 +247,8 @@ return {
             "concreteType": "User",
             "plural": false,
             "selections": [
-              v1,
-              v3,
+              (v1/*: any*/),
+              (v2/*: any*/),
               {
                 "kind": "ScalarField",
                 "alias": null,
@@ -257,7 +256,7 @@ return {
                 "args": null,
                 "storageKey": null
               },
-              v2,
+              (v3/*: any*/),
               {
                 "kind": "ScalarField",
                 "alias": null,
@@ -284,8 +283,16 @@ return {
         ]
       }
     ]
+  },
+  "params": {
+    "operationKind": "query",
+    "name": "PostQuery",
+    "id": null,
+    "text": "query PostQuery(\n  $id: ID!\n) {\n  ...Post\n}\n\nfragment Post on Query {\n  discussion(id: $id) {\n    id\n    _id\n    name\n    body\n    created_at\n    ...DiscussionLike_discussion\n    comment_count\n    feature_photo {\n      url\n      height\n      width\n      id\n    }\n    public_url\n    group {\n      _id\n      id\n      name\n      permalink\n    }\n    user {\n      id\n      _id\n      username\n      name\n      profile_picture_name\n      bio\n    }\n    parsed_body\n  }\n}\n\nfragment DiscussionLike_discussion on Discussion {\n  id\n  _id\n  viewer_does_like\n  like_count\n}\n",
+    "metadata": {}
   }
 };
 })();
+// prettier-ignore
 (node/*: any*/).hash = '626e137435c2daee5f3af13017ef3bbb';
 module.exports = node;

@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react'
-import { View, ScrollView, ToastAndroid, Platform } from 'react-native'
+import { View, ScrollView, ToastAndroid,  } from 'react-native'
 import { Bar } from 'react-native-progress'
 import ActivityButton from '../components/ActivityButton'
 import styles from '../styles'
@@ -198,7 +198,7 @@ const ChangePasswordFragmentContainer = createFragmentContainer(
   `
 )
 
-export default (ChangePasswordQueryRenderer = ({ api_key, ...props }) => (
+export default ({ api_key, ...props }) => (
   <QueryRendererProxy
     query={graphql`
       query ChangePasswordQuery {
@@ -211,4 +211,4 @@ export default (ChangePasswordQueryRenderer = ({ api_key, ...props }) => (
       <ChangePasswordFragmentContainer viewer={data.props.viewer} {...props} />
     )}
   />
-))
+)

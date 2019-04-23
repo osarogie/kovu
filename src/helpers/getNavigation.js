@@ -1,15 +1,24 @@
-export default (getNavigation = navigation => ({
+const getNavigation = navigation => ({
   openProfile(user) {
-    navigation.navigate('Profile', { id: user._id || user.id, user })
+    navigation.navigate('Profile', { ...user, id: user._id || user.id, user })
   },
   openCulture(culture) {
-    navigation.navigate('Culture', { id: culture._id, culture })
+    navigation.navigate('Culture', { ...culture, id: culture._id, culture })
   },
   openDiscussion(discussion) {
-    navigation.navigate('Discussion', { id: discussion._id, discussion })
+    navigation.navigate('Discussion', {
+      ...discussion,
+      username: discussion.user && discussion.user.username,
+      id: discussion._id,
+      discussion
+    })
   },
   openComments(discussion) {
-    navigation.navigate('Comments', { id: discussion._id, discussion })
+    navigation.navigate('Comments', {
+      ...discussion,
+      id: discussion._id,
+      discussion
+    })
   },
   openWrite({
     culture = false,
@@ -23,7 +32,7 @@ export default (getNavigation = navigation => ({
     navigation.navigate('Login')
   },
   openSearch() {
-    nnavigation.navigate('Discover')
+    navigation.navigate('Discover')
   },
   openEditProfile() {
     navigation.navigate('EditProfile')
@@ -39,6 +48,7 @@ export default (getNavigation = navigation => ({
   openProfilePicture(user) {
     navigation.navigate('ProfilePicture', user)
   }
-}))
+})
+export default getNavigation
 
 export const navHelper = component => getNavigation(component.props.navigation)

@@ -99,9 +99,11 @@ class JoinButton extends React.Component {
     const { viewer_is_a_member, is_private } = this.props.group
     const color = viewer_is_a_member ? '#fff' : '#05f'
     const backgroundColor = viewer_is_a_member ? '#05f' : '#fff'
-    title = viewer_is_a_member
+    const title = viewer_is_a_member
       ? 'Joined'
-      : is_private ? 'Private Culture' : 'Join'
+      : is_private
+        ? 'Private Culture'
+        : 'Join'
     return (
       <ActivityButton
         onPress={this.toggleJoin}

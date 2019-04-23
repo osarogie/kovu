@@ -17,9 +17,9 @@ const mutation = graphql`
 
 function sharedUpdater(store, discussion_id, newEdge) {
   const discussionProxy = store.get(discussion_id)
-  const CC = ConnectionHandler
-  const St = store
-  const ne = newEdge
+  // const CC = ConnectionHandler
+  // const St = store
+  // const ne = newEdge
 
   debugger
   const conn = ConnectionHandler.getConnection(

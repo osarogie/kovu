@@ -1,7 +1,6 @@
 import React from "react"
 import {
   Text,
-  StyleSheet,
   View,
   Image,
   // ViewPropTypes,
@@ -9,8 +8,7 @@ import {
   PixelRatio
 } from "react-native"
 import styles from "../styles"
-import { commitMutation, createFragmentContainer, graphql } from "react-relay"
-import Markdown from "react-native-simple-markdown"
+import { createFragmentContainer, graphql } from "react-relay"
 import { imageUrl } from "../utils"
 
 class GroupRow extends React.Component {

@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   View
 } from 'react-native'
-import PropTypes from 'prop-types'
 
 export default class ActivityButton extends React.Component {
   renderLoading() {
@@ -68,7 +67,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#b2b2b2',
     borderRadius: 15,
-    height: 30,
+    height: Platform.select({ android: 30, default: 40 }),
     paddingTop: 10,
     paddingBottom: 10,
     paddingRight: 20,
@@ -82,7 +81,8 @@ const styles = StyleSheet.create({
   activityIndicator: {
     marginTop: Platform.select({
       ios: -14,
-      android: -18
+      android: -18,
+      web: -18
     })
   }
 })

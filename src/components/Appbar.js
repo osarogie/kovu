@@ -2,7 +2,7 @@ import React from 'react'
 import { Toolbar as OldToolbar } from 'react-native-material-ui'
 import { withNavigation } from 'react-navigation'
 
-@withNavigation
+// @withNavigation
 export default class Appbar extends React.Component {
   render() {
     return (
@@ -19,3 +19,4 @@ export default class Appbar extends React.Component {
     )
   }
 }
+Appbar=withNavigation(Appbar)

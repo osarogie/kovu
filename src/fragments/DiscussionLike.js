@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { commitMutation, createFragmentContainer, graphql } from 'react-relay'
 import { navHelper } from '../helpers/getNavigation'
 import { withNavigation } from 'react-navigation'
-import { PURPLE, BLACK } from '../ui'
+import { BLACK } from '../ui'
 
 const mapStateToProps = state => ({
   night_mode: state.night_mode,
@@ -117,7 +117,7 @@ class DiscussionLike extends React.Component {
         onPress={this.toggleLike}
       >
         <Icon
-          name={viewer_does_like ? 'md-heart' : 'md-heart-outline'}
+          name={viewer_does_like ? 'md-heart' : 'md-heart-empty'}
           style={excerptStyles.controlIcon}
           size={size || 23}
           color={color}

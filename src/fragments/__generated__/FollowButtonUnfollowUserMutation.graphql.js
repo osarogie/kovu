@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 366dc571fe9e89a404b6be313ffbd61e
+ * @relayHash d8a2551d6fcc8ad1a8d4b5b4b671264b
  */
 
 /* eslint-disable */
@@ -10,18 +10,23 @@
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
 type FollowButton_user$ref = any;
+export type UnfollowUserInput = {|
+  clientMutationId?: ?string,
+  id: string,
+|};
 export type FollowButtonUnfollowUserMutationVariables = {|
-  input: {
-    clientMutationId?: ?string,
-    id: string,
-  },
+  input: UnfollowUserInput
 |};
 export type FollowButtonUnfollowUserMutationResponse = {|
   +unfollowUser: ?{|
     +user: ?{|
-      +$fragmentRefs: FollowButton_user$ref,
-    |},
-  |},
+      +$fragmentRefs: FollowButton_user$ref
+    |}
+  |}
+|};
+export type FollowButtonUnfollowUserMutation = {|
+  variables: FollowButtonUnfollowUserMutationVariables,
+  response: FollowButtonUnfollowUserMutationResponse,
 |};
 */
 
@@ -64,24 +69,19 @@ v1 = [
 ];
 return {
   "kind": "Request",
-  "operationKind": "mutation",
-  "name": "FollowButtonUnfollowUserMutation",
-  "id": null,
-  "text": "mutation FollowButtonUnfollowUserMutation(\n  $input: UnfollowUserInput!\n) {\n  unfollowUser(input: $input) {\n    user {\n      ...FollowButton_user\n      id\n    }\n  }\n}\n\nfragment FollowButton_user on User {\n  _id\n  viewer_follows\n  follows_viewer\n}\n",
-  "metadata": {},
   "fragment": {
     "kind": "Fragment",
     "name": "FollowButtonUnfollowUserMutation",
     "type": "Mutation",
     "metadata": null,
-    "argumentDefinitions": v0,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
         "name": "unfollowUser",
         "storageKey": null,
-        "args": v1,
+        "args": (v1/*: any*/),
         "concreteType": "UnfollowUserPayload",
         "plural": false,
         "selections": [
@@ -108,14 +108,14 @@ return {
   "operation": {
     "kind": "Operation",
     "name": "FollowButtonUnfollowUserMutation",
-    "argumentDefinitions": v0,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
         "name": "unfollowUser",
         "storageKey": null,
-        "args": v1,
+        "args": (v1/*: any*/),
         "concreteType": "UnfollowUserPayload",
         "plural": false,
         "selections": [
@@ -161,8 +161,16 @@ return {
         ]
       }
     ]
+  },
+  "params": {
+    "operationKind": "mutation",
+    "name": "FollowButtonUnfollowUserMutation",
+    "id": null,
+    "text": "mutation FollowButtonUnfollowUserMutation(\n  $input: UnfollowUserInput!\n) {\n  unfollowUser(input: $input) {\n    user {\n      ...FollowButton_user\n      id\n    }\n  }\n}\n\nfragment FollowButton_user on User {\n  _id\n  viewer_follows\n  follows_viewer\n}\n",
+    "metadata": {}
   }
 };
 })();
+// prettier-ignore
 (node/*: any*/).hash = '3c6c2aec1c72980d864f8ddb41b64650';
 module.exports = node;

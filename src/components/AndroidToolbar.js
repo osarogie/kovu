@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import colors from '../colors'
 import styles from '../styles'
-import Icon, { ToolbarAndroid } from 'react-native-vector-icons/Ionicons'
+import Icon from 'react-native-vector-icons/Ionicons'
 import { withNavigation } from 'react-navigation'
 // import { ViewPropTypes } from 'react-native'
 
@@ -14,7 +14,7 @@ class AndroidToolbar extends React.Component {
   render() {
     const { dark } = this.props
     return (
-      <ToolbarAndroid
+      <Icon.ToolbarAndroid
         titleColor={
           dark ? '#fff' : colors.get('toolbarTitleColor', this.props.night_mode)
         }

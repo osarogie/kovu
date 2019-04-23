@@ -1,7 +1,5 @@
 import React from 'react'
-import { View, Text } from 'react-native'
 import Icon from 'react-native-vector-icons/Feather'
-import excerptStyles from '../styles/excerptStyles'
 import ActivityButton from '../components/ActivityButton'
 import { connect } from 'react-redux'
 import { commitMutation, createFragmentContainer, graphql } from 'react-relay'
@@ -89,7 +87,7 @@ class FollowButton extends React.Component {
         })
   }
   renderIcon() {
-    const { viewer_follows, follows_viewer } = this.props.user
+    const { viewer_follows,  } = this.props.user
     return (
       <Icon
         name={viewer_follows ? 'user-check' : 'user-plus'}
@@ -103,7 +101,7 @@ class FollowButton extends React.Component {
     const { viewer_follows, follows_viewer } = this.props.user
     const color = viewer_follows ? '#fff' : '#05f'
     const backgroundColor = viewer_follows ? '#05f' : 'transparent'
-    title = viewer_follows
+    const title = viewer_follows
       ? 'Following'
       : follows_viewer
         ? 'Follow Back'

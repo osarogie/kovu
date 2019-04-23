@@ -2,17 +2,10 @@
 
 import React from 'react'
 import {
-  StyleSheet,
-  Text,
   View,
-  TouchableHighlight,
   VirtualizedList,
-  Image
 } from 'react-native'
-import { withNavigation } from 'react-navigation'
-import environment from '../../relay-environment'
 import styles from '../styles'
-import colors from '../colors'
 import LoaderBox from '../components/LoaderBox'
 import UserListItem from '../fragments/UserListItem'
 import Separator from '../components/Separator'
@@ -45,7 +38,7 @@ export class VerticalUserList extends React.Component {
   onEndReached = () => {
     const users = this.props.userList.users
 
-    if (!users.edges || users.edges.length == 0) return
+    if (!users.edges || users.edges.length === 0) return
 
     const hasMore = this.props.relay.hasMore()
     const isLoading = this.props.relay.isLoading()
@@ -79,9 +72,7 @@ export class VerticalUserList extends React.Component {
 
   renderFooter() {
     if (this.state.hasMore) {
-      return (
-        <LoaderBox isLoading={true} onPress={this.onEndReached.bind(this)} />
-      )
+      return <LoaderBox isLoading={true} onPress={this.onEndReached} />
     } else {
       return null
     }
@@ -104,7 +95,7 @@ export class VerticalUserList extends React.Component {
       //   getItemCount={data => data.length}
       //   getItem={(data, ii) => data[ii]}
       // />
-      <View>
+      <View style={{ flex: 1 }}>
         {this.props.renderHeader && this.props.renderHeader()}
         <VirtualizedList
           data={users.edges}

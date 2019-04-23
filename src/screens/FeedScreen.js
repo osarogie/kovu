@@ -1,38 +1,27 @@
 import React from 'react'
-import {
-  ScrollView,
-  Image,
-  Platform,
-  TouchableHighlight,
-  Dimensions
-} from 'react-native'
-import Authenticator from '../components/Authenticator'
+import { Platform, TouchableHighlight } from 'react-native'
 // import styles from '../styles'
 import Feed from '../renderers/Feed'
 import Avatar from '../components/Avatar'
-import Appbar from '../components/Appbar'
-import Ionicon from 'react-native-vector-icons/Ionicons'
 import Entypo from 'react-native-vector-icons/Entypo'
 import EvilIcon from 'react-native-vector-icons/EvilIcons'
 
-import { Icon } from '@shoutem/ui/components/Icon'
-import { Title, Text, Heading } from '@shoutem/ui/components/Text'
+import { Text, Heading } from '@shoutem/ui/components/Text'
 import { Button } from '@shoutem/ui/components/Button'
 // import { connectDecorator } from '../lib'
 import getNavigation from '../helpers/getNavigation'
 import { View } from '@shoutem/ui/components/View'
 import { Screen } from '@shoutem/ui/components/Screen'
-import { withNavigation } from 'react-navigation'
 import { connect } from 'react-redux'
 
 const mapStateToProps = state => ({
   user: state.user.user,
   loggedIn: state.user.loggedIn
 })
-const { width } = Dimensions.get('window')
+// const { width } = Dimensions.get('window')
 
 // @withNavigation
-@connect(mapStateToProps)
+// @connect(mapStateToProps)
 class TopBar extends React.Component {
   openWrite = _ => this._onActionSelected(0)
   openProfile = _ => this._onActionSelected(1)
@@ -68,21 +57,23 @@ class TopBar extends React.Component {
         //   this.props.navigation.navigate('DrawerToggle')
         // }
       /> */}
-      <View styleName="flexible">{this.renderAvatar()}</View>
+      <View style={{ width: 80 }}>{this.renderAvatar()}</View>
       <Heading
-        styleName="flexible"
-        style={{ textAlign: 'center', fontFamily: 'BlackHanSans-Regular' }}
+        style={{
+          textAlign: 'center',
+          flex: 1,
+          fontFamily: 'BlackHanSans-Regular'
+        }}
       >
-        -TC-
+        TheCommunity
       </Heading>
-      <View styleName="flexible">
-        <Button
-          styleName="clear"
-          style={{ alignSelf: 'flex-end' }}
+      <View style={{ width: 80 }}>
+        <TouchableHighlight
+          style={{ alignSelf: 'flex-end', marginRight: 10 }}
           onPress={this.openWrite}
         >
           <Text style={{ marginRight: 10, fontSize: 15 }}>Write</Text>
-        </Button>
+        </TouchableHighlight>
       </View>
     </View>
   )
@@ -158,9 +149,6 @@ class TopBar extends React.Component {
         case 0:
           navigate('Write')
           break
-        // case 1:
-        //   navigate('Notifications')
-        //   break
         case 1:
           navigate('Profile', { id: user.id, user })
           break
@@ -171,6 +159,7 @@ class TopBar extends React.Component {
   }
 }
 
+TopBar = connect(mapStateToProps)(TopBar)
 export default class FeedScreen extends React.Component {
   static navigationOptions = {
     tabBarLabel: 'Reading List',
@@ -188,7 +177,7 @@ export default class FeedScreen extends React.Component {
   render() {
     const { navigation } = this.props
     return (
-      <Screen styleName="paper">
+      <Screen styleName="paper" style={{ flex: 1, backgroundColor: '#fff' }}>
         <Feed {...getNavigation(navigation)} />
         <TopBar navigation={this.props.navigation} />
       </Screen>

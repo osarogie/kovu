@@ -10,10 +10,10 @@ import {
 import QueryRendererProxy from '../renderers/QueryRendererProxy'
 import { withNavigation } from 'react-navigation'
 
-import { createFragmentContainer } from 'react-relay'
+import { createFragmentContainer, graphql } from 'react-relay'
 
 import { Bar } from 'react-native-progress'
-import createEnvironment from '../../relay-environment'
+import createEnvironment from '../relay-environment'
 import { connect } from 'react-redux'
 import colors from '../colors'
 import CreateDiscussionMutation from '../mutations/CreateDiscussionMutation'
@@ -71,7 +71,7 @@ class Editor extends React.Component {
     const body = await this.richtext.getContentHtml()
 
     if (name && body) {
-      inputs = { name, body }
+      const inputs = { name, body }
       if (this.props.culture) {
         inputs.group_id = this.props.culture._id
       }
@@ -129,7 +129,7 @@ class Editor extends React.Component {
     const body = await this.richtext.getContentHtml()
 
     if (body) {
-      inputs = { body }
+      const inputs = { body }
       CreateCommentMutation.commit(this.environment, inputs, {
         onCompleted: _ => {
           // this.props.goBack()
@@ -304,7 +304,7 @@ const EditorFragmentContainer = createFragmentContainer(
   `
 )
 
-export default (EditorQueryRenderer = props =>
+export default props =>
   props.editing_mode ? (
     <QueryRendererProxy
       query={graphql`
@@ -324,4 +324,4 @@ export default (EditorQueryRenderer = props =>
     />
   ) : (
     <ConnectedEditor {...props} />
-  ))
+  )

@@ -7,8 +7,8 @@
 'use strict';
 
 /*::
-import type { ConcreteFragment } from 'relay-runtime';
-import type { FragmentReference } from 'relay-runtime';
+import type { ReaderFragment } from 'relay-runtime';
+import type { FragmentReference } from "relay-runtime";
 declare export opaque type DiscussionLike_discussion$ref: FragmentReference;
 export type DiscussionLike_discussion = {|
   +id: string,
@@ -20,7 +20,7 @@ export type DiscussionLike_discussion = {|
 */
 
 
-const node/*: ConcreteFragment*/ = {
+const node/*: ReaderFragment*/ = {
   "kind": "Fragment",
   "name": "DiscussionLike_discussion",
   "type": "Discussion",
@@ -57,5 +57,6 @@ const node/*: ConcreteFragment*/ = {
     }
   ]
 };
+// prettier-ignore
 (node/*: any*/).hash = 'ed66a8a29c79c7691a1d57c940e63dc7';
 module.exports = node;

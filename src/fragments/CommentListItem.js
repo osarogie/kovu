@@ -1,7 +1,6 @@
 import React from 'react'
 import {
   Text,
-  StyleSheet,
   View,
   Image,
   // ViewPropTypes,
@@ -11,13 +10,10 @@ import {
 } from 'react-native'
 import styles from '../styles'
 import excerptStyles from '../styles/excerptStyles'
-import { commitMutation, createFragmentContainer, graphql } from 'react-relay'
-import Markdown from 'react-native-simple-markdown'
+import { createFragmentContainer, graphql } from 'react-relay'
 import { connect } from 'react-redux'
 import Separator from '../components/Separator'
-import DiscussionLike from '../fragments/DiscussionLike'
 import { getTimeAgo, imageUrl } from '../utils'
-import Icon from 'react-native-vector-icons/Ionicons'
 import { Subtitle, Caption } from '@shoutem/ui/components/Text'
 import Avatar from '../components/Avatar'
 // import { connectDecorator } from '../lib'
@@ -28,7 +24,7 @@ const mapStateToProps = state => ({
   night_mode: state.night_mode
 })
 
-@withNavigation
+// @withNavigation
 class CommentListItem extends React.PureComponent {
   clickableProps = {
     underlayColor: 'whitesmoke'
@@ -113,7 +109,7 @@ class CommentListItem extends React.PureComponent {
   }
 
   renderNormal() {
-    const { comment, openDiscussion } = this.props
+    const { comment } = this.props
     // console.log(this.props);
     // console.log(comment.created_at)
     return (
@@ -143,7 +139,7 @@ class CommentListItem extends React.PureComponent {
   }
 
   renderStrip() {
-    const { comment, openDiscussion, openProfile } = this.props
+    const { comment, openProfile } = this.props
     // console.log(this.props);
     // console.log(comment.created_at)
     return (
@@ -194,12 +190,12 @@ class CommentListItem extends React.PureComponent {
   }
 }
 
+CommentListItem = withNavigation(CommentListItem)
 CommentListItem.defaultProps = {}
 
 CommentListItem.propTypes = {
   // ...ViewPropTypes
 }
-
 export default createFragmentContainer(
   connect(mapStateToProps)(CommentListItem),
   graphql`

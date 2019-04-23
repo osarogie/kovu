@@ -1,16 +1,19 @@
-/**
- * @flow
- */
-
 import React from 'react'
 import { Provider } from 'react-redux'
-import { StatusBar, Platform, View, StyleSheet, UIManager } from 'react-native'
+import {
+  StatusBar,
+  Platform,
+  View,
+  StyleSheet,
+  UIManager,
+  Text
+} from 'react-native'
 import { Root } from './navigation'
 import { addNavigationHelpers } from 'react-navigation'
 import getStore from './store'
 import colors from './colors'
 // import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper'
-import { COLOR, ThemeProvider } from 'react-native-material-ui'
+import { COLOR, ThemeContext } from 'react-native-material-ui'
 import { PURPLE } from './ui'
 import { connect } from 'react-redux'
 
@@ -52,14 +55,14 @@ const darkTheme = {
 }
 
 export default class App extends React.Component {
-  constructor() {
-    super()
+  // constructor(props) {
+  //   super(props)
 
-    if (Platform.OS === 'android') {
-      UIManager.setLayoutAnimationEnabledExperimental &&
-        UIManager.setLayoutAnimationEnabledExperimental(true)
-    }
-  }
+  //   if (Platform.OS === 'android') {
+  //     UIManager.setLayoutAnimationEnabledExperimental &&
+  //       UIManager.setLayoutAnimationEnabledExperimental(true)
+  //   }
+  // }
   render() {
     const prefix = Platform.select({
       android: 'thecommuntiy://read/',
@@ -90,9 +93,9 @@ export default class App extends React.Component {
 
 const ConnectedTheme = connect(state => ({ dark: state.night_mode }))(
   ({ dark, children }) => (
-    <ThemeProvider uiTheme={dark ? darkTheme : uiTheme}>
+    <ThemeContext.Provider uiTheme={dark ? darkTheme : uiTheme}>
       {children}
-    </ThemeProvider>
+    </ThemeContext.Provider>
   )
 )
 
@@ -100,10 +103,10 @@ ConnectedTheme.displayName = 'Connect(ThemeProvider)'
 
 const styles = StyleSheet.create({
   view: {
-    flex: 1
-    // paddingTop: Platform.select({
-    //   android: 0,
-    //   ios: 20
-    // })
+    flex: 1,
+    paddingTop: Platform.select({
+      android: 0,
+      ios: 20
+    })
   }
 })

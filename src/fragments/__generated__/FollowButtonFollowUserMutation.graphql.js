@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 2f0d5a0fe074b6dbc5c7e05a2082c028
+ * @relayHash cdf3ab4c098c678e14765a4d2e80a61b
  */
 
 /* eslint-disable */
@@ -10,18 +10,23 @@
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
 type FollowButton_user$ref = any;
+export type FollowUserInput = {|
+  clientMutationId?: ?string,
+  id: string,
+|};
 export type FollowButtonFollowUserMutationVariables = {|
-  input: {
-    clientMutationId?: ?string,
-    id: string,
-  },
+  input: FollowUserInput
 |};
 export type FollowButtonFollowUserMutationResponse = {|
   +followUser: ?{|
     +user: ?{|
-      +$fragmentRefs: FollowButton_user$ref,
-    |},
-  |},
+      +$fragmentRefs: FollowButton_user$ref
+    |}
+  |}
+|};
+export type FollowButtonFollowUserMutation = {|
+  variables: FollowButtonFollowUserMutationVariables,
+  response: FollowButtonFollowUserMutationResponse,
 |};
 */
 
@@ -64,24 +69,19 @@ v1 = [
 ];
 return {
   "kind": "Request",
-  "operationKind": "mutation",
-  "name": "FollowButtonFollowUserMutation",
-  "id": null,
-  "text": "mutation FollowButtonFollowUserMutation(\n  $input: FollowUserInput!\n) {\n  followUser(input: $input) {\n    user {\n      ...FollowButton_user\n      id\n    }\n  }\n}\n\nfragment FollowButton_user on User {\n  _id\n  viewer_follows\n  follows_viewer\n}\n",
-  "metadata": {},
   "fragment": {
     "kind": "Fragment",
     "name": "FollowButtonFollowUserMutation",
     "type": "Mutation",
     "metadata": null,
-    "argumentDefinitions": v0,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
         "name": "followUser",
         "storageKey": null,
-        "args": v1,
+        "args": (v1/*: any*/),
         "concreteType": "FollowUserPayload",
         "plural": false,
         "selections": [
@@ -108,14 +108,14 @@ return {
   "operation": {
     "kind": "Operation",
     "name": "FollowButtonFollowUserMutation",
-    "argumentDefinitions": v0,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
         "name": "followUser",
         "storageKey": null,
-        "args": v1,
+        "args": (v1/*: any*/),
         "concreteType": "FollowUserPayload",
         "plural": false,
         "selections": [
@@ -161,8 +161,16 @@ return {
         ]
       }
     ]
+  },
+  "params": {
+    "operationKind": "mutation",
+    "name": "FollowButtonFollowUserMutation",
+    "id": null,
+    "text": "mutation FollowButtonFollowUserMutation(\n  $input: FollowUserInput!\n) {\n  followUser(input: $input) {\n    user {\n      ...FollowButton_user\n      id\n    }\n  }\n}\n\nfragment FollowButton_user on User {\n  _id\n  viewer_follows\n  follows_viewer\n}\n",
+    "metadata": {}
   }
 };
 })();
+// prettier-ignore
 (node/*: any*/).hash = 'ba0002ae30c4a3eea5bc71b7ef9658c8';
 module.exports = node;

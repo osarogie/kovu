@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react'
-import createEnvironment from '../../relay-environment'
+import createEnvironment from '../relay-environment'
 import { QueryRenderer } from 'react-relay'
 import { connect } from 'react-redux'
 import LoaderBox from '../components/LoaderBox'

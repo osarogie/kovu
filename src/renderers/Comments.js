@@ -33,7 +33,7 @@ const mapStateToProps = state => ({
   loggedIn: state.user.loggedIn
 })
 
-export default (CommentsQueryRenderer = ({ id, gid, api_key, ...props }) => {
+export default ({ id, gid, api_key, ...props }) => {
   const itemProps = props
   return (
     <QueryRendererProxy
@@ -98,7 +98,7 @@ export default (CommentsQueryRenderer = ({ id, gid, api_key, ...props }) => {
       }}
     />
   )
-})
+}
 // PAGINATION CONTAINERS
 
 const CommentPaginationContainer = createPaginationContainer(

@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react'
-import { View, Platform, TabBarIOS } from 'react-native'
+import { View } from 'react-native'
 import styles from '../styles'
 import Editor from '../components/Editor'
 import getNavigation from '../helpers/getNavigation'

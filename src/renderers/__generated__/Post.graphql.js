@@ -7,9 +7,9 @@
 'use strict';
 
 /*::
-import type { ConcreteFragment } from 'relay-runtime';
+import type { ReaderFragment } from 'relay-runtime';
 type DiscussionLike_discussion$ref = any;
-import type { FragmentReference } from 'relay-runtime';
+import type { FragmentReference } from "relay-runtime";
 declare export opaque type Post$ref: FragmentReference;
 export type Post = {|
   +discussion: ?{|
@@ -47,7 +47,7 @@ export type Post = {|
 */
 
 
-const node/*: ConcreteFragment*/ = (function(){
+const node/*: ReaderFragment*/ = (function(){
 var v0 = {
   "kind": "ScalarField",
   "alias": null,
@@ -58,14 +58,14 @@ var v0 = {
 v1 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "name",
+  "name": "_id",
   "args": null,
   "storageKey": null
 },
 v2 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "_id",
+  "name": "name",
   "args": null,
   "storageKey": null
 };
@@ -98,15 +98,9 @@ return {
       "concreteType": "Discussion",
       "plural": false,
       "selections": [
-        {
-          "kind": "ScalarField",
-          "alias": null,
-          "name": "comment_count",
-          "args": null,
-          "storageKey": null
-        },
-        v0,
-        v1,
+        (v0/*: any*/),
+        (v1/*: any*/),
+        (v2/*: any*/),
         {
           "kind": "ScalarField",
           "alias": null,
@@ -126,7 +120,13 @@ return {
           "name": "DiscussionLike_discussion",
           "args": null
         },
-        v2,
+        {
+          "kind": "ScalarField",
+          "alias": null,
+          "name": "comment_count",
+          "args": null,
+          "storageKey": null
+        },
         {
           "kind": "LinkedField",
           "alias": null,
@@ -175,9 +175,9 @@ return {
           "concreteType": "Group",
           "plural": false,
           "selections": [
-            v2,
-            v0,
-            v1,
+            (v1/*: any*/),
+            (v0/*: any*/),
+            (v2/*: any*/),
             {
               "kind": "ScalarField",
               "alias": null,
@@ -196,8 +196,8 @@ return {
           "concreteType": "User",
           "plural": false,
           "selections": [
-            v0,
-            v2,
+            (v0/*: any*/),
+            (v1/*: any*/),
             {
               "kind": "ScalarField",
               "alias": null,
@@ -205,7 +205,7 @@ return {
               "args": null,
               "storageKey": null
             },
-            v1,
+            (v2/*: any*/),
             {
               "kind": "ScalarField",
               "alias": null,
@@ -234,5 +234,6 @@ return {
   ]
 };
 })();
+// prettier-ignore
 (node/*: any*/).hash = '9fe7aa940120dd6ff999e322def94788';
 module.exports = node;

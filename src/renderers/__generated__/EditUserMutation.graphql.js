@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 38ce8230bf4eed07952bf21bc79c0120
+ * @relayHash 9680869fbce3a9aafbccd750a60fc35b
  */
 
 /* eslint-disable */
@@ -10,23 +10,28 @@
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
 type EditUser_viewer$ref = any;
+export type EditUserInput = {|
+  clientMutationId?: ?string,
+  name?: ?string,
+  username?: ?string,
+  email?: ?string,
+  photo?: ?string,
+  bio?: ?string,
+|};
 export type EditUserMutationVariables = {|
-  input: {
-    clientMutationId?: ?string,
-    name?: ?string,
-    username?: ?string,
-    email?: ?string,
-    photo?: ?string,
-    bio?: ?string,
-  },
+  input: EditUserInput
 |};
 export type EditUserMutationResponse = {|
   +editUser: ?{|
     +user: ?{|
-      +$fragmentRefs: EditUser_viewer$ref,
+      +$fragmentRefs: EditUser_viewer$ref
     |},
     +success: ?boolean,
-  |},
+  |}
+|};
+export type EditUserMutation = {|
+  variables: EditUserMutationVariables,
+  response: EditUserMutationResponse,
 |};
 */
 
@@ -80,24 +85,19 @@ v2 = {
 };
 return {
   "kind": "Request",
-  "operationKind": "mutation",
-  "name": "EditUserMutation",
-  "id": null,
-  "text": "mutation EditUserMutation(\n  $input: EditUserInput!\n) {\n  editUser(input: $input) {\n    user {\n      ...EditUser_viewer\n      id\n    }\n    success\n  }\n}\n\nfragment EditUser_viewer on User {\n  id\n  _id\n  name\n  bio\n  username\n  profile_picture_name\n}\n",
-  "metadata": {},
   "fragment": {
     "kind": "Fragment",
     "name": "EditUserMutation",
     "type": "Mutation",
     "metadata": null,
-    "argumentDefinitions": v0,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
         "name": "editUser",
         "storageKey": null,
-        "args": v1,
+        "args": (v1/*: any*/),
         "concreteType": "EditUserPayload",
         "plural": false,
         "selections": [
@@ -117,7 +117,7 @@ return {
               }
             ]
           },
-          v2
+          (v2/*: any*/)
         ]
       }
     ]
@@ -125,14 +125,14 @@ return {
   "operation": {
     "kind": "Operation",
     "name": "EditUserMutation",
-    "argumentDefinitions": v0,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
         "name": "editUser",
         "storageKey": null,
-        "args": v1,
+        "args": (v1/*: any*/),
         "concreteType": "EditUserPayload",
         "plural": false,
         "selections": [
@@ -189,12 +189,20 @@ return {
               }
             ]
           },
-          v2
+          (v2/*: any*/)
         ]
       }
     ]
+  },
+  "params": {
+    "operationKind": "mutation",
+    "name": "EditUserMutation",
+    "id": null,
+    "text": "mutation EditUserMutation(\n  $input: EditUserInput!\n) {\n  editUser(input: $input) {\n    user {\n      ...EditUser_viewer\n      id\n    }\n    success\n  }\n}\n\nfragment EditUser_viewer on User {\n  id\n  _id\n  name\n  bio\n  username\n  profile_picture_name\n}\n",
+    "metadata": {}
   }
 };
 })();
+// prettier-ignore
 (node/*: any*/).hash = '3af9692558502f94b05d61d42e7933f6';
 module.exports = node;

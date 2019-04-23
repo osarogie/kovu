@@ -7,8 +7,8 @@
 'use strict';
 
 /*::
-import type { ConcreteFragment } from 'relay-runtime';
-import type { FragmentReference } from 'relay-runtime';
+import type { ReaderFragment } from 'relay-runtime';
+import type { FragmentReference } from "relay-runtime";
 declare export opaque type PostThumb_discussion$ref: FragmentReference;
 export type PostThumb_discussion = {|
   +id: string,
@@ -35,7 +35,7 @@ export type PostThumb_discussion = {|
 */
 
 
-const node/*: ConcreteFragment*/ = (function(){
+const node/*: ReaderFragment*/ = (function(){
 var v0 = {
   "kind": "ScalarField",
   "alias": null,
@@ -64,9 +64,9 @@ return {
   "metadata": null,
   "argumentDefinitions": [],
   "selections": [
-    v0,
-    v1,
-    v2,
+    (v0/*: any*/),
+    (v1/*: any*/),
+    (v2/*: any*/),
     {
       "kind": "ScalarField",
       "alias": null,
@@ -104,9 +104,9 @@ return {
       "concreteType": "User",
       "plural": false,
       "selections": [
-        v0,
-        v1,
-        v2,
+        (v0/*: any*/),
+        (v1/*: any*/),
+        (v2/*: any*/),
         {
           "kind": "ScalarField",
           "alias": null,
@@ -132,9 +132,9 @@ return {
       "concreteType": "Group",
       "plural": false,
       "selections": [
-        v0,
-        v1,
-        v2,
+        (v0/*: any*/),
+        (v1/*: any*/),
+        (v2/*: any*/),
         {
           "kind": "ScalarField",
           "alias": null,
@@ -147,5 +147,6 @@ return {
   ]
 };
 })();
+// prettier-ignore
 (node/*: any*/).hash = '47ebe39979eeed60a63f0089a8628d0a';
 module.exports = node;

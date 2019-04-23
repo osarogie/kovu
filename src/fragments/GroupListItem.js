@@ -1,7 +1,6 @@
 import React from 'react'
 import {
   Text,
-  StyleSheet,
   View,
   Image,
   // ViewPropTypes,
@@ -10,8 +9,7 @@ import {
   Dimensions
 } from 'react-native'
 import styles from '../styles'
-import { commitMutation, createFragmentContainer, graphql } from 'react-relay'
-import Markdown from 'react-native-simple-markdown'
+import { createFragmentContainer, graphql } from 'react-relay'
 import { imageUrl } from '../utils'
 import { withNavigation } from 'react-navigation'
 import { navHelper } from '../helpers/getNavigation'
@@ -20,7 +18,10 @@ const vertical_width = Dimensions.get('window').width - 34
 
 class GroupListItem extends React.Component {
   renderFeaturePhoto() {
-    const { group: { header_image }, vertical } = this.props
+    const {
+      group: { header_image },
+      vertical
+    } = this.props
     // const { header_image } = this.props.group
     const width = vertical ? vertical_width : this.props.f_width || 200
     const height = this.props.f_height || 100
@@ -52,7 +53,7 @@ class GroupListItem extends React.Component {
   }
 
   render() {
-    const { group, f_width, f_height, openCulture, vertical } = this.props
+    const { group, f_width, f_height, vertical } = this.props
     const width = vertical ? 'auto' : f_width || 200
     const height = f_height || 100
 

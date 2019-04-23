@@ -7,8 +7,8 @@
 'use strict';
 
 /*::
-import type { ConcreteFragment } from 'relay-runtime';
-import type { FragmentReference } from 'relay-runtime';
+import type { ReaderFragment } from 'relay-runtime';
+import type { FragmentReference } from "relay-runtime";
 declare export opaque type CommentRow_comment$ref: FragmentReference;
 export type CommentRow_comment = {|
   +id: string,
@@ -32,7 +32,7 @@ export type CommentRow_comment = {|
 */
 
 
-const node/*: ConcreteFragment*/ = (function(){
+const node/*: ReaderFragment*/ = (function(){
 var v0 = {
   "kind": "ScalarField",
   "alias": null,
@@ -54,8 +54,8 @@ return {
   "metadata": null,
   "argumentDefinitions": [],
   "selections": [
-    v0,
-    v1,
+    (v0/*: any*/),
+    (v1/*: any*/),
     {
       "kind": "ScalarField",
       "alias": null,
@@ -86,8 +86,8 @@ return {
       "concreteType": "Discussion",
       "plural": false,
       "selections": [
-        v0,
-        v1
+        (v0/*: any*/),
+        (v1/*: any*/)
       ]
     },
     {
@@ -99,8 +99,8 @@ return {
       "concreteType": "User",
       "plural": false,
       "selections": [
-        v0,
-        v1,
+        (v0/*: any*/),
+        (v1/*: any*/),
         {
           "kind": "ScalarField",
           "alias": null,
@@ -127,5 +127,6 @@ return {
   ]
 };
 })();
+// prettier-ignore
 (node/*: any*/).hash = '3e3e18dd85b4f4e06fd594c067b9ae35';
 module.exports = node;

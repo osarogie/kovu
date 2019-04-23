@@ -1,10 +1,7 @@
 import React from 'react'
 import {
   View,
-  Image,
   Text,
-  AsyncStorage,
-  StyleSheet,
   Alert,
   TouchableOpacity,
   Linking
@@ -14,11 +11,8 @@ import ActivityButton from './ActivityButton'
 import TextInput from './TextInput'
 import styles from '../styles'
 import inputStyles from '../styles/inputStyles'
-import Constants from '../constants'
 import auth from '../auth'
 import { setUser } from '../actions'
-import Hyperlink from 'react-native-hyperlink'
-import { Screen } from '@shoutem/ui/components/Screen'
 import { Form } from './Form'
 
 // const mapStateToProps = state => ({

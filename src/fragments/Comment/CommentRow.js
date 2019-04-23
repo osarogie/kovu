@@ -1,7 +1,6 @@
 import React from 'react'
 import excerptStyles from '..//excerptStyles'
 import { commitMutation, createFragmentContainer, graphql } from 'react-relay'
-import Markdown from 'react-native-simple-markdown'
 import { connect } from 'react-redux'
 import { getTimeAgo, imageUrl } from '../utils'
 
@@ -34,10 +33,10 @@ class CommentRow extends React.PureComponent {
               <Caption>{getTimeAgo(comment.created_at)}</Caption>
             </View>
             {/* <Text styleName="multiline">Banjo tote bag bicycle rights, High Life sartorial cray craft beer whatever street art fap. Hashtag typewriter banh mi, squid keffiyeh High.</Text> */}
-            <Markdown styles={excerptStyles.body}>
+            <div styles={excerptStyles.body}>
               {comment.body}
               {comment.word_count > 30 ? '***...(Read More)***' : ''}
-            </Markdown>
+            </div>
           </View>
         </Row>
       </TouchableOpacity>

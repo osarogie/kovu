@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 5f9e8f14c6eb51abdc28d3392c3fea37
+ * @relayHash 42b47928ddf117de880b56db8a25fba1
  */
 
 /* eslint-disable */
@@ -10,11 +10,15 @@
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
 type EditUser_viewer$ref = any;
-export type EditUserQueryVariables = {| |};
+export type EditUserQueryVariables = {||};
 export type EditUserQueryResponse = {|
   +viewer: ?{|
-    +$fragmentRefs: EditUser_viewer$ref,
-  |},
+    +$fragmentRefs: EditUser_viewer$ref
+  |}
+|};
+export type EditUserQuery = {|
+  variables: EditUserQueryVariables,
+  response: EditUserQueryResponse,
 |};
 */
 
@@ -39,11 +43,6 @@ fragment EditUser_viewer on User {
 
 const node/*: ConcreteRequest*/ = {
   "kind": "Request",
-  "operationKind": "query",
-  "name": "EditUserQuery",
-  "id": null,
-  "text": "query EditUserQuery {\n  viewer {\n    ...EditUser_viewer\n    id\n  }\n}\n\nfragment EditUser_viewer on User {\n  id\n  _id\n  name\n  bio\n  username\n  profile_picture_name\n}\n",
-  "metadata": {},
   "fragment": {
     "kind": "Fragment",
     "name": "EditUserQuery",
@@ -128,7 +127,15 @@ const node/*: ConcreteRequest*/ = {
         ]
       }
     ]
+  },
+  "params": {
+    "operationKind": "query",
+    "name": "EditUserQuery",
+    "id": null,
+    "text": "query EditUserQuery {\n  viewer {\n    ...EditUser_viewer\n    id\n  }\n}\n\nfragment EditUser_viewer on User {\n  id\n  _id\n  name\n  bio\n  username\n  profile_picture_name\n}\n",
+    "metadata": {}
   }
 };
+// prettier-ignore
 (node/*: any*/).hash = '9944f13cc203e55db47b1cb5faf1790c';
 module.exports = node;

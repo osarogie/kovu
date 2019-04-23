@@ -17,12 +17,10 @@ import HTMLView from 'react-native-htmlview'
 import Toolbar from '../components/Toolbar'
 import styles from '../styles'
 import excerptStyles from '../styles/excerptStyles'
-import CommentList from '../fragments/CommentList'
 import DiscussionLike from '../fragments/DiscussionLike'
 import {
   graphql,
   createFragmentContainer,
-  createPaginationContainer
 } from 'react-relay'
 import QueryRendererProxy from './QueryRendererProxy'
 import Avatar from '../components/Avatar'
@@ -152,7 +150,7 @@ class Post extends React.Component {
     const {
       data: { discussion }
     } = this.props
-    if (this.props.current_user._id == discussion.user._id) {
+    if (this.props.current_user._id === discussion.user._id) {
       return (
         <TouchableOpacity {...this.clickableProps} onPress={this.openWrite}>
           <Text style={{ marginLeft: 20 }}>Edit</Text>
@@ -198,7 +196,7 @@ class Post extends React.Component {
 
     switch (position) {
       case 0:
-        message = `Read "${discussion.name}" on TheCommunity - ${
+        const message = `Read "${discussion.name}" on TheCommunity - ${
           discussion.public_url
         } by ${discussion.user.name}`
         Share.share(
@@ -236,7 +234,7 @@ class Post extends React.Component {
         {this.renderEdit()}
         <TouchableOpacity {...this.clickableProps} onPress={this.openComments}>
           <Text style={{ marginLeft: 20 }}>
-            {`${comment_count_} Contribution${comment_count == 1 ? '' : 's'}`}
+            {`${comment_count_} Contribution${comment_count === 1 ? '' : 's'}`}
           </Text>
         </TouchableOpacity>
         {/* <Icon
@@ -250,7 +248,7 @@ class Post extends React.Component {
   }
 
   renderCommentBox() {
-    const discussion = this.props.data.discussion
+    // const discussion = this.props.data.discussion
     return (
       <TouchableHighlight
         {...this.clickableProps}
@@ -364,7 +362,7 @@ const PostFragmentContainer = createFragmentContainer(
   `
 )
 
-export default (PostQueryRenderer = ({ id, ...props }) => {
+export default ({ id, ...props }) => {
   return (
     <QueryRendererProxy
       query={graphql`
@@ -378,7 +376,7 @@ export default (PostQueryRenderer = ({ id, ...props }) => {
       )}
     />
   )
-})
+}
 const codeStyle = {
   fontFamily: Platform.select({ ios: 'Menlo', android: 'monospace' }),
   backgroundColor: '#eee'

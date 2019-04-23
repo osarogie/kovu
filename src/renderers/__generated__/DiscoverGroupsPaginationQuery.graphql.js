@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 69a997ffce8cf2536005fffbc5de3b02
+ * @relayHash 108a1900eb1e9c872436e6750aa940b3
  */
 
 /* eslint-disable */
@@ -17,8 +17,12 @@ export type DiscoverGroupsPaginationQueryVariables = {|
 |};
 export type DiscoverGroupsPaginationQueryResponse = {|
   +feed: ?{|
-    +$fragmentRefs: Discover_groupList$ref,
-  |},
+    +$fragmentRefs: Discover_groupList$ref
+  |}
+|};
+export type DiscoverGroupsPaginationQuery = {|
+  variables: DiscoverGroupsPaginationQueryVariables,
+  response: DiscoverGroupsPaginationQueryResponse,
 |};
 */
 
@@ -86,14 +90,34 @@ var v0 = [
     "defaultValue": null
   }
 ],
-v1 = {
+v1 = [
+  {
+    "kind": "Variable",
+    "name": "after",
+    "variableName": "cursor",
+    "type": "String"
+  },
+  {
+    "kind": "Variable",
+    "name": "first",
+    "variableName": "count",
+    "type": "Int"
+  },
+  {
+    "kind": "Variable",
+    "name": "q",
+    "variableName": "q",
+    "type": "String"
+  }
+],
+v2 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "id",
   "args": null,
   "storageKey": null
 },
-v2 = {
+v3 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "name",
@@ -102,17 +126,12 @@ v2 = {
 };
 return {
   "kind": "Request",
-  "operationKind": "query",
-  "name": "DiscoverGroupsPaginationQuery",
-  "id": null,
-  "text": "query DiscoverGroupsPaginationQuery(\n  $count: Int!\n  $cursor: String\n  $q: String\n) {\n  feed {\n    ...Discover_groupList\n    id\n  }\n}\n\nfragment Discover_groupList on Feed {\n  groups(first: $count, after: $cursor, q: $q) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        ...GroupListItem_group\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment GroupListItem_group on Group {\n  id\n  _id\n  name\n  permalink\n  body\n  header_image {\n    name\n    id\n  }\n}\n",
-  "metadata": {},
   "fragment": {
     "kind": "Fragment",
     "name": "DiscoverGroupsPaginationQuery",
     "type": "Query",
     "metadata": null,
-    "argumentDefinitions": v0,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
         "kind": "LinkedField",
@@ -135,7 +154,7 @@ return {
   "operation": {
     "kind": "Operation",
     "name": "DiscoverGroupsPaginationQuery",
-    "argumentDefinitions": v0,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
         "kind": "LinkedField",
@@ -151,26 +170,7 @@ return {
             "alias": null,
             "name": "groups",
             "storageKey": null,
-            "args": [
-              {
-                "kind": "Variable",
-                "name": "after",
-                "variableName": "cursor",
-                "type": "String"
-              },
-              {
-                "kind": "Variable",
-                "name": "first",
-                "variableName": "count",
-                "type": "Int"
-              },
-              {
-                "kind": "Variable",
-                "name": "q",
-                "variableName": "q",
-                "type": "String"
-              }
-            ],
+            "args": (v1/*: any*/),
             "concreteType": "GroupConnection",
             "plural": false,
             "selections": [
@@ -217,7 +217,7 @@ return {
                     "concreteType": "Group",
                     "plural": false,
                     "selections": [
-                      v1,
+                      (v2/*: any*/),
                       {
                         "kind": "ScalarField",
                         "alias": null,
@@ -225,7 +225,7 @@ return {
                         "args": null,
                         "storageKey": null
                       },
-                      v2,
+                      (v3/*: any*/),
                       {
                         "kind": "ScalarField",
                         "alias": null,
@@ -249,8 +249,8 @@ return {
                         "concreteType": "Photo",
                         "plural": false,
                         "selections": [
-                          v2,
-                          v1
+                          (v3/*: any*/),
+                          (v2/*: any*/)
                         ]
                       },
                       {
@@ -277,38 +277,27 @@ return {
             "kind": "LinkedHandle",
             "alias": null,
             "name": "groups",
-            "args": [
-              {
-                "kind": "Variable",
-                "name": "after",
-                "variableName": "cursor",
-                "type": "String"
-              },
-              {
-                "kind": "Variable",
-                "name": "first",
-                "variableName": "count",
-                "type": "Int"
-              },
-              {
-                "kind": "Variable",
-                "name": "q",
-                "variableName": "q",
-                "type": "String"
-              }
-            ],
+            "args": (v1/*: any*/),
             "handle": "connection",
             "key": "Discover_groups",
             "filters": [
               "q"
             ]
           },
-          v1
+          (v2/*: any*/)
         ]
       }
     ]
+  },
+  "params": {
+    "operationKind": "query",
+    "name": "DiscoverGroupsPaginationQuery",
+    "id": null,
+    "text": "query DiscoverGroupsPaginationQuery(\n  $count: Int!\n  $cursor: String\n  $q: String\n) {\n  feed {\n    ...Discover_groupList\n    id\n  }\n}\n\nfragment Discover_groupList on Feed {\n  groups(first: $count, after: $cursor, q: $q) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        ...GroupListItem_group\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment GroupListItem_group on Group {\n  id\n  _id\n  name\n  permalink\n  body\n  header_image {\n    name\n    id\n  }\n}\n",
+    "metadata": {}
   }
 };
 })();
+// prettier-ignore
 (node/*: any*/).hash = '3ac5e4185a5835537877b4d17096d8ca';
 module.exports = node;

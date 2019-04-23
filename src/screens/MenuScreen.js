@@ -4,10 +4,8 @@ import {
   ScrollView,
   Image,
   Platform,
-  Switch,
   Text,
-  TouchableOpacity,
-  PixelRatio
+  TouchableOpacity
 } from 'react-native'
 import styles from '../styles'
 import colors from '../colors'
@@ -27,7 +25,6 @@ import {
   openEditProfile,
   openChangePassword,
   openStartCulture,
-  imageUrl,
   openLogin
 } from '../utils'
 
@@ -91,7 +88,7 @@ class MenuScreen extends React.Component {
     return <Toolbar title="Options" style={{ elevation: 0 }} />
   }
   renderHeader() {
-    const { user, loggedIn, night_mode, navigation } = this.props
+    const { user, loggedIn } = this.props
 
     if (loggedIn) {
       return (
@@ -140,7 +137,14 @@ class MenuScreen extends React.Component {
   getIcon(name, variation = true) {
     const { night_mode } = this.props
     const optionIconProps = {
-      style: [styles.icon, { marginRight: 0, marginTop: 15, marginLeft: 15 }],
+      style: [
+        styles.icon,
+        {
+          marginRight: 0,
+          marginTop: Platform.select({ web: 11, default: 15 }),
+          marginLeft: 15
+        }
+      ],
       size: 25,
       color: colors.get('primary', night_mode)
     }
@@ -149,7 +153,11 @@ class MenuScreen extends React.Component {
       <Ionicon
         name={
           variation
-            ? `${Platform.select({ android: 'md', ios: 'ios' })}-${name}`
+            ? `${Platform.select({
+                android: 'md',
+                ios: 'ios',
+                web: 'md'
+              })}-${name}`
             : name
         } //{Platform.select({ ios: 'ios-options', android: 'md-options' })}
         {...optionIconProps}
@@ -157,7 +165,7 @@ class MenuScreen extends React.Component {
     )
   }
   renderUserMenu() {
-    const { night_mode, dispatch, navigation, user, loggedIn } = this.props
+    const { dispatch, user, loggedIn } = this.props
     if (loggedIn && user) {
       return (
         <SettingsList borderColor="#fff" defaultItemSize={50}>
@@ -193,15 +201,15 @@ class MenuScreen extends React.Component {
     return null
   }
   renderMenu() {
-    const { night_mode, dispatch, navigation } = this.props
-    const optionRowStyle = {
-      backgroundColor: colors.get('container', night_mode)
-    }
-    const optionIconProps = {
-      style: [styles.icon, { marginRight: 0 }],
-      size: 25,
-      color: colors.get('optionIcon', night_mode)
-    }
+    // const { night_mode } = this.props
+    // const optionRowStyle = {
+    //   backgroundColor: colors.get('container', night_mode)
+    // }
+    // const optionIconProps = {
+    //   style: [styles.icon, { marginRight: 0 }],
+    //   size: 25,
+    //   color: colors.get('optionIcon', night_mode)
+    // }
 
     return (
       <View style={{ flex: 1 }}>

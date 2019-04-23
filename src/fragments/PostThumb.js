@@ -1,25 +1,12 @@
 import React from 'react'
-import {
-  Text,
-  StyleSheet,
-  View,
-  Image,
-  // ViewPropTypes,
-  Dimensions,
-  TouchableHighlight,
-  PixelRatio,
-  TouchableOpacity
-} from 'react-native'
+import { Text, View, TouchableHighlight, TouchableOpacity } from 'react-native'
 import styles from '../styles'
 import excerptStyles from '../styles/excerptStyles'
 import { createFragmentContainer, graphql } from 'react-relay'
-import Markdown from 'react-native-simple-markdown'
 import { connect } from 'react-redux'
 import Separator from '../components/Separator'
 import Avatar from '../components/Avatar'
-import DiscussionLike from '../fragments/DiscussionLike'
-import { getTimeAgo, imageUrl, getCommentCount } from '../utils'
-import Icon from 'react-native-vector-icons/Ionicons'
+import { getTimeAgo } from '../utils'
 
 const mapStateToProps = state => ({
   night_mode: state.night_mode
@@ -118,7 +105,7 @@ class PostThumb extends React.PureComponent {
 
   render() {
     const { discussion } = this.props
-    const { name, excerpt, word_count, user } = discussion
+    const { user } = discussion
     console.log(discussion)
     return (
       <View>
@@ -162,7 +149,7 @@ PostThumb.propTypes = {
   // ...ViewPropTypes
 }
 
-export default (PostFragmentContainer = createFragmentContainer(
+export default createFragmentContainer(
   connect(mapStateToProps)(PostThumb),
   graphql`
     fragment PostThumb_discussion on Discussion {
@@ -187,4 +174,4 @@ export default (PostFragmentContainer = createFragmentContainer(
       }
     }
   `
-))
+)

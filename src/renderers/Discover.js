@@ -5,13 +5,13 @@ import { View, Text, Dimensions } from 'react-native'
 import { VerticalGroupList } from '../fragments/VerticalGroupList'
 import { VerticalUserList } from '../fragments/VerticalUserList'
 import PostList from '../fragments/PostList'
-import Separator from '../components/Separator'
 import QueryRendererProxy from './QueryRendererProxy'
-import { TabViewAnimated, TabBar, TabViewPagerPan } from 'react-native-tab-view'
+import { TabView, TabBar, TabViewPagerPan } from 'react-native-tab-view'
 import { createPaginationContainer, graphql } from 'react-relay'
 import { Title } from '@shoutem/ui/components/Text'
 import { Screen } from '@shoutem/ui/components/Screen'
 import Icon from 'react-native-vector-icons/Feather'
+import { WHITE } from '../ui'
 
 const initialLayout = {
   height: 0,
@@ -251,7 +251,12 @@ class Stories extends React.Component {
       return (
         <Screen
           styleName="paper"
-          style={{ alignItems: 'center', justifyContent: 'center' }}
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            flex: 1,
+            backgroundColor: WHITE
+          }}
         >
           <Icon
             name="search"
@@ -338,7 +343,7 @@ export default class VideoPager extends React.Component {
 
     return (
       <View style={{ flex: 1 /*marginTop: 53*/ }}>
-        <TabViewAnimated
+        <TabView
           style={[styles.container, this.props.style]}
           navigationState={this.state}
           renderScene={this._renderScene}
@@ -426,24 +431,24 @@ const styles = {
   }
 }
 
-const renderCultureHeader = q => (
-  <Text style={labelStyle}>
-    Top Cultures
-    {renderMatch(q)}
-  </Text>
-)
-const renderUserHeader = q => (
-  <Text style={labelStyle}>
-    People
-    {renderMatch(q)}
-  </Text>
-)
-const renderPostsLabel = q => (
-  <Text style={[labelStyle, { backgroundColor: '#eee' }]}>
-    Stories
-    {renderMatch(q)}
-  </Text>
-)
+// const renderCultureHeader = q => (
+//   <Text style={labelStyle}>
+//     Top Cultures
+//     {renderMatch(q)}
+//   </Text>
+// )
+// const renderUserHeader = q => (
+//   <Text style={labelStyle}>
+//     People
+//     {renderMatch(q)}
+//   </Text>
+// )
+// const renderPostsLabel = q => (
+//   <Text style={[labelStyle, { backgroundColor: '#eee' }]}>
+//     Stories
+//     {renderMatch(q)}
+//   </Text>
+// )
 
 const renderMatch = q => {
   if (q) {

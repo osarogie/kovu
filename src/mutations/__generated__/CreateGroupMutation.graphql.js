@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 257d75a9cba0263fa3a0328efe4070d9
+ * @relayHash d1e557c55f37a0a35b1580152c697e8d
  */
 
 /* eslint-disable */
@@ -10,22 +10,27 @@
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
 type GroupListItem_group$ref = any;
+export type CreateGroupInput = {|
+  clientMutationId?: ?string,
+  name: string,
+  body?: ?string,
+  is_private?: ?boolean,
+  header_image?: ?string,
+|};
 export type CreateGroupMutationVariables = {|
-  input: {
-    clientMutationId?: ?string,
-    name: string,
-    body?: ?string,
-    is_private?: ?boolean,
-    header_image?: ?string,
-  },
+  input: CreateGroupInput
 |};
 export type CreateGroupMutationResponse = {|
   +createGroup: ?{|
     +success: ?boolean,
     +group: ?{|
-      +$fragmentRefs: GroupListItem_group$ref,
+      +$fragmentRefs: GroupListItem_group$ref
     |},
-  |},
+  |}
+|};
+export type CreateGroupMutation = {|
+  variables: CreateGroupMutationVariables,
+  response: CreateGroupMutationResponse,
 |};
 */
 
@@ -96,28 +101,23 @@ v4 = {
 };
 return {
   "kind": "Request",
-  "operationKind": "mutation",
-  "name": "CreateGroupMutation",
-  "id": null,
-  "text": "mutation CreateGroupMutation(\n  $input: CreateGroupInput!\n) {\n  createGroup(input: $input) {\n    success\n    group {\n      ...GroupListItem_group\n      id\n    }\n  }\n}\n\nfragment GroupListItem_group on Group {\n  id\n  _id\n  name\n  permalink\n  body\n  header_image {\n    name\n    id\n  }\n}\n",
-  "metadata": {},
   "fragment": {
     "kind": "Fragment",
     "name": "CreateGroupMutation",
     "type": "Mutation",
     "metadata": null,
-    "argumentDefinitions": v0,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
         "name": "createGroup",
         "storageKey": null,
-        "args": v1,
+        "args": (v1/*: any*/),
         "concreteType": "CreateGroupPayload",
         "plural": false,
         "selections": [
-          v2,
+          (v2/*: any*/),
           {
             "kind": "LinkedField",
             "alias": null,
@@ -141,18 +141,18 @@ return {
   "operation": {
     "kind": "Operation",
     "name": "CreateGroupMutation",
-    "argumentDefinitions": v0,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
         "name": "createGroup",
         "storageKey": null,
-        "args": v1,
+        "args": (v1/*: any*/),
         "concreteType": "CreateGroupPayload",
         "plural": false,
         "selections": [
-          v2,
+          (v2/*: any*/),
           {
             "kind": "LinkedField",
             "alias": null,
@@ -162,7 +162,7 @@ return {
             "concreteType": "Group",
             "plural": false,
             "selections": [
-              v3,
+              (v3/*: any*/),
               {
                 "kind": "ScalarField",
                 "alias": null,
@@ -170,7 +170,7 @@ return {
                 "args": null,
                 "storageKey": null
               },
-              v4,
+              (v4/*: any*/),
               {
                 "kind": "ScalarField",
                 "alias": null,
@@ -194,8 +194,8 @@ return {
                 "concreteType": "Photo",
                 "plural": false,
                 "selections": [
-                  v4,
-                  v3
+                  (v4/*: any*/),
+                  (v3/*: any*/)
                 ]
               }
             ]
@@ -203,8 +203,16 @@ return {
         ]
       }
     ]
+  },
+  "params": {
+    "operationKind": "mutation",
+    "name": "CreateGroupMutation",
+    "id": null,
+    "text": "mutation CreateGroupMutation(\n  $input: CreateGroupInput!\n) {\n  createGroup(input: $input) {\n    success\n    group {\n      ...GroupListItem_group\n      id\n    }\n  }\n}\n\nfragment GroupListItem_group on Group {\n  id\n  _id\n  name\n  permalink\n  body\n  header_image {\n    name\n    id\n  }\n}\n",
+    "metadata": {}
   }
 };
 })();
+// prettier-ignore
 (node/*: any*/).hash = 'c6b3b4f376e689aa5c2c8a9e026db017';
 module.exports = node;

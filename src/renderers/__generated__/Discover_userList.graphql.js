@@ -7,9 +7,9 @@
 'use strict';
 
 /*::
-import type { ConcreteFragment } from 'relay-runtime';
+import type { ReaderFragment } from 'relay-runtime';
 type UserListItem_user$ref = any;
-import type { FragmentReference } from 'relay-runtime';
+import type { FragmentReference } from "relay-runtime";
 declare export opaque type Discover_userList$ref: FragmentReference;
 export type Discover_userList = {|
   +users: ?{|
@@ -21,7 +21,7 @@ export type Discover_userList = {|
       +node: ?{|
         +id: string,
         +$fragmentRefs: UserListItem_user$ref,
-      |},
+      |}
     |}>,
   |},
   +$refType: Discover_userList$ref,
@@ -29,7 +29,7 @@ export type Discover_userList = {|
 */
 
 
-const node/*: ConcreteFragment*/ = {
+const node/*: ReaderFragment*/ = {
   "kind": "Fragment",
   "name": "Discover_userList",
   "type": "Feed",
@@ -156,5 +156,6 @@ const node/*: ConcreteFragment*/ = {
     }
   ]
 };
+// prettier-ignore
 (node/*: any*/).hash = 'a15cec5ac6e90cb22810247edb44fb57';
 module.exports = node;

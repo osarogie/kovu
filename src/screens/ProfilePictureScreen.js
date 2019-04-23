@@ -1,24 +1,8 @@
 import React from 'react'
-import {
-  StyleSheet,
-  Alert,
-  View,
-  Dimensions,
-  Platform,
-  StatusBar,
-  TouchableOpacity,
-  Share
-} from 'react-native'
+import { View, Dimensions, Platform, StatusBar, Share } from 'react-native'
 
-import { Button } from '@shoutem/ui/components/Button'
-
-import { HorizontalPager } from '@shoutem/ui/components/HorizontalPager'
-import { Tile } from '@shoutem/ui/components/Tile'
-import { Text, Subtitle, Caption, Title } from '@shoutem/ui/components/Text'
 import Image from '../components/NetworkImage'
-// import { imageUrl, getSecureLink } from '../utils'
-import Icon from 'react-native-vector-icons/Ionicons'
-import { imageUrl } from '../utils'
+import { imageUrl, getSecureLink } from '../utils'
 import Toolbar from '../components/Toolbar'
 
 const window = Dimensions.get('window')
@@ -26,7 +10,7 @@ const window = Dimensions.get('window')
 export default class ProfilePictureScreen extends React.Component {
   goBack = _ => this.props.navigation.goBack()
   sharePic = _ => {
-    const { id, image, username } = this.props.navigation.state.params
+    const { image, username } = this.props.navigation.state.params
     const secureImage = getSecureLink(image)
 
     const message = `This is a picture of ${username}. ${secureImage}  - via Konfamd (https://konfamd.com)`

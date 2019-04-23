@@ -276,7 +276,7 @@ class PostListItem extends React.PureComponent {
                 <DiscussionLike
                   discussion={discussion}
                   stacked
-                  size={25}
+                  size={20}
                   // style={{ marginTop: 10 }}
                 />
                 <ShareButton

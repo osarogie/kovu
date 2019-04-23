@@ -1,6 +1,6 @@
 // @flow
 
-import React from "react"
+import React from 'react'
 import {
   StyleSheet,
   Text,
@@ -8,14 +8,14 @@ import {
   TouchableHighlight,
   VirtualizedList,
   Image
-} from "react-native"
-import { withNavigation } from "react-navigation"
-import environment from "../../relay-environment"
-import styles from "../styles"
-import colors from "../colors"
-import LoaderBox from "../components/LoaderBox"
-import UserListItem from "../fragments/UserListItem"
-import Separator from "../components/Separator"
+} from 'react-native'
+import { withNavigation } from 'react-navigation'
+import environment from '../relay-environment'
+import styles from '../styles'
+import colors from '../colors'
+import LoaderBox from '../components/LoaderBox'
+import UserListItem from '../fragments/UserListItem'
+import Separator from '../components/Separator'
 
 export default class UserList extends React.Component {
   state = {

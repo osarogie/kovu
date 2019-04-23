@@ -9,7 +9,6 @@ import {
   Dimensions,
   TouchableOpacity
 } from 'react-native'
-import environment from '../../relay-environment'
 import Separator from '../components/Separator'
 import Button from '../components/Button'
 import PostList from '../fragments/PostList'
@@ -19,7 +18,6 @@ import styles from '../styles'
 import colors from '../colors'
 import Avatar from '../components/Avatar'
 import QueryRendererProxy from './QueryRendererProxy'
-import Icon from 'react-native-vector-icons/Ionicons'
 import { imageUrl } from '../utils'
 import {
   createFragmentContainer,
@@ -34,12 +32,12 @@ const mapStateToProps = state => ({
 })
 
 class Group extends React.Component {
-  constructor(props) {
-    super(props)
-    this.openProfile = this.openProfile.bind(this)
-    this.openWrite = this.openWrite.bind(this)
-    this.openEditCulture = this.openEditCulture.bind(this)
-  }
+  // constructor(props) {
+  //   super(props)
+  //   this.openProfile = this.openProfile.bind(this)
+  //   this.openWrite = this.openWrite.bind(this)
+  //   this.openEditCulture = this.openEditCulture.bind(this)
+  // }
 
   openProfile = _ => this.props.openProfile(this.props.data.user)
   openWrite = _ => this.props.openWrite({ culture: this.props.data })
@@ -56,8 +54,8 @@ class Group extends React.Component {
     if (header_image) {
       const { width } = Dimensions.get('window')
       const height = header_image.height / header_image.width * width
-      const f_width = PixelRatio.getPixelSizeForLayoutSize(width)
-      const f_height = PixelRatio.getPixelSizeForLayoutSize(height)
+      var f_width = PixelRatio.getPixelSizeForLayoutSize(width)
+      var f_height = PixelRatio.getPixelSizeForLayoutSize(height)
       if (f_width > 1000 || f_height > 1000) {
         f_width = 1000
         f_height = 1000
@@ -98,9 +96,7 @@ class Group extends React.Component {
           numberOfLines={1}
         >
           <Text> by </Text>
-          <Text style={{ color: '#000' }}>
-            {user.name}
-          </Text>
+          <Text style={{ color: '#000' }}>{user.name}</Text>
         </Text>
       </TouchableOpacity>
     )
@@ -110,7 +106,7 @@ class Group extends React.Component {
     const group = this.props.data
     const { current_user } = this.props
 
-    if (current_user._id == group.user._id) {
+    if (current_user._id === group.user._id) {
       return (
         <Button
           onPress={this.openEditCulture}
@@ -239,7 +235,7 @@ const GroupFragmentContainer = createFragmentContainer(
   `
 )
 
-export default (GroupQueryRenderer = ({ id, api_key, ...props }) => {
+export default ({ id, api_key, ...props }) => {
   const itemProps = props
   return (
     <QueryRendererProxy
@@ -253,12 +249,12 @@ export default (GroupQueryRenderer = ({ id, api_key, ...props }) => {
         }
       `}
       variables={{ cursor: null, count: 5, id }}
-      render={({ error, props, retry }) =>
+      render={({ error, props, retry }) => (
         <GroupPostsPaginationContainer
           id={id}
           discussionList={props.group}
           itemProps={itemProps}
-          renderHeader={() =>
+          renderHeader={() => (
             <View style={styles.container}>
               <GroupFragmentContainer data={props.group} {...itemProps} />
               <Separator />
@@ -268,12 +264,14 @@ export default (GroupQueryRenderer = ({ id, api_key, ...props }) => {
                 renderHeader={renderUsersHeader}
                 itemProps={{ showGroupInfo: false, ...itemProps }}
               />
-            </View>}
-        />}
+            </View>
+          )}
+        />
+      )}
     />
   )
-})
-const renderUsersHeader = _ =>
+}
+const renderUsersHeader = _ => (
   <View
     style={{
       flexDirection: 'row',
@@ -291,6 +289,7 @@ const renderUsersHeader = _ =>
       color={colors.get('black')}
     /> */}
   </View>
+)
 // PAGINATION CONTAINERS
 
 const GroupPostsPaginationContainer = createPaginationContainer(

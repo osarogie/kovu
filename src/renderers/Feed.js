@@ -57,7 +57,7 @@ const FeedPaginationContainer = createPaginationContainer(
   }
 )
 
-export default (FeedQueryRenderer = props => {
+export default props => {
   return (
     <QueryRendererProxy
       query={graphql`
@@ -80,7 +80,7 @@ export default (FeedQueryRenderer = props => {
       )}
     />
   )
-})
+}
 const renderPostsHeader = _ => (
   <Text
     style={[styles.postsHeader, { marginTop: 53, fontSize: 20, padding: 15 }]}

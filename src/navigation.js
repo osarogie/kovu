@@ -1,6 +1,11 @@
 import React from 'react'
-import { StackNavigator, TabNavigator, TabBarBottom } from 'react-navigation'
-
+import {
+  TabBarBottom,
+  createStackNavigator,
+  createBottomTabNavigator,
+  createAppContainer
+} from 'react-navigation'
+import { Platform } from 'react-native'
 import {
   FeedScreen,
   DiscussionScreen,
@@ -9,16 +14,15 @@ import {
   NotificationScreen,
   LoginScreen,
   MenuScreen,
-  WriteScreen,
   CultureScreen,
   ContributionsScreen,
   StartCultureScreen,
   EditProfileScreen,
   ChangePasswordScreen
 } from './screens'
-import SearchScreen from './screens/SearchScreen'
 import { PURPLE } from './ui'
 import ProfilePictureScreen from './screens/ProfilePictureScreen'
+import WriteScreen from './screens/WriteScreen'
 // import { Examples } from '@shoutem/ui'
 
 // import { BottomNavigation } from 'react-native-paper'
@@ -52,7 +56,7 @@ import ProfilePictureScreen from './screens/ProfilePictureScreen'
 //   }
 // }
 
-export const Tab = TabNavigator(
+export const Tab = createBottomTabNavigator(
   {
     Home: {
       screen: FeedScreen
@@ -105,21 +109,26 @@ export const Tab = TabNavigator(
   }
 )
 
-export const Root = StackNavigator(
-  {
-    // Examples: { screen: Examples },
-    Tab: { screen: Tab },
-    Write: { screen: WriteScreen },
-    Login: { screen: LoginScreen },
-    Profile: { screen: ProfileScreen },
-    ProfilePicture: { screen: ProfilePictureScreen },
-    Discussion: { screen: DiscussionScreen },
-    Notifications: { screen: NotificationScreen },
-    Culture: { screen: CultureScreen },
-    Comments: { screen: ContributionsScreen },
-    StartCulture: { screen: StartCultureScreen },
-    EditProfile: { screen: EditProfileScreen },
-    ChangePassword: { screen: ChangePasswordScreen }
-  },
-  { mode: 'modal', headerMode: 'none' }
+export const Root = createAppContainer(
+  createStackNavigator(
+    {
+      // Examples: { screen: Examples },
+      Tab: { screen: Tab },
+      Write: { screen: WriteScreen },
+      Login: { screen: LoginScreen },
+      Profile: { screen: ProfileScreen },
+      ProfilePicture: { screen: ProfilePictureScreen },
+      Discussion: { screen: DiscussionScreen },
+      Notifications: { screen: NotificationScreen },
+      Culture: { screen: CultureScreen },
+      Comments: { screen: ContributionsScreen },
+      StartCulture: { screen: StartCultureScreen },
+      EditProfile: { screen: EditProfileScreen },
+      ChangePassword: { screen: ChangePasswordScreen }
+    },
+    {
+      mode: Platform.select({ android: 'modal', default: null }),
+      headerMode: 'none'
+    }
+  )
 )

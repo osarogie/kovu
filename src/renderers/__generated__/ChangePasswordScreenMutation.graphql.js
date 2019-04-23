@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 96039d50b6718c23622ede7df71a2309
+ * @relayHash 9eb900c41e7cd0be0a8f44e061683e36
  */
 
 /* eslint-disable */
@@ -9,18 +9,23 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
+export type ChangePasswordInput = {|
+  clientMutationId?: ?string,
+  current_password: string,
+  new_password: string,
+  new_password_confirmation?: ?string,
+|};
 export type ChangePasswordScreenMutationVariables = {|
-  input: {
-    clientMutationId?: ?string,
-    current_password: string,
-    new_password: string,
-    new_password_confirmation?: ?string,
-  },
+  input: ChangePasswordInput
 |};
 export type ChangePasswordScreenMutationResponse = {|
   +changePassword: ?{|
-    +success: ?boolean,
-  |},
+    +success: ?boolean
+  |}
+|};
+export type ChangePasswordScreenMutation = {|
+  variables: ChangePasswordScreenMutationVariables,
+  response: ChangePasswordScreenMutationResponse,
 |};
 */
 
@@ -73,26 +78,29 @@ v1 = [
 ];
 return {
   "kind": "Request",
-  "operationKind": "mutation",
-  "name": "ChangePasswordScreenMutation",
-  "id": null,
-  "text": "mutation ChangePasswordScreenMutation(\n  $input: ChangePasswordInput!\n) {\n  changePassword(input: $input) {\n    success\n  }\n}\n",
-  "metadata": {},
   "fragment": {
     "kind": "Fragment",
     "name": "ChangePasswordScreenMutation",
     "type": "Mutation",
     "metadata": null,
-    "argumentDefinitions": v0,
-    "selections": v1
+    "argumentDefinitions": (v0/*: any*/),
+    "selections": (v1/*: any*/)
   },
   "operation": {
     "kind": "Operation",
     "name": "ChangePasswordScreenMutation",
-    "argumentDefinitions": v0,
-    "selections": v1
+    "argumentDefinitions": (v0/*: any*/),
+    "selections": (v1/*: any*/)
+  },
+  "params": {
+    "operationKind": "mutation",
+    "name": "ChangePasswordScreenMutation",
+    "id": null,
+    "text": "mutation ChangePasswordScreenMutation(\n  $input: ChangePasswordInput!\n) {\n  changePassword(input: $input) {\n    success\n  }\n}\n",
+    "metadata": {}
   }
 };
 })();
+// prettier-ignore
 (node/*: any*/).hash = '4648e9042b5367f26a73cc83a596b469';
 module.exports = node;

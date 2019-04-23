@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react'
 import {
   Text,
   View,
@@ -7,17 +7,17 @@ import {
   TouchableHighlight,
   PixelRatio,
   TouchableOpacity
-} from "react-native"
-import styles from "../../styles"
-import excerptStyles from "../../styles/excerptStyles"
-import { createFragmentContainer, graphql } from "react-relay"
-import Markdown from "react-native-simple-markdown"
-import { connect } from "react-redux"
-import Separator from "../../components/Separator"
-import Avatar from "../../components/Avatar"
-import DiscussionLike from "../../fragments/DiscussionLike"
-import { getTimeAgo, imageUrl, getCommentCount } from "../../utils"
-import Icon from "react-native-vector-icons/Ionicons"
+} from 'react-native'
+import styles from '../../styles'
+import excerptStyles from '../../styles/excerptStyles'
+import { createFragmentContainer, graphql } from 'react-relay'
+import Markdown from 'react-native-simple-markdown'
+import { connect } from 'react-redux'
+import Separator from '../../components/Separator'
+import Avatar from '../../components/Avatar'
+import DiscussionLike from '../../fragments/DiscussionLike'
+import { getTimeAgo, imageUrl, getCommentCount } from '../../utils'
+import Icon from 'react-native-vector-icons/Ionicons'
 
 const mapStateToProps = state => ({
   night_mode: state.night_mode,
@@ -26,16 +26,16 @@ const mapStateToProps = state => ({
 
 class PostRow extends React.PureComponent {
   clickableProps = {
-    underlayColor: "whitesmoke"
+    underlayColor: 'whitesmoke'
   }
 
   cultureNameProps = {
-    style: { color: "#05f" }
+    style: { color: '#05f' }
   }
 
   featurePhotoStyles = {
     ...excerptStyles.featurePhoto,
-    backgroundColor: "#eee",
+    backgroundColor: '#eee',
     marginTop: 10
   }
 
@@ -54,7 +54,7 @@ class PostRow extends React.PureComponent {
       if (this.props.feature_photo) {
         const { height, width } = this.props.feature_photo
       } else {
-        var { width } = Dimensions.get("window")
+        var { width } = Dimensions.get('window')
         var height = width / 3
         width -= 36
       }
@@ -79,7 +79,7 @@ class PostRow extends React.PureComponent {
       return (
         <TouchableOpacity
           {...this.clickableProps}
-          style={{ flex: 1, flexDirection: "row" }}
+          style={{ flex: 1, flexDirection: 'row' }}
           onPress={this.openCulture}
         >
           <Text
@@ -103,7 +103,7 @@ class PostRow extends React.PureComponent {
         onPress={this.openProfile}
         key={`post.m.t.${discussion.id}`}
       >
-        <Text style={[styles.fill, { color: "#000" }]} numberOfLines={1}>
+        <Text style={[styles.fill, { color: '#000' }]} numberOfLines={1}>
           {discussion.user.name}
         </Text>
       </TouchableOpacity>,
@@ -140,7 +140,7 @@ class PostRow extends React.PureComponent {
       //   key={`post.c.separator.${discussion.id}`}
       // />,
       <View
-        style={[styles.row, { alignItems: "center" }]}
+        style={[styles.row, { alignItems: 'center' }]}
         key={`post.c.viewholder.${discussion.id}`}
       >
         <DiscussionLike discussion={discussion} openLogin={openLogin} />
@@ -148,7 +148,7 @@ class PostRow extends React.PureComponent {
         {this.renderEdit()}
         <TouchableOpacity {...this.clickableProps} onPress={this.openComments}>
           <Text style={{ marginLeft: 20 }}>
-            {`${comment_count_} Contribution${comment_count == 1 ? "" : "s"}`}
+            {`${comment_count_} Contribution${comment_count == 1 ? '' : 's'}`}
           </Text>
         </TouchableOpacity>
         {/* <Icon
@@ -171,7 +171,7 @@ class PostRow extends React.PureComponent {
         <TouchableHighlight
           {...this.clickableProps}
           style={{
-            backgroundColor: "#fff",
+            backgroundColor: '#fff',
             elevation: 2,
             marginBottom: 15,
             marginTop: 2
@@ -179,7 +179,7 @@ class PostRow extends React.PureComponent {
           onPress={this.openDiscussion}
         >
           <View style={[excerptStyles.container, { marginBottom: 0 }]}>
-            <View style={{ flexDirection: "row", marginBottom: 8 }}>
+            <View style={{ flexDirection: 'row', marginBottom: 8 }}>
               <Avatar
                 width={40}
                 radius={5}
@@ -196,7 +196,7 @@ class PostRow extends React.PureComponent {
             {this.renderFeaturePhoto()}
             <Markdown styles={excerptStyles.body}>
               {excerpt}
-              {word_count > 20 ? "..." : ""}
+              {word_count > 20 ? '...' : ''}
             </Markdown>
             {this.renderControls()}
           </View>

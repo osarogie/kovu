@@ -7,9 +7,9 @@
 'use strict';
 
 /*::
-import type { ConcreteFragment } from 'relay-runtime';
+import type { ReaderFragment } from 'relay-runtime';
 type JoinButton_group$ref = any;
-import type { FragmentReference } from 'relay-runtime';
+import type { FragmentReference } from "relay-runtime";
 declare export opaque type Group$ref: FragmentReference;
 export type Group = {|
   +id: string,
@@ -36,7 +36,7 @@ export type Group = {|
 */
 
 
-const node/*: ConcreteFragment*/ = (function(){
+const node/*: ReaderFragment*/ = (function(){
 var v0 = {
   "kind": "ScalarField",
   "alias": null,
@@ -65,9 +65,9 @@ return {
   "metadata": null,
   "argumentDefinitions": [],
   "selections": [
-    v0,
-    v1,
-    v2,
+    (v0/*: any*/),
+    (v1/*: any*/),
+    (v2/*: any*/),
     {
       "kind": "ScalarField",
       "alias": null,
@@ -103,7 +103,7 @@ return {
       "concreteType": "Photo",
       "plural": false,
       "selections": [
-        v2,
+        (v2/*: any*/),
         {
           "kind": "ScalarField",
           "alias": null,
@@ -129,9 +129,9 @@ return {
       "concreteType": "User",
       "plural": false,
       "selections": [
-        v0,
-        v1,
-        v2,
+        (v0/*: any*/),
+        (v1/*: any*/),
+        (v2/*: any*/),
         {
           "kind": "ScalarField",
           "alias": null,
@@ -151,5 +151,6 @@ return {
   ]
 };
 })();
+// prettier-ignore
 (node/*: any*/).hash = '827e4004c8f3f43d8ee302ef672e5322';
 module.exports = node;

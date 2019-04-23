@@ -42,7 +42,7 @@ const mapStateToProps = state => ({
 const { width } = Dimensions.get('window')
 const coverWidth = Math.min(1000, PixelRatio.getPixelSizeForLayoutSize(width))
 
-@withNavigation
+// @withNavigation
 class User extends React.Component {
   friendLabelStyle = { color: '#000', marginRight: 10 }
   friendValueStyle = { color: '#000', fontSize: 18 }
@@ -194,7 +194,7 @@ class User extends React.Component {
     )
   }
 }
-
+User = withNavigation(User)
 const _styles = StyleSheet.create({
   coverImageBlur: {
     position: 'absolute',
@@ -224,7 +224,7 @@ const UserFragmentContainer = createFragmentContainer(
   `
 )
 
-export default (UserQueryRenderer = ({ id, api_key, ...props }) => {
+export default ({ id, api_key, ...props }) => {
   const itemProps = props
   return (
     <QueryRendererProxy
@@ -261,7 +261,7 @@ export default (UserQueryRenderer = ({ id, api_key, ...props }) => {
       )}
     />
   )
-})
+}
 const renderCultureHeader = _ => (
   <Text
     style={{

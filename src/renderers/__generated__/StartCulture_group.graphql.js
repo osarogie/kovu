@@ -7,8 +7,8 @@
 'use strict';
 
 /*::
-import type { ConcreteFragment } from 'relay-runtime';
-import type { FragmentReference } from 'relay-runtime';
+import type { ReaderFragment } from 'relay-runtime';
+import type { FragmentReference } from "relay-runtime";
 declare export opaque type StartCulture_group$ref: FragmentReference;
 export type StartCulture_group = {|
   +id: string,
@@ -21,7 +21,7 @@ export type StartCulture_group = {|
 */
 
 
-const node/*: ConcreteFragment*/ = {
+const node/*: ReaderFragment*/ = {
   "kind": "Fragment",
   "name": "StartCulture_group",
   "type": "Group",
@@ -65,5 +65,6 @@ const node/*: ConcreteFragment*/ = {
     }
   ]
 };
+// prettier-ignore
 (node/*: any*/).hash = '6b82b694d4cd885ddb5ce624a82761f6';
 module.exports = node;

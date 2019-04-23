@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, ScrollView, Image, TouchableOpacity } from 'react-native'
+import { View, Image, TouchableOpacity } from 'react-native'
 import Authenticator from '../components/Authenticator'
 import styles from '../styles'
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -9,7 +9,6 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 export default class LoginScreen extends React.Component {
   goBack = () => this.props.navigation.goBack()
   render() {
-    const resizeMode = 'center'
     return (
       <View
         style={{

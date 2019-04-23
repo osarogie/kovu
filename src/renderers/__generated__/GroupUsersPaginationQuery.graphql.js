@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash a8d631264fa521473d58b983be71b3fd
+ * @relayHash 9b2b7dfdfb536b8eec6b365c7b3d07a5
  */
 
 /* eslint-disable */
@@ -17,8 +17,12 @@ export type GroupUsersPaginationQueryVariables = {|
 |};
 export type GroupUsersPaginationQueryResponse = {|
   +group: ?{|
-    +$fragmentRefs: Group_userList$ref,
-  |},
+    +$fragmentRefs: Group_userList$ref
+  |}
+|};
+export type GroupUsersPaginationQuery = {|
+  variables: GroupUsersPaginationQueryVariables,
+  response: GroupUsersPaginationQueryResponse,
 |};
 */
 
@@ -98,7 +102,21 @@ v1 = [
     "type": "ID!"
   }
 ],
-v2 = {
+v2 = [
+  {
+    "kind": "Variable",
+    "name": "after",
+    "variableName": "cursor",
+    "type": "String"
+  },
+  {
+    "kind": "Variable",
+    "name": "first",
+    "variableName": "count",
+    "type": "Int"
+  }
+],
+v3 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "id",
@@ -107,24 +125,19 @@ v2 = {
 };
 return {
   "kind": "Request",
-  "operationKind": "query",
-  "name": "GroupUsersPaginationQuery",
-  "id": null,
-  "text": "query GroupUsersPaginationQuery(\n  $count: Int!\n  $cursor: String\n  $id: ID!\n) {\n  group(id: $id) {\n    ...Group_userList\n    id\n  }\n}\n\nfragment Group_userList on Group {\n  users(first: $count, after: $cursor) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        ...UserListItem_user\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment UserListItem_user on User {\n  id\n  _id\n  name\n  username\n  bio\n  profile_picture_name\n  ...FollowButton_user\n}\n\nfragment FollowButton_user on User {\n  _id\n  viewer_follows\n  follows_viewer\n}\n",
-  "metadata": {},
   "fragment": {
     "kind": "Fragment",
     "name": "GroupUsersPaginationQuery",
     "type": "Query",
     "metadata": null,
-    "argumentDefinitions": v0,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
         "name": "group",
         "storageKey": null,
-        "args": v1,
+        "args": (v1/*: any*/),
         "concreteType": "Group",
         "plural": false,
         "selections": [
@@ -140,14 +153,14 @@ return {
   "operation": {
     "kind": "Operation",
     "name": "GroupUsersPaginationQuery",
-    "argumentDefinitions": v0,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
         "name": "group",
         "storageKey": null,
-        "args": v1,
+        "args": (v1/*: any*/),
         "concreteType": "Group",
         "plural": false,
         "selections": [
@@ -156,20 +169,7 @@ return {
             "alias": null,
             "name": "users",
             "storageKey": null,
-            "args": [
-              {
-                "kind": "Variable",
-                "name": "after",
-                "variableName": "cursor",
-                "type": "String"
-              },
-              {
-                "kind": "Variable",
-                "name": "first",
-                "variableName": "count",
-                "type": "Int"
-              }
-            ],
+            "args": (v2/*: any*/),
             "concreteType": "UserConnection",
             "plural": false,
             "selections": [
@@ -216,7 +216,7 @@ return {
                     "concreteType": "User",
                     "plural": false,
                     "selections": [
-                      v2,
+                      (v3/*: any*/),
                       {
                         "kind": "ScalarField",
                         "alias": null,
@@ -290,30 +290,25 @@ return {
             "kind": "LinkedHandle",
             "alias": null,
             "name": "users",
-            "args": [
-              {
-                "kind": "Variable",
-                "name": "after",
-                "variableName": "cursor",
-                "type": "String"
-              },
-              {
-                "kind": "Variable",
-                "name": "first",
-                "variableName": "count",
-                "type": "Int"
-              }
-            ],
+            "args": (v2/*: any*/),
             "handle": "connection",
             "key": "Group_users",
             "filters": null
           },
-          v2
+          (v3/*: any*/)
         ]
       }
     ]
+  },
+  "params": {
+    "operationKind": "query",
+    "name": "GroupUsersPaginationQuery",
+    "id": null,
+    "text": "query GroupUsersPaginationQuery(\n  $count: Int!\n  $cursor: String\n  $id: ID!\n) {\n  group(id: $id) {\n    ...Group_userList\n    id\n  }\n}\n\nfragment Group_userList on Group {\n  users(first: $count, after: $cursor) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        ...UserListItem_user\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment UserListItem_user on User {\n  id\n  _id\n  name\n  username\n  bio\n  profile_picture_name\n  ...FollowButton_user\n}\n\nfragment FollowButton_user on User {\n  _id\n  viewer_follows\n  follows_viewer\n}\n",
+    "metadata": {}
   }
 };
 })();
+// prettier-ignore
 (node/*: any*/).hash = 'fc02ec15fe1781c6db259094fecabed5';
 module.exports = node;

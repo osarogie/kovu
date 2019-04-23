@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 
-import { Share, Platform } from 'react-native'
+import { Share, } from 'react-native'
 
 import { Button } from '@shoutem/ui/components/Button'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import { PURPLE, BLACK } from '../ui'
+import {  BLACK } from '../ui'
 
 const { string } = PropTypes
 
@@ -48,11 +48,11 @@ export default class ShareButton extends Component {
   }
 
   render() {
-    const { animationName, style } = this.props
+    const {  style } = this.props
 
     return (
       <Button styleName="clear tight" onPress={this.onShare} style={style}>
-        <Icon size={25} name="share" color={`${BLACK}`} />
+        <Icon size={20} name="share" color={`${BLACK}`} />
       </Button>
     )
   }

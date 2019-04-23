@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 7507f2d580589fbc98eb4fc7167959d9
+ * @relayHash fff1c88bd3159d1059d8bf47fd7efc7e
  */
 
 /* eslint-disable */
@@ -17,8 +17,12 @@ export type CommentsPaginationQueryVariables = {|
 |};
 export type CommentsPaginationQueryResponse = {|
   +discussion: ?{|
-    +$fragmentRefs: Comments_commentList$ref,
-  |},
+    +$fragmentRefs: Comments_commentList$ref
+  |}
+|};
+export type CommentsPaginationQuery = {|
+  variables: CommentsPaginationQueryVariables,
+  response: CommentsPaginationQueryResponse,
 |};
 */
 
@@ -102,14 +106,34 @@ v1 = [
     "type": "ID!"
   }
 ],
-v2 = {
+v2 = [
+  {
+    "kind": "Variable",
+    "name": "after",
+    "variableName": "cursor",
+    "type": "String"
+  },
+  {
+    "kind": "Literal",
+    "name": "by_latest",
+    "value": true,
+    "type": "Boolean"
+  },
+  {
+    "kind": "Variable",
+    "name": "first",
+    "variableName": "count",
+    "type": "Int"
+  }
+],
+v3 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "id",
   "args": null,
   "storageKey": null
 },
-v3 = {
+v4 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "_id",
@@ -118,24 +142,19 @@ v3 = {
 };
 return {
   "kind": "Request",
-  "operationKind": "query",
-  "name": "CommentsPaginationQuery",
-  "id": null,
-  "text": "query CommentsPaginationQuery(\n  $count: Int!\n  $cursor: String\n  $id: ID!\n) {\n  discussion(id: $id) {\n    ...Comments_commentList\n    id\n  }\n}\n\nfragment Comments_commentList on Discussion {\n  comments(first: $count, after: $cursor, by_latest: true) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        ...CommentListItem_comment\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment CommentListItem_comment on Comment {\n  id\n  _id\n  body\n  created_at\n  discussion_id\n  excerpt\n  discussion {\n    id\n    _id\n  }\n  user {\n    id\n    _id\n    name\n    username\n    profile_picture_name\n  }\n}\n",
-  "metadata": {},
   "fragment": {
     "kind": "Fragment",
     "name": "CommentsPaginationQuery",
     "type": "Query",
     "metadata": null,
-    "argumentDefinitions": v0,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
         "name": "discussion",
         "storageKey": null,
-        "args": v1,
+        "args": (v1/*: any*/),
         "concreteType": "Discussion",
         "plural": false,
         "selections": [
@@ -151,14 +170,14 @@ return {
   "operation": {
     "kind": "Operation",
     "name": "CommentsPaginationQuery",
-    "argumentDefinitions": v0,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
         "name": "discussion",
         "storageKey": null,
-        "args": v1,
+        "args": (v1/*: any*/),
         "concreteType": "Discussion",
         "plural": false,
         "selections": [
@@ -167,26 +186,7 @@ return {
             "alias": null,
             "name": "comments",
             "storageKey": null,
-            "args": [
-              {
-                "kind": "Variable",
-                "name": "after",
-                "variableName": "cursor",
-                "type": "String"
-              },
-              {
-                "kind": "Literal",
-                "name": "by_latest",
-                "value": true,
-                "type": "Boolean"
-              },
-              {
-                "kind": "Variable",
-                "name": "first",
-                "variableName": "count",
-                "type": "Int"
-              }
-            ],
+            "args": (v2/*: any*/),
             "concreteType": "CommentConnection",
             "plural": false,
             "selections": [
@@ -233,8 +233,8 @@ return {
                     "concreteType": "Comment",
                     "plural": false,
                     "selections": [
-                      v2,
-                      v3,
+                      (v3/*: any*/),
+                      (v4/*: any*/),
                       {
                         "kind": "ScalarField",
                         "alias": null,
@@ -272,8 +272,8 @@ return {
                         "concreteType": "Discussion",
                         "plural": false,
                         "selections": [
-                          v2,
-                          v3
+                          (v3/*: any*/),
+                          (v4/*: any*/)
                         ]
                       },
                       {
@@ -285,8 +285,8 @@ return {
                         "concreteType": "User",
                         "plural": false,
                         "selections": [
-                          v2,
-                          v3,
+                          (v3/*: any*/),
+                          (v4/*: any*/),
                           {
                             "kind": "ScalarField",
                             "alias": null,
@@ -334,36 +334,25 @@ return {
             "kind": "LinkedHandle",
             "alias": null,
             "name": "comments",
-            "args": [
-              {
-                "kind": "Variable",
-                "name": "after",
-                "variableName": "cursor",
-                "type": "String"
-              },
-              {
-                "kind": "Literal",
-                "name": "by_latest",
-                "value": true,
-                "type": "Boolean"
-              },
-              {
-                "kind": "Variable",
-                "name": "first",
-                "variableName": "count",
-                "type": "Int"
-              }
-            ],
+            "args": (v2/*: any*/),
             "handle": "connection",
             "key": "Comment_comments",
             "filters": []
           },
-          v2
+          (v3/*: any*/)
         ]
       }
     ]
+  },
+  "params": {
+    "operationKind": "query",
+    "name": "CommentsPaginationQuery",
+    "id": null,
+    "text": "query CommentsPaginationQuery(\n  $count: Int!\n  $cursor: String\n  $id: ID!\n) {\n  discussion(id: $id) {\n    ...Comments_commentList\n    id\n  }\n}\n\nfragment Comments_commentList on Discussion {\n  comments(first: $count, after: $cursor, by_latest: true) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        ...CommentListItem_comment\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment CommentListItem_comment on Comment {\n  id\n  _id\n  body\n  created_at\n  discussion_id\n  excerpt\n  discussion {\n    id\n    _id\n  }\n  user {\n    id\n    _id\n    name\n    username\n    profile_picture_name\n  }\n}\n",
+    "metadata": {}
   }
 };
 })();
+// prettier-ignore
 (node/*: any*/).hash = '0ebf11f8779ff9da0935084f72fdda6c';
 module.exports = node;

@@ -4,7 +4,6 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
 } from 'react-native'
 
 export default class Button extends React.Component {

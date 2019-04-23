@@ -2,9 +2,6 @@
 
 import React from 'react'
 import { View, VirtualizedList } from 'react-native'
-import environment from '../../relay-environment'
-import styles from '../styles'
-import colors from '../colors'
 import LoaderBox from '../components/LoaderBox'
 import EmptyList from '../components/EmptyList'
 import PostListItem from '../fragments/PostListItem'
@@ -42,7 +39,7 @@ export default class PostList extends React.Component {
     const { discussionList } = this.props
     const discussions = discussionList.discussions || discussionList.top_stories
 
-    if (!discussions.edges || discussions.edges.length == 0) return
+    if (!discussions.edges || discussions.edges.length === 0) return
 
     const hasMore = this.props.relay.hasMore()
     const isLoading = this.props.relay.isLoading()

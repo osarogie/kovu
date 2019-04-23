@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 52bc414f6f390a2c2c44956a32bc7593
+ * @relayHash ad9028c3e4d2d7df0379430b0940fd64
  */
 
 /* eslint-disable */
@@ -11,12 +11,16 @@
 import type { ConcreteRequest } from 'relay-runtime';
 type StartCulture_group$ref = any;
 export type StartCultureQueryVariables = {|
-  id: string,
+  id: string
 |};
 export type StartCultureQueryResponse = {|
   +group: ?{|
-    +$fragmentRefs: StartCulture_group$ref,
-  |},
+    +$fragmentRefs: StartCulture_group$ref
+  |}
+|};
+export type StartCultureQuery = {|
+  variables: StartCultureQueryVariables,
+  response: StartCultureQueryResponse,
 |};
 */
 
@@ -59,24 +63,19 @@ v1 = [
 ];
 return {
   "kind": "Request",
-  "operationKind": "query",
-  "name": "StartCultureQuery",
-  "id": null,
-  "text": "query StartCultureQuery(\n  $id: ID!\n) {\n  group(id: $id) {\n    ...StartCulture_group\n    id\n  }\n}\n\nfragment StartCulture_group on Group {\n  id\n  _id\n  name\n  body\n  is_private\n}\n",
-  "metadata": {},
   "fragment": {
     "kind": "Fragment",
     "name": "StartCultureQuery",
     "type": "Query",
     "metadata": null,
-    "argumentDefinitions": v0,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
         "name": "group",
         "storageKey": null,
-        "args": v1,
+        "args": (v1/*: any*/),
         "concreteType": "Group",
         "plural": false,
         "selections": [
@@ -92,14 +91,14 @@ return {
   "operation": {
     "kind": "Operation",
     "name": "StartCultureQuery",
-    "argumentDefinitions": v0,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
         "name": "group",
         "storageKey": null,
-        "args": v1,
+        "args": (v1/*: any*/),
         "concreteType": "Group",
         "plural": false,
         "selections": [
@@ -141,8 +140,16 @@ return {
         ]
       }
     ]
+  },
+  "params": {
+    "operationKind": "query",
+    "name": "StartCultureQuery",
+    "id": null,
+    "text": "query StartCultureQuery(\n  $id: ID!\n) {\n  group(id: $id) {\n    ...StartCulture_group\n    id\n  }\n}\n\nfragment StartCulture_group on Group {\n  id\n  _id\n  name\n  body\n  is_private\n}\n",
+    "metadata": {}
   }
 };
 })();
+// prettier-ignore
 (node/*: any*/).hash = '0aaa4625041e4e5e21d9ba516374f8e9';
 module.exports = node;
