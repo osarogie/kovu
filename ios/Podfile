@@ -3,51 +3,46 @@ ENV['COCOAPODS_DISABLE_STATS'] = 'true'
 # Uncomment the next line to define a global platform for your project
 platform :ios, '9.0'
 
-# Pods for kovu
 target 'kovu' do
+  pod 'AppCenter/Crashes', '~> 1.14.0'
+  pod 'AppCenter/Analytics', '~> 1.14.0'
+  pod 'AppCenterReactNativeShared', '~> 1.13.0'
   # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
   # use_frameworks!
 
-  rn_path = '../node_modules/react-native'
-  pod 'yoga', path: "#{rn_path}/ReactCommon/yoga"
-  pod 'DoubleConversion', podspec: "#{rn_path}/third-party-podspecs/DoubleConversion.podspec"
-  pod 'glog', podspec: "#{rn_path}/third-party-podspecs/glog.podspec"
-  pod 'Folly', podspec: "#{rn_path}/third-party-podspecs/Folly.podspec"
+  # Pods for kovu
+  pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
 
-  pod 'React', path: rn_path, subspecs: [
-    'Core',
-    'CxxBridge', 
-    'DevSupport', 
-    'RCTActionSheet',
-    'RCTAnimation',
-    'RCTGeolocation',
-    'RCTImage',
+  pod 'React', :path => '../node_modules/react-native', :subspecs => [
+    'DevSupport',
     'RCTLinkingIOS',
-    'RCTNetwork',
-    'RCTSettings',
-    'RCTText',
-    'RCTVibration',
-    'RCTWebSocket'
+    'RCTImage'
   ]
 
-  pod 'RNImageCropPicker', :path =>  '../node_modules/react-native-image-crop-picker'
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
-  pod 'AppCenter'
-  pod 'ReactNativePermissions', :path => '../node_modules/react-native-permissions'
-  pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
+  pod 'lottie-react-native', :path => '../node_modules/lottie-react-native'
+
+  pod 'react-native-blur', :path => '../node_modules/react-native-blur'
+
+  pod 'react-native-camera-kit', :path => '../node_modules/react-native-camera-kit'
+
   pod 'CodePush', :path => '../node_modules/react-native-code-push'
-  
-  # Use the following line to use App Center Analytics and Crashes.
-  pod 'AppCenter/Crashes', '~> 1.5.0'
-  pod 'AppCenter/Analytics', '~> 1.5.0'
-  pod 'AppCenterReactNativeShared', '~> 1.4.0'
 
-  pod 'react-native-fbsdk', :path => '../node_modules/react-native-fbsdk/ios'
-  pod 'FBSDKCoreKit', '4.38'
-  pod 'FBSDKLoginKit', '4.38'
-  pod 'FBSDKShareKit', '4.38'
+  pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
 
-  platform :ios, '9.0'
+  pod 'react-native-fbsdk', :path => '../node_modules/react-native-fbsdk'
+
+  pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
+
+  pod 'RNImageCropPicker', :path => '../node_modules/react-native-image-crop-picker'
+
+  pod 'ReactNativePermissions', :path => '../node_modules/react-native-permissions'
+
+  pod 'RNReanimated', :path => '../node_modules/react-native-reanimated'
+
+  pod 'react-native-spinkit', :path => '../node_modules/react-native-spinkit'
+
   target 'kovuTests' do
     inherit! :search_paths
     # Pods for testing
@@ -68,9 +63,18 @@ target 'kovu-tvOS' do
 
 end
 
+
 post_install do |installer|
   installer.pods_project.targets.each do |target|
-    if target.name == "React"
+    # The following is needed to ensure the "archive" step works in XCode.
+    # It removes React & Yoga from the Pods project, as it is already included in the main project.
+    # Without this, you'd see errors when you archive like:
+    # "Multiple commands produce ... libReact.a"
+    # "Multiple commands produce ... libyoga.a"
+
+    targets_to_ignore = %w(React yoga)
+    
+    if targets_to_ignore.include? target.name
       target.remove_from_project
     end
   end
