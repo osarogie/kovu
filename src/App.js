@@ -12,12 +12,26 @@ import { Root } from './navigation'
 import { addNavigationHelpers } from 'react-navigation'
 import getStore from './store'
 import colors from './colors'
-// import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper'
+import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper'
 import { COLOR, ThemeContext } from 'react-native-material-ui'
 import { PURPLE } from './ui'
 import { connect } from 'react-redux'
+import { useScreens } from 'react-native-screens'
+import { ViewerProvider } from './services/viewerService'
+
+useScreens()
 
 const store = getStore()
+
+const theme = {
+  ...DefaultTheme,
+  roundness: 2,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: '#05f',
+    accent: '#05f'
+  }
+}
 
 // you can set your style right here, it'll be propagated to application
 const uiTheme = {
@@ -69,24 +83,28 @@ export default class App extends React.Component {
       ios: 'thecommuntiy://'
     })
     return (
-      <Provider store={store}>
-        <ConnectedTheme>
-          <View style={styles.view}>
-            <StatusBar
-              // backgroundColor={colors.get("statusBar")}
-              backgroundColor="#000"
-              // barStyle="light-content"
-            />
-            <Root
-              uriPrefix={prefix}
-              // navigation={addNavigationHelpers({
-              //   dispatch: this.props.dispatch,
-              //   state: this.props.nav
-              // })}
-            />
-          </View>
-        </ConnectedTheme>
-      </Provider>
+      <PaperProvider theme={theme}>
+        <Provider store={store}>
+          <ViewerProvider>
+            <ConnectedTheme>
+              <View style={styles.view}>
+                <StatusBar
+                  // backgroundColor={colors.get("statusBar")}
+                  backgroundColor="#000"
+                  // barStyle="light-content"
+                />
+                <Root
+                  uriPrefix={prefix}
+                  // navigation={addNavigationHelpers({
+                  //   dispatch: this.props.dispatch,
+                  //   state: this.props.nav
+                  // })}
+                />
+              </View>
+            </ConnectedTheme>
+          </ViewerProvider>
+        </Provider>
+      </PaperProvider>
     )
   }
 }

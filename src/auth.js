@@ -2,9 +2,12 @@ import Base64 from 'base-64'
 import { AsyncStorage } from 'react-native'
 import Constants from './constants'
 
-const apiBaseUrl = 'https://data.thecommunity.ng/v1/'
-// const apiBaseUrl = 'http://localhost:3000/v1/'
-// const apiBaseUrl = 'http://10.42.0.1:3000/v1/'
+const API_HOST =
+  process.env.NODE_ENV === 'production'
+    ? 'https://data.thecommunity.ng'
+    : 'http://localhost:5000'
+
+const apiBaseUrl = `${API_HOST}/v1`
 
 export default {
   async login(username, l_password) {

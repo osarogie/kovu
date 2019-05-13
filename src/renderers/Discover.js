@@ -330,7 +330,7 @@ export default class VideoPager extends React.Component {
     <TabBar
       {...props}
       onTabPress={this.onTabPress}
-      // scrollEnabled
+      scrollEnabled
       indicatorStyle={styles.indicator}
       style={styles.tabbar}
       tabStyle={styles.tab}
@@ -344,7 +344,7 @@ export default class VideoPager extends React.Component {
     return (
       <View style={{ flex: 1 /*marginTop: 53*/ }}>
         <TabView
-          style={[styles.container, this.props.style]}
+          // style={[styles.container, this.props.style]}
           navigationState={this.state}
           renderScene={this._renderScene}
           renderHeader={this._renderHeader}
@@ -419,15 +419,17 @@ const styles = {
   },
   tab: {
     // width: 'auto',
+    backgroundColor: '#fff',
     height: 50
   },
   indicator: {
-    backgroundColor: '#50f',
+    backgroundColor: '#000',
     height: 2
   },
   label: {
     color: '#000',
-    fontWeight: '400'
+    fontWeight: '400',
+    ...labelStyle
   }
 }
 

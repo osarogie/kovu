@@ -64,37 +64,28 @@ export const Tab = createBottomTabNavigator(
     Discover: {
       screen: DiscoverScreen
     },
-    // Notifications: {
-    //   screen: NotificationScreen
-    // },
+
+    Notifications: {
+      screen: NotificationScreen
+    },
     Menu: {
       screen: MenuScreen
     }
   },
   {
     tabBarOptions: {
-      inactiveTintColor: '#fffc',
-      activeTintColor: '#fff',
-      // labelStyle: {
-      //   fontSize: 13
-      //   // color: '#000'
-      // },
+      inactiveTintColor: '#27f',
+      activeTintColor: '#05f',
       style: {
-        backgroundColor: PURPLE,
-        // paddingBottom: 6,
-        // height: 56,
-        elevation: 10,
-        borderTopWidth: 0,
-        borderTopColor: '#ddd',
-        borderBottomWidth: 0
-        // borderBottomRightRadius: 10,
-        // borderBottomLeftRadius: 10
+        backgroundColor: '#fff',
+        // elevation: 15,
+        borderTopWidth: 0
+        // borderTopColor: '#ddd',
+        // borderBottomWidth: 0
       },
       tabBarShadowStyle: {
-        height: 3
+        height: 7
       },
-      // position: 1,
-      // activeBackgroundColor: '#f2f2f2',
       showIcon: true,
       showLabel: false
     },
@@ -102,10 +93,6 @@ export const Tab = createBottomTabNavigator(
     // lazy: true
     tabBarPosition: 'bottom',
     tabBarComponent: TabBarBottom
-    // indicatorStyle: {
-    //   height: 0,
-    //   color: '#000'
-    // }
   }
 )
 

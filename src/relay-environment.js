@@ -1,6 +1,9 @@
 import { Environment, Network, RecordSource, Store } from 'relay-runtime'
 import RelayQueryResponseCache from 'relay-runtime/lib/RelayQueryResponseCache'
 
+const prod = process.env.NODE_ENV === 'production'
+const API_HOST = prod ? 'https://data.thecommunity.ng' : 'http://localhost:5000'
+
 const ttl = 3 * 60 * 1000
 const cache = new RelayQueryResponseCache({ size: 1024, ttl })
 
@@ -20,9 +23,7 @@ export default ({ headers }) => {
       return fromCache
     }
 
-    // return fetch('http://10.42.0.1:3000/v2', {
-    // return fetch("http://localhost:5000/v2", {
-    return fetch('https://data.thecommunity.ng/v2', {
+    return fetch(`${API_HOST}/v2`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -37,7 +38,7 @@ export default ({ headers }) => {
       .then(response => {
         // console.log(response.text())
         const r = response.json()
-        process.env.NODE_ENV === 'development' ? console.log(r) : null
+        console.log(r)
         return r
       })
       .then(json => {

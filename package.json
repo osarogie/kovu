@@ -12,6 +12,7 @@
     "relayw": "relay-compiler --src ./src --schema schema.graphql --watch"
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.4.0",
     "@shoutem/animation": "^0.12.3",
     "@shoutem/ui": "thenosakhare/ui",
     "appcenter": "^1.13.0",
@@ -45,6 +46,7 @@
     "react-native-permissions": "^1.1.1",
     "react-native-progress": "^3.6.0",
     "react-native-reanimated": "^1.0.1",
+    "react-native-screens": "^1.0.0-alpha.22",
     "react-native-settings-list": "^1.8.0",
     "react-native-simple-markdown": "^1.1.0",
     "react-native-spinkit": "^1.2.0",
@@ -54,6 +56,7 @@
     "react-native-webview-bridge": "^0.40.1",
     "react-native-zss-rich-text-editor": "^1.1.0",
     "react-navigation": "^3.8.1",
+    "react-navigation-hooks": "^1.0.0-alpha.2",
     "react-redux": "^7.0.2",
     "react-relay": "^3.0.0",
     "redux": "^4.0.1",
@@ -65,13 +68,19 @@
   "devDependencies": {
     "@babel/core": "^7.4.3",
     "@babel/runtime": "^7.4.3",
+    "@react-navigation/core": "^3.0.0",
+    "@types/react": "^16.8.17",
+    "@types/react-native": "^0.57.55",
+    "@types/react-test-renderer": "^16.8.1",
     "babel-jest": "^24.7.1",
     "babel-plugin-relay": "^3.0.0",
     "fetch-schema": "^0.0.14",
     "jest": "^24.7.1",
     "metro-react-native-babel-preset": "^0.53.1",
+    "react-navigation-types-only": "bySabi/react-navigation#patch-1",
     "react-test-renderer": "16.8.3",
-    "relay-compiler": "^3.0.0"
+    "relay-compiler": "^3.0.0",
+    "typescript": "^3.4.5"
   },
   "jest": {
     "preset": "react-native"

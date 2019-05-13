@@ -43,7 +43,7 @@ class MenuScreen extends React.Component {
     tabBarLabel: 'Options',
     tabBarIcon: ({ tintColor, focused }) => (
       <Feather
-        name="more-horizontal"
+        name="user"
         // style={styles.tabIcon}
         size={focused ? 25 : 23}
         color={tintColor}
@@ -258,7 +258,8 @@ class MenuScreen extends React.Component {
               {'https://thecommunity.ng'}
             </Text>
             <Text style={[this.infoStyles, { marginTop: 30 }]}>
-              {`Nosakhare Emmanuel. \u00A9 2017`}
+              {`Nosakhare Emmanuel. \u00A9 `}
+              {new Date().getFullYear()}
             </Text>
             <Text
               style={[
@@ -270,7 +271,7 @@ class MenuScreen extends React.Component {
                 }
               ]}
             >
-              {'https://nosakhare.us'}
+              {'https://osarogie.com'}
             </Text>
           </Hyperlink>
           <View style={{ alignItems: 'center' }}>
