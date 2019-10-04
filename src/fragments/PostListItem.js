@@ -25,11 +25,6 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import { Subtitle, Caption } from '@shoutem/ui/components/Text'
 import CommentListItem from './CommentListItem'
 
-const mapStateToProps = state => ({
-  night_mode: state.night_mode,
-  current_user: state.user.user
-})
-
 class PostListItem extends React.PureComponent {
   clickableProps = {
     underlayColor: 'whitesmoke'
@@ -42,7 +37,8 @@ class PostListItem extends React.PureComponent {
   featurePhotoStyles = {
     ...excerptStyles.featurePhoto,
     backgroundColor: '#eee',
-    marginTop: 10
+    marginTop: 10,
+    marginStart: 10
   }
 
   constructor(props) {
@@ -67,13 +63,8 @@ class PostListItem extends React.PureComponent {
     const image = this.props.discussion.feature_photo
 
     if (image) {
-      if (this.props.feature_photo) {
-        const { height, width } = this.props.feature_photo
-      } else {
-        var { width } = Dimensions.get('window')
-        var height = width / 3
-        width -= 85
-      }
+      const height = 100
+      const width = 100
       const f_width = Math.min(
         1000,
         PixelRatio.getPixelSizeForLayoutSize(width)
@@ -115,29 +106,38 @@ class PostListItem extends React.PureComponent {
 
   renderMeta() {
     const { discussion } = this.props
+    const { user } = discussion
 
-    return [
-      <TouchableOpacity
-        {...this.clickableProps}
-        onPress={this.openProfile}
-        key={`post.m.t.${discussion.id}`}
-      >
-        <Text style={[styles.fill, { color: '#000' }]} numberOfLines={1}>
-          {discussion.user.name}
-        </Text>
-      </TouchableOpacity>,
-      <View style={styles.row} key={`post.m.v.${discussion.id}`}>
-        <Text style={excerptStyles.meta}>
-          {getTimeAgo(discussion.created_at)}
-        </Text>
-        {this.renderCultureName()}
+    return (
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <Avatar
+          width={40}
+          rounded
+          source={user}
+          title={user.name}
+          onPress={this.openProfile}
+          activeOpacity={0.7}
+        />
+        <View style={{ marginStart: 15, flex: 1 }}>
+          <TouchableOpacity {...this.clickableProps} onPress={this.openProfile}>
+            <Text style={[styles.fill, { color: '#000' }]} numberOfLines={1}>
+              {discussion.user.name}
+            </Text>
+          </TouchableOpacity>
+          <View style={styles.row}>
+            <Text style={excerptStyles.meta}>
+              {getTimeAgo(discussion.created_at)}
+            </Text>
+            {this.renderCultureName()}
+          </View>
+        </View>
       </View>
-    ]
+    )
   }
 
   renderEdit() {
-    const { discussion } = this.props
-    if (this.props.current_user._id == discussion.user._id) {
+    const { discussion, current_user = {} } = this.props
+    if (current_user._id == discussion.user._id) {
       return (
         <TouchableOpacity {...this.clickableProps} onPress={this.openWrite}>
           <Text style={{ marginLeft: 20 }}>Edit</Text>
@@ -182,7 +182,7 @@ class PostListItem extends React.PureComponent {
 
   render2() {
     const { discussion } = this.props
-    const { name, excerpt, word_count, user } = discussion
+    // const { name, excerpt, word_count, user } = discussion
     // console.log(this.props);
     // console.log(discussion.created_at)
     return (
@@ -258,50 +258,40 @@ class PostListItem extends React.PureComponent {
             borderBottomColor: '#ddd',
             borderBottomWidth: 1,
             paddingBottom: 15,
-            marginTop: 2
+            paddingTop: 2
           }}
           onPress={this.openDiscussion}
         >
           <View style={[excerptStyles.container, { marginBottom: 0 }]}>
-            <View style={{ flexDirection: 'row', marginBottom: 8 }}>
-              <View style={{ alignItems: 'center' }}>
-                <Avatar
-                  width={40}
-                  radius={5}
-                  source={user}
-                  title={user.name}
-                  onPress={this.openProfile}
-                  activeOpacity={0.7}
-                />
-                <DiscussionLike
-                  discussion={discussion}
-                  stacked
-                  size={20}
-                  // style={{ marginTop: 10 }}
-                />
-                <ShareButton
-                  title={discussion.name}
-                  url={discussion.public_url}
-                  message={`Read "${discussion.name}" on TheCommunity - ${
-                    discussion.public_url
-                  } by ${discussion.user.name}`}
-                  style={{ marginTop: 5 }}
-                />
-              </View>
-              <View style={{ marginLeft: 15, flex: 1 }}>
-                {this.renderMeta()}
-                {this.renderFeaturePhoto()}
-                <Text style={excerptStyles.title}>{name}</Text>
-                {/* <Markdown styles={excerptStyles.body}> */}
+            {this.renderMeta()}
+            <View style={{ flexDirection: 'row' }}>
+              <View style={{ flex: 1 }}>
+                <Text style={excerptStyles.title}>{name.trimLeft()}</Text>
                 <Subtitle>
                   {excerpt}
                   {word_count > 20 ? '...' : ''}
                 </Subtitle>
-                {/* </Markdown> */}
-                {this.renderControls()}
-                {this.renderComments()}
               </View>
+              {this.renderFeaturePhoto()}
             </View>
+            {this.renderControls()}
+            <View style={{ flexDirection: 'row', marginBottom: 8 }}>
+              {/* <DiscussionLike
+                  discussion={discussion}
+                  stacked
+                  size={20}
+                  // style={{ marginTop: 10 }}
+                /> */}
+              <ShareButton
+                title={discussion.name}
+                url={discussion.public_url}
+                message={`Read "${discussion.name}" on TheCommunity - ${
+                  discussion.public_url
+                } by ${discussion.user.name}`}
+                style={{ marginTop: 5 }}
+              />
+            </View>
+            {/* {this.renderComments()} */}
           </View>
         </TouchableHighlight>
         {/* <Separator /> */}
@@ -317,7 +307,7 @@ PostListItem.propTypes = {
 }
 
 export default createFragmentContainer(
-  connect(mapStateToProps)(PostListItem),
+  PostListItem,
   graphql`
     fragment PostListItem_discussion on Discussion {
       id
@@ -362,7 +352,7 @@ export default createFragmentContainer(
         width
         name
       }
-      ...DiscussionLike_discussion
+      # ...DiscussionLike_discussion
     }
   `
 )

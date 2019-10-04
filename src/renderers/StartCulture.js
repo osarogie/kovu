@@ -16,10 +16,10 @@ import { Bar } from 'react-native-progress'
 import createEnvironment from '../relay-environment'
 import { connect } from 'react-redux'
 import styles from '../styles'
-import CreateGroupMutation from '../mutations/CreateGroupMutation'
+import CreateGroupMutation from '../data/mutations/CreateGroupMutation'
 import ActivityButton from '../components/ActivityButton'
 import TextInput from '../components/TextInput'
-import EditGroupMutation from '../mutations/EditGroupMutation'
+import EditGroupMutation from '../data/mutations/EditGroupMutation'
 import Toolbar from '../components/Toolbar'
 
 const mapStateToProps = state => ({
@@ -151,7 +151,7 @@ class StartCulture extends React.Component {
     }
   }
   renderToolbar() {
-    const {  editing_mode } = this.props
+    const { editing_mode } = this.props
     const title = editing_mode ? 'Edit Culture' : 'Create Culture'
     // const subtitle = culture ? { subtitle: culture.name } : {}
     return <Toolbar title={title} navIconName="md-close" />

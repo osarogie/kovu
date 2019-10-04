@@ -1,11 +1,8 @@
-// @flow
-
-import React from "react"
-import { View, VirtualizedList } from "react-native"
-import environment from ".././relay-environment"
-import LoaderBox from "../../components/LoaderBox"
-import EmptyList from "../../components/EmptyList"
-import PostRow from "../../fragments/PostRow"
+import React from 'react'
+import { View, VirtualizedList } from 'react-native'
+import LoaderBox from '../../components/LoaderBox'
+import EmptyList from '../../components/EmptyList'
+import PostRow from '../../fragments/PostRow'
 
 export default class PostList extends React.Component {
   state = {
@@ -29,7 +26,7 @@ export default class PostList extends React.Component {
       isFetchingTop: true
     })
 
-    this.props.relay.refetchConnection(discussions.edges.length, err => {
+    this.props.relay.refetchConnection(discussions.edges.length, () => {
       this.setState({
         isFetchingTop: false
       })
@@ -54,7 +51,7 @@ export default class PostList extends React.Component {
     }
 
     // fetch more 5
-    this.props.relay.loadMore(10, err => {
+    this.props.relay.loadMore(10, () => {
       this.setState({
         hasMore: this.props.relay.hasMore(),
         isLoading: this.props.relay.isLoading()
@@ -94,7 +91,7 @@ export default class PostList extends React.Component {
       : { edges: [] }
 
     return (
-      <View style={{ flex: 1, backgroundColor: "#eee" }}>
+      <View style={{ flex: 1, backgroundColor: '#eee' }}>
         {this.props.renderTopHeader && this.props.renderTopHeader()}
         <VirtualizedList
           data={discussions.edges}

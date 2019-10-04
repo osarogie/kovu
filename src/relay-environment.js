@@ -23,6 +23,21 @@ export default ({ headers }) => {
       return fromCache
     }
 
+    console.log(`${API_HOST}/v2`)
+
+    console.log({
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        ...headers
+      },
+      body: JSON.stringify({
+        query: operation.text,
+        variables
+      })
+    })
+
     return fetch(`${API_HOST}/v2`, {
       method: 'POST',
       headers: {

@@ -9,7 +9,10 @@
     "schema": "./node_modules/.bin/fetch-schema http://thecommunity.ng/_/api -f schema.graphql",
     "schema:local": "./node_modules/.bin/fetch-schema http://localhost:3000/_/api -f schema.graphql",
     "relay": "relay-compiler --src ./src --schema schema.graphql",
-    "relayw": "relay-compiler --src ./src --schema schema.graphql --watch"
+    "relayw": "relay-compiler --src ./src --schema schema.graphql --watch",
+    "a": "react-native run-android",
+    "i": "react-native run-ios",
+    "postinstall": "npx jetify"
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.4.0",
@@ -20,6 +23,7 @@
     "appcenter-crashes": "^1.13.0",
     "base-64": "^0.1.0",
     "graphql": "^14.2.1",
+    "jetifier": "^1.6.4",
     "lodash": "^4.17.11",
     "lottie-react-native": "^2.6.1",
     "prop-types": "^15.7.2",

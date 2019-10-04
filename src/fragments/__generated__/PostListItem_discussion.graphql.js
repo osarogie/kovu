@@ -9,7 +9,6 @@
 /*::
 import type { ReaderFragment } from 'relay-runtime';
 type CommentListItem_comment$ref = any;
-type DiscussionLike_discussion$ref = any;
 import type { FragmentReference } from "relay-runtime";
 declare export opaque type PostListItem_discussion$ref: FragmentReference;
 export type PostListItem_discussion = {|
@@ -54,7 +53,6 @@ export type PostListItem_discussion = {|
     +width: ?number,
     +name: ?string,
   |},
-  +$fragmentRefs: DiscussionLike_discussion$ref,
   +$refType: PostListItem_discussion$ref,
 |};
 */
@@ -71,14 +69,14 @@ var v0 = {
 v1 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "_id",
+  "name": "name",
   "args": null,
   "storageKey": null
 },
 v2 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "name",
+  "name": "_id",
   "args": null,
   "storageKey": null
 };
@@ -100,9 +98,15 @@ return {
   },
   "argumentDefinitions": [],
   "selections": [
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "comment_count",
+      "args": null,
+      "storageKey": null
+    },
     (v0/*: any*/),
     (v1/*: any*/),
-    (v2/*: any*/),
     {
       "kind": "ScalarField",
       "alias": null,
@@ -131,13 +135,7 @@ return {
       "args": null,
       "storageKey": null
     },
-    {
-      "kind": "ScalarField",
-      "alias": null,
-      "name": "comment_count",
-      "args": null,
-      "storageKey": null
-    },
+    (v2/*: any*/),
     {
       "kind": "LinkedField",
       "alias": "comments",
@@ -240,8 +238,8 @@ return {
       "plural": false,
       "selections": [
         (v0/*: any*/),
-        (v1/*: any*/),
         (v2/*: any*/),
+        (v1/*: any*/),
         {
           "kind": "ScalarField",
           "alias": null,
@@ -268,8 +266,8 @@ return {
       "plural": false,
       "selections": [
         (v0/*: any*/),
-        (v1/*: any*/),
         (v2/*: any*/),
+        (v1/*: any*/),
         {
           "kind": "ScalarField",
           "alias": null,
@@ -289,7 +287,7 @@ return {
       "plural": false,
       "selections": [
         (v0/*: any*/),
-        (v1/*: any*/),
+        (v2/*: any*/),
         {
           "kind": "ScalarField",
           "alias": null,
@@ -304,17 +302,12 @@ return {
           "args": null,
           "storageKey": null
         },
-        (v2/*: any*/)
+        (v1/*: any*/)
       ]
-    },
-    {
-      "kind": "FragmentSpread",
-      "name": "DiscussionLike_discussion",
-      "args": null
     }
   ]
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'ad938c65f3b1f1e464c68533b4959527';
+(node/*: any*/).hash = '540bf9d2b468cd8a0fb8b9456e0ecafe';
 module.exports = node;

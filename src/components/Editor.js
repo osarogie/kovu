@@ -16,9 +16,9 @@ import { Bar } from 'react-native-progress'
 import createEnvironment from '../relay-environment'
 import { connect } from 'react-redux'
 import colors from '../colors'
-import CreateDiscussionMutation from '../mutations/CreateDiscussionMutation'
-import EditDiscussionMutation from '../mutations/EditDiscussionMutation'
-import CreateCommentMutation from '../mutations/CreateCommentMutation'
+import CreateDiscussionMutation from '../data/mutations/CreateDiscussionMutation'
+import EditDiscussionMutation from '../data/mutations/EditDiscussionMutation'
+import CreateCommentMutation from '../data/mutations/CreateCommentMutation'
 import {
   RichTextEditor,
   RichTextToolbar,

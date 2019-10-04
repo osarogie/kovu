@@ -1,14 +1,8 @@
 import React from 'react'
-import {  Heading } from '@shoutem/ui/components/Text'
-import {
-  Picker,
-  View,
-  Animated,
-  Dimensions
-} from 'react-native'
+import { Picker, View, Animated, Text, StyleSheet } from 'react-native'
 import { TextField } from './TextField'
-import ActivityButton from './ActivityButton'
-import { PURPLE } from '../ui'
+import { withTheme } from '../providers/ThemeProvider'
+import { RoundButton } from './buttons/RoundButton'
 
 // const { width } = Dimensions.get('window')
 export class Form extends React.Component {
@@ -113,6 +107,7 @@ export class Form extends React.Component {
             onSubmitEditing={() => this.onNext(f, i, a)}
             ref={e => (this[f] = e)}
             label={fields[f].label}
+            style={{ marginBottom: 20 }}
             onChangeText={t => this.setState({ [f]: t, [`${f}$error`]: null })}
           />
         )
@@ -129,6 +124,7 @@ export class Form extends React.Component {
             ref={e => (this[f] = e)}
             keyboardType="phone-pad"
             label={fields[f].label}
+            style={{ marginBottom: 20 }}
             onChangeText={t => this.setState({ [f]: t, [`${f}$error`]: null })}
           />
         )
@@ -152,7 +148,8 @@ export class Form extends React.Component {
     }
   }
   render() {
-    const { fields, onSubmit, submitText, storage } = this.props
+    const { fields, onSubmit, submitText, storage, theme } = this.props
+    const textColor = theme.colors.text
 
     return (
       <View
@@ -178,15 +175,17 @@ export class Form extends React.Component {
               height: 70
             }}
           /> */}
-        <Heading
+        <Text
           style={{
             fontWeight: 'bold',
             marginTop: 30,
+            fontSize: 30,
+            color: textColor,
             alignSelf: 'center'
           }}
         >
           {submitText}
-        </Heading>
+        </Text>
         <View
           style={{
             alignSelf: 'center',
@@ -204,20 +203,28 @@ export class Form extends React.Component {
             this.renderField(f, i, a)
           )}
           {onSubmit || storage ? (
-            <ActivityButton
-              title={submitText || 'Submit'}
-              disabled={!this.validate()}
-              isLoading={this.state.isSaving}
+            // <ActivityButton
+            //   title={submitText || 'Submit'}
+            //   disabled={!this.validate()}
+            //   isLoading={this.state.isSaving}
+            //   onPress={this.onSubmit}
+            //   buttonStyle={{
+            //     alignSelf: 'center',
+            //     marginTop: 30,
+            //     height: 40,
+            //     width: 120,
+            //     borderRadius: 30,
+            //     backgroundColor: PURPLE
+            //   }}
+            // />
+            <RoundButton
+              mode="contained"
+              loading={this.state.isSaving}
+              style={styles.button}
               onPress={this.onSubmit}
-              buttonStyle={{
-                alignSelf: 'center',
-                marginTop: 30,
-                height: 40,
-                width: 120,
-                borderRadius: 30,
-                backgroundColor: PURPLE
-              }}
-            />
+            >
+              {submitText || 'Submit'}
+            </RoundButton>
           ) : null}
         </View>
         {this.props.bottomContent}
@@ -228,11 +235,14 @@ export class Form extends React.Component {
   }
 }
 
-// const styles = {
-//   button: {
-//     marginLeft: 0,
-//     marginRight: 0,
-//     backgroundColor: PURPLE,
-//     borderColor: PURPLE
-//   }
-// }
+Form = withTheme(Form)
+
+const styles = StyleSheet.create({
+  button: {
+    // marginLeft: 0,
+    // marginRight: 0,
+    // backgroundColor: PURPLE,
+    // borderColor: PURPLE,
+    width: 120
+  }
+})

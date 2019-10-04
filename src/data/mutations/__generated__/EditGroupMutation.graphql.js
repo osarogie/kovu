@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash d1e557c55f37a0a35b1580152c697e8d
+ * @relayHash 2a5d2482e5142bcb95f3e20bd3baa80e
  */
 
 /* eslint-disable */
@@ -10,36 +10,38 @@
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
 type GroupListItem_group$ref = any;
-export type CreateGroupInput = {|
+export type EditGroupInput = {|
   clientMutationId?: ?string,
+  id: string,
   name: string,
+  tagline?: ?string,
   body?: ?string,
   is_private?: ?boolean,
   header_image?: ?string,
 |};
-export type CreateGroupMutationVariables = {|
-  input: CreateGroupInput
+export type EditGroupMutationVariables = {|
+  input: EditGroupInput
 |};
-export type CreateGroupMutationResponse = {|
-  +createGroup: ?{|
+export type EditGroupMutationResponse = {|
+  +editGroup: ?{|
     +success: ?boolean,
     +group: ?{|
       +$fragmentRefs: GroupListItem_group$ref
     |},
   |}
 |};
-export type CreateGroupMutation = {|
-  variables: CreateGroupMutationVariables,
-  response: CreateGroupMutationResponse,
+export type EditGroupMutation = {|
+  variables: EditGroupMutationVariables,
+  response: EditGroupMutationResponse,
 |};
 */
 
 
 /*
-mutation CreateGroupMutation(
-  $input: CreateGroupInput!
+mutation EditGroupMutation(
+  $input: EditGroupInput!
 ) {
-  createGroup(input: $input) {
+  editGroup(input: $input) {
     success
     group {
       ...GroupListItem_group
@@ -66,7 +68,7 @@ var v0 = [
   {
     "kind": "LocalArgument",
     "name": "input",
-    "type": "CreateGroupInput!",
+    "type": "EditGroupInput!",
     "defaultValue": null
   }
 ],
@@ -75,7 +77,7 @@ v1 = [
     "kind": "Variable",
     "name": "input",
     "variableName": "input",
-    "type": "CreateGroupInput!"
+    "type": "EditGroupInput!"
   }
 ],
 v2 = {
@@ -103,7 +105,7 @@ return {
   "kind": "Request",
   "fragment": {
     "kind": "Fragment",
-    "name": "CreateGroupMutation",
+    "name": "EditGroupMutation",
     "type": "Mutation",
     "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
@@ -111,10 +113,10 @@ return {
       {
         "kind": "LinkedField",
         "alias": null,
-        "name": "createGroup",
+        "name": "editGroup",
         "storageKey": null,
         "args": (v1/*: any*/),
-        "concreteType": "CreateGroupPayload",
+        "concreteType": "EditGroupPayload",
         "plural": false,
         "selections": [
           (v2/*: any*/),
@@ -140,16 +142,16 @@ return {
   },
   "operation": {
     "kind": "Operation",
-    "name": "CreateGroupMutation",
+    "name": "EditGroupMutation",
     "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
-        "name": "createGroup",
+        "name": "editGroup",
         "storageKey": null,
         "args": (v1/*: any*/),
-        "concreteType": "CreateGroupPayload",
+        "concreteType": "EditGroupPayload",
         "plural": false,
         "selections": [
           (v2/*: any*/),
@@ -206,13 +208,13 @@ return {
   },
   "params": {
     "operationKind": "mutation",
-    "name": "CreateGroupMutation",
+    "name": "EditGroupMutation",
     "id": null,
-    "text": "mutation CreateGroupMutation(\n  $input: CreateGroupInput!\n) {\n  createGroup(input: $input) {\n    success\n    group {\n      ...GroupListItem_group\n      id\n    }\n  }\n}\n\nfragment GroupListItem_group on Group {\n  id\n  _id\n  name\n  permalink\n  body\n  header_image {\n    name\n    id\n  }\n}\n",
+    "text": "mutation EditGroupMutation(\n  $input: EditGroupInput!\n) {\n  editGroup(input: $input) {\n    success\n    group {\n      ...GroupListItem_group\n      id\n    }\n  }\n}\n\nfragment GroupListItem_group on Group {\n  id\n  _id\n  name\n  permalink\n  body\n  header_image {\n    name\n    id\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'c6b3b4f376e689aa5c2c8a9e026db017';
+(node/*: any*/).hash = '66b0e034d2d3a6cbb3b17c9a7b590f27';
 module.exports = node;

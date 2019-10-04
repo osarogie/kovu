@@ -1,10 +1,7 @@
-// @flow
 
 import React from 'react'
-import { Text } from 'react-native'
 import PostList from '../fragments/PostList'
 import QueryRendererProxy from './QueryRendererProxy'
-import styles from '../styles'
 
 import { createPaginationContainer, graphql } from 'react-relay'
 
@@ -74,17 +71,9 @@ export default props => {
       render={data => (
         <FeedPaginationContainer
           discussionList={data.props.feed}
-          renderHeader={renderPostsHeader}
           itemProps={{ ...props /*, feature_photo: { width, height }*/ }}
         />
       )}
     />
   )
 }
-const renderPostsHeader = _ => (
-  <Text
-    style={[styles.postsHeader, { marginTop: 53, fontSize: 20, padding: 15 }]}
-  >
-    Top Stories
-  </Text>
-)

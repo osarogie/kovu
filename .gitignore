@@ -29,6 +29,10 @@ build/
 .gradle
 local.properties
 *.iml
+org.eclipse.buildship.core.prefs
+.project
+.classpath
+
 
 # node.js
 #

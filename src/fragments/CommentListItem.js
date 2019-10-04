@@ -155,7 +155,6 @@ class CommentListItem extends React.PureComponent {
               source={comment.user}
               title={comment.user.name}
               activeOpacity={0.7}
-              onPress={_ => openProfile(comment.user)}
             />
             <View style={{ marginLeft: 10, flex: 1 }}>
               {/* <TouchableOpacity

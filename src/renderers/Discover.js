@@ -1,3 +1,4 @@
+import { StatusBar, StyleSheet, TouchableOpacity } from 'react-native'
 // @flow
 
 import React from 'react'
@@ -8,10 +9,10 @@ import PostList from '../fragments/PostList'
 import QueryRendererProxy from './QueryRendererProxy'
 import { TabView, TabBar, TabViewPagerPan } from 'react-native-tab-view'
 import { createPaginationContainer, graphql } from 'react-relay'
-import { Title } from '@shoutem/ui/components/Text'
-import { Screen } from '@shoutem/ui/components/Screen'
 import Icon from 'react-native-vector-icons/Feather'
 import { WHITE } from '../ui'
+import Animated from 'react-native-reanimated'
+import { elevation } from '../styles/elevation'
 
 const initialLayout = {
   height: 0,
@@ -249,8 +250,7 @@ class Stories extends React.Component {
 
     if (!q)
       return (
-        <Screen
-          styleName="paper"
+        <View
           style={{
             alignItems: 'center',
             justifyContent: 'center',
@@ -261,13 +261,13 @@ class Stories extends React.Component {
           <Icon
             name="search"
             size={100}
-            color="#ddd"
+            color="#05f"
             style={{ marginBottom: 10 }}
           />
-          <Title style={{ color: '#ddd' }}>
+          <Text style={{ color: '#05f', fontSize: 20 }}>
             Use the search bar to find stories
-          </Title>
-        </Screen>
+          </Text>
+        </View>
       )
 
     return (
@@ -326,17 +326,50 @@ export default class VideoPager extends React.Component {
     }
   }
 
-  _renderHeader = props => (
-    <TabBar
-      {...props}
-      onTabPress={this.onTabPress}
-      scrollEnabled
-      indicatorStyle={styles.indicator}
-      style={styles.tabbar}
-      tabStyle={styles.tab}
-      labelStyle={styles.label}
-    />
-  )
+  _renderHeader = props => {
+    const inputRange = props.navigationState.routes.map((x, i) => i)
+
+    return (
+      <View style={styles.tabBar}>
+        {props.navigationState.routes.map((route, i) => {
+          const color = Animated.color(
+            Animated.round(
+              Animated.interpolate(props.position, {
+                inputRange,
+                outputRange: inputRange.map(inputIndex =>
+                  inputIndex === i ? 255 : 0
+                )
+              })
+            ),
+            0,
+            0
+          )
+
+          return (
+            <TouchableOpacity
+              key={i}
+              style={styles.tabItem}
+              onPress={() => this.setState({ index: i })}
+            >
+              <Animated.Text style={{ color }}>{route.title}</Animated.Text>
+            </TouchableOpacity>
+          )
+        })}
+      </View>
+    )
+
+    return (
+      <TabBar
+        {...props}
+        onTabPress={this.onTabPress}
+        scrollEnabled
+        indicatorStyle={styles.indicator}
+        style={styles.tabbar}
+        tabStyle={styles.tab}
+        labelStyle={styles.label}
+      />
+    )
+  }
   render() {
     // const { loading, error, selected } = this.state
     // const categories = this.props.data
@@ -347,7 +380,7 @@ export default class VideoPager extends React.Component {
           // style={[styles.container, this.props.style]}
           navigationState={this.state}
           renderScene={this._renderScene}
-          renderHeader={this._renderHeader}
+          renderTabBar={this._renderHeader}
           onIndexChange={this._handleIndexChange}
           initialLayout={initialLayout}
           renderPager={props => <TabViewPagerPan {...props} />}
@@ -412,7 +445,7 @@ const labelStyle = {
   fontWeight: 'bold'
 }
 
-const styles = {
+const styles = StyleSheet.create({
   white: { color: '#fff', paddingVertical: 5 },
   tabbar: {
     backgroundColor: '#fff'
@@ -430,8 +463,18 @@ const styles = {
     color: '#000',
     fontWeight: '400',
     ...labelStyle
+  },
+  tabBar: {
+    flexDirection: 'row',
+    // paddingTop: StatusBar.currentHeight,
+    ...elevation(2)
+  },
+  tabItem: {
+    flex: 1,
+    alignItems: 'center',
+    padding: 16
   }
-}
+})
 
 // const renderCultureHeader = q => (
 //   <Text style={labelStyle}>

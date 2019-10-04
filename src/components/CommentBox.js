@@ -11,7 +11,7 @@ import {
 import styles from '../styles'
 import colors from '../colors'
 import Avatar from './Avatar'
-import CreateCommentMutation from '../mutations/CreateCommentMutation'
+import CreateCommentMutation from '../data/mutations/CreateCommentMutation'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { withNavigation } from 'react-navigation'
 import { navHelper } from '../helpers/getNavigation'

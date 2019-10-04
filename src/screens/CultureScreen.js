@@ -10,7 +10,7 @@ export default class CultureScreen extends React.Component {
   renderToolbar() {
     // const { culture } = this.props.navigation.state.params
     // const title = (culture && culture.permalink) || 'Culture'
-    const title = 'Culture'
+    const title = 'Blog'
 
     return <Toolbar title={title} navIconName="md-arrow-back" />
   }

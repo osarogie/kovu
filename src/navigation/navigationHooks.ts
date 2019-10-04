@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from 'react'
-import { NavigationContext } from '@react-navigation/core'
+import { NavigationContext } from 'react-navigation'
 // TODO: move to "react-navigation" when https://github.com/react-navigation/react-navigation/pull/5276
 // get merged
 import {

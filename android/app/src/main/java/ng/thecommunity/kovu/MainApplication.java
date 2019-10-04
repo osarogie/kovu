@@ -7,6 +7,7 @@ import com.cmcewen.blurview.BlurViewPackage;
 import com.crashlytics.android.Crashlytics;
 import com.facebook.CallbackManager;
 import com.facebook.react.ReactApplication;
+import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.microsoft.codepush.react.ReactInstanceHolder;
 import com.swmansion.rnscreens.RNScreensPackage;
 import com.facebook.react.ReactNativeHost;
@@ -59,6 +60,7 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
+            new AsyncStoragePackage(),
                     new RNScreensPackage(),
                     new WebViewBridgePackage(),
                     new RNSpinkitPackage(),

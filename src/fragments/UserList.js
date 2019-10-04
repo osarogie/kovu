@@ -1,18 +1,5 @@
-// @flow
-
 import React from 'react'
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableHighlight,
-  VirtualizedList,
-  Image
-} from 'react-native'
-import { withNavigation } from 'react-navigation'
-import environment from '../relay-environment'
-import styles from '../styles'
-import colors from '../colors'
+import { View, VirtualizedList } from 'react-native'
 import LoaderBox from '../components/LoaderBox'
 import UserListItem from '../fragments/UserListItem'
 import Separator from '../components/Separator'
@@ -35,7 +22,7 @@ export default class UserList extends React.Component {
       isFetchingTop: true
     })
 
-    this.props.relay.refetchConnection(users.edges.length, err => {
+    this.props.relay.refetchConnection(users.edges.length, () => {
       this.setState({
         isFetchingTop: false
       })
@@ -59,7 +46,7 @@ export default class UserList extends React.Component {
     }
 
     // fetch more 5
-    this.props.relay.loadMore(10, err => {
+    this.props.relay.loadMore(10, () => {
       this.setState({
         hasMore: this.props.relay.hasMore(),
         isLoading: this.props.relay.isLoading()

@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 8dab373c20b12099149b6256c73b5e36
+ * @relayHash 18bbbb0d3fb00d6ea949acceb084d721
  */
 
 /* eslint-disable */
@@ -95,7 +95,6 @@ fragment PostListItem_discussion on Discussion {
     width
     name
   }
-  ...DiscussionLike_discussion
 }
 
 fragment UserListItem_user on User {
@@ -133,13 +132,6 @@ fragment CommentListItem_comment on Comment {
     profile_picture_name
   }
 }
-
-fragment DiscussionLike_discussion on Discussion {
-  id
-  _id
-  viewer_does_like
-  like_count
-}
 */
 
 const node/*: ConcreteRequest*/ = (function(){
@@ -169,14 +161,14 @@ v2 = {
 v3 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "_id",
+  "name": "name",
   "args": null,
   "storageKey": null
 },
 v4 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "name",
+  "name": "_id",
   "args": null,
   "storageKey": null
 },
@@ -292,9 +284,15 @@ return {
             "concreteType": "Discussion",
             "plural": false,
             "selections": [
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "name": "comment_count",
+                "args": null,
+                "storageKey": null
+              },
               (v2/*: any*/),
               (v3/*: any*/),
-              (v4/*: any*/),
               {
                 "kind": "ScalarField",
                 "alias": null,
@@ -323,13 +321,7 @@ return {
                 "args": null,
                 "storageKey": null
               },
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "name": "comment_count",
-                "args": null,
-                "storageKey": null
-              },
+              (v4/*: any*/),
               {
                 "kind": "LinkedField",
                 "alias": null,
@@ -390,7 +382,7 @@ return {
                             "args": null,
                             "storageKey": null
                           },
-                          (v3/*: any*/),
+                          (v4/*: any*/),
                           {
                             "kind": "ScalarField",
                             "alias": null,
@@ -416,7 +408,7 @@ return {
                             "plural": false,
                             "selections": [
                               (v2/*: any*/),
-                              (v3/*: any*/)
+                              (v4/*: any*/)
                             ]
                           },
                           {
@@ -429,8 +421,8 @@ return {
                             "plural": false,
                             "selections": [
                               (v2/*: any*/),
-                              (v3/*: any*/),
                               (v4/*: any*/),
+                              (v3/*: any*/),
                               (v7/*: any*/),
                               (v8/*: any*/)
                             ]
@@ -475,8 +467,8 @@ return {
                 "plural": false,
                 "selections": [
                   (v2/*: any*/),
-                  (v3/*: any*/),
                   (v4/*: any*/),
+                  (v3/*: any*/),
                   (v7/*: any*/),
                   (v8/*: any*/),
                   {
@@ -512,8 +504,8 @@ return {
                 "plural": false,
                 "selections": [
                   (v2/*: any*/),
-                  (v3/*: any*/),
                   (v4/*: any*/),
+                  (v3/*: any*/),
                   {
                     "kind": "ScalarField",
                     "alias": null,
@@ -533,7 +525,7 @@ return {
                 "plural": false,
                 "selections": [
                   (v2/*: any*/),
-                  (v3/*: any*/),
+                  (v4/*: any*/),
                   {
                     "kind": "ScalarField",
                     "alias": null,
@@ -548,22 +540,8 @@ return {
                     "args": null,
                     "storageKey": null
                   },
-                  (v4/*: any*/)
+                  (v3/*: any*/)
                 ]
-              },
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "name": "viewer_does_like",
-                "args": null,
-                "storageKey": null
-              },
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "name": "like_count",
-                "args": null,
-                "storageKey": null
               }
             ]
           }
@@ -575,7 +553,7 @@ return {
     "operationKind": "mutation",
     "name": "DeleteDiscussionMutation",
     "id": null,
-    "text": "mutation DeleteDiscussionMutation(\n  $input: DeleteDiscussionInput!\n) {\n  deleteDiscussion(input: $input) {\n    discussion {\n      ...PostListItem_discussion\n      user {\n        ...UserListItem_user\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment PostListItem_discussion on Discussion {\n  id\n  _id\n  name\n  public_url\n  excerpt(size: 20)\n  word_count\n  comment_count\n  comments(by_latest: true, first: 3) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        excerpt\n        ...CommentListItem_comment\n        __typename\n      }\n      cursor\n    }\n  }\n  created_at\n  user {\n    id\n    _id\n    name\n    username\n    profile_picture_name\n  }\n  group {\n    id\n    _id\n    name\n    permalink\n  }\n  feature_photo {\n    id\n    _id\n    height\n    width\n    name\n  }\n  ...DiscussionLike_discussion\n}\n\nfragment UserListItem_user on User {\n  id\n  _id\n  name\n  username\n  bio\n  profile_picture_name\n  ...FollowButton_user\n}\n\nfragment FollowButton_user on User {\n  _id\n  viewer_follows\n  follows_viewer\n}\n\nfragment CommentListItem_comment on Comment {\n  id\n  _id\n  body\n  created_at\n  discussion_id\n  excerpt\n  discussion {\n    id\n    _id\n  }\n  user {\n    id\n    _id\n    name\n    username\n    profile_picture_name\n  }\n}\n\nfragment DiscussionLike_discussion on Discussion {\n  id\n  _id\n  viewer_does_like\n  like_count\n}\n",
+    "text": "mutation DeleteDiscussionMutation(\n  $input: DeleteDiscussionInput!\n) {\n  deleteDiscussion(input: $input) {\n    discussion {\n      ...PostListItem_discussion\n      user {\n        ...UserListItem_user\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment PostListItem_discussion on Discussion {\n  id\n  _id\n  name\n  public_url\n  excerpt(size: 20)\n  word_count\n  comment_count\n  comments(by_latest: true, first: 3) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        excerpt\n        ...CommentListItem_comment\n        __typename\n      }\n      cursor\n    }\n  }\n  created_at\n  user {\n    id\n    _id\n    name\n    username\n    profile_picture_name\n  }\n  group {\n    id\n    _id\n    name\n    permalink\n  }\n  feature_photo {\n    id\n    _id\n    height\n    width\n    name\n  }\n}\n\nfragment UserListItem_user on User {\n  id\n  _id\n  name\n  username\n  bio\n  profile_picture_name\n  ...FollowButton_user\n}\n\nfragment FollowButton_user on User {\n  _id\n  viewer_follows\n  follows_viewer\n}\n\nfragment CommentListItem_comment on Comment {\n  id\n  _id\n  body\n  created_at\n  discussion_id\n  excerpt\n  discussion {\n    id\n    _id\n  }\n  user {\n    id\n    _id\n    name\n    username\n    profile_picture_name\n  }\n}\n",
     "metadata": {}
   }
 };

@@ -5,7 +5,8 @@ import {
   Image,
   Platform,
   Text,
-  TouchableOpacity
+  TouchableOpacity,
+  Linking
 } from 'react-native'
 import styles from '../styles'
 import colors from '../colors'
@@ -27,6 +28,7 @@ import {
   openStartCulture,
   openLogin
 } from '../utils'
+import { RoundButton } from '../components/buttons/RoundButton'
 
 const mapStateToProps = state => ({
   night_mode: state.night_mode,
@@ -68,6 +70,14 @@ class MenuScreen extends React.Component {
     this.props.loggedIn
       ? openStartCulture(this.props.navigation, {})
       : this.openLogin()
+
+  openWebsite() {
+    Linking.openURL('https://thecommunity.ng')
+  }
+
+  openDeveloperWebsite() {
+    Linking.openURL('https://osarogie.com')
+  }
 
   getPicture = _ => {
     const { user } = this.props
@@ -122,13 +132,9 @@ class MenuScreen extends React.Component {
             padding: 20
           }}
         >
-          <Button
-            raised
-            buttonStyle={{ backgroundColor: '#05f', height: 40 }}
-            textStyle={{ textAlign: 'center' }}
-            onPress={this.openLogin}
-            title="Login"
-          />
+          <RoundButton mode="outlined" onPress={this.openLogin}>
+            Login
+          </RoundButton>
         </View>
       )
     }
@@ -212,7 +218,7 @@ class MenuScreen extends React.Component {
     // }
 
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, marginStart: 10 }}>
         {this.renderUserMenu()}
         <SettingsList borderColor="transparent" defaultItemSize={50}>
           {/* <SettingsList.Header headerStyle={{ marginTop: 15 }} />
@@ -231,6 +237,18 @@ class MenuScreen extends React.Component {
             title="Start a new culture"
             onPress={this.openStartCulture}
           />
+          <SettingsList.Item
+            icon={this.getIcon('globe')}
+            hasNavArrow={false}
+            title="Visit Website"
+            onPress={this.openWebsite}
+          />
+          <SettingsList.Item
+            icon={this.getIcon('person')}
+            hasNavArrow={false}
+            title="Developer"
+            onPress={this.openDeveloperWebsite}
+          />
         </SettingsList>
       </View>
     )
@@ -245,7 +263,7 @@ class MenuScreen extends React.Component {
             <Separator />
           </View>
           {this.renderMenu()}
-          <Hyperlink linkDefault={true}>
+          {/* <Hyperlink linkDefault={true}>
             <Text style={[this.infoStyles, { marginTop: 50 }]}>
               {`Some features will be available soon.`}
             </Text>
@@ -273,15 +291,15 @@ class MenuScreen extends React.Component {
             >
               {'https://osarogie.com'}
             </Text>
-          </Hyperlink>
-          <View style={{ alignItems: 'center' }}>
+          </Hyperlink> */}
+          {/* <View style={{ alignItems: 'center' }}>
             <Image
               source={require('../images/ic_logo.png')}
               width={45}
               height={45}
               style={{ width: 45, height: 45, marginBottom: 50 }}
             />
-          </View>
+          </View> */}
         </ScrollView>
         {/* <View style={styles.elevation} /> */}
       </View>

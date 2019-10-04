@@ -1,26 +1,9 @@
-// @flow
-
 import React from 'react'
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  VirtualizedList,
-  Image
-} from 'react-native'
-// import { withNavigation } from 'react-navigation'
-import environment from '../relay-environment'
+import { View, VirtualizedList } from 'react-native'
 import styles from '../styles'
-import colors from '../colors'
 import LoaderBox from '../components/LoaderBox'
 import Separator from '../components/Separator'
 import GroupListItem from '../fragments/GroupListItem'
-import { connect } from 'react-redux'
-
-const mapStateToProps = state => ({
-  night_mode: state.night_mode
-})
 
 export default class GroupList extends React.Component {
   state = {
@@ -40,7 +23,7 @@ export default class GroupList extends React.Component {
       isFetchingTop: true
     })
 
-    this.props.relay.refetchConnection(groups.edges.length, err => {
+    this.props.relay.refetchConnection(groups.edges.length, () => {
       this.setState({
         isFetchingTop: false
       })
@@ -65,7 +48,7 @@ export default class GroupList extends React.Component {
     }
 
     // fetch more 5
-    this.props.relay.loadMore(10, err => {
+    this.props.relay.loadMore(10, () => {
       this.setState({
         hasMore: this.props.relay.hasMore(),
         isLoading: this.props.relay.isLoading()
@@ -98,7 +81,7 @@ export default class GroupList extends React.Component {
   }
 
   render() {
-    const { groupList, itemProps, night_mode } = this.props
+    const { groupList, itemProps } = this.props
     // console.log(groupList)
     const groups = groupList.groups_in || groupList.groups
     // console.log(this.props);

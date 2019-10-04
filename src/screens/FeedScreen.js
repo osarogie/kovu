@@ -8,10 +8,10 @@ import EvilIcon from 'react-native-vector-icons/EvilIcons'
 
 import getNavigation from '../helpers/getNavigation'
 import { View } from '@shoutem/ui/components/View'
-import { Screen } from '@shoutem/ui/components/Screen'
 import { FAB, Title } from 'react-native-paper'
-import { useAppNavigation } from '../services/navigation/navigationService'
-import { useViewer } from '../services/viewerService'
+import { useAppNavigation } from '../navigation/navigationHelper'
+import { useViewer } from '../providers/ViewerProvider'
+import { elevation } from '../styles/elevation'
 
 function TopBar() {
   const { openWrite, openViewerProfile } = useAppNavigation()
@@ -59,8 +59,9 @@ function TopBar() {
   return (
     <>
       <View style={styles.toolbar}>
-        <View style={styles.avatarWrap}>{renderAvatar()}</View>
         <Title style={styles.title}>Home</Title>
+        <View style={{ flex: 1 }} />
+        <View style={styles.avatarWrap}>{renderAvatar()}</View>
       </View>
       <FAB
         style={styles.fab}
@@ -81,10 +82,10 @@ export default class FeedScreen extends React.Component {
   render() {
     const { navigation } = this.props
     return (
-      <Screen styleName="paper" style={{ flex: 1, backgroundColor: '#fff' }}>
+      <View style={{ flex: 1, backgroundColor: '#fff' }}>
         <TopBar />
         <Feed {...getNavigation(navigation)} />
-      </Screen>
+      </View>
     )
   }
 }
@@ -97,13 +98,15 @@ const styles = StyleSheet.create({
     position: 'absolute'
   },
   title: {
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    marginStart: 17
   },
   avatarWrap: { width: 60 },
   toolbar: {
     flexDirection: 'row',
     height: 53,
-    alignItems: 'center'
+    alignItems: 'center',
+    ...elevation(4)
   },
   userIcon: {
     height: 56,

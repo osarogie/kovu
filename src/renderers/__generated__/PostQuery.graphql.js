@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 88dcaec3da14372ece771bff394b1d3f
+ * @relayHash 4f1f7b27a19cfd96fb6a2f53c2ab61bc
  */
 
 /* eslint-disable */
@@ -91,14 +91,14 @@ v1 = {
 v2 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "_id",
+  "name": "name",
   "args": null,
   "storageKey": null
 },
 v3 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "name",
+  "name": "_id",
   "args": null,
   "storageKey": null
 };
@@ -139,9 +139,15 @@ return {
         "concreteType": "Discussion",
         "plural": false,
         "selections": [
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "name": "like_count",
+            "args": null,
+            "storageKey": null
+          },
           (v1/*: any*/),
           (v2/*: any*/),
-          (v3/*: any*/),
           {
             "kind": "ScalarField",
             "alias": null,
@@ -163,13 +169,7 @@ return {
             "args": null,
             "storageKey": null
           },
-          {
-            "kind": "ScalarField",
-            "alias": null,
-            "name": "like_count",
-            "args": null,
-            "storageKey": null
-          },
+          (v3/*: any*/),
           {
             "kind": "ScalarField",
             "alias": null,
@@ -226,9 +226,9 @@ return {
             "concreteType": "Group",
             "plural": false,
             "selections": [
-              (v2/*: any*/),
-              (v1/*: any*/),
               (v3/*: any*/),
+              (v1/*: any*/),
+              (v2/*: any*/),
               {
                 "kind": "ScalarField",
                 "alias": null,
@@ -248,7 +248,7 @@ return {
             "plural": false,
             "selections": [
               (v1/*: any*/),
-              (v2/*: any*/),
+              (v3/*: any*/),
               {
                 "kind": "ScalarField",
                 "alias": null,
@@ -256,7 +256,7 @@ return {
                 "args": null,
                 "storageKey": null
               },
-              (v3/*: any*/),
+              (v2/*: any*/),
               {
                 "kind": "ScalarField",
                 "alias": null,

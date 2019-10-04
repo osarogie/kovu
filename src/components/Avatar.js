@@ -19,13 +19,13 @@ import Text from './Text'
 
 import { imageUrl } from '../utils'
 import { PURPLE } from '../ui'
+import { useAppNavigation } from '../navigation/navigationHelper'
 
 const DEFAULT_COLORS = ['#000', '#333', '#555', '#888', '#05f', '#ddd']
 
-const Avatar = props => {
+function Avatar(props) {
   const {
     component,
-    onPress,
     onLongPress,
     containerStyle,
     icon,
@@ -47,6 +47,16 @@ const Avatar = props => {
     onEditPress,
     ...attributes
   } = props
+
+  const { openProfile } = useAppNavigation()
+
+  function defaultOnPress() {
+    if (source && source._id) {
+      openProfile(source._id, source)
+    }
+  }
+
+  const { onPress = defaultOnPress } = props
 
   let { width, height } = props
 
@@ -242,13 +252,13 @@ const Avatar = props => {
   )
 }
 
-const defaultProps = {
+Avatar.defaultProps = {
   showEditButton: false,
   onEditPress: null,
   editButton: {
     size: null,
-    iconName: 'md-camera',
-    iconType: 'ionicon',
+    iconName: 'camera',
+    iconType: 'feather',
     iconColor: '#fff',
     underlayColor: DEFAULT_COLORS[0],
     style: null
@@ -293,7 +303,5 @@ Avatar.propTypes = {
     // style: ViewPropTypes.style
   })
 }
-
-Avatar.defaultProps = defaultProps
 
 export default Avatar

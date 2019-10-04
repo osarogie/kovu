@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash bb36bdcb8194ca0a94e0c2ed837fc402
+ * @relayHash babff106bb75931b75ba6dbffcdf7b3c
  */
 
 /* eslint-disable */
@@ -100,7 +100,6 @@ fragment PostListItem_discussion on Discussion {
     width
     name
   }
-  ...DiscussionLike_discussion
 }
 
 fragment CommentListItem_comment on Comment {
@@ -121,13 +120,6 @@ fragment CommentListItem_comment on Comment {
     username
     profile_picture_name
   }
-}
-
-fragment DiscussionLike_discussion on Discussion {
-  id
-  _id
-  viewer_does_like
-  like_count
 }
 */
 
@@ -209,14 +201,14 @@ v4 = {
 v5 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "_id",
+  "name": "name",
   "args": null,
   "storageKey": null
 },
 v6 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "name",
+  "name": "_id",
   "args": null,
   "storageKey": null
 },
@@ -251,8 +243,8 @@ v9 = {
   "plural": false,
   "selections": [
     (v4/*: any*/),
-    (v5/*: any*/),
     (v6/*: any*/),
+    (v5/*: any*/),
     {
       "kind": "ScalarField",
       "alias": null,
@@ -352,9 +344,15 @@ return {
                     "concreteType": "Discussion",
                     "plural": false,
                     "selections": [
+                      {
+                        "kind": "ScalarField",
+                        "alias": null,
+                        "name": "comment_count",
+                        "args": null,
+                        "storageKey": null
+                      },
                       (v4/*: any*/),
                       (v5/*: any*/),
-                      (v6/*: any*/),
                       {
                         "kind": "ScalarField",
                         "alias": null,
@@ -383,13 +381,7 @@ return {
                         "args": null,
                         "storageKey": null
                       },
-                      {
-                        "kind": "ScalarField",
-                        "alias": null,
-                        "name": "comment_count",
-                        "args": null,
-                        "storageKey": null
-                      },
+                      (v6/*: any*/),
                       {
                         "kind": "LinkedField",
                         "alias": null,
@@ -426,7 +418,7 @@ return {
                                     "args": null,
                                     "storageKey": null
                                   },
-                                  (v5/*: any*/),
+                                  (v6/*: any*/),
                                   {
                                     "kind": "ScalarField",
                                     "alias": null,
@@ -452,7 +444,7 @@ return {
                                     "plural": false,
                                     "selections": [
                                       (v4/*: any*/),
-                                      (v5/*: any*/)
+                                      (v6/*: any*/)
                                     ]
                                   },
                                   (v9/*: any*/),
@@ -485,8 +477,8 @@ return {
                         "plural": false,
                         "selections": [
                           (v4/*: any*/),
-                          (v5/*: any*/),
                           (v6/*: any*/),
+                          (v5/*: any*/),
                           {
                             "kind": "ScalarField",
                             "alias": null,
@@ -506,7 +498,7 @@ return {
                         "plural": false,
                         "selections": [
                           (v4/*: any*/),
-                          (v5/*: any*/),
+                          (v6/*: any*/),
                           {
                             "kind": "ScalarField",
                             "alias": null,
@@ -521,22 +513,8 @@ return {
                             "args": null,
                             "storageKey": null
                           },
-                          (v6/*: any*/)
+                          (v5/*: any*/)
                         ]
-                      },
-                      {
-                        "kind": "ScalarField",
-                        "alias": null,
-                        "name": "viewer_does_like",
-                        "args": null,
-                        "storageKey": null
-                      },
-                      {
-                        "kind": "ScalarField",
-                        "alias": null,
-                        "name": "like_count",
-                        "args": null,
-                        "storageKey": null
                       },
                       (v10/*: any*/)
                     ]
@@ -564,7 +542,7 @@ return {
     "operationKind": "query",
     "name": "GroupPostsPaginationQuery",
     "id": null,
-    "text": "query GroupPostsPaginationQuery(\n  $count: Int!\n  $cursor: String\n  $id: ID!\n) {\n  group(id: $id) {\n    ...Group_discussionList\n    id\n  }\n}\n\nfragment Group_discussionList on Group {\n  discussions(first: $count, after: $cursor) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        ...PostListItem_discussion\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment PostListItem_discussion on Discussion {\n  id\n  _id\n  name\n  public_url\n  excerpt(size: 20)\n  word_count\n  comment_count\n  comments(by_latest: true, first: 3) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        excerpt\n        ...CommentListItem_comment\n        __typename\n      }\n      cursor\n    }\n  }\n  created_at\n  user {\n    id\n    _id\n    name\n    username\n    profile_picture_name\n  }\n  group {\n    id\n    _id\n    name\n    permalink\n  }\n  feature_photo {\n    id\n    _id\n    height\n    width\n    name\n  }\n  ...DiscussionLike_discussion\n}\n\nfragment CommentListItem_comment on Comment {\n  id\n  _id\n  body\n  created_at\n  discussion_id\n  excerpt\n  discussion {\n    id\n    _id\n  }\n  user {\n    id\n    _id\n    name\n    username\n    profile_picture_name\n  }\n}\n\nfragment DiscussionLike_discussion on Discussion {\n  id\n  _id\n  viewer_does_like\n  like_count\n}\n",
+    "text": "query GroupPostsPaginationQuery(\n  $count: Int!\n  $cursor: String\n  $id: ID!\n) {\n  group(id: $id) {\n    ...Group_discussionList\n    id\n  }\n}\n\nfragment Group_discussionList on Group {\n  discussions(first: $count, after: $cursor) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        ...PostListItem_discussion\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment PostListItem_discussion on Discussion {\n  id\n  _id\n  name\n  public_url\n  excerpt(size: 20)\n  word_count\n  comment_count\n  comments(by_latest: true, first: 3) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        excerpt\n        ...CommentListItem_comment\n        __typename\n      }\n      cursor\n    }\n  }\n  created_at\n  user {\n    id\n    _id\n    name\n    username\n    profile_picture_name\n  }\n  group {\n    id\n    _id\n    name\n    permalink\n  }\n  feature_photo {\n    id\n    _id\n    height\n    width\n    name\n  }\n}\n\nfragment CommentListItem_comment on Comment {\n  id\n  _id\n  body\n  created_at\n  discussion_id\n  excerpt\n  discussion {\n    id\n    _id\n  }\n  user {\n    id\n    _id\n    name\n    username\n    profile_picture_name\n  }\n}\n",
     "metadata": {}
   }
 };

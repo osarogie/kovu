@@ -29,7 +29,7 @@ const getNavigation = navigation => ({
     navigation.navigate('Write', { culture, discussion, id, editing_mode })
   },
   openLogin() {
-    navigation.navigate('Login')
+    navigation.navigate('Auth')
   },
   openSearch() {
     navigation.navigate('Discover')

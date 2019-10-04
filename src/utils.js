@@ -21,7 +21,7 @@ export const openWrite = (
     editing_mode
   })
 
-export const openLogin = navigation => navigation.navigate('Login')
+export const openLogin = navigation => navigation.navigate('Auth')
 export const openEditProfile = (user, navigation) =>
   navigation.navigate('EditProfile', { id: user.id })
 export const openChangePassword = navigation =>

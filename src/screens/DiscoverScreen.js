@@ -55,13 +55,14 @@ export default class DiscoverScreen extends React.Component {
             // placeholderTextColor="#fff"
             // placeholderStyle={{ color: '#fff' }}
             inputStyle={{ color: '#333' }}
-            iconColor="#ddd"
+            iconColor="#333"
             style={{
-              backgroundColor: '#f9f9f9',
+              backgroundColor: '#ddd',
               elevation: 0,
-              borderWidth: 1,
-              borderColor: '#eee',
-              ...Platform.select({ web: { borderStyle: 'solid' } })
+              borderRadius: 5
+              // borderWidth: 1,
+              // borderColor: '#eee',
+              // ...Platform.select({ web: { borderStyle: 'solid' } })
             }}
             placeholder="Search TheCommunity"
             ref={component => (this._q = component)}
