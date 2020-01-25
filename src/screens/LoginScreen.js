@@ -2,8 +2,8 @@ import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import Authenticator from '../components/Authenticator'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import Toolbar from '../components/Toolbar'
 import { useTheme } from '../providers/ThemeProvider'
+import { Appbar } from 'react-native-paper'
 
 export default function LoginScreen({ navigation }) {
   const { colors } = useTheme()
@@ -14,7 +14,7 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <>
-      <Toolbar onBackPress={goBack} />
+      <Appbar.BackAction key="nav-icon" onPress={goBack} style={{ margin: 10 }} />
       <KeyboardAwareScrollView
         onKeyboardWillShow={frames => {
           console.log('Keyboard event', frames)
@@ -43,9 +43,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     alignItems: 'center',
     maxWidth: 400,
-    alignItems: 'center',
     paddingTop: 20,
     paddingBottom: 20
   },
-  scrollView: { width: '100%', flex: 1 }
+  scrollView: { width: '100%', flex: 1,backgroundColor:'#eee' }
 })

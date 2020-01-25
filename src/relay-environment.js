@@ -2,7 +2,7 @@ import { Environment, Network, RecordSource, Store } from 'relay-runtime'
 import RelayQueryResponseCache from 'relay-runtime/lib/RelayQueryResponseCache'
 
 const prod = process.env.NODE_ENV === 'production'
-const API_HOST = prod ? 'https://data.thecommunity.ng' : 'http://localhost:5000'
+const API_HOST = prod ? 'https://data.thecommunity.ng' : 'https://data.thecommunity.ng'
 
 const ttl = 3 * 60 * 1000
 const cache = new RelayQueryResponseCache({ size: 1024, ttl })

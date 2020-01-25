@@ -99,6 +99,7 @@ export class Form extends React.Component {
           <TextField
             key={f}
             showPasswordAccessory={fields[f].secure}
+            secureTextEntry={fields[f].secure}
             title={fields[f].title}
             characterRestriction={fields[f].characterRestriction}
             error={this.state[`${f}$error`]}
@@ -178,7 +179,7 @@ export class Form extends React.Component {
         <Text
           style={{
             fontWeight: 'bold',
-            marginTop: 30,
+            marginTop: 10,
             fontSize: 30,
             color: textColor,
             alignSelf: 'center'

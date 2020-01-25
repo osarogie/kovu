@@ -421,7 +421,7 @@ class Authenticator extends React.Component {
           },
           username: {
             type: 'text',
-            label: 'Username',
+            label: 'Username (optional)',
             required: true,
             title: 'minimum is 6 character'
           },
