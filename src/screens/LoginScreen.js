@@ -13,7 +13,7 @@ export default function LoginScreen({ navigation }) {
   }
 
   return (
-    <>
+    <View style={{ backgroundColor: colors.background, flex: 1 }}>
       <Appbar.BackAction
         key="nav-icon"
         onPress={goBack}
@@ -28,7 +28,7 @@ export default function LoginScreen({ navigation }) {
         contentContainerStyle={{
           alignItems: 'center',
         }}
-        style={[styles.scrollView, { backgroundColor: colors.background }]}>
+        style={[styles.scrollView]}>
         <View style={styles.container}>
           {/* <Image
                 source={require("../images/welcome.png")}
@@ -37,7 +37,7 @@ export default function LoginScreen({ navigation }) {
           <Authenticator goBack={goBack} />
         </View>
       </KeyboardAwareScrollView>
-    </>
+    </View>
   )
 }
 
@@ -50,5 +50,5 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     width: '100%',
   },
-  scrollView: { width: '100%', flex: 1, backgroundColor: '#eee' },
+  scrollView: { width: '100%', flex: 1 },
 })

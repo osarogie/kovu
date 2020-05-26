@@ -55,12 +55,6 @@ function Authenticator({ goBack, dispatch }) {
 
   const inputProps = {
     style: inputStyles.textInput,
-    inputProps: {
-      placeholderTextColor: '#b2b2b2',
-    },
-    inputStyle: {
-      color: colors.text,
-    },
   }
 
   const openForgotPassword = () =>
@@ -138,16 +132,15 @@ function Authenticator({ goBack, dispatch }) {
   const renderRegister = () => {
     return (
       <View style={{ flex: 1 }}>
-        {/* <Text
+        <Text
           style={{
-            color: '#05f',
-            fontSize: 18,
+            color: colors.text,
+            fontSize: 35,
             marginBottom: 20,
-            textAlign: 'center'
-          }}
-        >
-          Register on TheCommunity
-        </Text> */}
+            textAlign: 'center',
+          }}>
+          Register
+        </Text>
         <TextInput
           {...inputProps}
           key="full_name"
@@ -195,7 +188,7 @@ function Authenticator({ goBack, dispatch }) {
             contentStyle={{ height: 50, width: 150 }}
             disabled={isRegisterLoading}
             loading={isRegisterLoading}>
-            Up
+            Sign Up
           </Button>
           <Text
             style={[styles.altText, { opacity: isRegisterLoading ? 0 : 1 }]}
@@ -213,16 +206,15 @@ function Authenticator({ goBack, dispatch }) {
   const renderLogin = () => {
     return (
       <View style={{ flex: 1 }}>
-        {/* <Text
+        <Text
           style={{
-            color: '#05f',
-            fontSize: 18,
+            color: colors.text,
+            fontSize: 35,
             marginBottom: 20,
-            textAlign: 'center'
-          }}
-        >
-          Sign in with TheCommunity
-        </Text> */}
+            textAlign: 'center',
+          }}>
+          Login
+        </Text>
         <TextInput
           {...inputProps}
           placeholder="Username or Email"
@@ -255,7 +247,10 @@ function Authenticator({ goBack, dispatch }) {
             Login
           </Button>
           <Text
-            style={[styles.altText, { opacity: isLoginLoading ? 0 : 1 }]}
+            style={[
+              styles.altText,
+              { opacity: isLoginLoading ? 0 : 1, color: colors.text },
+            ]}
             onPress={() => setAction('register')}>
             {'Are you new? '}
             <Text style={{ textDecorationLine: 'underline' }}>

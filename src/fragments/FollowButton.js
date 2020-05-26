@@ -107,7 +107,7 @@ class FollowButton extends React.Component {
       : 'Follow'
     return (
       <Button
-        mode="contained"
+        mode={viewer_follows ? 'contained' : 'outlined'}
         onPress={this.toggleFollow}
         {...this.props}
         style={{
@@ -125,11 +125,13 @@ class FollowButton extends React.Component {
 
 export default createFragmentContainer(
   withNavigation(connect(mapStateToProps)(FollowButton)),
-  graphql`
-    fragment FollowButton_user on User {
-      _id
-      viewer_follows
-      follows_viewer
-    }
-  `,
+  {
+    user: graphql`
+      fragment FollowButton_user on User {
+        _id
+        viewer_follows
+        follows_viewer
+      }
+    `,
+  },
 )

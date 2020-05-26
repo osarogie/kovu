@@ -7,7 +7,7 @@ module.exports = StyleSheet.create({
     marginRight: 20,
     marginTop: 15,
     // opacity: 0.9,
-    backgroundColor: '#272728cc',
+    // backgroundColor: '#272728cc',
   },
   loginField: {
     marginTop: 10,

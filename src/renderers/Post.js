@@ -24,6 +24,7 @@ import Avatar from '../components/Avatar'
 import { getTimeAgo, getCommentCount, imageUrl } from '../utils'
 import { useTheme, Text } from 'react-native-paper'
 import { useViewer } from '../providers/ViewerProvider'
+import { readingTime } from '../utils/readingTime'
 
 const { width } = Dimensions.get('window')
 
@@ -61,12 +62,12 @@ function Post(props) {
       const height = (feature_photo.height / feature_photo.width) * width
 
       const widthPixels = Math.min(
-        1000,
+        800,
         PixelRatio.getPixelSizeForLayoutSize(width),
       )
 
       const heightPixels = Math.min(
-        1000,
+        800,
         PixelRatio.getPixelSizeForLayoutSize(height),
       )
       return (
@@ -74,7 +75,7 @@ function Post(props) {
           <Image
             source={{
               uri: imageUrl(
-                header_image.name,
+                feature_photo.name,
                 `${widthPixels}x${heightPixels}`,
               ),
             }}
@@ -140,6 +141,8 @@ function Post(props) {
               numberOfLines={1}
               style={{ flex: 1, fontSize: 12, fontStyle: 'italic' }}>
               {getTimeAgo(discussion.created_at)}
+              &nbsp;&nbsp;&bull;&nbsp;&nbsp;
+              {readingTime(discussion.body).text}
             </Text>
           </View>
         </View>

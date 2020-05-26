@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef, useState, useCallback } from 'react'
 import { View, Platform } from 'react-native'
 import styles from '../styles'
 import searchStyles from '../styles/search'
@@ -8,32 +8,33 @@ import Icon from 'react-native-vector-icons/Feather'
 // import { Icon } from '@shoutem/ui/components/Icon'
 import getNavigation from '../helpers/getNavigation'
 import { WHITE } from '../ui'
+import { set } from 'react-native-reanimated'
+import { useTheme } from 'react-native-paper'
 // import { withNavigation } from '../navigation/withNavigation'
 
 // @withNavigation
-export default class DiscoverScreen extends React.Component {
-  static navigationOptions = {
-    tabBarLabel: 'Discover',
-    tabBarIcon: ({ tintColor, focused }) => (
-      <Icon
-        name="search"
-        // style={styles.tabIcon}
-        size={focused ? 25 : 23}
-        color={tintColor}
-      />
-    ),
-  }
+export default function DiscoverScreen({ navigation }) {
+  // static navigationOptions = {
+  //   tabBarLabel: 'Discover',
+  //   tabBarIcon: ({ tintColor, focused }) => (
+  //     <Icon
+  //       name="search"
+  //       // style={styles.tabIcon}
+  //       size={focused ? 25 : 23}
+  //       color={tintColor}
+  //     />
+  //   ),
+  // }
+  const { colors } = useTheme()
+  const [q, setQ] = useState('')
+  const [qs, setQs] = useState('')
+  const inputRef = useRef()
 
-  state = {
-    q: '',
-    qs: '',
-  }
+  const handleSubmit = useCallback(() => setQs(inputRef.current.state.value), [
+    inputRef,
+  ])
 
-  handleSubmit = _ => this.setState({ qs: this._q.state.value })
-  shouldComponentUpdate(p, s) {
-    return s.qs !== this.state.qs
-  }
-  renderToolbar() {
+  const renderToolbar = () => {
     return (
       <View
         style={{
@@ -43,7 +44,7 @@ export default class DiscoverScreen extends React.Component {
           width: '100%',
           // position: 'absolute',
           justifyContent: 'center',
-          backgroundColor: WHITE,
+          backgroundColor: colors.background,
         }}>
         <View style={searchStyles.container}>
           <TextInput
@@ -51,12 +52,11 @@ export default class DiscoverScreen extends React.Component {
               returnKeyLabel: 'search',
               returnKeyType: 'search',
             }}
-            // placeholderTextColor="#fff"
-            // placeholderStyle={{ color: '#fff' }}
-            inputStyle={{ color: '#333' }}
-            iconColor="#333"
+            placeholderTextColor={colors.darkGray}
+            inputStyle={{ color: colors.darkGray }}
+            iconColor={colors.darkGray}
             style={{
-              backgroundColor: '#ddd',
+              backgroundColor: colors.separator,
               elevation: 0,
               borderRadius: 5,
               // borderWidth: 1,
@@ -64,33 +64,30 @@ export default class DiscoverScreen extends React.Component {
               // ...Platform.select({ web: { borderStyle: 'solid' } })
             }}
             placeholder="Search TheCommunity"
-            ref={component => (this._q = component)}
+            ref={inputRef}
             androidIcon="search"
-            // value={this.state.q}
-            // onChangeText={q => this.setState({ q })}
-            onSubmitEditing={this.handleSubmit}
+            // value={q}
+            // onChangeText={q => setState({ q })}
+            onSubmitEditing={handleSubmit}
           />
         </View>
       </View>
     )
   }
-  renderPage() {
-    const { navigation } = this.props
+  const renderPage = () => {
     return (
       <View style={[styles.container]}>
-        <Discover {...getNavigation(navigation)} q={this.state.qs} />
+        <Discover {...getNavigation(navigation)} q={qs} />
         {/* <View style={styles.elevation} /> */}
       </View>
     )
   }
-  render() {
-    return (
-      <View style={styles.container}>
-        {this.renderToolbar()}
-        {this.renderPage()}
-      </View>
-    )
-  }
+  return (
+    <View style={styles.container}>
+      {renderToolbar()}
+      {renderPage()}
+    </View>
+  )
 }
 
 // const styles2 = StyleSheet.create({

@@ -11,7 +11,7 @@ import styles from '../styles'
 export default class TextInput extends React.Component {
   state = {
     showSecureEntry: false, //this.props.secureTextEntry,
-    value: this.props.value
+    value: this.props.value,
   }
 
   focus() {
@@ -51,14 +51,13 @@ export default class TextInput extends React.Component {
         style={[
           {
             paddingRight: 20,
-            paddingLeft: 20
+            paddingLeft: 20,
           },
-          this.props.textStyle
+          this.props.textStyle,
         ]}
         // size={20}
         // onPress={this.focus.bind(this)}
-        color={this.props.iconColor || '#b2b2b2'}
-      >
+        color={this.props.iconColor || '#b2b2b2'}>
         {this.props.sideText}
       </Text>
     )
@@ -73,7 +72,7 @@ export default class TextInput extends React.Component {
         style={[
           styles.loginFieldIcon,
           { marginRight: 0 },
-          this.props.iconStyle
+          this.props.iconStyle,
         ]}
         size={20}
         color={this.state.showSecureEntry ? '#05f' : '#b2b2b2'}
@@ -106,6 +105,7 @@ export default class TextInput extends React.Component {
               this.props.secureTextEntry && !this.state.showSecureEntry
             }
             placeholder={this.props.placeholder}
+            placeholderTextColor={this.props.placeholderTextColor}
             onSubmitEditing={this.props.onSubmitEditing}
             {...this.props.inputProps}
           />
@@ -126,7 +126,7 @@ TextInput.defaultProps = {
   sideText: '',
   value: '',
   inputProps: {},
-  keyboardType: 'default'
+  keyboardType: 'default',
 }
 
 TextInput.propTypes = {

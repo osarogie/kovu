@@ -104,7 +104,7 @@ function PostListItem({
             style={[excerptStyles.groupInfo, excerptStyles.meta]}
             numberOfLines={1}>
             <Text> in </Text>
-            <Text style={{ color: colors.primary }}>
+            <Text style={{ color: colors.secondary }}>
               {discussion.group.name}
             </Text>
           </Text>
@@ -293,9 +293,8 @@ function PostListItem({
   )
 }
 
-export default createFragmentContainer(
-  PostListItem,
-  graphql`
+export default createFragmentContainer(PostListItem, {
+  discussion: graphql`
     fragment PostListItem_discussion on Discussion {
       id
       _id
@@ -342,4 +341,4 @@ export default createFragmentContainer(
       # ...DiscussionLike_discussion
     }
   `,
-)
+})

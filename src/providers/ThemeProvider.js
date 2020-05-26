@@ -5,13 +5,13 @@ import React, {
   useEffect,
   useMemo,
 } from 'react'
+import { useColorScheme } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage'
 import {
   DefaultTheme,
   DarkTheme,
   Provider as PaperProvider,
 } from 'react-native-paper'
-import { AppearanceProvider, useColorScheme } from 'react-native-appearance'
 
 const lightTheme = {
   ...DefaultTheme,
@@ -19,11 +19,13 @@ const lightTheme = {
   colors: {
     ...DefaultTheme.colors,
     background: '#fff',
-    primary: '#50f',
+    primary: '#05f',
+    secondary: '#05f',
     accent: '#50f',
     statusBar: '#fff',
     text: '#000',
     grayBackground: '#f9f9f9',
+    darkGray: '#333',
     separator: '#ddd',
   },
   statusBar: {
@@ -37,10 +39,12 @@ const darkTheme = {
   colors: {
     ...DarkTheme.colors,
     primary: '#fff',
+    secondary: '#fff',
     accent: '#05f',
     statusBar: '#000',
     text: '#fff',
     grayBackground: '#333',
+    darkGray: '#f9f9f9',
     separator: '#444',
   },
   statusBar: {
@@ -72,11 +76,9 @@ export function ThemeProvider({ children }) {
   )
 
   return (
-    <AppearanceProvider>
-      <ThemeContext.Provider value={value}>
-        <PaperProvider theme={value.theme}>{children}</PaperProvider>
-      </ThemeContext.Provider>
-    </AppearanceProvider>
+    <ThemeContext.Provider value={value}>
+      <PaperProvider theme={value.theme}>{children}</PaperProvider>
+    </ThemeContext.Provider>
   )
 }
 

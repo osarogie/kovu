@@ -1,13 +1,12 @@
 import Feather from 'react-native-vector-icons/Feather'
 import React from 'react'
-import { TouchableHighlight, StyleSheet } from 'react-native'
+import { TouchableHighlight, StyleSheet, View } from 'react-native'
 import Feed from '../renderers/Feed'
 import Avatar from '../components/Avatar'
 import Entypo from 'react-native-vector-icons/Entypo'
 import EvilIcon from 'react-native-vector-icons/EvilIcons'
 
 import getNavigation from '../helpers/getNavigation'
-import { View } from '@shoutem/ui/components/View'
 import { FAB, Title, useTheme } from 'react-native-paper'
 import { useAppNavigation } from '../navigation/navigationHelper'
 import { useViewer } from '../providers/ViewerProvider'
@@ -63,11 +62,6 @@ function TopBar() {
         <View style={{ flex: 1 }} />
         <View style={styles.avatarWrap}>{renderAvatar()}</View>
       </View>
-      <FAB
-        style={styles.fab}
-        onPress={openWrite}
-        icon={props => <Feather name="edit-3" {...props} />}
-      />
     </>
   )
 }
@@ -79,11 +73,23 @@ export default function FeedScreen({ navigation }) {
   //   ),
   // }
   const { colors } = useTheme()
+  const { openDiscussionForm, openViewerProfile } = useAppNavigation()
 
   return (
-    <View style={{ flex: 1, backgroundColor: colors.background }}>
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: colors.background,
+        position: 'relative',
+      }}>
       <TopBar />
       <Feed {...getNavigation(navigation)} />
+      <FAB
+        label="Write"
+        style={styles.fab}
+        onPress={openDiscussionForm}
+        icon={props => <Feather name="edit-3" {...props} />}
+      />
     </View>
   )
 }
