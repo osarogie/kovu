@@ -11,6 +11,7 @@ import type { ReaderFragment } from 'relay-runtime';
 type CommentListItem_comment$ref = any;
 import type { FragmentReference } from "relay-runtime";
 declare export opaque type Comments_commentList$ref: FragmentReference;
+declare export opaque type Comments_commentList$fragmentType: Comments_commentList$ref;
 export type Comments_commentList = {|
   +comments: ?{|
     +pageInfo: {|
@@ -26,25 +27,16 @@ export type Comments_commentList = {|
   |},
   +$refType: Comments_commentList$ref,
 |};
+export type Comments_commentList$data = Comments_commentList;
+export type Comments_commentList$key = {
+  +$data?: Comments_commentList$data,
+  +$fragmentRefs: Comments_commentList$ref,
+  ...
+};
 */
 
 
 const node/*: ReaderFragment*/ = {
-  "kind": "Fragment",
-  "name": "Comments_commentList",
-  "type": "Discussion",
-  "metadata": {
-    "connection": [
-      {
-        "count": "count",
-        "cursor": "cursor",
-        "direction": "forward",
-        "path": [
-          "comments"
-        ]
-      }
-    ]
-  },
   "argumentDefinitions": [
     {
       "kind": "RootArgument",
@@ -57,93 +49,109 @@ const node/*: ReaderFragment*/ = {
       "type": "String"
     }
   ],
+  "kind": "Fragment",
+  "metadata": {
+    "connection": [
+      {
+        "count": "count",
+        "cursor": "cursor",
+        "direction": "forward",
+        "path": [
+          "comments"
+        ]
+      }
+    ]
+  },
+  "name": "Comments_commentList",
   "selections": [
     {
-      "kind": "LinkedField",
       "alias": "comments",
-      "name": "__Comment_comments_connection",
-      "storageKey": null,
       "args": null,
       "concreteType": "CommentConnection",
+      "kind": "LinkedField",
+      "name": "__Comment_comments_connection",
       "plural": false,
       "selections": [
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "pageInfo",
-          "storageKey": null,
           "args": null,
           "concreteType": "PageInfo",
+          "kind": "LinkedField",
+          "name": "pageInfo",
           "plural": false,
           "selections": [
             {
-              "kind": "ScalarField",
               "alias": null,
-              "name": "hasNextPage",
               "args": null,
+              "kind": "ScalarField",
+              "name": "hasNextPage",
               "storageKey": null
             },
             {
-              "kind": "ScalarField",
               "alias": null,
-              "name": "endCursor",
               "args": null,
+              "kind": "ScalarField",
+              "name": "endCursor",
               "storageKey": null
             }
-          ]
+          ],
+          "storageKey": null
         },
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "edges",
-          "storageKey": null,
           "args": null,
           "concreteType": "CommentEdge",
+          "kind": "LinkedField",
+          "name": "edges",
           "plural": true,
           "selections": [
             {
-              "kind": "LinkedField",
               "alias": null,
-              "name": "node",
-              "storageKey": null,
               "args": null,
               "concreteType": "Comment",
+              "kind": "LinkedField",
+              "name": "node",
               "plural": false,
               "selections": [
                 {
-                  "kind": "ScalarField",
                   "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
                   "name": "id",
-                  "args": null,
                   "storageKey": null
                 },
                 {
-                  "kind": "FragmentSpread",
-                  "name": "CommentListItem_comment",
-                  "args": null
-                },
-                {
-                  "kind": "ScalarField",
                   "alias": null,
-                  "name": "__typename",
                   "args": null,
+                  "kind": "ScalarField",
+                  "name": "__typename",
                   "storageKey": null
+                },
+                {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "CommentListItem_comment"
                 }
-              ]
+              ],
+              "storageKey": null
             },
             {
-              "kind": "ScalarField",
               "alias": null,
-              "name": "cursor",
               "args": null,
+              "kind": "ScalarField",
+              "name": "cursor",
               "storageKey": null
             }
-          ]
+          ],
+          "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     }
-  ]
+  ],
+  "type": "Discussion"
 };
 // prettier-ignore
 (node/*: any*/).hash = '0648a2c8fa7fcc529c1d38cd7e615e42';
+
 module.exports = node;

@@ -11,6 +11,7 @@ import type { ReaderFragment } from 'relay-runtime';
 type UserListItem_user$ref = any;
 import type { FragmentReference } from "relay-runtime";
 declare export opaque type Discover_userList$ref: FragmentReference;
+declare export opaque type Discover_userList$fragmentType: Discover_userList$ref;
 export type Discover_userList = {|
   +users: ?{|
     +pageInfo: {|
@@ -26,25 +27,16 @@ export type Discover_userList = {|
   |},
   +$refType: Discover_userList$ref,
 |};
+export type Discover_userList$data = Discover_userList;
+export type Discover_userList$key = {
+  +$data?: Discover_userList$data,
+  +$fragmentRefs: Discover_userList$ref,
+  ...
+};
 */
 
 
 const node/*: ReaderFragment*/ = {
-  "kind": "Fragment",
-  "name": "Discover_userList",
-  "type": "Feed",
-  "metadata": {
-    "connection": [
-      {
-        "count": "count",
-        "cursor": "cursor",
-        "direction": "forward",
-        "path": [
-          "users"
-        ]
-      }
-    ]
-  },
   "argumentDefinitions": [
     {
       "kind": "RootArgument",
@@ -62,100 +54,115 @@ const node/*: ReaderFragment*/ = {
       "type": "String"
     }
   ],
+  "kind": "Fragment",
+  "metadata": {
+    "connection": [
+      {
+        "count": "count",
+        "cursor": "cursor",
+        "direction": "forward",
+        "path": [
+          "users"
+        ]
+      }
+    ]
+  },
+  "name": "Discover_userList",
   "selections": [
     {
-      "kind": "LinkedField",
       "alias": "users",
-      "name": "__Discover_users_connection",
-      "storageKey": null,
       "args": [
         {
           "kind": "Variable",
           "name": "q",
-          "variableName": "q",
-          "type": "String"
+          "variableName": "q"
         }
       ],
       "concreteType": "UserConnection",
+      "kind": "LinkedField",
+      "name": "__Discover_users_connection",
       "plural": false,
       "selections": [
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "pageInfo",
-          "storageKey": null,
           "args": null,
           "concreteType": "PageInfo",
+          "kind": "LinkedField",
+          "name": "pageInfo",
           "plural": false,
           "selections": [
             {
-              "kind": "ScalarField",
               "alias": null,
-              "name": "hasNextPage",
               "args": null,
+              "kind": "ScalarField",
+              "name": "hasNextPage",
               "storageKey": null
             },
             {
-              "kind": "ScalarField",
               "alias": null,
-              "name": "endCursor",
               "args": null,
+              "kind": "ScalarField",
+              "name": "endCursor",
               "storageKey": null
             }
-          ]
+          ],
+          "storageKey": null
         },
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "edges",
-          "storageKey": null,
           "args": null,
           "concreteType": "UserEdge",
+          "kind": "LinkedField",
+          "name": "edges",
           "plural": true,
           "selections": [
             {
-              "kind": "LinkedField",
               "alias": null,
-              "name": "node",
-              "storageKey": null,
               "args": null,
               "concreteType": "User",
+              "kind": "LinkedField",
+              "name": "node",
               "plural": false,
               "selections": [
                 {
-                  "kind": "ScalarField",
                   "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
                   "name": "id",
-                  "args": null,
                   "storageKey": null
                 },
                 {
-                  "kind": "FragmentSpread",
-                  "name": "UserListItem_user",
-                  "args": null
-                },
-                {
-                  "kind": "ScalarField",
                   "alias": null,
-                  "name": "__typename",
                   "args": null,
+                  "kind": "ScalarField",
+                  "name": "__typename",
                   "storageKey": null
+                },
+                {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "UserListItem_user"
                 }
-              ]
+              ],
+              "storageKey": null
             },
             {
-              "kind": "ScalarField",
               "alias": null,
-              "name": "cursor",
               "args": null,
+              "kind": "ScalarField",
+              "name": "cursor",
               "storageKey": null
             }
-          ]
+          ],
+          "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     }
-  ]
+  ],
+  "type": "Feed"
 };
 // prettier-ignore
 (node/*: any*/).hash = 'a15cec5ac6e90cb22810247edb44fb57';
+
 module.exports = node;

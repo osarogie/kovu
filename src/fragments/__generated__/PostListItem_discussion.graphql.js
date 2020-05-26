@@ -11,6 +11,7 @@ import type { ReaderFragment } from 'relay-runtime';
 type CommentListItem_comment$ref = any;
 import type { FragmentReference } from "relay-runtime";
 declare export opaque type PostListItem_discussion$ref: FragmentReference;
+declare export opaque type PostListItem_discussion$fragmentType: PostListItem_discussion$ref;
 export type PostListItem_discussion = {|
   +id: string,
   +_id: string,
@@ -55,35 +56,40 @@ export type PostListItem_discussion = {|
   |},
   +$refType: PostListItem_discussion$ref,
 |};
+export type PostListItem_discussion$data = PostListItem_discussion;
+export type PostListItem_discussion$key = {
+  +$data?: PostListItem_discussion$data,
+  +$fragmentRefs: PostListItem_discussion$ref,
+  ...
+};
 */
 
 
 const node/*: ReaderFragment*/ = (function(){
 var v0 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "id",
   "args": null,
+  "kind": "ScalarField",
+  "name": "id",
   "storageKey": null
 },
 v1 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "name",
   "args": null,
+  "kind": "ScalarField",
+  "name": "_id",
   "storageKey": null
 },
 v2 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "_id",
   "args": null,
+  "kind": "ScalarField",
+  "name": "name",
   "storageKey": null
 };
 return {
+  "argumentDefinitions": [],
   "kind": "Fragment",
-  "name": "PostListItem_discussion",
-  "type": "Discussion",
   "metadata": {
     "connection": [
       {
@@ -96,218 +102,219 @@ return {
       }
     ]
   },
-  "argumentDefinitions": [],
+  "name": "PostListItem_discussion",
   "selections": [
-    {
-      "kind": "ScalarField",
-      "alias": null,
-      "name": "comment_count",
-      "args": null,
-      "storageKey": null
-    },
     (v0/*: any*/),
     (v1/*: any*/),
+    (v2/*: any*/),
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "public_url",
       "args": null,
+      "kind": "ScalarField",
+      "name": "public_url",
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "excerpt",
       "args": [
         {
           "kind": "Literal",
           "name": "size",
-          "value": 20,
-          "type": "Int"
+          "value": 20
         }
       ],
+      "kind": "ScalarField",
+      "name": "excerpt",
       "storageKey": "excerpt(size:20)"
     },
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "word_count",
       "args": null,
+      "kind": "ScalarField",
+      "name": "word_count",
       "storageKey": null
     },
-    (v2/*: any*/),
     {
-      "kind": "LinkedField",
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "comment_count",
+      "storageKey": null
+    },
+    {
       "alias": "comments",
-      "name": "__PostListItem_comments_connection",
-      "storageKey": null,
       "args": null,
       "concreteType": "CommentConnection",
+      "kind": "LinkedField",
+      "name": "__PostListItem_comments_connection",
       "plural": false,
       "selections": [
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "pageInfo",
-          "storageKey": null,
           "args": null,
           "concreteType": "PageInfo",
+          "kind": "LinkedField",
+          "name": "pageInfo",
           "plural": false,
           "selections": [
             {
-              "kind": "ScalarField",
               "alias": null,
-              "name": "hasNextPage",
               "args": null,
+              "kind": "ScalarField",
+              "name": "hasNextPage",
               "storageKey": null
             },
             {
-              "kind": "ScalarField",
               "alias": null,
-              "name": "endCursor",
               "args": null,
+              "kind": "ScalarField",
+              "name": "endCursor",
               "storageKey": null
             }
-          ]
+          ],
+          "storageKey": null
         },
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "edges",
-          "storageKey": null,
           "args": null,
           "concreteType": "CommentEdge",
+          "kind": "LinkedField",
+          "name": "edges",
           "plural": true,
           "selections": [
             {
-              "kind": "LinkedField",
               "alias": null,
-              "name": "node",
-              "storageKey": null,
               "args": null,
               "concreteType": "Comment",
+              "kind": "LinkedField",
+              "name": "node",
               "plural": false,
               "selections": [
                 (v0/*: any*/),
                 {
-                  "kind": "ScalarField",
                   "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
                   "name": "excerpt",
-                  "args": null,
                   "storageKey": null
                 },
                 {
-                  "kind": "FragmentSpread",
-                  "name": "CommentListItem_comment",
-                  "args": null
-                },
-                {
-                  "kind": "ScalarField",
                   "alias": null,
-                  "name": "__typename",
                   "args": null,
+                  "kind": "ScalarField",
+                  "name": "__typename",
                   "storageKey": null
+                },
+                {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "CommentListItem_comment"
                 }
-              ]
+              ],
+              "storageKey": null
             },
             {
-              "kind": "ScalarField",
               "alias": null,
-              "name": "cursor",
               "args": null,
+              "kind": "ScalarField",
+              "name": "cursor",
               "storageKey": null
             }
-          ]
+          ],
+          "storageKey": null
         }
-      ]
-    },
-    {
-      "kind": "ScalarField",
-      "alias": null,
-      "name": "created_at",
-      "args": null,
+      ],
       "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "user",
-      "storageKey": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "created_at",
+      "storageKey": null
+    },
+    {
+      "alias": null,
       "args": null,
       "concreteType": "User",
+      "kind": "LinkedField",
+      "name": "user",
       "plural": false,
       "selections": [
         (v0/*: any*/),
-        (v2/*: any*/),
         (v1/*: any*/),
+        (v2/*: any*/),
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "username",
           "args": null,
+          "kind": "ScalarField",
+          "name": "username",
           "storageKey": null
         },
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "profile_picture_name",
           "args": null,
+          "kind": "ScalarField",
+          "name": "profile_picture_name",
           "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "group",
-      "storageKey": null,
       "args": null,
       "concreteType": "Group",
+      "kind": "LinkedField",
+      "name": "group",
       "plural": false,
       "selections": [
         (v0/*: any*/),
-        (v2/*: any*/),
         (v1/*: any*/),
+        (v2/*: any*/),
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "permalink",
           "args": null,
+          "kind": "ScalarField",
+          "name": "permalink",
           "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "feature_photo",
-      "storageKey": null,
       "args": null,
       "concreteType": "Photo",
+      "kind": "LinkedField",
+      "name": "feature_photo",
       "plural": false,
       "selections": [
         (v0/*: any*/),
-        (v2/*: any*/),
+        (v1/*: any*/),
         {
-          "kind": "ScalarField",
           "alias": null,
+          "args": null,
+          "kind": "ScalarField",
           "name": "height",
-          "args": null,
           "storageKey": null
         },
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "width",
           "args": null,
+          "kind": "ScalarField",
+          "name": "width",
           "storageKey": null
         },
-        (v1/*: any*/)
-      ]
+        (v2/*: any*/)
+      ],
+      "storageKey": null
     }
-  ]
+  ],
+  "type": "Discussion"
 };
 })();
 // prettier-ignore
 (node/*: any*/).hash = '540bf9d2b468cd8a0fb8b9456e0ecafe';
+
 module.exports = node;

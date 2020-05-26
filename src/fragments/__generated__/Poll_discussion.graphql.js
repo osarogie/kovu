@@ -10,6 +10,7 @@
 import type { ReaderFragment } from 'relay-runtime';
 import type { FragmentReference } from "relay-runtime";
 declare export opaque type Poll_discussion$ref: FragmentReference;
+declare export opaque type Poll_discussion$fragmentType: Poll_discussion$ref;
 export type Poll_discussion = {|
   +voting_has_ended: ?boolean,
   +viewer_has_voted: ?boolean,
@@ -31,21 +32,26 @@ export type Poll_discussion = {|
   |},
   +$refType: Poll_discussion$ref,
 |};
+export type Poll_discussion$data = Poll_discussion;
+export type Poll_discussion$key = {
+  +$data?: Poll_discussion$data,
+  +$fragmentRefs: Poll_discussion$ref,
+  ...
+};
 */
 
 
 const node/*: ReaderFragment*/ = (function(){
 var v0 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "vote_count",
   "args": null,
+  "kind": "ScalarField",
+  "name": "vote_count",
   "storageKey": null
 };
 return {
+  "argumentDefinitions": [],
   "kind": "Fragment",
-  "name": "Poll_discussion",
-  "type": "Discussion",
   "metadata": {
     "connection": [
       {
@@ -58,155 +64,157 @@ return {
       }
     ]
   },
-  "argumentDefinitions": [],
+  "name": "Poll_discussion",
   "selections": [
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "voting_has_ended",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "viewer_has_voted",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "hide_votes",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "has_poll",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "viewer_owns",
       "args": null,
+      "kind": "ScalarField",
+      "name": "viewer_owns",
       "storageKey": null
     },
     (v0/*: any*/),
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "poll_closes_at",
       "args": null,
+      "kind": "ScalarField",
+      "name": "poll_closes_at",
       "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": "poll",
-      "name": "__PostListItem_poll_connection",
-      "storageKey": null,
       "args": null,
       "concreteType": "DiscussionOptionConnection",
+      "kind": "LinkedField",
+      "name": "__PostListItem_poll_connection",
       "plural": false,
       "selections": [
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "edges",
-          "storageKey": null,
           "args": null,
           "concreteType": "DiscussionOptionEdge",
+          "kind": "LinkedField",
+          "name": "edges",
           "plural": true,
           "selections": [
             {
-              "kind": "LinkedField",
               "alias": null,
-              "name": "node",
-              "storageKey": null,
               "args": null,
               "concreteType": "DiscussionOption",
+              "kind": "LinkedField",
+              "name": "node",
               "plural": false,
               "selections": [
                 {
-                  "kind": "ScalarField",
                   "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
                   "name": "id",
-                  "args": null,
                   "storageKey": null
                 },
                 {
-                  "kind": "ScalarField",
                   "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
                   "name": "_id",
-                  "args": null,
                   "storageKey": null
                 },
                 {
-                  "kind": "ScalarField",
                   "alias": null,
-                  "name": "title",
                   "args": null,
+                  "kind": "ScalarField",
+                  "name": "title",
                   "storageKey": null
                 },
                 (v0/*: any*/),
                 {
-                  "kind": "ScalarField",
                   "alias": null,
-                  "name": "viewer_selected",
                   "args": null,
+                  "kind": "ScalarField",
+                  "name": "viewer_selected",
                   "storageKey": null
                 },
                 {
-                  "kind": "ScalarField",
                   "alias": null,
-                  "name": "__typename",
                   "args": null,
+                  "kind": "ScalarField",
+                  "name": "__typename",
                   "storageKey": null
                 }
-              ]
+              ],
+              "storageKey": null
             },
             {
-              "kind": "ScalarField",
               "alias": null,
-              "name": "cursor",
               "args": null,
+              "kind": "ScalarField",
+              "name": "cursor",
               "storageKey": null
             }
-          ]
+          ],
+          "storageKey": null
         },
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "pageInfo",
-          "storageKey": null,
           "args": null,
           "concreteType": "PageInfo",
+          "kind": "LinkedField",
+          "name": "pageInfo",
           "plural": false,
           "selections": [
             {
-              "kind": "ScalarField",
               "alias": null,
-              "name": "endCursor",
               "args": null,
+              "kind": "ScalarField",
+              "name": "endCursor",
               "storageKey": null
             },
             {
-              "kind": "ScalarField",
               "alias": null,
-              "name": "hasNextPage",
               "args": null,
+              "kind": "ScalarField",
+              "name": "hasNextPage",
               "storageKey": null
             }
-          ]
+          ],
+          "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     }
-  ]
+  ],
+  "type": "Discussion"
 };
 })();
 // prettier-ignore
 (node/*: any*/).hash = '4982a938cd944f5c6a774355986fec49';
+
 module.exports = node;

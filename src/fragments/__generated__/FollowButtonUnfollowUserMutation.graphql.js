@@ -1,6 +1,5 @@
 /**
  * @flow
- * @relayHash d8a2551d6fcc8ad1a8d4b5b4b671264b
  */
 
 /* eslint-disable */
@@ -53,124 +52,124 @@ fragment FollowButton_user on User {
 const node/*: ConcreteRequest*/ = (function(){
 var v0 = [
   {
+    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "input",
-    "type": "UnfollowUserInput!",
-    "defaultValue": null
+    "type": "UnfollowUserInput!"
   }
 ],
 v1 = [
   {
     "kind": "Variable",
     "name": "input",
-    "variableName": "input",
-    "type": "UnfollowUserInput!"
+    "variableName": "input"
   }
 ];
 return {
-  "kind": "Request",
   "fragment": {
-    "kind": "Fragment",
-    "name": "FollowButtonUnfollowUserMutation",
-    "type": "Mutation",
-    "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "FollowButtonUnfollowUserMutation",
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "unfollowUser",
-        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "UnfollowUserPayload",
+        "kind": "LinkedField",
+        "name": "unfollowUser",
         "plural": false,
         "selections": [
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "user",
-            "storageKey": null,
             "args": null,
             "concreteType": "User",
+            "kind": "LinkedField",
+            "name": "user",
             "plural": false,
             "selections": [
               {
+                "args": null,
                 "kind": "FragmentSpread",
-                "name": "FollowButton_user",
-                "args": null
+                "name": "FollowButton_user"
               }
-            ]
+            ],
+            "storageKey": null
           }
-        ]
+        ],
+        "storageKey": null
       }
-    ]
+    ],
+    "type": "Mutation"
   },
+  "kind": "Request",
   "operation": {
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "FollowButtonUnfollowUserMutation",
-    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "unfollowUser",
-        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "UnfollowUserPayload",
+        "kind": "LinkedField",
+        "name": "unfollowUser",
         "plural": false,
         "selections": [
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "user",
-            "storageKey": null,
             "args": null,
             "concreteType": "User",
+            "kind": "LinkedField",
+            "name": "user",
             "plural": false,
             "selections": [
               {
-                "kind": "ScalarField",
                 "alias": null,
+                "args": null,
+                "kind": "ScalarField",
                 "name": "_id",
-                "args": null,
                 "storageKey": null
               },
               {
-                "kind": "ScalarField",
                 "alias": null,
+                "args": null,
+                "kind": "ScalarField",
                 "name": "viewer_follows",
-                "args": null,
                 "storageKey": null
               },
               {
-                "kind": "ScalarField",
                 "alias": null,
+                "args": null,
+                "kind": "ScalarField",
                 "name": "follows_viewer",
-                "args": null,
                 "storageKey": null
               },
               {
-                "kind": "ScalarField",
                 "alias": null,
-                "name": "id",
                 "args": null,
+                "kind": "ScalarField",
+                "name": "id",
                 "storageKey": null
               }
-            ]
+            ],
+            "storageKey": null
           }
-        ]
+        ],
+        "storageKey": null
       }
     ]
   },
   "params": {
-    "operationKind": "mutation",
-    "name": "FollowButtonUnfollowUserMutation",
     "id": null,
-    "text": "mutation FollowButtonUnfollowUserMutation(\n  $input: UnfollowUserInput!\n) {\n  unfollowUser(input: $input) {\n    user {\n      ...FollowButton_user\n      id\n    }\n  }\n}\n\nfragment FollowButton_user on User {\n  _id\n  viewer_follows\n  follows_viewer\n}\n",
-    "metadata": {}
+    "metadata": {},
+    "name": "FollowButtonUnfollowUserMutation",
+    "operationKind": "mutation",
+    "text": "mutation FollowButtonUnfollowUserMutation(\n  $input: UnfollowUserInput!\n) {\n  unfollowUser(input: $input) {\n    user {\n      ...FollowButton_user\n      id\n    }\n  }\n}\n\nfragment FollowButton_user on User {\n  _id\n  viewer_follows\n  follows_viewer\n}\n"
   }
 };
 })();
 // prettier-ignore
 (node/*: any*/).hash = '3c6c2aec1c72980d864f8ddb41b64650';
+
 module.exports = node;

@@ -10,6 +10,7 @@
 import type { ReaderFragment } from 'relay-runtime';
 import type { FragmentReference } from "relay-runtime";
 declare export opaque type DiscussionLike_discussion$ref: FragmentReference;
+declare export opaque type DiscussionLike_discussion$fragmentType: DiscussionLike_discussion$ref;
 export type DiscussionLike_discussion = {|
   +id: string,
   +_id: string,
@@ -17,46 +18,53 @@ export type DiscussionLike_discussion = {|
   +like_count: ?number,
   +$refType: DiscussionLike_discussion$ref,
 |};
+export type DiscussionLike_discussion$data = DiscussionLike_discussion;
+export type DiscussionLike_discussion$key = {
+  +$data?: DiscussionLike_discussion$data,
+  +$fragmentRefs: DiscussionLike_discussion$ref,
+  ...
+};
 */
 
 
 const node/*: ReaderFragment*/ = {
-  "kind": "Fragment",
-  "name": "DiscussionLike_discussion",
-  "type": "Discussion",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "DiscussionLike_discussion",
   "selections": [
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "id",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "_id",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "viewer_does_like",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "like_count",
       "args": null,
+      "kind": "ScalarField",
+      "name": "like_count",
       "storageKey": null
     }
-  ]
+  ],
+  "type": "Discussion"
 };
 // prettier-ignore
 (node/*: any*/).hash = 'ed66a8a29c79c7691a1d57c940e63dc7';
+
 module.exports = node;

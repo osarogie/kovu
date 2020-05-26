@@ -11,6 +11,7 @@ import type { ReaderFragment } from 'relay-runtime';
 type GroupListItem_group$ref = any;
 import type { FragmentReference } from "relay-runtime";
 declare export opaque type Discover_groupList$ref: FragmentReference;
+declare export opaque type Discover_groupList$fragmentType: Discover_groupList$ref;
 export type Discover_groupList = {|
   +groups: ?{|
     +pageInfo: {|
@@ -26,25 +27,16 @@ export type Discover_groupList = {|
   |},
   +$refType: Discover_groupList$ref,
 |};
+export type Discover_groupList$data = Discover_groupList;
+export type Discover_groupList$key = {
+  +$data?: Discover_groupList$data,
+  +$fragmentRefs: Discover_groupList$ref,
+  ...
+};
 */
 
 
 const node/*: ReaderFragment*/ = {
-  "kind": "Fragment",
-  "name": "Discover_groupList",
-  "type": "Feed",
-  "metadata": {
-    "connection": [
-      {
-        "count": "count",
-        "cursor": "cursor",
-        "direction": "forward",
-        "path": [
-          "groups"
-        ]
-      }
-    ]
-  },
   "argumentDefinitions": [
     {
       "kind": "RootArgument",
@@ -62,100 +54,115 @@ const node/*: ReaderFragment*/ = {
       "type": "String"
     }
   ],
+  "kind": "Fragment",
+  "metadata": {
+    "connection": [
+      {
+        "count": "count",
+        "cursor": "cursor",
+        "direction": "forward",
+        "path": [
+          "groups"
+        ]
+      }
+    ]
+  },
+  "name": "Discover_groupList",
   "selections": [
     {
-      "kind": "LinkedField",
       "alias": "groups",
-      "name": "__Discover_groups_connection",
-      "storageKey": null,
       "args": [
         {
           "kind": "Variable",
           "name": "q",
-          "variableName": "q",
-          "type": "String"
+          "variableName": "q"
         }
       ],
       "concreteType": "GroupConnection",
+      "kind": "LinkedField",
+      "name": "__Discover_groups_connection",
       "plural": false,
       "selections": [
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "pageInfo",
-          "storageKey": null,
           "args": null,
           "concreteType": "PageInfo",
+          "kind": "LinkedField",
+          "name": "pageInfo",
           "plural": false,
           "selections": [
             {
-              "kind": "ScalarField",
               "alias": null,
-              "name": "hasNextPage",
               "args": null,
+              "kind": "ScalarField",
+              "name": "hasNextPage",
               "storageKey": null
             },
             {
-              "kind": "ScalarField",
               "alias": null,
-              "name": "endCursor",
               "args": null,
+              "kind": "ScalarField",
+              "name": "endCursor",
               "storageKey": null
             }
-          ]
+          ],
+          "storageKey": null
         },
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "edges",
-          "storageKey": null,
           "args": null,
           "concreteType": "GroupEdge",
+          "kind": "LinkedField",
+          "name": "edges",
           "plural": true,
           "selections": [
             {
-              "kind": "LinkedField",
               "alias": null,
-              "name": "node",
-              "storageKey": null,
               "args": null,
               "concreteType": "Group",
+              "kind": "LinkedField",
+              "name": "node",
               "plural": false,
               "selections": [
                 {
-                  "kind": "ScalarField",
                   "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
                   "name": "id",
-                  "args": null,
                   "storageKey": null
                 },
                 {
-                  "kind": "FragmentSpread",
-                  "name": "GroupListItem_group",
-                  "args": null
-                },
-                {
-                  "kind": "ScalarField",
                   "alias": null,
-                  "name": "__typename",
                   "args": null,
+                  "kind": "ScalarField",
+                  "name": "__typename",
                   "storageKey": null
+                },
+                {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "GroupListItem_group"
                 }
-              ]
+              ],
+              "storageKey": null
             },
             {
-              "kind": "ScalarField",
               "alias": null,
-              "name": "cursor",
               "args": null,
+              "kind": "ScalarField",
+              "name": "cursor",
               "storageKey": null
             }
-          ]
+          ],
+          "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     }
-  ]
+  ],
+  "type": "Feed"
 };
 // prettier-ignore
 (node/*: any*/).hash = 'ba0c823a1d40460c3a9bbcd4b2634627';
+
 module.exports = node;

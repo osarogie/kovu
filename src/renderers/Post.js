@@ -28,6 +28,9 @@ import { useViewer } from '../providers/ViewerProvider'
 const { width } = Dimensions.get('window')
 
 function Post(props) {
+  const { discussion, openLogin } = props
+  const { feature_photo, comment_count } = discussion
+
   const { colors } = useTheme()
   const current_user = useViewer()
   const clickableProps = {
@@ -46,15 +49,14 @@ function Post(props) {
 
   const openWrite = () =>
     props.openWrite({
-      id: props.data.discussion._id,
+      id: discussion._id,
       editing_mode: true,
     })
-  const openComments = () => props.openComments(props.data.discussion)
-  const openProfile = () => props.openProfile(props.data.discussion.user)
-  const openCulture = () => props.openCulture(props.data.discussion.group)
+  const openComments = () => props.openComments(discussion)
+  const openProfile = () => props.openProfile(discussion.user)
+  const openCulture = () => props.openCulture(discussion.group)
 
   const renderFeaturePhoto = () => {
-    const { feature_photo } = props.data.discussion
     if (feature_photo) {
       const height = (feature_photo.height / feature_photo.width) * width
 
@@ -84,9 +86,6 @@ function Post(props) {
   }
 
   const renderGroupInfo = () => {
-    const {
-      data: { discussion },
-    } = props
     if (discussion.group) {
       return (
         <TouchableOpacity {...clickableProps} onPress={openCulture}>
@@ -112,10 +111,6 @@ function Post(props) {
   }
 
   const renderUserInfo = () => {
-    const {
-      data: { discussion },
-    } = props
-    // console.log(props)
     return (
       <TouchableOpacity {...clickableProps} onPress={openProfile}>
         <View
@@ -126,7 +121,15 @@ function Post(props) {
             marginLeft: 20,
             marginRight: 20,
           }}>
-          <View style={{ marginRight: 20, flex: 1 }}>
+          <Avatar
+            width={40}
+            rounded
+            source={discussion.user}
+            title={discussion.user.name}
+            onPress={openProfile}
+            activeOpacity={0.7}
+          />
+          <View style={{ marginStart: 20, flex: 1 }}>
             <Text style={{ fontWeight: 'bold', color: colors.text }}>
               {discussion.user.name}
             </Text>
@@ -139,23 +142,12 @@ function Post(props) {
               {getTimeAgo(discussion.created_at)}
             </Text>
           </View>
-          <Avatar
-            width={40}
-            rounded
-            source={discussion.user}
-            title={discussion.user.name}
-            onPress={openProfile}
-            activeOpacity={0.7}
-          />
         </View>
       </TouchableOpacity>
     )
   }
 
   const renderEdit = () => {
-    const {
-      data: { discussion },
-    } = props
     if (current_user._id === discussion.user._id) {
       return (
         <TouchableOpacity {...clickableProps} onPress={openWrite}>
@@ -168,7 +160,6 @@ function Post(props) {
   }
 
   const renderToolbar = () => {
-    // const { discussion } = props.route.params
     const title = 'Story'
     // const subtitle =
     //   (discussion && { subtitle: `by ${discussion.user.name}` }) || {}
@@ -196,10 +187,6 @@ function Post(props) {
   }
 
   const _onActionSelected = position => {
-    const {
-      data: { discussion },
-    } = props
-
     switch (position) {
       case 0:
         const message = `Read "${discussion.name}" on TheCommunity - ${
@@ -216,11 +203,6 @@ function Post(props) {
   }
 
   const renderControls = () => {
-    const {
-      data: { discussion },
-      openLogin,
-    } = props
-    const { comment_count } = discussion
     const comment_count_ = getCommentCount(comment_count)
 
     return (
@@ -253,7 +235,6 @@ function Post(props) {
   }
 
   const renderCommentBox = () => {
-    // const discussion = props.data.discussion
     return (
       <TouchableHighlight
         {...clickableProps}
@@ -291,8 +272,6 @@ function Post(props) {
     )
   }
 
-  const { discussion } = props.data
-
   return (
     <ScrollView>
       <View>
@@ -328,55 +307,59 @@ function Post(props) {
 }
 
 // PostFragmentContainer
-const PostFragmentContainer = createFragmentContainer(
-  Post,
-  graphql`
-    fragment Post on Query {
-      discussion(id: $id) {
+const PostFragmentContainer = createFragmentContainer(Post, {
+  discussion: graphql`
+    fragment Post_discussion on Discussion {
+      id
+      _id
+      name
+      body
+      created_at
+      ...DiscussionLike_discussion
+      comment_count
+      feature_photo {
+        url
+        name
+        height
+        width
+      }
+      public_url
+      group {
+        _id
+        id
+        name
+        permalink
+      }
+      user {
         id
         _id
+        username
         name
-        body
-        created_at
-        ...DiscussionLike_discussion
-        comment_count
-        feature_photo {
-          url
-          height
-          width
-        }
-        public_url
-        group {
-          _id
-          id
-          name
-          permalink
-        }
-        user {
-          id
-          _id
-          username
-          name
-          profile_picture_name
-          bio
-        }
-        parsed_body
+        profile_picture_name
+        bio
       }
+      parsed_body
     }
   `,
-)
+})
 
 export default ({ id, ...props }) => {
   return (
     <QueryRendererProxy
       query={graphql`
         query PostQuery($id: ID!) {
-          ...Post
+          discussion(id: $id) {
+            ...Post_discussion
+          }
         }
       `}
       variables={{ id }}
       render={data => (
-        <PostFragmentContainer id={id} data={data.props} {...props} />
+        <PostFragmentContainer
+          id={id}
+          discussion={data.props.discussion}
+          {...props}
+        />
       )}
     />
   )

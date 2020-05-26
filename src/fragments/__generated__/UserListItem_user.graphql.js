@@ -11,6 +11,7 @@ import type { ReaderFragment } from 'relay-runtime';
 type FollowButton_user$ref = any;
 import type { FragmentReference } from "relay-runtime";
 declare export opaque type UserListItem_user$ref: FragmentReference;
+declare export opaque type UserListItem_user$fragmentType: UserListItem_user$ref;
 export type UserListItem_user = {|
   +id: string,
   +_id: string,
@@ -21,65 +22,72 @@ export type UserListItem_user = {|
   +$fragmentRefs: FollowButton_user$ref,
   +$refType: UserListItem_user$ref,
 |};
+export type UserListItem_user$data = UserListItem_user;
+export type UserListItem_user$key = {
+  +$data?: UserListItem_user$data,
+  +$fragmentRefs: UserListItem_user$ref,
+  ...
+};
 */
 
 
 const node/*: ReaderFragment*/ = {
-  "kind": "Fragment",
-  "name": "UserListItem_user",
-  "type": "User",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "UserListItem_user",
   "selections": [
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "id",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "_id",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "name",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "username",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "bio",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "profile_picture_name",
       "args": null,
+      "kind": "ScalarField",
+      "name": "profile_picture_name",
       "storageKey": null
     },
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "FollowButton_user",
-      "args": null
+      "name": "FollowButton_user"
     }
-  ]
+  ],
+  "type": "User"
 };
 // prettier-ignore
 (node/*: any*/).hash = '4f91409e255c6a7e5c56527a07269ad2';
+
 module.exports = node;

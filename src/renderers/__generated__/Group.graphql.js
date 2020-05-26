@@ -11,6 +11,7 @@ import type { ReaderFragment } from 'relay-runtime';
 type JoinButton_group$ref = any;
 import type { FragmentReference } from "relay-runtime";
 declare export opaque type Group$ref: FragmentReference;
+declare export opaque type Group$fragmentType: Group$ref;
 export type Group = {|
   +id: string,
   +_id: string,
@@ -33,124 +34,131 @@ export type Group = {|
   +$fragmentRefs: JoinButton_group$ref,
   +$refType: Group$ref,
 |};
+export type Group$data = Group;
+export type Group$key = {
+  +$data?: Group$data,
+  +$fragmentRefs: Group$ref,
+  ...
+};
 */
 
 
 const node/*: ReaderFragment*/ = (function(){
 var v0 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "id",
   "args": null,
+  "kind": "ScalarField",
+  "name": "id",
   "storageKey": null
 },
 v1 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "_id",
   "args": null,
+  "kind": "ScalarField",
+  "name": "_id",
   "storageKey": null
 },
 v2 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "name",
   "args": null,
+  "kind": "ScalarField",
+  "name": "name",
   "storageKey": null
 };
 return {
-  "kind": "Fragment",
-  "name": "Group",
-  "type": "Group",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "Group",
   "selections": [
     (v0/*: any*/),
     (v1/*: any*/),
     (v2/*: any*/),
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "permalink",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "body",
-      "args": null,
       "storageKey": null
     },
     {
+      "alias": null,
+      "args": null,
       "kind": "ScalarField",
-      "alias": null,
       "name": "viewer_is_a_member",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "FragmentSpread",
-      "name": "JoinButton_group",
-      "args": null
-    },
-    {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "header_image",
-      "storageKey": null,
       "args": null,
       "concreteType": "Photo",
+      "kind": "LinkedField",
+      "name": "header_image",
       "plural": false,
       "selections": [
         (v2/*: any*/),
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "height",
           "args": null,
+          "kind": "ScalarField",
+          "name": "height",
           "storageKey": null
         },
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "width",
           "args": null,
+          "kind": "ScalarField",
+          "name": "width",
           "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "user",
-      "storageKey": null,
       "args": null,
       "concreteType": "User",
+      "kind": "LinkedField",
+      "name": "user",
       "plural": false,
       "selections": [
         (v0/*: any*/),
         (v1/*: any*/),
         (v2/*: any*/),
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "username",
           "args": null,
+          "kind": "ScalarField",
+          "name": "username",
           "storageKey": null
         },
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "profile_picture_name",
           "args": null,
+          "kind": "ScalarField",
+          "name": "profile_picture_name",
           "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "JoinButton_group"
     }
-  ]
+  ],
+  "type": "Group"
 };
 })();
 // prettier-ignore
 (node/*: any*/).hash = '827e4004c8f3f43d8ee302ef672e5322';
+
 module.exports = node;

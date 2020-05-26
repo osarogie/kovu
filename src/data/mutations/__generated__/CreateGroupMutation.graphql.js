@@ -1,6 +1,5 @@
 /**
  * @flow
- * @relayHash 96e7598152a2b5e797ccd5f15ae90a2b
  */
 
 /* eslint-disable */
@@ -65,155 +64,155 @@ fragment GroupListItem_group on Group {
 const node/*: ConcreteRequest*/ = (function(){
 var v0 = [
   {
+    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "input",
-    "type": "CreateGroupInput!",
-    "defaultValue": null
+    "type": "CreateGroupInput!"
   }
 ],
 v1 = [
   {
     "kind": "Variable",
     "name": "input",
-    "variableName": "input",
-    "type": "CreateGroupInput!"
+    "variableName": "input"
   }
 ],
 v2 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "success",
   "args": null,
+  "kind": "ScalarField",
+  "name": "success",
   "storageKey": null
 },
 v3 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "id",
   "args": null,
+  "kind": "ScalarField",
+  "name": "id",
   "storageKey": null
 },
 v4 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "name",
   "args": null,
+  "kind": "ScalarField",
+  "name": "name",
   "storageKey": null
 };
 return {
-  "kind": "Request",
   "fragment": {
-    "kind": "Fragment",
-    "name": "CreateGroupMutation",
-    "type": "Mutation",
-    "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "CreateGroupMutation",
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "createGroup",
-        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "CreateGroupPayload",
+        "kind": "LinkedField",
+        "name": "createGroup",
         "plural": false,
         "selections": [
           (v2/*: any*/),
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "group",
-            "storageKey": null,
             "args": null,
             "concreteType": "Group",
+            "kind": "LinkedField",
+            "name": "group",
             "plural": false,
             "selections": [
               {
+                "args": null,
                 "kind": "FragmentSpread",
-                "name": "GroupListItem_group",
-                "args": null
+                "name": "GroupListItem_group"
               }
-            ]
+            ],
+            "storageKey": null
           }
-        ]
+        ],
+        "storageKey": null
       }
-    ]
+    ],
+    "type": "Mutation"
   },
+  "kind": "Request",
   "operation": {
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "CreateGroupMutation",
-    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "createGroup",
-        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "CreateGroupPayload",
+        "kind": "LinkedField",
+        "name": "createGroup",
         "plural": false,
         "selections": [
           (v2/*: any*/),
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "group",
-            "storageKey": null,
             "args": null,
             "concreteType": "Group",
+            "kind": "LinkedField",
+            "name": "group",
             "plural": false,
             "selections": [
               (v3/*: any*/),
               {
-                "kind": "ScalarField",
                 "alias": null,
-                "name": "_id",
                 "args": null,
+                "kind": "ScalarField",
+                "name": "_id",
                 "storageKey": null
               },
               (v4/*: any*/),
               {
-                "kind": "ScalarField",
                 "alias": null,
+                "args": null,
+                "kind": "ScalarField",
                 "name": "permalink",
-                "args": null,
                 "storageKey": null
               },
               {
+                "alias": null,
+                "args": null,
                 "kind": "ScalarField",
-                "alias": null,
                 "name": "body",
-                "args": null,
                 "storageKey": null
               },
               {
-                "kind": "LinkedField",
                 "alias": null,
-                "name": "header_image",
-                "storageKey": null,
                 "args": null,
                 "concreteType": "Photo",
+                "kind": "LinkedField",
+                "name": "header_image",
                 "plural": false,
                 "selections": [
                   (v4/*: any*/),
                   (v3/*: any*/)
-                ]
+                ],
+                "storageKey": null
               }
-            ]
+            ],
+            "storageKey": null
           }
-        ]
+        ],
+        "storageKey": null
       }
     ]
   },
   "params": {
-    "operationKind": "mutation",
-    "name": "CreateGroupMutation",
     "id": null,
-    "text": "mutation CreateGroupMutation(\n  $input: CreateGroupInput!\n) {\n  createGroup(input: $input) {\n    success\n    group {\n      ...GroupListItem_group\n      id\n    }\n  }\n}\n\nfragment GroupListItem_group on Group {\n  id\n  _id\n  name\n  permalink\n  body\n  header_image {\n    name\n    id\n  }\n}\n",
-    "metadata": {}
+    "metadata": {},
+    "name": "CreateGroupMutation",
+    "operationKind": "mutation",
+    "text": "mutation CreateGroupMutation(\n  $input: CreateGroupInput!\n) {\n  createGroup(input: $input) {\n    success\n    group {\n      ...GroupListItem_group\n      id\n    }\n  }\n}\n\nfragment GroupListItem_group on Group {\n  id\n  _id\n  name\n  permalink\n  body\n  header_image {\n    name\n    id\n  }\n}\n"
   }
 };
 })();
 // prettier-ignore
 (node/*: any*/).hash = 'c6b3b4f376e689aa5c2c8a9e026db017';
+
 module.exports = node;

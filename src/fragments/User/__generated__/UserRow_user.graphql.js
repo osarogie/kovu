@@ -11,6 +11,7 @@ import type { ReaderFragment } from 'relay-runtime';
 type FollowButton_user$ref = any;
 import type { FragmentReference } from "relay-runtime";
 declare export opaque type UserRow_user$ref: FragmentReference;
+declare export opaque type UserRow_user$fragmentType: UserRow_user$ref;
 export type UserRow_user = {|
   +id: string,
   +_id: string,
@@ -21,65 +22,72 @@ export type UserRow_user = {|
   +$fragmentRefs: FollowButton_user$ref,
   +$refType: UserRow_user$ref,
 |};
+export type UserRow_user$data = UserRow_user;
+export type UserRow_user$key = {
+  +$data?: UserRow_user$data,
+  +$fragmentRefs: UserRow_user$ref,
+  ...
+};
 */
 
 
 const node/*: ReaderFragment*/ = {
-  "kind": "Fragment",
-  "name": "UserRow_user",
-  "type": "User",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "UserRow_user",
   "selections": [
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "id",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "_id",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "name",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "username",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "bio",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "profile_picture_name",
       "args": null,
+      "kind": "ScalarField",
+      "name": "profile_picture_name",
       "storageKey": null
     },
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "FollowButton_user",
-      "args": null
+      "name": "FollowButton_user"
     }
-  ]
+  ],
+  "type": "User"
 };
 // prettier-ignore
 (node/*: any*/).hash = '51e28c8cf52e47a536b33e8f2e222eb9';
+
 module.exports = node;

@@ -1,6 +1,5 @@
 /**
  * @flow
- * @relayHash 9eb900c41e7cd0be0a8f44e061683e36
  */
 
 /* eslint-disable */
@@ -43,64 +42,64 @@ mutation ChangePasswordScreenMutation(
 const node/*: ConcreteRequest*/ = (function(){
 var v0 = [
   {
+    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "input",
-    "type": "ChangePasswordInput!",
-    "defaultValue": null
+    "type": "ChangePasswordInput!"
   }
 ],
 v1 = [
   {
-    "kind": "LinkedField",
     "alias": null,
-    "name": "changePassword",
-    "storageKey": null,
     "args": [
       {
         "kind": "Variable",
         "name": "input",
-        "variableName": "input",
-        "type": "ChangePasswordInput!"
+        "variableName": "input"
       }
     ],
     "concreteType": "ChangePasswordPayload",
+    "kind": "LinkedField",
+    "name": "changePassword",
     "plural": false,
     "selections": [
       {
-        "kind": "ScalarField",
         "alias": null,
-        "name": "success",
         "args": null,
+        "kind": "ScalarField",
+        "name": "success",
         "storageKey": null
       }
-    ]
+    ],
+    "storageKey": null
   }
 ];
 return {
-  "kind": "Request",
   "fragment": {
-    "kind": "Fragment",
-    "name": "ChangePasswordScreenMutation",
-    "type": "Mutation",
-    "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
-    "selections": (v1/*: any*/)
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "ChangePasswordScreenMutation",
+    "selections": (v1/*: any*/),
+    "type": "Mutation"
   },
+  "kind": "Request",
   "operation": {
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "ChangePasswordScreenMutation",
-    "argumentDefinitions": (v0/*: any*/),
     "selections": (v1/*: any*/)
   },
   "params": {
-    "operationKind": "mutation",
-    "name": "ChangePasswordScreenMutation",
     "id": null,
-    "text": "mutation ChangePasswordScreenMutation(\n  $input: ChangePasswordInput!\n) {\n  changePassword(input: $input) {\n    success\n  }\n}\n",
-    "metadata": {}
+    "metadata": {},
+    "name": "ChangePasswordScreenMutation",
+    "operationKind": "mutation",
+    "text": "mutation ChangePasswordScreenMutation(\n  $input: ChangePasswordInput!\n) {\n  changePassword(input: $input) {\n    success\n  }\n}\n"
   }
 };
 })();
 // prettier-ignore
 (node/*: any*/).hash = '4648e9042b5367f26a73cc83a596b469';
+
 module.exports = node;

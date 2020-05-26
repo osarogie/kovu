@@ -10,6 +10,7 @@
 import type { ReaderFragment } from 'relay-runtime';
 import type { FragmentReference } from "relay-runtime";
 declare export opaque type CommentListItem_comment$ref: FragmentReference;
+declare export opaque type CommentListItem_comment$fragmentType: CommentListItem_comment$ref;
 export type CommentListItem_comment = {|
   +id: string,
   +_id: string,
@@ -30,111 +31,118 @@ export type CommentListItem_comment = {|
   |},
   +$refType: CommentListItem_comment$ref,
 |};
+export type CommentListItem_comment$data = CommentListItem_comment;
+export type CommentListItem_comment$key = {
+  +$data?: CommentListItem_comment$data,
+  +$fragmentRefs: CommentListItem_comment$ref,
+  ...
+};
 */
 
 
 const node/*: ReaderFragment*/ = (function(){
 var v0 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "id",
   "args": null,
+  "kind": "ScalarField",
+  "name": "id",
   "storageKey": null
 },
 v1 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "_id",
   "args": null,
+  "kind": "ScalarField",
+  "name": "_id",
   "storageKey": null
 };
 return {
-  "kind": "Fragment",
-  "name": "CommentListItem_comment",
-  "type": "Comment",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "CommentListItem_comment",
   "selections": [
     (v0/*: any*/),
     (v1/*: any*/),
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "body",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "created_at",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "discussion_id",
-      "args": null,
       "storageKey": null
     },
     {
+      "alias": null,
+      "args": null,
       "kind": "ScalarField",
-      "alias": null,
       "name": "excerpt",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "discussion",
-      "storageKey": null,
       "args": null,
       "concreteType": "Discussion",
+      "kind": "LinkedField",
+      "name": "discussion",
       "plural": false,
       "selections": [
         (v0/*: any*/),
         (v1/*: any*/)
-      ]
+      ],
+      "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "user",
-      "storageKey": null,
       "args": null,
       "concreteType": "User",
+      "kind": "LinkedField",
+      "name": "user",
       "plural": false,
       "selections": [
         (v0/*: any*/),
         (v1/*: any*/),
         {
-          "kind": "ScalarField",
           "alias": null,
+          "args": null,
+          "kind": "ScalarField",
           "name": "name",
-          "args": null,
           "storageKey": null
         },
         {
-          "kind": "ScalarField",
           "alias": null,
+          "args": null,
+          "kind": "ScalarField",
           "name": "username",
-          "args": null,
           "storageKey": null
         },
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "profile_picture_name",
           "args": null,
+          "kind": "ScalarField",
+          "name": "profile_picture_name",
           "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     }
-  ]
+  ],
+  "type": "Comment"
 };
 })();
 // prettier-ignore
 (node/*: any*/).hash = 'c1d4415748214ad057fe511589cd8f2a';
+
 module.exports = node;

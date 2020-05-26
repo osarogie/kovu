@@ -10,6 +10,7 @@
 import type { ReaderFragment } from 'relay-runtime';
 import type { FragmentReference } from "relay-runtime";
 declare export opaque type PostThumb_discussion$ref: FragmentReference;
+declare export opaque type PostThumb_discussion$fragmentType: PostThumb_discussion$ref;
 export type PostThumb_discussion = {|
   +id: string,
   +_id: string,
@@ -32,121 +33,127 @@ export type PostThumb_discussion = {|
   |},
   +$refType: PostThumb_discussion$ref,
 |};
+export type PostThumb_discussion$data = PostThumb_discussion;
+export type PostThumb_discussion$key = {
+  +$data?: PostThumb_discussion$data,
+  +$fragmentRefs: PostThumb_discussion$ref,
+  ...
+};
 */
 
 
 const node/*: ReaderFragment*/ = (function(){
 var v0 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "id",
   "args": null,
+  "kind": "ScalarField",
+  "name": "id",
   "storageKey": null
 },
 v1 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "_id",
   "args": null,
+  "kind": "ScalarField",
+  "name": "_id",
   "storageKey": null
 },
 v2 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "name",
   "args": null,
+  "kind": "ScalarField",
+  "name": "name",
   "storageKey": null
 };
 return {
-  "kind": "Fragment",
-  "name": "PostThumb_discussion",
-  "type": "Discussion",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "PostThumb_discussion",
   "selections": [
     (v0/*: any*/),
     (v1/*: any*/),
     (v2/*: any*/),
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "excerpt",
       "args": [
         {
           "kind": "Literal",
           "name": "size",
-          "value": 10,
-          "type": "Int"
+          "value": 10
         }
       ],
+      "kind": "ScalarField",
+      "name": "excerpt",
       "storageKey": "excerpt(size:10)"
     },
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "word_count",
-      "args": null,
       "storageKey": null
     },
     {
+      "alias": null,
+      "args": null,
       "kind": "ScalarField",
-      "alias": null,
       "name": "created_at",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "user",
-      "storageKey": null,
       "args": null,
       "concreteType": "User",
+      "kind": "LinkedField",
+      "name": "user",
       "plural": false,
       "selections": [
         (v0/*: any*/),
         (v1/*: any*/),
         (v2/*: any*/),
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "username",
           "args": null,
+          "kind": "ScalarField",
+          "name": "username",
           "storageKey": null
         },
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "profile_picture_name",
           "args": null,
+          "kind": "ScalarField",
+          "name": "profile_picture_name",
           "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "group",
-      "storageKey": null,
       "args": null,
       "concreteType": "Group",
+      "kind": "LinkedField",
+      "name": "group",
       "plural": false,
       "selections": [
         (v0/*: any*/),
         (v1/*: any*/),
         (v2/*: any*/),
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "permalink",
           "args": null,
+          "kind": "ScalarField",
+          "name": "permalink",
           "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     }
-  ]
+  ],
+  "type": "Discussion"
 };
 })();
 // prettier-ignore
 (node/*: any*/).hash = '47ebe39979eeed60a63f0089a8628d0a';
+
 module.exports = node;

@@ -10,43 +10,44 @@
 import type { ReaderFragment } from 'relay-runtime';
 type DiscussionLike_discussion$ref = any;
 import type { FragmentReference } from "relay-runtime";
-declare export opaque type PostRow_discussion$ref: FragmentReference;
-declare export opaque type PostRow_discussion$fragmentType: PostRow_discussion$ref;
-export type PostRow_discussion = {|
+declare export opaque type Post_discussion$ref: FragmentReference;
+declare export opaque type Post_discussion$fragmentType: Post_discussion$ref;
+export type Post_discussion = {|
   +id: string,
   +_id: string,
   +name: ?string,
-  +excerpt: ?string,
-  +word_count: ?number,
-  +comment_count: ?number,
+  +body: ?string,
   +created_at: ?number,
-  +user: ?{|
-    +id: string,
-    +_id: string,
+  +comment_count: ?number,
+  +feature_photo: ?{|
+    +url: ?string,
     +name: ?string,
-    +username: ?string,
-    +profile_picture_name: ?string,
+    +height: ?number,
+    +width: ?number,
   |},
+  +public_url: ?string,
   +group: ?{|
-    +id: string,
     +_id: string,
+    +id: string,
     +name: ?string,
     +permalink: ?string,
   |},
-  +feature_photo: ?{|
+  +user: ?{|
     +id: string,
     +_id: string,
-    +height: ?number,
-    +width: ?number,
+    +username: ?string,
     +name: ?string,
+    +profile_picture_name: ?string,
+    +bio: ?string,
   |},
+  +parsed_body: ?string,
   +$fragmentRefs: DiscussionLike_discussion$ref,
-  +$refType: PostRow_discussion$ref,
+  +$refType: Post_discussion$ref,
 |};
-export type PostRow_discussion$data = PostRow_discussion;
-export type PostRow_discussion$key = {
-  +$data?: PostRow_discussion$data,
-  +$fragmentRefs: PostRow_discussion$ref,
+export type Post_discussion$data = Post_discussion;
+export type Post_discussion$key = {
+  +$data?: Post_discussion$data,
+  +$fragmentRefs: Post_discussion$ref,
   ...
 };
 */
@@ -78,36 +79,16 @@ return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "PostRow_discussion",
+  "name": "Post_discussion",
   "selections": [
     (v0/*: any*/),
     (v1/*: any*/),
     (v2/*: any*/),
     {
       "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "size",
-          "value": 20
-        }
-      ],
-      "kind": "ScalarField",
-      "name": "excerpt",
-      "storageKey": "excerpt(size:20)"
-    },
-    {
-      "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "word_count",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "comment_count",
+      "name": "body",
       "storageKey": null
     },
     {
@@ -120,29 +101,48 @@ return {
     {
       "alias": null,
       "args": null,
-      "concreteType": "User",
+      "kind": "ScalarField",
+      "name": "comment_count",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Photo",
       "kind": "LinkedField",
-      "name": "user",
+      "name": "feature_photo",
       "plural": false,
       "selections": [
-        (v0/*: any*/),
-        (v1/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "url",
+          "storageKey": null
+        },
         (v2/*: any*/),
         {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "username",
+          "name": "height",
           "storageKey": null
         },
         {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "profile_picture_name",
+          "name": "width",
           "storageKey": null
         }
       ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "public_url",
       "storageKey": null
     },
     {
@@ -153,8 +153,8 @@ return {
       "name": "group",
       "plural": false,
       "selections": [
-        (v0/*: any*/),
         (v1/*: any*/),
+        (v0/*: any*/),
         (v2/*: any*/),
         {
           "alias": null,
@@ -169,9 +169,9 @@ return {
     {
       "alias": null,
       "args": null,
-      "concreteType": "Photo",
+      "concreteType": "User",
       "kind": "LinkedField",
-      "name": "feature_photo",
+      "name": "user",
       "plural": false,
       "selections": [
         (v0/*: any*/),
@@ -180,18 +180,32 @@ return {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "height",
+          "name": "username",
+          "storageKey": null
+        },
+        (v2/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "profile_picture_name",
           "storageKey": null
         },
         {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "width",
+          "name": "bio",
           "storageKey": null
-        },
-        (v2/*: any*/)
+        }
       ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "parsed_body",
       "storageKey": null
     },
     {
@@ -204,6 +218,6 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '42c66a3a1c06a4a6afb03123adeed092';
+(node/*: any*/).hash = '88d16fc0eb6d25527ba724d349575328';
 
 module.exports = node;

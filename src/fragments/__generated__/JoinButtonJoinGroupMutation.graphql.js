@@ -1,6 +1,5 @@
 /**
  * @flow
- * @relayHash 191f18454a7c3086985f56f09e14d720
  */
 
 /* eslint-disable */
@@ -53,124 +52,124 @@ fragment JoinButton_group on Group {
 const node/*: ConcreteRequest*/ = (function(){
 var v0 = [
   {
+    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "input",
-    "type": "JoinGroupInput!",
-    "defaultValue": null
+    "type": "JoinGroupInput!"
   }
 ],
 v1 = [
   {
     "kind": "Variable",
     "name": "input",
-    "variableName": "input",
-    "type": "JoinGroupInput!"
+    "variableName": "input"
   }
 ];
 return {
-  "kind": "Request",
   "fragment": {
-    "kind": "Fragment",
-    "name": "JoinButtonJoinGroupMutation",
-    "type": "Mutation",
-    "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "JoinButtonJoinGroupMutation",
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "joinGroup",
-        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "JoinGroupPayload",
+        "kind": "LinkedField",
+        "name": "joinGroup",
         "plural": false,
         "selections": [
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "group",
-            "storageKey": null,
             "args": null,
             "concreteType": "Group",
+            "kind": "LinkedField",
+            "name": "group",
             "plural": false,
             "selections": [
               {
+                "args": null,
                 "kind": "FragmentSpread",
-                "name": "JoinButton_group",
-                "args": null
+                "name": "JoinButton_group"
               }
-            ]
+            ],
+            "storageKey": null
           }
-        ]
+        ],
+        "storageKey": null
       }
-    ]
+    ],
+    "type": "Mutation"
   },
+  "kind": "Request",
   "operation": {
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "JoinButtonJoinGroupMutation",
-    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "joinGroup",
-        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "JoinGroupPayload",
+        "kind": "LinkedField",
+        "name": "joinGroup",
         "plural": false,
         "selections": [
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "group",
-            "storageKey": null,
             "args": null,
             "concreteType": "Group",
+            "kind": "LinkedField",
+            "name": "group",
             "plural": false,
             "selections": [
               {
-                "kind": "ScalarField",
                 "alias": null,
+                "args": null,
+                "kind": "ScalarField",
                 "name": "_id",
-                "args": null,
                 "storageKey": null
               },
               {
-                "kind": "ScalarField",
                 "alias": null,
+                "args": null,
+                "kind": "ScalarField",
                 "name": "viewer_is_a_member",
-                "args": null,
                 "storageKey": null
               },
               {
-                "kind": "ScalarField",
                 "alias": null,
+                "args": null,
+                "kind": "ScalarField",
                 "name": "is_private",
-                "args": null,
                 "storageKey": null
               },
               {
-                "kind": "ScalarField",
                 "alias": null,
-                "name": "id",
                 "args": null,
+                "kind": "ScalarField",
+                "name": "id",
                 "storageKey": null
               }
-            ]
+            ],
+            "storageKey": null
           }
-        ]
+        ],
+        "storageKey": null
       }
     ]
   },
   "params": {
-    "operationKind": "mutation",
-    "name": "JoinButtonJoinGroupMutation",
     "id": null,
-    "text": "mutation JoinButtonJoinGroupMutation(\n  $input: JoinGroupInput!\n) {\n  joinGroup(input: $input) {\n    group {\n      ...JoinButton_group\n      id\n    }\n  }\n}\n\nfragment JoinButton_group on Group {\n  _id\n  viewer_is_a_member\n  is_private\n}\n",
-    "metadata": {}
+    "metadata": {},
+    "name": "JoinButtonJoinGroupMutation",
+    "operationKind": "mutation",
+    "text": "mutation JoinButtonJoinGroupMutation(\n  $input: JoinGroupInput!\n) {\n  joinGroup(input: $input) {\n    group {\n      ...JoinButton_group\n      id\n    }\n  }\n}\n\nfragment JoinButton_group on Group {\n  _id\n  viewer_is_a_member\n  is_private\n}\n"
   }
 };
 })();
 // prettier-ignore
 (node/*: any*/).hash = '06dd10ef3dfec09b6ee3949fba2a8058';
+
 module.exports = node;
