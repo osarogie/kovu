@@ -1,6 +1,5 @@
 import React from 'react'
 import {
-  Text,
   StyleSheet,
   View,
   Image,
@@ -9,7 +8,8 @@ import {
   Dimensions,
   TouchableHighlight,
   PixelRatio,
-  TouchableOpacity
+  TouchableOpacity,
+  useColorScheme,
 } from 'react-native'
 import styles from '../styles'
 import excerptStyles from '../styles/excerptStyles'
@@ -22,59 +22,70 @@ import Avatar from '../components/Avatar'
 import DiscussionLike from '../fragments/DiscussionLike'
 import { getTimeAgo, imageUrl, getCommentCount } from '../utils'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { Subtitle, Caption } from '@shoutem/ui/components/Text'
 import CommentListItem from './CommentListItem'
+import { useTheme, Text, Subheading, Caption } from 'react-native-paper'
 
-class PostListItem extends React.PureComponent {
-  clickableProps = {
-    underlayColor: 'whitesmoke'
-  }
+const featurePhotoStyles = {
+  // backgroundColor: '#eee',
+  borderRadius: 5,
+  marginTop: 10,
+  marginStart: 10,
+}
 
-  cultureNameProps = {
-    style: { color: '#05f' }
-  }
+function PostListItem({
+  discussion,
+  showGroupInfo,
+  current_user = {},
+  openLogin,
+  ...props
+}) {
+  const {
+    comments,
+    excerpt,
+    word_count,
+    user,
+    comment_count,
+    name,
+  } = discussion
 
-  featurePhotoStyles = {
-    ...excerptStyles.featurePhoto,
-    backgroundColor: '#eee',
-    marginTop: 10,
-    marginStart: 10
-  }
+  const { colors } = useTheme()
+  const comment_count_ = getCommentCount(comment_count)
+  const openProfile = () => props.openProfile(discussion.user)
+  const openDiscussion = () => props.openDiscussion(discussion)
+  const openComments = () => props.openComments(discussion)
+  const openCulture = () => props.openCulture(discussion.group)
+  const openWrite = () =>
+    props.openWrite({ id: discussion._id, editing_mode: true })
 
-  constructor(props) {
-    super(props)
-    this.openProfile = this.openProfile.bind(this)
-    this.openDiscussion = this.openDiscussion.bind(this)
-    this.openProfile = this.openProfile.bind(this)
-    this.openComments = this.openComments.bind(this)
-    this.openCulture = this.openCulture.bind(this)
-    this.openWrite = this.openWrite.bind(this)
-  }
-
-  openProfile = _ => this.props.openProfile(this.props.discussion.user)
-  openDiscussion = _ => this.props.openDiscussion(this.props.discussion)
-  openComments = _ => this.props.openComments(this.props.discussion)
-  openCulture = _ => this.props.openCulture(this.props.discussion.group)
-  openProfile = _ => this.props.openProfile(this.props.discussion.user)
-  openWrite = _ =>
-    this.props.openWrite({ id: this.props.discussion._id, editing_mode: true })
-
-  renderFeaturePhoto() {
-    const image = this.props.discussion.feature_photo
+  const renderFeaturePhoto = () => {
+    const image = discussion.feature_photo
 
     if (image) {
       const height = 100
       const width = 100
       const f_width = Math.min(
         1000,
-        PixelRatio.getPixelSizeForLayoutSize(width)
+        PixelRatio.getPixelSizeForLayoutSize(width),
       )
       // const f_height = PixelRatio.getPixelSizeForLayoutSize(height)
       const uri = imageUrl(image.name, `${f_width}x1000`)
 
       return (
-        <View style={[{ height, width }, this.featurePhotoStyles]}>
-          <Image source={{ uri }} style={{ borderRadius: 5, height, width }} />
+        <View
+          style={[
+            featurePhotoStyles,
+            { height, width, backgroundColor: colors.separator },
+          ]}>
+          <Image
+            source={{ uri }}
+            resizeMethod="resize"
+            style={{
+              borderRadius: 5,
+              height,
+              width,
+              backgroundColor: colors.separator,
+            }}
+          />
         </View>
       )
     } else {
@@ -82,32 +93,27 @@ class PostListItem extends React.PureComponent {
     }
   }
 
-  renderCultureName() {
-    const { discussion, showGroupInfo } = this.props
-
+  const renderCultureName = () => {
     if (discussion.group && showGroupInfo !== false) {
       return (
         <TouchableOpacity
-          {...this.clickableProps}
+          underlayColor={colors.separator}
           style={{ flex: 1, flexDirection: 'row' }}
-          onPress={this.openCulture}
-        >
+          onPress={openCulture}>
           <Text
             style={[excerptStyles.groupInfo, excerptStyles.meta]}
-            numberOfLines={1}
-          >
+            numberOfLines={1}>
             <Text> in </Text>
-            <Text {...this.cultureNameProps}>{discussion.group.name}</Text>
+            <Text style={{ color: colors.primary }}>
+              {discussion.group.name}
+            </Text>
           </Text>
         </TouchableOpacity>
       )
     } else return null
   }
 
-  renderMeta() {
-    const { discussion } = this.props
-    const { user } = discussion
-
+  const renderMeta = () => {
     return (
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <Avatar
@@ -115,12 +121,16 @@ class PostListItem extends React.PureComponent {
           rounded
           source={user}
           title={user.name}
-          onPress={this.openProfile}
+          onPress={openProfile}
           activeOpacity={0.7}
         />
         <View style={{ marginStart: 15, flex: 1 }}>
-          <TouchableOpacity {...this.clickableProps} onPress={this.openProfile}>
-            <Text style={[styles.fill, { color: '#000' }]} numberOfLines={1}>
+          <TouchableOpacity
+            underlayColor={colors.separator}
+            onPress={openProfile}>
+            <Text
+              style={[styles.fill, { color: colors.text }]}
+              numberOfLines={1}>
               {discussion.user.name}
             </Text>
           </TouchableOpacity>
@@ -128,18 +138,17 @@ class PostListItem extends React.PureComponent {
             <Text style={excerptStyles.meta}>
               {getTimeAgo(discussion.created_at)}
             </Text>
-            {this.renderCultureName()}
+            {renderCultureName()}
           </View>
         </View>
       </View>
     )
   }
 
-  renderEdit() {
-    const { discussion, current_user = {} } = this.props
+  const renderEdit = () => {
     if (current_user._id == discussion.user._id) {
       return (
-        <TouchableOpacity {...this.clickableProps} onPress={this.openWrite}>
+        <TouchableOpacity underlayColor={colors.separator} onPress={openWrite}>
           <Text style={{ marginLeft: 20 }}>Edit</Text>
         </TouchableOpacity>
       )
@@ -148,11 +157,7 @@ class PostListItem extends React.PureComponent {
     return null
   }
 
-  renderControls() {
-    const { discussion, openLogin } = this.props
-    const { comment_count } = discussion
-    const comment_count_ = getCommentCount(comment_count)
-
+  const renderControls = () => {
     return [
       // <Separator
       //   styles={{ marginTop: 13 }}
@@ -160,12 +165,13 @@ class PostListItem extends React.PureComponent {
       // />,
       <View
         style={[styles.row, { alignItems: 'center', marginTop: 10 }]}
-        key={`post.c.viewholder.${discussion.id}`}
-      >
+        key={`post.c.viewholder.${discussion.id}`}>
         {/* <DiscussionLike discussion={discussion} openLogin={openLogin} /> */}
         <View style={styles.fillRow} />
-        {this.renderEdit()}
-        <TouchableOpacity {...this.clickableProps} onPress={this.openComments}>
+        {renderEdit()}
+        <TouchableOpacity
+          underlayColor={colors.separator}
+          onPress={openComments}>
           <Caption style={{ marginLeft: 20 }}>
             {`${comment_count_} Contribution${comment_count == 1 ? '' : 's'}`}
           </Caption>
@@ -176,29 +182,24 @@ class PostListItem extends React.PureComponent {
             size={25}
             color="#777"
           /> */}
-      </View>
+      </View>,
     ]
   }
 
-  render2() {
-    const { discussion } = this.props
-    // const { name, excerpt, word_count, user } = discussion
-    // console.log(this.props);
-    // console.log(discussion.created_at)
+  const render2 = () => {
     return (
       <View>
         <TouchableHighlight
-          {...this.clickableProps}
+          underlayColor={colors.separator}
           style={{
-            backgroundColor: '#fff',
+            backgroundColor: colors.background,
             // elevation: 2,
-            borderBottomColor: '#ddd',
+            borderBottomColor: colors.separator,
             borderBottomWidth: 1,
             paddingBottom: 15,
-            marginTop: 2
+            marginTop: 2,
           }}
-          onPress={this.openDiscussion}
-        >
+          onPress={openDiscussion}>
           <View style={[excerptStyles.container, { marginBottom: 0 }]}>
             <View style={{ flexDirection: 'row', marginBottom: 8 }}>
               <Avatar
@@ -206,21 +207,21 @@ class PostListItem extends React.PureComponent {
                 radius={5}
                 source={user}
                 title={user.name}
-                onPress={this.openProfile}
+                onPress={openProfile}
                 activeOpacity={0.7}
               />
               <View style={{ marginLeft: 15, marginRight: 15, flex: 1 }}>
-                {this.renderMeta()}
+                {renderMeta()}
               </View>
             </View>
             <Text style={excerptStyles.title}>{name}</Text>
-            {this.renderFeaturePhoto()}
+            {renderFeaturePhoto()}
             {/* <Markdown styles={excerptStyles.body}> */}
             <Text>
               {excerpt}
               {word_count > 20 ? '...' : ''}
               {/* </Markdown> */}
-              {/* {this.renderControls()} */}
+              {/* {renderControls()} */}
             </Text>
           </View>
         </TouchableHighlight>
@@ -229,10 +230,7 @@ class PostListItem extends React.PureComponent {
     )
   }
 
-  renderComments() {
-    const { discussion } = this.props
-    const { comments } = discussion
-
+  const renderComments = () => {
     return (
       <FlatList
         data={comments.edges}
@@ -243,67 +241,56 @@ class PostListItem extends React.PureComponent {
     )
   }
 
-  render() {
-    const { discussion } = this.props
-    const { name, excerpt, word_count, user } = discussion
-    // console.log(this.props);
-    // console.log(discussion.created_at)
-    return (
-      <View>
-        <TouchableHighlight
-          {...this.clickableProps}
-          style={{
-            backgroundColor: '#fff',
-            // elevation: 2,
-            borderBottomColor: '#ddd',
-            borderBottomWidth: 1,
-            paddingBottom: 15,
-            paddingTop: 2
-          }}
-          onPress={this.openDiscussion}
-        >
-          <View style={[excerptStyles.container, { marginBottom: 0 }]}>
-            {this.renderMeta()}
-            <View style={{ flexDirection: 'row' }}>
-              <View style={{ flex: 1 }}>
-                <Text style={excerptStyles.title}>{name.trimLeft()}</Text>
-                <Subtitle>
-                  {excerpt}
-                  {word_count > 20 ? '...' : ''}
-                </Subtitle>
-              </View>
-              {this.renderFeaturePhoto()}
+  return (
+    <View>
+      <TouchableHighlight
+        underlayColor={colors.separator}
+        style={{
+          backgroundColor: colors.background,
+          // elevation: 2,
+          borderBottomColor: colors.separator,
+          borderBottomWidth: 1,
+          paddingBottom: 15,
+          paddingTop: 2,
+        }}
+        onPress={openDiscussion}>
+        <View style={[excerptStyles.container, { marginBottom: 0 }]}>
+          {renderMeta()}
+          <View style={{ flexDirection: 'row' }}>
+            <View style={{ flex: 1 }}>
+              <Text style={[excerptStyles.title, { color: colors.text }]}>
+                {name.trimLeft()}
+              </Text>
+              <Subheading>
+                {excerpt}
+                {word_count > 20 ? '...' : ''}
+              </Subheading>
             </View>
-            {this.renderControls()}
-            <View style={{ flexDirection: 'row', marginBottom: 8 }}>
-              {/* <DiscussionLike
+            {renderFeaturePhoto()}
+          </View>
+          {renderControls()}
+          <View style={{ flexDirection: 'row', marginBottom: 8 }}>
+            {/* <DiscussionLike
                   discussion={discussion}
                   stacked
                   size={20}
                   // style={{ marginTop: 10 }}
                 /> */}
-              <ShareButton
-                title={discussion.name}
-                url={discussion.public_url}
-                message={`Read "${discussion.name}" on TheCommunity - ${
-                  discussion.public_url
-                } by ${discussion.user.name}`}
-                style={{ marginTop: 5 }}
-              />
-            </View>
-            {/* {this.renderComments()} */}
+            <ShareButton
+              title={discussion.name}
+              url={discussion.public_url}
+              message={`Read "${discussion.name}" on TheCommunity - ${
+                discussion.public_url
+              } by ${discussion.user.name}`}
+              style={{ marginTop: 5 }}
+            />
           </View>
-        </TouchableHighlight>
-        {/* <Separator /> */}
-      </View>
-    )
-  }
-}
-
-PostListItem.defaultProps = {}
-
-PostListItem.propTypes = {
-  // ...ViewPropTypes
+          {/* {renderComments()} */}
+        </View>
+      </TouchableHighlight>
+      {/* <Separator /> */}
+    </View>
+  )
 }
 
 export default createFragmentContainer(
@@ -354,5 +341,5 @@ export default createFragmentContainer(
       }
       # ...DiscussionLike_discussion
     }
-  `
+  `,
 )

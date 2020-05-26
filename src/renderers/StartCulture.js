@@ -6,13 +6,13 @@ import {
   KeyboardAvoidingView,
   ToastAndroid,
   Switch,
-  ScrollView
+  ScrollView,
 } from 'react-native'
 import QueryRendererProxy from './QueryRendererProxy'
 
 import { createFragmentContainer, graphql } from 'react-relay'
 
-import { Bar } from 'react-native-progress'
+import Bar from 'react-native-progress/Bar'
 import createEnvironment from '../relay-environment'
 import { connect } from 'react-redux'
 import styles from '../styles'
@@ -24,7 +24,7 @@ import Toolbar from '../components/Toolbar'
 
 const mapStateToProps = state => ({
   // night_mode: state.night_mode,
-  api_key: state.user.api_key
+  api_key: state.user.api_key,
 })
 
 class StartCulture extends React.Component {
@@ -32,7 +32,7 @@ class StartCulture extends React.Component {
   new_id = null
   inputProps = {
     wrapperStyle: {
-      marginBottom: 15
+      marginBottom: 15,
     },
     style: {
       flex: 1,
@@ -42,15 +42,15 @@ class StartCulture extends React.Component {
       // opacity: 0.9,
       borderRadius: 0,
 
-      backgroundColor: '#fff'
+      backgroundColor: '#fff',
     },
     inputProps: {
       placeholderTextColor: '#333',
-      underlineColorAndroid: '#000'
+      underlineColorAndroid: '#000',
     },
     inputStyle: {
-      color: '#000'
-    }
+      color: '#000',
+    },
   }
   bodyInputProps = {
     ...this.inputProps,
@@ -58,8 +58,8 @@ class StartCulture extends React.Component {
       ...this.inputProps.inputProps,
       multiline: true,
       onContentSizeChange: e =>
-        this.setState({ inputSize: e.nativeEvent.contentSize.height })
-    }
+        this.setState({ inputSize: e.nativeEvent.contentSize.height }),
+    },
   }
 
   notify(message) {
@@ -72,8 +72,8 @@ class StartCulture extends React.Component {
     textStyle: {
       textAlign: 'center',
       color: '#fff',
-      fontSize: 16
-    }
+      fontSize: 16,
+    },
   }
   constructor(props) {
     super(props)
@@ -85,7 +85,7 @@ class StartCulture extends React.Component {
         name: props.group.name,
         body: props.group.body,
         is_private: props.group.is_private,
-        inputSize: 50
+        inputSize: 50,
       }
 
     this.save = this.save.bind(this)
@@ -121,8 +121,8 @@ class StartCulture extends React.Component {
               //
               // this.new_id = newGroup.getValue('_id')
               this.props.goBack()
-            }
-          }
+            },
+          },
         )
       } else {
         CreateGroupMutation.commit(this.environment, inputs, {
@@ -141,7 +141,7 @@ class StartCulture extends React.Component {
 
             this.new_id = newGroup.getValue('_id')
             this.props.goBack()
-          }
+          },
         })
       }
     } else {
@@ -205,7 +205,7 @@ class StartCulture extends React.Component {
               {...this.bodyInputProps}
               inputStyle={{
                 height: this.state.inputSize,
-                color: '#000'
+                color: '#000',
               }}
               // placeholder="Bio"
               ref={component => (this._body = component)}
@@ -218,9 +218,8 @@ class StartCulture extends React.Component {
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                padding: 20
-              }}
-            >
+                padding: 20,
+              }}>
               <Text style={{ marginRight: 10, color: '#000' }}>
                 Private Culture?
               </Text>
@@ -256,7 +255,7 @@ const StartCultureFragmentContainer = createFragmentContainer(
       body
       is_private
     }
-  `
+  `,
 )
 
 export default props =>

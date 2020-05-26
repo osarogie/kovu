@@ -5,7 +5,7 @@ import {
   View,
   Text,
   TextInput,
-  ToastAndroid
+  ToastAndroid,
   // KeyboardAvoidingView
 } from 'react-native'
 import styles from '../styles'
@@ -13,12 +13,12 @@ import colors from '../colors'
 import Avatar from './Avatar'
 import CreateCommentMutation from '../data/mutations/CreateCommentMutation'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { withNavigation } from 'react-navigation'
+import { withNavigation } from '../navigation/withNavigation'
 import { navHelper } from '../helpers/getNavigation'
 
 const mapStateToProps = state => ({
   loggedIn: state.user.loggedIn,
-  user: state.user.user
+  user: state.user.user,
 })
 class CommentBox extends React.Component {
   state = { isSending: false }
@@ -46,7 +46,7 @@ class CommentBox extends React.Component {
           {
             body,
             discussion_id,
-            gid: this.props.gid
+            gid: this.props.gid,
           },
           {
             onCompleted: ({ editUser, ...props }) => {
@@ -56,8 +56,8 @@ class CommentBox extends React.Component {
             onError: _ => {
               this.setState({ isSending: false })
               this.notify('Your comment could not be sent')
-            }
-          }
+            },
+          },
         )
       } else {
         this.setState({ isSending: false })
@@ -84,17 +84,16 @@ class CommentBox extends React.Component {
           paddingLeft: 20,
           paddingRight: 20,
           paddingBottom: 10,
-          paddingTop: 10
+          paddingTop: 10,
           // marginBottom: 20
           // padding: 20,
           // borderRadius: 8
-        }}
-      >
+        }}>
         {/* <View style={{ flex: 1 }}> */}
         <TextInput
           style={[
             styles.input,
-            { height: this.state.inputSize, fontSize: 17, flex: 1 }
+            { height: this.state.inputSize, fontSize: 17, flex: 1 },
           ]}
           ref={c => (this.commentBox = c)}
           underlineColorAndroid="#05f"
@@ -129,7 +128,7 @@ class CommentBox extends React.Component {
               // borderColor: '#05f'
               width: 70,
               height: 40,
-              paddingRight: 0
+              paddingRight: 0,
             }}
             isLoading={this.state.isSending}
           />

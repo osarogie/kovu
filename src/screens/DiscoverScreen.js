@@ -8,7 +8,7 @@ import Icon from 'react-native-vector-icons/Feather'
 // import { Icon } from '@shoutem/ui/components/Icon'
 import getNavigation from '../helpers/getNavigation'
 import { WHITE } from '../ui'
-// import { withNavigation } from 'react-navigation'
+// import { withNavigation } from '../navigation/withNavigation'
 
 // @withNavigation
 export default class DiscoverScreen extends React.Component {
@@ -21,12 +21,12 @@ export default class DiscoverScreen extends React.Component {
         size={focused ? 25 : 23}
         color={tintColor}
       />
-    )
+    ),
   }
 
   state = {
     q: '',
-    qs: ''
+    qs: '',
   }
 
   handleSubmit = _ => this.setState({ qs: this._q.state.value })
@@ -43,14 +43,13 @@ export default class DiscoverScreen extends React.Component {
           width: '100%',
           // position: 'absolute',
           justifyContent: 'center',
-          backgroundColor: WHITE
-        }}
-      >
+          backgroundColor: WHITE,
+        }}>
         <View style={searchStyles.container}>
           <TextInput
             inputProps={{
               returnKeyLabel: 'search',
-              returnKeyType: 'search'
+              returnKeyType: 'search',
             }}
             // placeholderTextColor="#fff"
             // placeholderStyle={{ color: '#fff' }}
@@ -59,7 +58,7 @@ export default class DiscoverScreen extends React.Component {
             style={{
               backgroundColor: '#ddd',
               elevation: 0,
-              borderRadius: 5
+              borderRadius: 5,
               // borderWidth: 1,
               // borderColor: '#eee',
               // ...Platform.select({ web: { borderStyle: 'solid' } })

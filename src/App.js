@@ -1,20 +1,21 @@
+import 'react-native-gesture-handler'
 import React from 'react'
-import { Platform } from 'react-native'
-import { useScreens } from 'react-native-screens'
+import { Platform, SafeAreaView } from 'react-native'
+import { enableScreens } from 'react-native-screens'
 import { Provider as ReduxProvider } from 'react-redux'
 import getStore from './store'
-import { AppContainer } from './navigation/AppContainer'
 import { ThemeProvider } from './providers/ThemeProvider'
 import { CustomStatusBar } from './components/CustomStatusBar'
 import { ViewerProvider } from './providers/ViewerProvider'
+import { RootNavigator } from './navigation/RootNavigator'
 
-useScreens()
+enableScreens()
 
 const store = getStore()
 
 const prefix = Platform.select({
   android: 'thecommuntiy://read/',
-  ios: 'thecommuntiy://'
+  ios: 'thecommuntiy://',
 })
 
 export default function App() {
@@ -22,10 +23,10 @@ export default function App() {
     <ReduxProvider store={store}>
       <ThemeProvider>
         <ViewerProvider>
-          <>
+          <SafeAreaView style={{ flex: 1 }}>
             <CustomStatusBar />
-            <AppContainer uriPrefix={prefix} />
-          </>
+            <RootNavigator uriPrefix={prefix} />
+          </SafeAreaView>
         </ViewerProvider>
       </ThemeProvider>
     </ReduxProvider>

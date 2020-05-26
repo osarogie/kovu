@@ -3,7 +3,6 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import StartCulture from '../renderers/StartCulture'
-import { withNavigation } from 'react-navigation'
 import Toolbar from '../components/Toolbar'
 import getNavigation from '../helpers/getNavigation'
 
@@ -15,7 +14,7 @@ export default class StartCultureScreen extends React.Component {
 
   render() {
     const { navigation } = this.props
-    const { params } = this.props.navigation.state
+    const { params } = this.props.route
     var id = null
     var editing_mode = null
 

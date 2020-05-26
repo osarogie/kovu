@@ -14,17 +14,21 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <>
-      <Appbar.BackAction key="nav-icon" onPress={goBack} style={{ margin: 10 }} />
+      <Appbar.BackAction
+        key="nav-icon"
+        onPress={goBack}
+        color={colors.text}
+        style={{ margin: 10 }}
+      />
       <KeyboardAwareScrollView
         onKeyboardWillShow={frames => {
           console.log('Keyboard event', frames)
         }}
         resetScrollToCoords={{ x: 0, y: 0 }}
         contentContainerStyle={{
-          alignItems: 'center'
+          alignItems: 'center',
         }}
-        style={[styles.scrollView]}
-      >
+        style={[styles.scrollView, { backgroundColor: colors.background }]}>
         <View style={styles.container}>
           {/* <Image
                 source={require("../images/welcome.png")}
@@ -41,10 +45,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginHorizontal: 20,
-    alignItems: 'center',
-    maxWidth: 400,
+    maxWidth: 500,
     paddingTop: 20,
-    paddingBottom: 20
+    paddingBottom: 20,
+    width: '100%',
   },
-  scrollView: { width: '100%', flex: 1,backgroundColor:'#eee' }
+  scrollView: { width: '100%', flex: 1, backgroundColor: '#eee' },
 })

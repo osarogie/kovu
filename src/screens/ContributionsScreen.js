@@ -8,21 +8,21 @@ import getNavigation from '../helpers/getNavigation'
 
 export default class ProfileScreen extends React.Component {
   renderToolbar() {
-    const { user } = this.props.navigation.state.params
+    const { user } = this.props.route.params
     const title = (user && user.username) || 'Contributions'
     return <Toolbar title={title} navIconName="md-arrow-back" />
   }
 
   render() {
-    const { navigation } = this.props
+    const { navigation, route } = this.props
 
     return (
       <View style={{ flex: 1 }}>
         {this.renderToolbar()}
         {/* <KeyboardAvoidingView> */}
         <Comments
-          id={navigation.state.params.id}
-          gid={navigation.state.params.discussion.id}
+          id={route.params.id}
+          gid={route.params.discussion.id}
           {...getNavigation(navigation)}
         />
         {/* </KeyboardAvoidingView> */}

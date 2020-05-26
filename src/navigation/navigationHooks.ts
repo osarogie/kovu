@@ -8,7 +8,7 @@ import {
   NavigationParams,
   NavigationEventCallback,
   NavigationEventPayload,
-  EventType
+  EventType,
 } from 'react-navigation-types-only'
 
 export function useNavigation<S>(): NavigationScreenProp<S & NavigationRoute> {
@@ -16,7 +16,7 @@ export function useNavigation<S>(): NavigationScreenProp<S & NavigationRoute> {
 }
 
 export function useNavigationParam<T extends keyof NavigationParams>(
-  paramName: T
+  paramName: T,
 ) {
   return useNavigation().getParam(paramName)
 }
@@ -50,7 +50,7 @@ export function useNavigationEvents(handleEvt: NavigationEventCallback) {
     // identifies the nav object, then we should probably pass [navigation.state.key] here, to
     // make sure react doesn't needlessly detach and re-attach this effect. In practice this
     // seems to cause troubles
-    undefined
+    undefined,
     // [navigation.state.key]
   )
 }
@@ -59,7 +59,7 @@ const emptyFocusState = {
   isFocused: false,
   isBlurring: false,
   isBlurred: false,
-  isFocusing: false
+  isFocusing: false,
 }
 const didFocusState = { ...emptyFocusState, isFocused: true }
 const willBlurState = { ...emptyFocusState, isBlurring: true }

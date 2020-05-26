@@ -8,7 +8,7 @@ import {
   PixelRatio,
   StyleSheet,
   findNodeHandle,
-  Dimensions
+  Dimensions,
 } from 'react-native'
 import Separator from '../components/Separator'
 import Button from '../components/Button'
@@ -23,12 +23,12 @@ import { imageUrl } from '../utils'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { Image as StyledImage } from '@shoutem/ui/components/Image'
 import { BlurView } from 'react-native-blur'
-import { withNavigation } from 'react-navigation'
+import { withNavigation } from '../navigation/withNavigation'
 
 import {
   createFragmentContainer,
   createPaginationContainer,
-  graphql
+  graphql,
 } from 'react-relay'
 import { connect } from 'react-redux'
 import { navHelper } from '../helpers/getNavigation'
@@ -36,7 +36,7 @@ import { navHelper } from '../helpers/getNavigation'
 const mapStateToProps = state => ({
   night_mode: state.night_mode,
   current_user: state.user.user,
-  loggedIn: state.user.loggedIn
+  loggedIn: state.user.loggedIn,
 })
 
 const { width } = Dimensions.get('window')
@@ -54,7 +54,7 @@ class User extends React.Component {
       isSameUser:
         props.loggedIn && props.user._id == props.current_user._id
           ? true
-          : false
+          : false,
     }
   }
 
@@ -108,7 +108,7 @@ class User extends React.Component {
           backgroundColor: 'transparent',
           borderRadius: 5,
           borderWidth: 1,
-          borderColor: '#05f'
+          borderColor: '#05f',
         }}
       />
     ) : null
@@ -119,9 +119,8 @@ class User extends React.Component {
       <View
         style={{
           flex: 1,
-          backgroundColor: '#fff'
-        }}
-      >
+          backgroundColor: '#fff',
+        }}>
         {/* <View
           style={{
             position: 'absolute',
@@ -145,13 +144,13 @@ class User extends React.Component {
         <Image
           style={[
             { height: '100%', backgroundColor: '#f9f9f9' },
-            _styles.coverImageBlur
+            _styles.coverImageBlur,
           ]}
           ref={img => {
             this.coverImage = img
           }}
           source={{
-            uri: imageUrl(user.profile_picture_name, `${coverWidth}x1000`)
+            uri: imageUrl(user.profile_picture_name, `${coverWidth}x1000`),
           }}
           onLoadEnd={this.imageLoaded}
         />
@@ -167,9 +166,8 @@ class User extends React.Component {
             padding: 20,
             flex: 1,
             flexDirection: 'row',
-            backgroundColor: '#fffc' /*colors.get('container', night_mode)*/
-          }}
-        >
+            backgroundColor: '#fffc' /*colors.get('container', night_mode)*/,
+          }}>
           <View style={{ marginRight: 10, flex: 1 }}>
             <Text style={styles.title}>{user.name}</Text>
             <Text style={{ flex: 1 }}>{user.bio}</Text>
@@ -201,8 +199,8 @@ const _styles = StyleSheet.create({
     top: 0,
     left: 0,
     bottom: 0,
-    right: 0
-  }
+    right: 0,
+  },
 })
 
 // UserFragmentContainer
@@ -221,7 +219,7 @@ const UserFragmentContainer = createFragmentContainer(
       following_count
       ...FollowButton_user
     }
-  `
+  `,
 )
 
 export default ({ id, api_key, ...props }) => {
@@ -271,9 +269,8 @@ const renderCultureHeader = _ => (
       paddingTop: 17,
       paddingLeft: 20,
       borderTopWidth: 1,
-      borderTopColor: '#ddd'
-    }}
-  >
+      borderTopColor: '#ddd',
+    }}>
     Cultures
   </Text>
 )
@@ -300,7 +297,7 @@ const UserPostsPaginationContainer = createPaginationContainer(
           }
         }
       }
-    `
+    `,
   },
   {
     direction: 'forward',
@@ -320,8 +317,8 @@ const UserPostsPaginationContainer = createPaginationContainer(
           ...User_discussionList
         }
       }
-    `
-  }
+    `,
+  },
 )
 
 const UserGroupsPaginationContainer = createPaginationContainer(
@@ -343,7 +340,7 @@ const UserGroupsPaginationContainer = createPaginationContainer(
           }
         }
       }
-    `
+    `,
   },
   {
     direction: 'forward',
@@ -353,7 +350,7 @@ const UserGroupsPaginationContainer = createPaginationContainer(
     getFragmentVariables(prevVars, totalCount) {
       return {
         ...prevVars,
-        count: totalCount
+        count: totalCount,
       }
     },
     getVariables(props, { count, cursor }, fragmentVariables) {
@@ -366,6 +363,6 @@ const UserGroupsPaginationContainer = createPaginationContainer(
           ...User_groupList
         }
       }
-    `
-  }
+    `,
+  },
 )

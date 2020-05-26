@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react'
+import React, { useMemo, useState, useCallback } from 'react'
 import createEnvironment from '../relay-environment'
 import { QueryRenderer } from 'react-relay'
 import { connect } from 'react-redux'
@@ -8,64 +8,50 @@ import LoaderBox from '../components/LoaderBox'
 
 const mapStateToProps = state => ({ api_key: state.user.api_key })
 
-class QueryRendererProxy extends React.PureComponent {
-  constructor(props) {
-    super(props)
-    this.renderPage = this.renderPage.bind(this)
-
-    this.state = { resetValue: 1, environment: this.updateEnvironment(props) }
-  }
-
-  componentWillReceiveProps(props) {
-    this.setState({ environment: this.updateEnvironment(props) })
-  }
-
-  // shouldComponentUpdate(p)
-
-  updateEnvironment(props) {
-    const { api_key } = props
-
+function QueryRendererProxy({ api_key, render, ...props }) {
+  const [resetValue, setResetValue] = useState()
+  const environment = useMemo(() => {
     var config = {}
     if (api_key) {
       config = { headers: { Authorization: `Token token=${api_key}` } }
     }
     return createEnvironment(config)
-  }
+  }, [api_key])
 
-  renderPage({ error, props, retry }) {
-    if (props)
-      return this.props.render({
-        error,
-        props,
-        retry,
-        environment: this.state.environment
-      })
+  const reloadRenderer = useCallback(() => {
+    setResetValue(Math.random() * 100)
+  })
 
-    const reloadRenderer = _ => {
-      // this.setState({ resetValue: Math.random() })
-      // retry()
-      this.setState({ environment: this.updateEnvironment(this.props) })
-    }
+  const renderPage = useCallback(
+    ({ error, props, retry }) => {
+      if (props) {
+        return render({
+          error,
+          props,
+          retry,
+          environment,
+        })
+      }
 
-    return (
-      <LoaderBox
-        isLoading={!error}
-        error={error && error.message}
-        onPress={reloadRenderer}
-      />
-    )
-  }
+      return (
+        <LoaderBox
+          isLoading={!error}
+          error={error?.message}
+          onPress={reloadRenderer}
+        />
+      )
+    },
+    [render, environment, reloadRenderer],
+  )
 
-  render() {
-    return (
-      <QueryRenderer
-        environment={this.state.environment}
-        resetValue={this.state.resetValue}
-        {...this.props}
-        render={this.renderPage}
-      />
-    )
-  }
+  return (
+    <QueryRenderer
+      key={resetValue}
+      environment={environment}
+      {...props}
+      render={renderPage}
+    />
+  )
 }
 
 export default connect(mapStateToProps)(QueryRendererProxy)

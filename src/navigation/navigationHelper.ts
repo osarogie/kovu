@@ -1,18 +1,16 @@
-import { useNavigation } from './navigationHooks'
 import { useViewer } from '../providers/ViewerProvider'
-import { NavigationParams } from 'react-navigation-types-only'
 import { IAppNavigation } from './IAppNavigation'
-import { useEffect, useState } from 'react'
+import { useMemo, useCallback } from 'react'
+import { useNavigation } from '@react-navigation/native'
+import { NavigationParams } from 'react-navigation'
 
 export function useAppNavigation(): IAppNavigation {
   const navigation = useNavigation()
   const { viewer } = useViewer()
-  const [appNavigation, setAppNavigation] = useState<IAppNavigation>({})
+  const { navigate, goBack } = navigation
 
-  useEffect(() => {
-    const { navigate, goBack } = navigation
-
-    setAppNavigation({
+  const appNavigation = useMemo<IAppNavigation>(
+    () => ({
       goBack,
 
       openDiscussionForm(params) {
@@ -38,14 +36,14 @@ export function useAppNavigation(): IAppNavigation {
       openDiscussion(id, discussion) {
         return navigate('Discussion', {
           id,
-          discussion
+          discussion,
         })
       },
 
       openComments(discussionID, discussion) {
         return navigate('Comments', {
           discussionID,
-          discussion
+          discussion,
         })
       },
 
@@ -67,16 +65,23 @@ export function useAppNavigation(): IAppNavigation {
 
       openProfilePicture(picture_name) {
         return navigate('ProfilePicture', { picture_name })
+      },
+    }),
+    [navigation],
+  )
+
+  const requireViewer = useCallback(
+    (route: string, params?: NavigationParams): boolean => {
+      if (!viewer) {
+        navigate('Auth')
+        return false
+      } else {
+        navigate(route, params)
+        return true
       }
-    })
-  }, [navigation])
-
-  function requireViewer(route: string, params?: NavigationParams): boolean {
-    const { navigate } = navigation
-
-    if (!viewer) return navigate('Auth')
-    return navigate(route, params)
-  }
+    },
+    [navigate],
+  )
 
   return appNavigation
 }

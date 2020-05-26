@@ -6,18 +6,18 @@ import ActivityButton from '../components/ActivityButton'
 import { connect } from 'react-redux'
 import { commitMutation, createFragmentContainer, graphql } from 'react-relay'
 import { navHelper } from '../helpers/getNavigation'
-import { withNavigation } from 'react-navigation'
+import { withNavigation } from '../navigation/withNavigation'
 
 const mapStateToProps = state => ({
   night_mode: state.night_mode,
-  loggedIn: state.user.loggedIn
+  loggedIn: state.user.loggedIn,
 })
 
 function joinMutation({ _id }, environment, config) {
   const variables = {
     input: {
-      id: _id
-    }
+      id: _id,
+    },
   }
 
   commitMutation(environment, {
@@ -31,15 +31,15 @@ function joinMutation({ _id }, environment, config) {
         }
       }
     `,
-    ...config
+    ...config,
   })
 }
 
 function leaveMutation({ _id }, environment, config) {
   const variables = {
     input: {
-      id: _id
-    }
+      id: _id,
+    },
   }
 
   commitMutation(environment, {
@@ -53,7 +53,7 @@ function leaveMutation({ _id }, environment, config) {
         }
       }
     `,
-    ...config
+    ...config,
   })
 }
 
@@ -71,7 +71,7 @@ class JoinButton extends React.Component {
     if (!viewer_is_a_member && is_private) {
       Alert.alert(
         'Cannot join',
-        'You cannot join this unless you are added by the admin'
+        'You cannot join this unless you are added by the admin',
       )
       return
     }
@@ -87,12 +87,12 @@ class JoinButton extends React.Component {
       ? leaveMutation(group, environment, {
           onCompleted: _ => {
             this.setState({ isLoading: false })
-          }
+          },
         })
       : joinMutation(group, environment, {
           onCompleted: _ => {
             this.setState({ isLoading: false })
-          }
+          },
         })
   }
   render() {
@@ -102,8 +102,8 @@ class JoinButton extends React.Component {
     const title = viewer_is_a_member
       ? 'Joined'
       : is_private
-        ? 'Private Culture'
-        : 'Join'
+      ? 'Private Culture'
+      : 'Join'
     return (
       <ActivityButton
         onPress={this.toggleJoin}
@@ -117,7 +117,7 @@ class JoinButton extends React.Component {
           borderRadius: 5,
           borderWidth: 1,
           borderColor: '#05f',
-          ...this.props.buttonStyle
+          ...this.props.buttonStyle,
         }}
         isLoading={this.state.isLoading}
       />
@@ -133,5 +133,5 @@ export default createFragmentContainer(
       viewer_is_a_member
       is_private
     }
-  `
+  `,
 )

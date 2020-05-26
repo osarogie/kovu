@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import React, { Component, useCallback } from 'react'
 
 import { Share } from 'react-native'
 
 import { Button } from '@shoutem/ui/components/Button'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { BLACK } from '../ui'
+import { useTheme } from 'react-native-paper'
 
 const { string } = PropTypes
 
@@ -17,43 +18,21 @@ const { string } = PropTypes
  * It should have the style of its underlying button. That's why it's not connected to style
  * or animation.
  */
-export default class ShareButton extends Component {
-  static propTypes = {
-    // Animation name for share icon
-    animationName: string,
-    // Message to share
-    message: string,
-    // Title
-    title: string,
-    // Url to share
-    url: string
-  }
-
-  constructor(props) {
-    super(props)
-
-    this.onShare = this.onShare.bind(this)
-  }
-
-  onShare() {
-    const { title, message, url } = this.props
-
+export default function ShareButton({ title, message, url, color, style }) {
+  const { colors } = useTheme()
+  const onShare = useCallback(() => {
     Share.share({
       title,
       // URL property isn't supported on Android, so we are
       // including it as the message for now
       message,
-      url
+      url,
     })
-  }
+  }, [title, message, url])
 
-  render() {
-    const { style } = this.props
-
-    return (
-      <Button styleName="clear tight" onPress={this.onShare} style={style}>
-        <Icon size={20} name="share" color={`${BLACK}`} />
-      </Button>
-    )
-  }
+  return (
+    <Button styleName="clear tight" onPress={onShare} style={style}>
+      <Icon size={20} name="share" color={colors.text} />
+    </Button>
+  )
 }

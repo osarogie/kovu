@@ -1,9 +1,8 @@
 // @flow
 
-import React from 'react'
+import React, { useMemo } from 'react'
 import {
   StyleSheet,
-  Text,
   View,
   ScrollView,
   Platform,
@@ -11,62 +10,72 @@ import {
   Dimensions,
   Share,
   TouchableOpacity,
-  TouchableHighlight
+  TouchableHighlight,
+  PixelRatio,
 } from 'react-native'
 import HTMLView from 'react-native-htmlview'
 import Toolbar from '../components/Toolbar'
 import styles from '../styles'
 import excerptStyles from '../styles/excerptStyles'
 import DiscussionLike from '../fragments/DiscussionLike'
-import {
-  graphql,
-  createFragmentContainer,
-} from 'react-relay'
+import { graphql, createFragmentContainer } from 'react-relay'
 import QueryRendererProxy from './QueryRendererProxy'
 import Avatar from '../components/Avatar'
-import { getTimeAgo, getCommentCount } from '../utils'
-import { connect } from 'react-redux'
-
-const mapStateToProps = state => ({
-  // loggedIn: state.user.loggedIn,
-  current_user: state.user.user
-})
+import { getTimeAgo, getCommentCount, imageUrl } from '../utils'
+import { useTheme, Text } from 'react-native-paper'
+import { useViewer } from '../providers/ViewerProvider'
 
 const { width } = Dimensions.get('window')
 
-class Post extends React.Component {
-  clickableProps = {
-    underlayColor: 'whitesmoke',
-    style: { backgroundColor: '#fff' }
+function Post(props) {
+  const { colors } = useTheme()
+  const current_user = useViewer()
+  const clickableProps = {
+    underlayColor: colors.separator,
+    style: { backgroundColor: colors.background },
   }
 
-  cultureNameProps = {
-    style: { color: '#000' }
+  const cultureNameProps = {
+    style: { color: colors.text },
   }
 
-  containerStyles = [
+  const containerStyles = [
     styles.container,
-    { backgroundColor: '#fff', elevation: 2, paddingBottom: 20 }
+    { backgroundColor: colors.background, elevation: 2, paddingBottom: 20 },
   ]
 
-  openWrite = _ =>
-    this.props.openWrite({
-      id: this.props.data.discussion._id,
-      editing_mode: true
+  const openWrite = () =>
+    props.openWrite({
+      id: props.data.discussion._id,
+      editing_mode: true,
     })
-  openComments = _ => this.props.openComments(this.props.data.discussion)
-  openProfile = _ => this.props.openProfile(this.props.data.discussion.user)
-  openCulture = _ => this.props.openCulture(this.props.data.discussion.group)
+  const openComments = () => props.openComments(props.data.discussion)
+  const openProfile = () => props.openProfile(props.data.discussion.user)
+  const openCulture = () => props.openCulture(props.data.discussion.group)
 
-  renderFeaturePhoto() {
-    const { feature_photo } = this.props.data.discussion
+  const renderFeaturePhoto = () => {
+    const { feature_photo } = props.data.discussion
     if (feature_photo) {
-      const height = feature_photo.height / feature_photo.width * width
+      const height = (feature_photo.height / feature_photo.width) * width
 
+      const widthPixels = Math.min(
+        1000,
+        PixelRatio.getPixelSizeForLayoutSize(width),
+      )
+
+      const heightPixels = Math.min(
+        1000,
+        PixelRatio.getPixelSizeForLayoutSize(height),
+      )
       return (
         <View style={styles.imageWrap}>
           <Image
-            source={{ uri: `https://${feature_photo.url}` }}
+            source={{
+              uri: imageUrl(
+                header_image.name,
+                `${widthPixels}x${heightPixels}`,
+              ),
+            }}
             style={{ width, height }}
           />
         </View>
@@ -74,13 +83,13 @@ class Post extends React.Component {
     } else return null
   }
 
-  renderGroupInfo() {
+  const renderGroupInfo = () => {
     const {
-      data: { discussion }
-    } = this.props
+      data: { discussion },
+    } = props
     if (discussion.group) {
       return (
-        <TouchableOpacity {...this.clickableProps} onPress={this.openCulture}>
+        <TouchableOpacity {...clickableProps} onPress={openCulture}>
           <Text
             style={[
               excerptStyles.groupInfo,
@@ -90,12 +99,11 @@ class Post extends React.Component {
                 paddingBottom: 8,
                 paddingTop: 8,
                 // backgroundColor: '#eee',
-                fontStyle: 'italic'
-              }
-            ]}
-          >
+                fontStyle: 'italic',
+              },
+            ]}>
             <Text>Posted in </Text>
-            <Text {...this.cultureNameProps}>{discussion.group.name}</Text>
+            <Text {...cultureNameProps}>{discussion.group.name}</Text>
             <Text> culture</Text>
           </Text>
         </TouchableOpacity>
@@ -103,24 +111,23 @@ class Post extends React.Component {
     } else return null
   }
 
-  renderUserInfo() {
+  const renderUserInfo = () => {
     const {
-      data: { discussion }
-    } = this.props
-    // console.log(this.props)
+      data: { discussion },
+    } = props
+    // console.log(props)
     return (
-      <TouchableOpacity {...this.clickableProps} onPress={this.openProfile}>
+      <TouchableOpacity {...clickableProps} onPress={openProfile}>
         <View
           style={{
             flexDirection: 'row',
             flex: 1,
             marginTop: 20,
             marginLeft: 20,
-            marginRight: 20
-          }}
-        >
+            marginRight: 20,
+          }}>
           <View style={{ marginRight: 20, flex: 1 }}>
-            <Text style={{ fontWeight: 'bold', color: '#000' }}>
+            <Text style={{ fontWeight: 'bold', color: colors.text }}>
               {discussion.user.name}
             </Text>
             <Text numberOfLines={1} style={{ flex: 1, fontSize: 13 }}>
@@ -128,8 +135,7 @@ class Post extends React.Component {
             </Text>
             <Text
               numberOfLines={1}
-              style={{ flex: 1, fontSize: 12, fontStyle: 'italic' }}
-            >
+              style={{ flex: 1, fontSize: 12, fontStyle: 'italic' }}>
               {getTimeAgo(discussion.created_at)}
             </Text>
           </View>
@@ -138,7 +144,7 @@ class Post extends React.Component {
             rounded
             source={discussion.user}
             title={discussion.user.name}
-            onPress={this.openProfile}
+            onPress={openProfile}
             activeOpacity={0.7}
           />
         </View>
@@ -146,13 +152,13 @@ class Post extends React.Component {
     )
   }
 
-  renderEdit() {
+  const renderEdit = () => {
     const {
-      data: { discussion }
-    } = this.props
-    if (this.props.current_user._id === discussion.user._id) {
+      data: { discussion },
+    } = props
+    if (current_user._id === discussion.user._id) {
       return (
-        <TouchableOpacity {...this.clickableProps} onPress={this.openWrite}>
+        <TouchableOpacity {...clickableProps} onPress={openWrite}>
           <Text style={{ marginLeft: 20 }}>Edit</Text>
         </TouchableOpacity>
       )
@@ -161,8 +167,8 @@ class Post extends React.Component {
     return null
   }
 
-  renderToolbar() {
-    // const { discussion } = this.props.navigation.state.params
+  const renderToolbar = () => {
+    // const { discussion } = props.route.params
     const title = 'Story'
     // const subtitle =
     //   (discussion && { subtitle: `by ${discussion.user.name}` }) || {}
@@ -170,29 +176,29 @@ class Post extends React.Component {
     return (
       <Toolbar
         title={title}
-        actions={this.toolbarActions()}
-        onActionSelected={this._onActionSelected.bind(this)}
+        actions={toolbarActions()}
+        onActionSelected={_onActionSelected.bind(this)}
         navIconName="md-arrow-back"
       />
     )
   }
 
-  toolbarActions() {
+  const toolbarActions = () => {
     return [
       {
         title: 'Share',
         show: 'always',
-        iconName: 'md-share'
-      }
+        iconName: 'md-share',
+      },
       // { title: 'Notifications', show: 'always', iconName: 'ios-notifications' },
       // { title: 'View Profile', show: 'always', iconName: 'ios-person' }
     ]
   }
 
-  _onActionSelected(position) {
+  const _onActionSelected = position => {
     const {
-      data: { discussion }
-    } = this.props
+      data: { discussion },
+    } = props
 
     switch (position) {
       case 0:
@@ -201,7 +207,7 @@ class Post extends React.Component {
         } by ${discussion.user.name}`
         Share.share(
           { title: discussion.name, message },
-          { dialogTitle: 'Share Story' }
+          { dialogTitle: 'Share Story' },
         )
         break
       default:
@@ -209,11 +215,11 @@ class Post extends React.Component {
     }
   }
 
-  renderControls() {
+  const renderControls = () => {
     const {
       data: { discussion },
-      openLogin
-    } = this.props
+      openLogin,
+    } = props
     const { comment_count } = discussion
     const comment_count_ = getCommentCount(comment_count)
 
@@ -224,15 +230,14 @@ class Post extends React.Component {
           {
             alignItems: 'center',
             paddingRight: 20,
-            paddingLeft: 20
-          }
+            paddingLeft: 20,
+          },
         ]}
-        key={`post.c.viewholder.${discussion.id}`}
-      >
+        key={`post.c.viewholder.${discussion.id}`}>
         <DiscussionLike discussion={discussion} openLogin={openLogin} />
         <View style={styles.fillRow} />
-        {this.renderEdit()}
-        <TouchableOpacity {...this.clickableProps} onPress={this.openComments}>
+        {renderEdit()}
+        <TouchableOpacity {...clickableProps} onPress={openComments}>
           <Text style={{ marginLeft: 20 }}>
             {`${comment_count_} Contribution${comment_count === 1 ? '' : 's'}`}
           </Text>
@@ -247,41 +252,38 @@ class Post extends React.Component {
     )
   }
 
-  renderCommentBox() {
-    // const discussion = this.props.data.discussion
+  const renderCommentBox = () => {
+    // const discussion = props.data.discussion
     return (
       <TouchableHighlight
-        {...this.clickableProps}
-        onPress={this.openComments}
+        {...clickableProps}
+        onPress={openComments}
         style={{
           elevation: 2,
           margin: 20,
-          backgroundColor: '#fff',
+          backgroundColor: colors.background,
           padding: 20,
-          borderRadius: 8
-        }}
-      >
+          borderRadius: 8,
+        }}>
         <View
           style={{
             flexDirection: 'row',
-            alignItems: 'center'
-          }}
-        >
+            alignItems: 'center',
+          }}>
           <Avatar
             width={40}
             rounded
-            source={this.props.current_user}
-            title={this.props.current_user.name}
+            source={current_user}
+            title={current_user.name}
             activeOpacity={0.7}
           />
           <Text
             style={{
               fontWeight: 'bold',
               fontStyle: 'italic',
-              color: '#000',
-              marginLeft: 20
-            }}
-          >
+              color: colors.text,
+              marginLeft: 20,
+            }}>
             Leave a comment
           </Text>
         </View>
@@ -289,43 +291,45 @@ class Post extends React.Component {
     )
   }
 
-  render() {
-    const { discussion } = this.props.data
+  const { discussion } = props.data
 
-    return (
-      <ScrollView>
-        <View>
-          {this.renderToolbar()}
-          <View style={this.containerStyles}>
-            {this.renderGroupInfo()}
-            {this.renderUserInfo()}
-            <Text style={[styles.title, { margin: 20, fontSize: 36 }]}>
-              {discussion.name}
-            </Text>
-            {this.renderFeaturePhoto()}
-            <View style={{ padding: 20 }}>
-              <HTMLView
-                value={discussion.parsed_body}
-                stylesheet={htmlStyles}
-                selectable={true}
-                textComponentProps={{
-                  selectable: true,
-                  style: { color: '#000', lineHeight: 30 }
-                }}
-              />
-            </View>
-            {this.renderControls()}
+  return (
+    <ScrollView>
+      <View>
+        {renderToolbar()}
+        <View style={containerStyles}>
+          {renderGroupInfo()}
+          {renderUserInfo()}
+          <Text
+            style={[
+              styles.title,
+              { margin: 20, fontSize: 36, color: colors.text },
+            ]}>
+            {discussion.name}
+          </Text>
+          {renderFeaturePhoto()}
+          <View style={{ padding: 20 }}>
+            <HTMLView
+              value={discussion.parsed_body}
+              stylesheet={htmlStyles}
+              selectable={true}
+              textComponentProps={{
+                selectable: true,
+                style: { color: colors.text, lineHeight: 30, fontSize: 19 },
+              }}
+            />
           </View>
-          {this.renderCommentBox()}
+          {renderControls()}
         </View>
-      </ScrollView>
-    )
-  }
+        {renderCommentBox()}
+      </View>
+    </ScrollView>
+  )
 }
 
 // PostFragmentContainer
 const PostFragmentContainer = createFragmentContainer(
-  connect(mapStateToProps)(Post),
+  Post,
   graphql`
     fragment Post on Query {
       discussion(id: $id) {
@@ -359,7 +363,7 @@ const PostFragmentContainer = createFragmentContainer(
         parsed_body
       }
     }
-  `
+  `,
 )
 
 export default ({ id, ...props }) => {
@@ -379,7 +383,7 @@ export default ({ id, ...props }) => {
 }
 const codeStyle = {
   fontFamily: Platform.select({ ios: 'Menlo', android: 'monospace' }),
-  backgroundColor: '#eee'
+  backgroundColor: '#eee',
   // padding: 2,
   // borderRadius: 3,
   // flex: 1
@@ -390,6 +394,6 @@ const htmlStyles = StyleSheet.create({
   a: {
     color: '#05f',
     fontWeight: '500',
-    textDecorationLine: 'underline'
-  }
+    textDecorationLine: 'underline',
+  },
 })

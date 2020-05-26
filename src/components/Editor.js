@@ -5,14 +5,14 @@ import {
   StyleSheet,
   View,
   KeyboardAvoidingView,
-  ToastAndroid
+  ToastAndroid,
 } from 'react-native'
 import QueryRendererProxy from '../renderers/QueryRendererProxy'
-import { withNavigation } from 'react-navigation'
+import { withNavigation } from '../navigation/withNavigation'
 
 import { createFragmentContainer, graphql } from 'react-relay'
 
-import { Bar } from 'react-native-progress'
+import Bar from 'react-native-progress/Bar'
 import createEnvironment from '../relay-environment'
 import { connect } from 'react-redux'
 import colors from '../colors'
@@ -22,14 +22,14 @@ import CreateCommentMutation from '../data/mutations/CreateCommentMutation'
 import {
   RichTextEditor,
   RichTextToolbar,
-  actions
+  actions,
 } from 'react-native-zss-rich-text-editor'
 import Toolbar from './Toolbar'
 import { navHelper } from '../helpers/getNavigation'
 
 const mapStateToProps = state => ({
   // night_mode: state.night_mode,
-  api_key: state.user.api_key
+  api_key: state.user.api_key,
 })
 
 class Editor extends React.Component {
@@ -94,8 +94,8 @@ class Editor extends React.Component {
               //
               // this.new_id = newDiscussion.getValue('_id')
               this.props.goBack()
-            }
-          }
+            },
+          },
         )
       } else {
         CreateDiscussionMutation.commit(this.environment, inputs, {
@@ -114,7 +114,7 @@ class Editor extends React.Component {
 
             this.new_id = newDiscussion.getValue('_id')
             this.props.goBack()
-          }
+          },
         })
       }
     } else {
@@ -137,7 +137,7 @@ class Editor extends React.Component {
         },
         onError: _ => {
           this.notify('Your comment could not be sent')
-        }
+        },
       })
     } else {
       this.setState({ sending: false })
@@ -171,9 +171,8 @@ class Editor extends React.Component {
             backgroundColor: '#f2f2f2',
             color: '#bbb',
             padding: 5,
-            paddingLeft: 20
-          }}
-        >
+            paddingLeft: 20,
+          }}>
           {'This will go in the culture '}
           <Text style={{ fontStyle: 'italic', color: '#05f' }}>
             {culture.name}
@@ -255,7 +254,7 @@ class Editor extends React.Component {
             backgroundColor: '#f9f9f9',
             elevation: 20,
             borderTopWidth: 1,
-            borderTopColor: '#ddd'
+            borderTopColor: '#ddd',
           }}
           iconTint="#000"
           actions={[
@@ -263,7 +262,7 @@ class Editor extends React.Component {
             actions.setItalic,
             actions.insertBulletsList,
             actions.insertOrderedList,
-            actions.insertLink
+            actions.insertLink,
           ]}
           selectedButtonStyle={{ backgroundColor: '#eee' }}
         />
@@ -301,7 +300,7 @@ const EditorFragmentContainer = createFragmentContainer(
       body
       parsed_body
     }
-  `
+  `,
 )
 
 export default props =>

@@ -8,7 +8,7 @@ import PostThumb from '../fragments/PostThumb'
 
 export default class CommentScreen extends React.Component {
   render() {
-    const { discussion } = this.props.navigation.state.params
+    const { discussion } = this.props.route.params
 
     return (
       <View style={styles.container}>

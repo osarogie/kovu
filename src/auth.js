@@ -1,13 +1,13 @@
 import Base64 from 'base-64'
-import { AsyncStorage } from 'react-native'
+import AsyncStorage from '@react-native-community/async-storage'
 import Constants from './constants'
 
 const API_HOST =
   process.env.NODE_ENV === 'production'
     ? 'https://data.thecommunity.ng'
-    : 'http://localhost:5000'
+    : 'https://data.thecommunity.ng'
 
-const apiBaseUrl = `${API_HOST}/v1`
+const apiBaseUrl = `${API_HOST}/v1/`
 
 export default {
   async login(username, l_password) {
@@ -19,8 +19,8 @@ export default {
       headers: {
         Authorization: basic,
         'Content-Type': 'application/json',
-        Accept: 'application/json'
-      }
+        Accept: 'application/json',
+      },
     }).then(response => {
       // console.log(response.text())
       const r = response.json()
@@ -37,12 +37,12 @@ export default {
       headers: {
         Authorization: basic,
         'Content-Type': 'application/json',
-        Accept: 'application/json'
+        Accept: 'application/json',
       },
       body: JSON.stringify({
         name: name,
-        username: username
-      })
+        username: username,
+      }),
     }).then(response => {
       // console.log(response.text())
       const r = response.json()
@@ -55,7 +55,7 @@ export default {
     AsyncStorage.multiRemove([
       Constants.USER_ID,
       Constants.USER,
-      Constants.API_KEY
+      Constants.API_KEY,
     ])
-  }
+  },
 }

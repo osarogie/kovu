@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { View, ScrollView, ToastAndroid } from 'react-native'
-import { Bar } from 'react-native-progress'
+import Bar from 'react-native-progress/Bar'
 import ActivityButton from '../components/ActivityButton'
 import styles from '../styles'
 import TextInput from '../components/TextInput'
@@ -14,11 +14,11 @@ import { connect } from 'react-redux'
 
 const mapStateToProps = state => ({
   night_mode: state.night_mode,
-  current_user: state.user.user
+  current_user: state.user.user,
 })
 function UpdateProfile(input, environment, config) {
   const variables = {
-    input: input
+    input: input,
   }
 
   commitMutation(environment, {
@@ -33,13 +33,13 @@ function UpdateProfile(input, environment, config) {
         }
       }
     `,
-    ...config
+    ...config,
   })
 }
 class EditUser extends React.Component {
   inputProps = {
     wrapperStyle: {
-      marginBottom: 15
+      marginBottom: 15,
     },
     style: {
       flex: 1,
@@ -49,15 +49,15 @@ class EditUser extends React.Component {
       // opacity: 0.9,
       borderRadius: 0,
 
-      backgroundColor: '#fff'
+      backgroundColor: '#fff',
     },
     inputProps: {
       placeholderTextColor: '#333',
-      underlineColorAndroid: '#000'
+      underlineColorAndroid: '#000',
     },
     inputStyle: {
-      color: '#000'
-    }
+      color: '#000',
+    },
   }
   bioInputProps = {
     ...this.inputProps,
@@ -65,12 +65,12 @@ class EditUser extends React.Component {
       ...this.inputProps.inputProps,
       multiline: true,
       onContentSizeChange: e =>
-        this.setState({ inputSize: e.nativeEvent.contentSize.height })
+        this.setState({ inputSize: e.nativeEvent.contentSize.height }),
     },
     inputStyle: {
       height: 100,
-      color: '#000'
-    }
+      color: '#000',
+    },
   }
 
   buttonProps = {
@@ -79,8 +79,8 @@ class EditUser extends React.Component {
     textStyle: {
       textAlign: 'center',
       color: '#fff',
-      fontSize: 16
-    }
+      fontSize: 16,
+    },
   }
 
   // state = { name: '', bio: '', username: '' }
@@ -118,14 +118,14 @@ class EditUser extends React.Component {
             username: newProfile.getValue('username'),
             profile_picture_name: newProfile.getValue('profile_picture_name'),
             id: newProfile.getValue('_id'),
-            _id: newProfile.getValue('_id')
+            _id: newProfile.getValue('_id'),
           }
           this.props.dispatch(setUser(viewer))
         },
         onError: _ => {
           this.setState({ isSaving: false })
           this.notify('Profile update failed')
-        }
+        },
       })
     } else {
       this.notify('Name and username are required')
@@ -154,7 +154,7 @@ class EditUser extends React.Component {
     return null
   }
   render() {
-    const {  night_mode } = this.props
+    const { night_mode } = this.props
     // alert(PixelRatio.getPixelSizeForLayoutSize(75) + '')
     const backgroundColor = night_mode ? '#000' : '#fff'
 
@@ -163,8 +163,7 @@ class EditUser extends React.Component {
         <View style={{ height: 2 }}>{this.renderProgress()}</View>
         <ScrollView
           style={{ flex: 1, backgroundColor }}
-          contentContainerStyle={{ alignItems: 'center' }}
-        >
+          contentContainerStyle={{ alignItems: 'center' }}>
           <View style={{ flex: 1, padding: 40, alignItems: 'center' }}>
             <TextInput
               {...this.inputProps}
@@ -189,14 +188,14 @@ class EditUser extends React.Component {
               {...this.bioInputProps}
               inputStyle={{
                 height: this.state.inputSize,
-                color: '#000'
+                color: '#000',
               }}
               style={{
                 flex: 1,
                 width: '100%',
                 borderRadius: 0,
                 backgroundColor: '#fff',
-                height: this.state.inputSize
+                height: this.state.inputSize,
               }}
               placeholder="Bio"
               ref={component => (this._bio = component)}
@@ -231,7 +230,7 @@ const EditUserFragmentContainer = createFragmentContainer(
       username
       profile_picture_name
     }
-  `
+  `,
 )
 
 export default props => (

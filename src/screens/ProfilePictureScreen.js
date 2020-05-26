@@ -10,7 +10,7 @@ const window = Dimensions.get('window')
 export default class ProfilePictureScreen extends React.Component {
   goBack = _ => this.props.navigation.goBack()
   sharePic = _ => {
-    const { image, username } = this.props.navigation.state.params
+    const { image, username } = this.props.route.params
     const secureImage = getSecureLink(image)
 
     const message = `This is a picture of ${username}. ${secureImage}  - via Konfamd (https://konfamd.com)`
@@ -18,14 +18,11 @@ export default class ProfilePictureScreen extends React.Component {
     Share.share({
       title: 'Share Pic',
       message,
-      url: secureImage
+      url: secureImage,
     })
   }
   render() {
-    const {
-      profile_picture_name,
-      username
-    } = this.props.navigation.state.params
+    const { profile_picture_name, username } = this.props.route.params
     const secureImage = imageUrl(profile_picture_name, '1000x1000')
 
     return (
@@ -36,10 +33,9 @@ export default class ProfilePictureScreen extends React.Component {
           width: window.width,
           paddingTop: Platform.select({
             android: 0,
-            ios: 20
-          })
-        }}
-      >
+            ios: 20,
+          }),
+        }}>
         <StatusBar barStyle="light-content" />
 
         <Toolbar
@@ -52,7 +48,7 @@ export default class ProfilePictureScreen extends React.Component {
           <Image
             style={styles.image}
             source={{
-              uri: secureImage
+              uri: secureImage,
             }}
           />
         </View>
@@ -66,6 +62,6 @@ const styles = {
   flexible: { flex: 1 },
   image: {
     width: window.width,
-    height: window.width
-  }
+    height: window.width,
+  },
 }

@@ -1,94 +1,87 @@
-import React, { useState, useContext, createContext, useEffect } from 'react'
+import React, {
+  useState,
+  useContext,
+  createContext,
+  useEffect,
+  useMemo,
+} from 'react'
 import AsyncStorage from '@react-native-community/async-storage'
 import {
   DefaultTheme,
   DarkTheme,
-  Provider as PaperProvider
+  Provider as PaperProvider,
 } from 'react-native-paper'
+import { AppearanceProvider, useColorScheme } from 'react-native-appearance'
 
 const lightTheme = {
   ...DefaultTheme,
-  roundness: 2,
+  roundness: 5,
   colors: {
     ...DefaultTheme.colors,
+    background: '#fff',
     primary: '#50f',
     accent: '#50f',
-    statusBar: '#3902a7',
+    statusBar: '#fff',
     text: '#000',
-    grayBackground: '#f9f9f9'
+    grayBackground: '#f9f9f9',
+    separator: '#ddd',
   },
   statusBar: {
-    barStyle: 'light-content'
-  }
+    barStyle: 'dark-content',
+  },
 }
 
 const darkTheme = {
   ...DarkTheme,
-  roundness: 2,
+  roundness: 5,
   colors: {
     ...DarkTheme.colors,
-    primary: '#05f',
+    primary: '#fff',
     accent: '#05f',
     statusBar: '#000',
     text: '#fff',
-    grayBackground: '#333'
+    grayBackground: '#333',
+    separator: '#444',
   },
   statusBar: {
-    barStyle: 'light-content'
-  }
+    barStyle: 'light-content',
+  },
 }
 
 const themes = {
   light: lightTheme,
   dark: darkTheme,
-  black: null
+  black: null,
 }
 
 const defaultValue = {
   theme: lightTheme,
   themeControl: {
     changeTheme() {},
-    selectedTheme: 'light'
-  }
+    selectedTheme: 'light',
+  },
 }
 
 const ThemeContext = createContext(defaultValue)
 
 export function ThemeProvider({ children }) {
-  const [value, setValue] = useState(defaultValue)
-
-  useEffect(() => {
-    loadTheme()
-    console.log('Load Theme')
-  }, [1])
-
-  async function loadTheme() {
-    let selectedTheme = await AsyncStorage.getItem('theme')
-
-    setValue({
-      theme: themes[selectedTheme] || lightTheme,
-      themeControl: {
-        changeTheme(themeName) {
-          setValue(themeName)
-        },
-        selectedTheme: selectedTheme || 'light'
-      }
-    })
-  }
+  const colorScheme = useColorScheme()
+  const value = useMemo(
+    () => ({ theme: themes[colorScheme] || lightTheme, colorScheme }),
+    [colorScheme],
+  )
 
   return (
-    <ThemeContext.Provider value={value}>
-      <PaperProvider theme={value.theme}>{children}</PaperProvider>
-    </ThemeContext.Provider>
+    <AppearanceProvider>
+      <ThemeContext.Provider value={value}>
+        <PaperProvider theme={value.theme}>{children}</PaperProvider>
+      </ThemeContext.Provider>
+    </AppearanceProvider>
   )
 }
 
 export function useTheme() {
   return useContext(ThemeContext).theme
-}
-
-export function useThemeControl() {
-  return useContext(ThemeContext).themeControl
 }
 
 export function withTheme(Component) {

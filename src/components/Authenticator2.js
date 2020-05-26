@@ -1,14 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   View,
   Image,
   Text,
-  AsyncStorage,
   StyleSheet,
   Alert,
   Linking,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native'
+import AsyncStorage from '@react-native-community/async-storage'
 import { connect } from 'react-redux'
 import ActivityButton from './ActivityButton'
 import TextInput from './TextInput'
@@ -23,66 +23,67 @@ import Hyperlink from 'react-native-hyperlink'
 //   user: state.user
 // })
 
-class Authenticator extends React.Component {
-  state = {}
+function Authenticator({ goBack, dispatch }) {
+  const state = {}
+  const [username, set_username] = useState('')
+  const [l_password, set_l_password] = useState('')
+  const [full_name, set_full_name] = useState('')
+  const [r_username, set_r_username] = useState('')
+  const [email, set_email] = useState('')
+  const [r_password, set_r_password] = useState('')
 
-  buttonProps = {
+  const [isLoading, set_isLoginLoading] = useState(false)
+  const [isRegisterLoading, set_isRegisterLoading] = useState(false)
+
+  const buttonProps = {
     buttonStyle: styles.button,
     loadingBackground: '#b2b2b2',
     textStyle: {
       textAlign: 'center',
       color: '#fff',
-      fontSize: 16
-    }
+      fontSize: 16,
+    },
   }
 
-  infoStyles = {
+  const infoStyles = {
     textAlign: 'center',
     color: '#ccc',
     fontSize: 14,
     marginRight: 20,
-    marginLeft: 20
+    marginLeft: 20,
   }
 
-  inputProps = {
+  const inputProps = {
     style: inputStyles.textInput,
     inputProps: {
-      placeholderTextColor: '#b2b2b2'
+      placeholderTextColor: '#b2b2b2',
     },
     inputStyle: {
-      color: '#fff'
-    }
+      color: '#fff',
+    },
   }
 
-  constructor(props) {
-    super(props)
-    this.attemptLogin = this.attemptLogin.bind(this)
-    this.attemptRegister = this.attemptRegister.bind(this)
-  }
-
-  openForgotPassword = () =>
+  const openForgotPassword = () =>
     Linking.openURL('https://thecommunity.ng/a/recover')
 
-  attemptLogin() {
-    if (!this.state.isLoginLoading) {
-      const { username, l_password } = this.state
-
+  const attemptLogin = () => {
+    if (!isLoginLoading) {
       if (username && l_password) {
-        this.setState({ isLoginLoading: true })
+        set_isLoginLoading(true)
 
         auth
           .login(username, l_password)
           .then(response => {
             if (response && response.success === true) {
               // console.log(response);
-              this.storeSession(response)
+              storeSession(response)
             } else {
-              this.setState({ isLoginLoading: false })
+              set_isLoginLoading(false)
               Alert.alert((response && response.message) || 'Login failed')
             }
           })
           .catch(error => {
-            this.setState({ isLoginLoading: false })
+            set_isLoginLoading(false)
             Alert.alert('Login failed')
             console.error(error)
           })
@@ -94,12 +95,10 @@ class Authenticator extends React.Component {
     }
   }
 
-  attemptRegister() {
-    if (!this.state.isRegisterLoading) {
-      const { full_name, r_username, email, r_password } = this.state
-
+  const attemptRegister = () => {
+    if (!isRegisterLoading) {
       if (email && r_username && r_password && full_name) {
-        this.setState({ isRegisterLoading: true })
+        set_isRegisterLoading(true)
 
         auth
           .register(full_name, r_username, email, r_password)
@@ -107,14 +106,14 @@ class Authenticator extends React.Component {
             // console.log(response);
             if (response && response.success === true) {
               // console.log(response);
-              this.storeSession(response)
+              storeSession(response)
             } else {
-              this.setState({ isRegisterLoading: false })
+              set_isRegisterLoading(false)
               Alert.alert((response && response.message) || 'Sign Up failed')
             }
           })
           .catch(error => {
-            this.setState({ isRegisterLoading: false })
+            set_isRegisterLoading(false)
             Alert.alert('Sign Up failed')
             console.error(error)
           })
@@ -126,18 +125,17 @@ class Authenticator extends React.Component {
     }
   }
 
-  storeSession(response) {
-    const { goBack, dispatch } = this.props
+  const storeSession = response => {
     dispatch(
       setUser(
         { ...response.user, _id: `${response.user.id}` },
-        response.api_key
-      )
+        response.api_key,
+      ),
     )
     goBack()
   }
 
-  renderRegister() {
+  const renderRegister = () => {
     return (
       <View style={{ flex: 1 }}>
         {/* <Text
@@ -151,60 +149,56 @@ class Authenticator extends React.Component {
           Register on TheCommunity
         </Text> */}
         <TextInput
-          {...this.inputProps}
+          {...inputProps}
           key="full_name"
           placeholder="Full name"
-          onChangeText={full_name => this.setState({ full_name })}
+          onChangeText={set_full_name}
           androidIcon="text-format"
-          value={this.state.full_name}
-          onSubmitEditing={() => this._r_username.focus()}
+          value={full_name}
+          // onSubmitEditing={() => _r_username.focus()}
         />
         <TextInput
-          {...this.inputProps}
+          {...inputProps}
           placeholder="Username"
           key="username"
-          ref={component => (this._r_username = component)}
+          // ref={component => (_r_username = component)}
           androidIcon="person"
-          onChangeText={r_username => this.setState({ r_username })}
-          value={this.state.r_username}
-          onSubmitEditing={() => this._email.focus()}
+          onChangeText={set_r_username}
+          value={r_username}
+          // onSubmitEditing={() => _email.focus()}
         />
         <TextInput
-          {...this.inputProps}
+          {...inputProps}
           placeholder="Email"
-          ref={component => (this._email = component)}
-          onChangeText={email => this.setState({ email })}
+          // ref={component => (_email = component)}
+          onChangeText={set_email}
           keyboardType="email-address"
           androidIcon="email"
-          value={this.state.email}
-          onSubmitEditing={() => this._r_password.focus()}
+          value={email}
+          // onSubmitEditing={() => _r_password.focus()}
         />
         <TextInput
-          {...this.inputProps}
+          {...inputProps}
           placeholder="Password"
           androidIcon="lock"
-          ref={component => (this._r_password = component)}
+          // ref={component => (_r_password = component)}
           secureTextEntry={true}
-          value={this.state.r_password}
-          onChangeText={r_password => this.setState({ r_password })}
-          onSubmitEditing={this.attemptRegister}
+          value={r_password}
+          onChangeText={set_r_password}
+          // onSubmitEditing={attemptRegister}
         />
         <View style={styles.bottomControl}>
           <ActivityButton
-            {...this.buttonProps}
+            {...buttonProps}
             title="Sign Up"
-            onPress={this.attemptRegister}
-            isLoading={this.state.isRegisterLoading}
+            onPress={attemptRegister}
+            isLoading={isRegisterLoading}
           />
           <Text
-            style={[
-              styles.altText,
-              { opacity: this.state.isRegisterLoading ? 0 : 1 }
-            ]}
+            style={[styles.altText, { opacity: isRegisterLoading ? 0 : 1 }]}
             onPress={() => {
-              this.setState({ action: 'login' })
-            }}
-          >
+              setAction('login')
+            }}>
             {'Existing member? '}
             <Text style={{ textDecorationLine: 'underline' }}>{'Sign in'}</Text>
           </Text>
@@ -213,7 +207,7 @@ class Authenticator extends React.Component {
     )
   }
 
-  renderLogin() {
+  const renderLogin = () => {
     return (
       <View style={{ flex: 1 }}>
         {/* <Text
@@ -227,53 +221,48 @@ class Authenticator extends React.Component {
           Sign in with TheCommunity
         </Text> */}
         <TextInput
-          {...this.inputProps}
+          {...inputProps}
           placeholder="Username or Email"
           androidIcon="person"
           key="login$username"
-          onChangeText={username => this.setState({ username })}
+          onChangeText={set_username}
           keyboardType="email-address"
-          value={this.state.username}
-          onSubmitEditing={() => this._l_password.focus()}
+          value={username}
+          // onSubmitEditing={() => _l_password.focus()}
         />
         <TextInput
-          {...this.inputProps}
+          {...inputProps}
           placeholder="Password"
           key="login$password"
           androidIcon="lock"
-          ref={component => (this._l_password = component)}
+          // ref={component => (_l_password = component)}
           secureTextEntry={true}
-          value={this.state.l_password}
-          onChangeText={l_password => this.setState({ l_password })}
-          onSubmitEditing={this.attemptLogin}
+          value={l_password}
+          onChangeText={set_l_password}
+          // onSubmitEditing={attemptLogin}
         />
         <View style={styles.bottomControl}>
           <ActivityButton
-            {...this.buttonProps}
+            {...buttonProps}
             title="Login"
-            isLoading={this.state.isLoginLoading}
-            onPress={this.attemptLogin}
+            isLoading={isLoginLoading}
+            onPress={attemptLogin}
           />
           <Text
-            style={[
-              styles.altText,
-              { opacity: this.state.isLoginLoading ? 0 : 1 }
-            ]}
-            onPress={() => this.setState({ action: 'register' })}
-          >
+            style={[styles.altText, { opacity: isLoginLoading ? 0 : 1 }]}
+            onPress={() => setAction('register')}>
             {'Are you new? '}
             <Text style={{ textDecorationLine: 'underline' }}>
               {'Create an account'}
             </Text>
           </Text>
 
-          <TouchableOpacity onPress={this.openForgotPassword}>
+          <TouchableOpacity onPress={openForgotPassword}>
             <Text
               style={[
-                this.infoStyles,
-                { marginTop: 10, padding: 10, textDecorationLine: 'underline' }
-              ]}
-            >
+                infoStyles,
+                { marginTop: 10, padding: 10, textDecorationLine: 'underline' },
+              ]}>
               Forgot password
             </Text>
           </TouchableOpacity>
@@ -282,13 +271,11 @@ class Authenticator extends React.Component {
     )
   }
 
-  render() {
-    if (this.state.action === 'register') {
-      return this.renderRegister()
-    }
-
-    return this.renderLogin()
+  if (action === 'register') {
+    return renderRegister()
   }
+
+  return renderLogin()
 }
 
 export default connect()(Authenticator)

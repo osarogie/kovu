@@ -8,7 +8,7 @@ import getNavigation from '../helpers/getNavigation'
 
 export default class CultureScreen extends React.Component {
   renderToolbar() {
-    // const { culture } = this.props.navigation.state.params
+    // const { culture } = this.props.route.params
     // const title = (culture && culture.permalink) || 'Culture'
     const title = 'Blog'
 
@@ -16,14 +16,14 @@ export default class CultureScreen extends React.Component {
   }
 
   render() {
-    const { navigation } = this.props
-    // console.log(navigation.state.params.id)
+    const { navigation, route } = this.props
+    // console.log(route.params.id)
 
     return (
       <View style={{ flex: 1 }}>
         {this.renderToolbar()}
         <Group
-          id={navigation.state.params.id}
+          id={route.params.id}
           {...getNavigation(navigation)}
           showGroupInfo={false}
         />

@@ -8,8 +8,8 @@ import getNavigation from '../helpers/getNavigation'
 
 export default class WriteScreen extends React.Component {
   render() {
-    // const { culture } = this.props.navigation.state.params
-    const { params } = this.props.navigation.state
+    // const { culture } = this.props.route.params
+    const { params } = this.props.route
     var culture = null
     var id = null
     var editing_mode = null

@@ -6,7 +6,7 @@ import {
   Platform,
   Text,
   TouchableOpacity,
-  Linking
+  Linking,
 } from 'react-native'
 import styles from '../styles'
 import colors from '../colors'
@@ -26,16 +26,16 @@ import {
   openEditProfile,
   openChangePassword,
   openStartCulture,
-  openLogin
+  openLogin,
 } from '../utils'
 import { RoundButton } from '../components/buttons/RoundButton'
 
 const mapStateToProps = state => ({
   night_mode: state.night_mode,
   user: state.user.user,
-  loggedIn: state.user.loggedIn
+  loggedIn: state.user.loggedIn,
 })
-// import { withNavigation } from 'react-navigation'
+// import { withNavigation } from '../navigation/withNavigation'
 
 // @withNavigation
 // @connect(mapStateToProps)
@@ -50,7 +50,7 @@ class MenuScreen extends React.Component {
         size={focused ? 25 : 23}
         color={tintColor}
       />
-    )
+    ),
   }
 
   infoStyles = {
@@ -58,7 +58,7 @@ class MenuScreen extends React.Component {
     color: '#ccc',
     fontSize: 14,
     marginRight: 20,
-    marginLeft: 20
+    marginLeft: 20,
   }
 
   toggleNightMode = mode => this.props.dispatch(setNightMode(mode))
@@ -105,8 +105,7 @@ class MenuScreen extends React.Component {
         <TouchableOpacity
           underlayColor="whitesmoke"
           style={{ backgroundColor: '#fff' }}
-          onPress={this.openProfile}
-        >
+          onPress={this.openProfile}>
           <View style={{ padding: 15, flexDirection: 'row' }}>
             <Avatar
               large
@@ -129,9 +128,8 @@ class MenuScreen extends React.Component {
       return (
         <View
           style={{
-            padding: 20
-          }}
-        >
+            padding: 20,
+          }}>
           <RoundButton mode="outlined" onPress={this.openLogin}>
             Login
           </RoundButton>
@@ -148,11 +146,11 @@ class MenuScreen extends React.Component {
         {
           marginRight: 0,
           marginTop: Platform.select({ web: 11, default: 15 }),
-          marginLeft: 15
-        }
+          marginLeft: 15,
+        },
       ],
       size: 25,
-      color: colors.get('primary', night_mode)
+      color: colors.get('primary', night_mode),
     }
 
     return (
@@ -162,7 +160,7 @@ class MenuScreen extends React.Component {
             ? `${Platform.select({
                 android: 'md',
                 ios: 'ios',
-                web: 'md'
+                web: 'md',
               })}-${name}`
             : name
         } //{Platform.select({ ios: 'ios-options', android: 'md-options' })}
@@ -234,7 +232,7 @@ class MenuScreen extends React.Component {
           <SettingsList.Item
             icon={this.getIcon('logo-buffer', false)}
             hasNavArrow={false}
-            title="Start a new culture"
+            title="Start a blog"
             onPress={this.openStartCulture}
           />
           <SettingsList.Item

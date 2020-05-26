@@ -1,11 +1,18 @@
-import { Environment, Network, RecordSource, Store } from 'relay-runtime'
-import RelayQueryResponseCache from 'relay-runtime/lib/RelayQueryResponseCache'
+import {
+  Environment,
+  Network,
+  RecordSource,
+  Store,
+  QueryResponseCache,
+} from 'relay-runtime'
 
 const prod = process.env.NODE_ENV === 'production'
-const API_HOST = prod ? 'https://data.thecommunity.ng' : 'https://data.thecommunity.ng'
+const API_HOST = prod
+  ? 'https://data.thecommunity.ng'
+  : 'https://data.thecommunity.ng'
 
 const ttl = 3 * 60 * 1000
-const cache = new RelayQueryResponseCache({ size: 1024, ttl })
+const cache = new QueryResponseCache({ size: 1024, ttl })
 
 const source = new RecordSource()
 const store = new Store(source)
@@ -30,12 +37,12 @@ export default ({ headers }) => {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        ...headers
+        ...headers,
       },
       body: JSON.stringify({
         query: operation.text,
-        variables
-      })
+        variables,
+      }),
     })
 
     return fetch(`${API_HOST}/v2`, {
@@ -43,12 +50,12 @@ export default ({ headers }) => {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        ...headers
+        ...headers,
       },
       body: JSON.stringify({
         query: operation.text,
-        variables
-      })
+        variables,
+      }),
     })
       .then(response => {
         // console.log(response.text())

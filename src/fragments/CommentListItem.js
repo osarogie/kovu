@@ -6,7 +6,7 @@ import {
   // ViewPropTypes,
   Dimensions,
   TouchableOpacity,
-  PixelRatio
+  PixelRatio,
 } from 'react-native'
 import styles from '../styles'
 import excerptStyles from '../styles/excerptStyles'
@@ -17,27 +17,27 @@ import { getTimeAgo, imageUrl } from '../utils'
 import { Subtitle, Caption } from '@shoutem/ui/components/Text'
 import Avatar from '../components/Avatar'
 // import { connectDecorator } from '../lib'
-import { withNavigation } from 'react-navigation'
+import { withNavigation } from '../navigation/withNavigation'
 import { navHelper } from '../helpers/getNavigation'
 
 const mapStateToProps = state => ({
-  night_mode: state.night_mode
+  night_mode: state.night_mode,
 })
 
 // @withNavigation
 class CommentListItem extends React.PureComponent {
   clickableProps = {
-    underlayColor: 'whitesmoke'
+    underlayColor: 'whitesmoke',
   }
 
   cultureNameProps = {
-    style: { color: '#05f' }
+    style: { color: '#05f' },
   }
 
   featurePhotoStyles = {
     ...excerptStyles.featurePhoto,
     backgroundColor: '#eee',
-    marginTop: 10
+    marginTop: 10,
   }
   openComments = () =>
     navHelper(this).openComments(this.props.comment.discussion)
@@ -77,11 +77,9 @@ class CommentListItem extends React.PureComponent {
     return (
       <TouchableOpacity
         {...this.clickableProps}
-        onPress={_ => openProfile(comment.user)}
-      >
+        onPress={_ => openProfile(comment.user)}>
         <View
-          style={[excerptStyles.profilePicture, { backgroundColor: '#eee' }]}
-        >
+          style={[excerptStyles.profilePicture, { backgroundColor: '#eee' }]}>
           <Image source={{ uri }} style={excerptStyles.profilePicture} />
         </View>
       </TouchableOpacity>
@@ -95,8 +93,7 @@ class CommentListItem extends React.PureComponent {
       <View>
         <TouchableOpacity
           {...this.clickableProps}
-          onPress={_ => openProfile(comment.user)}
-        >
+          onPress={_ => openProfile(comment.user)}>
           <Text style={[styles.fill, { color: '#000' }]}>
             {comment.user.name}
           </Text>
@@ -116,8 +113,7 @@ class CommentListItem extends React.PureComponent {
       <View>
         <TouchableOpacity
           {...this.clickableProps}
-          style={{ backgroundColor: '#fff' }}
-        >
+          style={{ backgroundColor: '#fff' }}>
           <View style={excerptStyles.container}>
             <View style={{ flexDirection: 'row' }}>
               {this.renderProfilePicture()}
@@ -145,8 +141,7 @@ class CommentListItem extends React.PureComponent {
     return (
       <TouchableOpacity
         style={{ backgroundColor: '#f2f2f2', borderRadius: 5 }}
-        onPress={this.openComments}
-      >
+        onPress={this.openComments}>
         <View style={{ margin: 10 }}>
           <View style={{ flexDirection: 'row' }}>
             <Avatar
@@ -217,5 +212,5 @@ export default createFragmentContainer(
         profile_picture_name
       }
     }
-  `
+  `,
 )

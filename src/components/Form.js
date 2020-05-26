@@ -1,8 +1,8 @@
 import React from 'react'
 import { Picker, View, Animated, Text, StyleSheet } from 'react-native'
-import { TextField } from './TextField'
 import { withTheme } from '../providers/ThemeProvider'
 import { RoundButton } from './buttons/RoundButton'
+import { TextInput } from 'react-native-paper'
 
 // const { width } = Dimensions.get('window')
 export class Form extends React.Component {
@@ -96,7 +96,7 @@ export class Form extends React.Component {
     switch (fields[f].type) {
       case 'text':
         return (
-          <TextField
+          <TextInput
             key={f}
             showPasswordAccessory={fields[f].secure}
             secureTextEntry={fields[f].secure}
@@ -114,7 +114,7 @@ export class Form extends React.Component {
         )
       case 'phone':
         return (
-          <TextField
+          <TextInput
             key={f}
             // onFocus={e => this._scrollToInput(findNodeHandle(e.target))}
             returnKeyType={a.length > i + 1 ? 'next' : 'send'}
@@ -136,8 +136,7 @@ export class Form extends React.Component {
             ref={e => (this[f] = e)}
             selectedValue={this.state[f]}
             onValueChange={value => this.setState({ [f]: value })}
-            collapsable={true}
-          >
+            collapsable={true}>
             {(fields[f].options || []).map(o => (
               <Picker.Item key={o.label} label={o.label} value={o.value} />
             ))}
@@ -160,7 +159,7 @@ export class Form extends React.Component {
           backgroundColor: '#fff',
           width: 350,
           padding: 20,
-          borderRadius: 10
+          borderRadius: 10,
         }}
         // styleName="flexible"
         // source={require('../image/background.jpg')}
@@ -182,9 +181,8 @@ export class Form extends React.Component {
             marginTop: 10,
             fontSize: 30,
             color: textColor,
-            alignSelf: 'center'
-          }}
-        >
+            alignSelf: 'center',
+          }}>
           {submitText}
         </Text>
         <View
@@ -195,13 +193,12 @@ export class Form extends React.Component {
             marginTop: 30,
             marginHorizontal: 2,
             marginBottom: 30,
-            backgroundColor: '#fff'
+            backgroundColor: '#fff',
             // borderRadius: 5,
             // elevation: 2
-          }}
-        >
+          }}>
           {Object.keys(fields || {}).map((f, i, a) =>
-            this.renderField(f, i, a)
+            this.renderField(f, i, a),
           )}
           {onSubmit || storage ? (
             // <ActivityButton
@@ -222,8 +219,7 @@ export class Form extends React.Component {
               mode="contained"
               loading={this.state.isSaving}
               style={styles.button}
-              onPress={this.onSubmit}
-            >
+              onPress={this.onSubmit}>
               {submitText || 'Submit'}
             </RoundButton>
           ) : null}
@@ -244,6 +240,6 @@ const styles = StyleSheet.create({
     // marginRight: 0,
     // backgroundColor: PURPLE,
     // borderColor: PURPLE,
-    width: 120
-  }
+    width: 120,
+  },
 })

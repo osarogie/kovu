@@ -8,7 +8,7 @@ import EvilIcon from 'react-native-vector-icons/EvilIcons'
 
 import getNavigation from '../helpers/getNavigation'
 import { View } from '@shoutem/ui/components/View'
-import { FAB, Title } from 'react-native-paper'
+import { FAB, Title, useTheme } from 'react-native-paper'
 import { useAppNavigation } from '../navigation/navigationHelper'
 import { useViewer } from '../providers/ViewerProvider'
 import { elevation } from '../styles/elevation'
@@ -16,6 +16,7 @@ import { elevation } from '../styles/elevation'
 function TopBar() {
   const { openWrite, openViewerProfile } = useAppNavigation()
   const { viewer } = useViewer()
+  const { colors } = useTheme()
 
   function getPicture(user = {}) {
     if (
@@ -48,10 +49,9 @@ function TopBar() {
     return (
       <TouchableHighlight
         onPress={openViewerProfile}
-        underlayColor="#ddd"
-        style={styles.userIcon}
-      >
-        <EvilIcon name="user" size={35} color="#000" />
+        underlayColor={colors.separator}
+        style={styles.userIcon}>
+        <EvilIcon name="user" size={35} color={colors.text} />
       </TouchableHighlight>
     )
   }
@@ -71,23 +71,21 @@ function TopBar() {
     </>
   )
 }
-export default class FeedScreen extends React.Component {
-  static navigationOptions = {
-    tabBarLabel: 'Reading List',
-    tabBarIcon: ({ tintColor, focused }) => (
-      <Entypo name="home" size={focused ? 25 : 23} color={tintColor} />
-    )
-  }
+export default function FeedScreen({ navigation }) {
+  // static navigationOptions = {
+  //   tabBarLabel: 'Reading List',
+  //   tabBarIcon: ({ tintColor, focused }) => (
+  //     <Entypo name="home" size={focused ? 25 : 23} color={tintColor} />
+  //   ),
+  // }
+  const { colors } = useTheme()
 
-  render() {
-    const { navigation } = this.props
-    return (
-      <View style={{ flex: 1, backgroundColor: '#fff' }}>
-        <TopBar />
-        <Feed {...getNavigation(navigation)} />
-      </View>
-    )
-  }
+  return (
+    <View style={{ flex: 1, backgroundColor: colors.background }}>
+      <TopBar />
+      <Feed {...getNavigation(navigation)} />
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
@@ -95,24 +93,24 @@ const styles = StyleSheet.create({
     margin: 16,
     right: 0,
     bottom: 0,
-    position: 'absolute'
+    position: 'absolute',
   },
   title: {
     fontWeight: 'bold',
-    marginStart: 17
+    marginStart: 17,
   },
   avatarWrap: { width: 60 },
   toolbar: {
     flexDirection: 'row',
     height: 53,
     alignItems: 'center',
-    ...elevation(4)
+    ...elevation(4),
   },
   userIcon: {
     height: 56,
     width: 56,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
-  avatar: { marginStart: 17 }
+  avatar: { marginStart: 17 },
 })

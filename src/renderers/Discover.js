@@ -7,7 +7,7 @@ import { VerticalGroupList } from '../fragments/VerticalGroupList'
 import { VerticalUserList } from '../fragments/VerticalUserList'
 import PostList from '../fragments/PostList'
 import QueryRendererProxy from './QueryRendererProxy'
-import { TabView, TabBar, TabViewPagerPan } from 'react-native-tab-view'
+import { TabView, TabBar } from 'react-native-tab-view'
 import { createPaginationContainer, graphql } from 'react-relay'
 import Icon from 'react-native-vector-icons/Feather'
 import { WHITE } from '../ui'
@@ -16,7 +16,7 @@ import { elevation } from '../styles/elevation'
 
 const initialLayout = {
   height: 0,
-  width: Dimensions.get('window').width
+  width: Dimensions.get('window').width,
 }
 
 const DiscoverGroupsPaginationContainer = createPaginationContainer(
@@ -38,7 +38,7 @@ const DiscoverGroupsPaginationContainer = createPaginationContainer(
           }
         }
       }
-    `
+    `,
   },
   {
     direction: 'forward',
@@ -48,7 +48,7 @@ const DiscoverGroupsPaginationContainer = createPaginationContainer(
     getFragmentVariables(prevVars, totalCount) {
       return {
         ...prevVars,
-        count: totalCount
+        count: totalCount,
       }
     },
     getVariables(props, { count, cursor }, fragmentVariables) {
@@ -56,7 +56,7 @@ const DiscoverGroupsPaginationContainer = createPaginationContainer(
       return {
         count,
         cursor,
-        q: props.q
+        q: props.q,
       }
     },
     variables: { cursor: null, q: '' },
@@ -70,8 +70,8 @@ const DiscoverGroupsPaginationContainer = createPaginationContainer(
           ...Discover_groupList
         }
       }
-    `
-  }
+    `,
+  },
 )
 
 const DiscoverUsersPaginationContainer = createPaginationContainer(
@@ -93,7 +93,7 @@ const DiscoverUsersPaginationContainer = createPaginationContainer(
           }
         }
       }
-    `
+    `,
   },
   {
     direction: 'forward',
@@ -103,14 +103,14 @@ const DiscoverUsersPaginationContainer = createPaginationContainer(
     getFragmentVariables(prevVars, totalCount) {
       return {
         ...prevVars,
-        count: totalCount
+        count: totalCount,
       }
     },
     getVariables(props, { count, cursor, size }, fragmentVariables) {
       return {
         count,
         cursor,
-        q: props.q
+        q: props.q,
       }
     },
     variables: { cursor: null, size: '30x39' },
@@ -124,8 +124,8 @@ const DiscoverUsersPaginationContainer = createPaginationContainer(
           ...Discover_userList
         }
       }
-    `
-  }
+    `,
+  },
 )
 
 const DiscoverPostsPaginationContainer = createPaginationContainer(
@@ -147,7 +147,7 @@ const DiscoverPostsPaginationContainer = createPaginationContainer(
           }
         }
       }
-    `
+    `,
   },
   {
     direction: 'forward',
@@ -157,14 +157,14 @@ const DiscoverPostsPaginationContainer = createPaginationContainer(
     getFragmentVariables(prevVars, totalCount) {
       return {
         ...prevVars,
-        count: totalCount
+        count: totalCount,
       }
     },
     getVariables(props, { count, cursor }, fragmentVariables) {
       return {
         count,
         cursor,
-        q: props.q
+        q: props.q,
       }
     },
     variables: { cursor: null },
@@ -178,8 +178,8 @@ const DiscoverPostsPaginationContainer = createPaginationContainer(
           ...Discover_discussionList
         }
       }
-    `
-  }
+    `,
+  },
 )
 
 class Cultures extends React.Component {
@@ -198,7 +198,7 @@ class Cultures extends React.Component {
         `}
         variables={{ cursor: null, count: 10, q }}
         render={data => (
-          <View style={{ flex: 1, backgroundColor: '#fff' }}>
+          <View style={{ flex: 1 }}>
             <DiscoverGroupsPaginationContainer
               // renderHeader={_ => renderCultureHeader(q)}
               groupList={data.props.feed}
@@ -228,7 +228,7 @@ class Users extends React.Component {
         `}
         variables={{ cursor: null, count: 10, q }}
         render={data => (
-          <View style={{ flex: 1, backgroundColor: '#fff' }}>
+          <View style={{ flex: 1 }}>
             <DiscoverUsersPaginationContainer
               // renderHeader={_ => renderUserHeader(q)}
               userList={data.props.feed}
@@ -255,9 +255,8 @@ class Stories extends React.Component {
             alignItems: 'center',
             justifyContent: 'center',
             flex: 1,
-            backgroundColor: WHITE
-          }}
-        >
+            backgroundColor: WHITE,
+          }}>
           <Icon
             name="search"
             size={100}
@@ -281,7 +280,7 @@ class Stories extends React.Component {
         `}
         variables={{ cursor: null, count: 10, q }}
         render={data => (
-          <View style={{ flex: 1, backgroundColor: '#fff' }}>
+          <View style={{ flex: 1 }}>
             <DiscoverPostsPaginationContainer
               discussionList={data.props.feed}
               q={q}
@@ -303,12 +302,12 @@ export default class VideoPager extends React.Component {
     routes: [
       { key: 'cultures', title: 'Cultures' },
       { key: 'users', title: 'People' },
-      { key: 'stories', title: 'Stories' }
-    ]
+      { key: 'stories', title: 'Stories' },
+    ],
   }
   _handleIndexChange = index =>
     this.setState({
-      index
+      index,
     })
 
   _renderScene = ({ route }) => {
@@ -337,20 +336,19 @@ export default class VideoPager extends React.Component {
               Animated.interpolate(props.position, {
                 inputRange,
                 outputRange: inputRange.map(inputIndex =>
-                  inputIndex === i ? 255 : 0
-                )
-              })
+                  inputIndex === i ? 255 : 0,
+                ),
+              }),
             ),
             0,
-            0
+            0,
           )
 
           return (
             <TouchableOpacity
               key={i}
               style={styles.tabItem}
-              onPress={() => this.setState({ index: i })}
-            >
+              onPress={() => this.setState({ index: i })}>
               <Animated.Text style={{ color }}>{route.title}</Animated.Text>
             </TouchableOpacity>
           )
@@ -383,7 +381,7 @@ export default class VideoPager extends React.Component {
           renderTabBar={this._renderHeader}
           onIndexChange={this._handleIndexChange}
           initialLayout={initialLayout}
-          renderPager={props => <TabViewPagerPan {...props} />}
+          // renderPager={props => <TabViewPagerPan {...props} />}
         />
       </View>
     )
@@ -419,7 +417,7 @@ export default class VideoPager extends React.Component {
 //                 q={q}
 //                 itemProps={{ ...props }}
 //               />
-//               <View style={{ flex: 1, backgroundColor: '#fff' }}>
+//               <View style={{ flex: 1 }}>
 //                 <DiscoverGroupsPaginationContainer
 //                   renderHeader={_ => renderCultureHeader(q)}
 //                   groupList={data.props.feed}
@@ -442,38 +440,38 @@ const labelStyle = {
   paddingBottom: 8,
   fontSize: 15,
   color: '#000',
-  fontWeight: 'bold'
+  fontWeight: 'bold',
 }
 
 const styles = StyleSheet.create({
   white: { color: '#fff', paddingVertical: 5 },
   tabbar: {
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
   },
   tab: {
     // width: 'auto',
     backgroundColor: '#fff',
-    height: 50
+    height: 50,
   },
   indicator: {
     backgroundColor: '#000',
-    height: 2
+    height: 2,
   },
   label: {
     color: '#000',
     fontWeight: '400',
-    ...labelStyle
+    ...labelStyle,
   },
   tabBar: {
     flexDirection: 'row',
     // paddingTop: StatusBar.currentHeight,
-    ...elevation(2)
+    ...elevation(2),
   },
   tabItem: {
     flex: 1,
     alignItems: 'center',
-    padding: 16
-  }
+    padding: 16,
+  },
 })
 
 // const renderCultureHeader = q => (

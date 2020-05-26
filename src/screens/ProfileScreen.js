@@ -3,25 +3,25 @@
 import React from 'react'
 import { View } from 'react-native'
 import User from '../renderers/User'
-// import { withNavigation } from 'react-navigation'
+// import { withNavigation } from '../navigation/withNavigation'
 // import styles from '../styles'
 import Toolbar from '../components/Toolbar'
 import getNavigation from '../helpers/getNavigation'
 
 export default class ProfileScreen extends React.Component {
   renderToolbar() {
-    const { user } = this.props.navigation.state.params
+    const { user } = this.props.route.params
     const title = (user && `@${user.username}`) || 'Profile'
     return <Toolbar title={title} navIconName="md-arrow-back" showNavIcon />
   }
 
   render() {
-    const { navigation } = this.props
+    const { navigation, route } = this.props
 
     return (
       <View style={{ flex: 1 }}>
         {this.renderToolbar()}
-        <User id={navigation.state.params.id} {...getNavigation(navigation)} />
+        <User id={route.params.id} {...getNavigation(navigation)} />
       </View>
     )
   }

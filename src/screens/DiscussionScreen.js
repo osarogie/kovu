@@ -1,18 +1,14 @@
 import React from 'react'
 import { View } from 'react-native'
 import Post from '../renderers/Post'
-// import { withNavigation } from 'react-navigation'
+// import { withNavigation } from '../navigation/withNavigation'
 import styles from '../styles'
 import getNavigation from '../helpers/getNavigation'
 
-export default class DiscussionScreen extends React.Component {
-  render() {
-    const { navigation } = this.props
-
-    return (
-      <View style={styles.container}>
-        <Post id={navigation.state.params.id} {...getNavigation(navigation)} />
-      </View>
-    )
-  }
+export default function DiscussionScreen({ navigation, route }) {
+  return (
+    <View style={styles.container}>
+      <Post id={route.params.id} {...getNavigation(navigation)} />
+    </View>
+  )
 }

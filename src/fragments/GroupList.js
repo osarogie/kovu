@@ -1,12 +1,8 @@
 // @flow
 
 import React from 'react'
-import {
-  View,
-  TouchableOpacity,
-  VirtualizedList,
-} from 'react-native'
-// import { withNavigation } from 'react-navigation'
+import { View, TouchableOpacity, VirtualizedList } from 'react-native'
+// import { withNavigation } from '../navigation/withNavigation'
 import styles from '../styles'
 import LoaderBox from '../components/LoaderBox'
 import Separator from '../components/Separator'
@@ -21,7 +17,7 @@ export default class GroupList extends React.Component {
   state = {
     isFetchingTop: false,
     isLoading: false,
-    hasMore: false
+    hasMore: false,
   }
 
   onRefresh = () => {
@@ -32,12 +28,12 @@ export default class GroupList extends React.Component {
     }
 
     this.setState({
-      isFetchingTop: true
+      isFetchingTop: true,
     })
 
     this.props.relay.refetchConnection(groups.edges.length, err => {
       this.setState({
-        isFetchingTop: false
+        isFetchingTop: false,
       })
     })
   }
@@ -54,7 +50,7 @@ export default class GroupList extends React.Component {
     if (!hasMore || isLoading) {
       this.setState({
         hasMore,
-        isLoading
+        isLoading,
       })
       return
     }
@@ -63,14 +59,14 @@ export default class GroupList extends React.Component {
     this.props.relay.loadMore(10, err => {
       this.setState({
         hasMore: this.props.relay.hasMore(),
-        isLoading: this.props.relay.isLoading()
+        isLoading: this.props.relay.isLoading(),
       })
       // console.log('loadMore: ', err)
     })
 
     this.setState({
       hasMore: this.props.relay.hasMore(),
-      isLoading: this.props.relay.isLoading()
+      isLoading: this.props.relay.isLoading(),
     })
   }
 
@@ -93,7 +89,7 @@ export default class GroupList extends React.Component {
   }
 
   render() {
-    const { groupList, itemProps,  } = this.props
+    const { groupList, itemProps } = this.props
     // console.log(groupList)
     const groups = groupList.groups_in || groupList.groups
     // console.log(this.props);

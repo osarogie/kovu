@@ -4,18 +4,19 @@ import ActivityButton from '../components/ActivityButton'
 import { connect } from 'react-redux'
 import { commitMutation, createFragmentContainer, graphql } from 'react-relay'
 import { navHelper } from '../helpers/getNavigation'
-import { withNavigation } from 'react-navigation'
+import { withNavigation } from '../navigation/withNavigation'
+import { Button, Text } from 'react-native-paper'
 
 const mapStateToProps = state => ({
   night_mode: state.night_mode,
-  loggedIn: state.user.loggedIn
+  loggedIn: state.user.loggedIn,
 })
 
 function followMutation({ _id }, environment, config) {
   const variables = {
     input: {
-      id: _id
-    }
+      id: _id,
+    },
   }
 
   commitMutation(environment, {
@@ -29,15 +30,15 @@ function followMutation({ _id }, environment, config) {
         }
       }
     `,
-    ...config
+    ...config,
   })
 }
 
 function unfollowMutation({ _id }, environment, config) {
   const variables = {
     input: {
-      id: _id
-    }
+      id: _id,
+    },
   }
 
   commitMutation(environment, {
@@ -51,7 +52,7 @@ function unfollowMutation({ _id }, environment, config) {
         }
       }
     `,
-    ...config
+    ...config,
   })
 }
 
@@ -75,7 +76,7 @@ class FollowButton extends React.Component {
           },
           onError: _ => {
             this.setState({ isLoading: false })
-          }
+          },
         })
       : followMutation(user, environment, {
           onCompleted: _ => {
@@ -83,11 +84,11 @@ class FollowButton extends React.Component {
           },
           onError: _ => {
             this.setState({ isLoading: false })
-          }
+          },
         })
   }
   renderIcon() {
-    const { viewer_follows,  } = this.props.user
+    const { viewer_follows } = this.props.user
     return (
       <Icon
         name={viewer_follows ? 'user-check' : 'user-plus'}
@@ -99,30 +100,25 @@ class FollowButton extends React.Component {
   render() {
     const { icon } = this.props
     const { viewer_follows, follows_viewer } = this.props.user
-    const color = viewer_follows ? '#fff' : '#05f'
-    const backgroundColor = viewer_follows ? '#05f' : 'transparent'
     const title = viewer_follows
       ? 'Following'
       : follows_viewer
-        ? 'Follow Back'
-        : 'Follow'
+      ? 'Follow Back'
+      : 'Follow'
     return (
-      <ActivityButton
+      <Button
+        mode="contained"
         onPress={this.toggleFollow}
-        indicatorColor={color}
-        title={title}
         {...this.props}
-        textStyle={{ color, ...this.props.textStyle }}
-        buttonStyle={{
-          backgroundColor,
-          borderRadius: 5,
-          borderWidth: 1,
-          borderColor: color,
-          ...this.props.buttonStyle
+        style={{
+          marginTop: 20,
+          height: 40,
         }}
-        isLoading={this.state.isLoading}
-        icon={icon ? this.renderIcon() : null}
-      />
+        contentStyle={{ height: 40, paddingHorizontal: 20 }}
+        loading={this.state.isLoading}
+        icon={icon ? this.renderIcon() : null}>
+        {icon ? this.renderIcon() : title}
+      </Button>
     )
   }
 }
@@ -135,5 +131,5 @@ export default createFragmentContainer(
       viewer_follows
       follows_viewer
     }
-  `
+  `,
 )

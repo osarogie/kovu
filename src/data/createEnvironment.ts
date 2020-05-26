@@ -1,11 +1,16 @@
-import { Environment, Network, RecordSource, Store } from 'relay-runtime'
-import RelayQueryResponseCache from 'relay-runtime/lib/RelayQueryResponseCache'
+import {
+  Environment,
+  Network,
+  RecordSource,
+  Store,
+  QueryResponseCache,
+} from 'relay-runtime'
 
 const prod = process.env.NODE_ENV === 'production'
 const API_HOST = prod ? 'https://data.thecommunity.ng' : 'http://localhost:5000'
 
 const ttl = 3 * 60 * 1000
-const cache = new RelayQueryResponseCache({ size: 1024, ttl })
+const cache = new QueryResponseCache({ size: 1024, ttl })
 
 const source = new RecordSource()
 const store = new Store(source)
@@ -23,7 +28,7 @@ export function createEnvironment({ headers }: IOptions): Environment {
     operation,
     variables: any,
     cacheConfig?: ICacheConfig,
-    uploadables
+    uploadables,
   ) {
     const queryID = operation.text
     const isMutation = operation.operationKind === 'mutation'
@@ -40,12 +45,12 @@ export function createEnvironment({ headers }: IOptions): Environment {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        ...headers
+        ...headers,
       },
       body: JSON.stringify({
         query: operation.text,
-        variables
-      })
+        variables,
+      }),
     })
 
     const finalResult = await response.json()

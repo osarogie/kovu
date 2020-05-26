@@ -1,4 +1,3 @@
-import { createSwitchNavigator } from 'react-navigation'
 import { Platform } from 'react-native'
 import LoginScreen from '../screens/LoginScreen'
 

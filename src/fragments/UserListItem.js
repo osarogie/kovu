@@ -6,7 +6,7 @@ import {
   Image,
   // ViewPropTypes,
   PixelRatio,
-  TouchableHighlight
+  TouchableHighlight,
 } from 'react-native'
 import styles from '../styles'
 import excerptStyles from '../styles/excerptStyles'
@@ -16,16 +16,16 @@ import Avatar from '../components/Avatar'
 import FollowButton from './FollowButton'
 import { connect } from 'react-redux'
 import { navHelper } from '../helpers/getNavigation'
-import { withNavigation } from 'react-navigation'
+import { withNavigation } from '../navigation/withNavigation'
 
 const mapStateToProps = state => ({
   night_mode: state.night_mode,
   loggedIn: state.user.loggedIn,
-  current_user: state.user.user
+  current_user: state.user.user,
 })
 class UserListItem extends React.Component {
   clickableProps = {
-    underlayColor: 'whitesmoke'
+    underlayColor: 'whitesmoke',
   }
 
   openProfile = _ => navHelper(this).openProfile(this.props.user)
@@ -52,11 +52,10 @@ class UserListItem extends React.Component {
             // padding: 17,
             // marginTop: 10,
             backgroundColor: '#fff',
-            flex: 1
+            flex: 1,
             // elevation: 3,
             // borderRadius: 5
-          }}
-        >
+          }}>
           <View style={{ paddingHorizontal: 17, paddingVertical: 14, flex: 1 }}>
             <View style={{ flexDirection: 'row', flex: 1 }}>
               <Avatar
@@ -74,10 +73,9 @@ class UserListItem extends React.Component {
                     marginRight: 5,
                     color: '#000',
                     fontSize: 16,
-                    fontWeight: 'bold'
+                    fontWeight: 'bold',
                     // textAlign: 'center'
-                  }}
-                >
+                  }}>
                   {user.name}
                 </Text>
                 <Text
@@ -88,10 +86,9 @@ class UserListItem extends React.Component {
                     // marginLeft: 10,
                     flex: 1,
                     marginRight: 5,
-                    fontSize: 14
+                    fontSize: 14,
                     // textAlign: 'center'
-                  }}
-                >
+                  }}>
                   {user.bio}
                 </Text>
               </View>
@@ -111,9 +108,8 @@ class UserListItem extends React.Component {
           backgroundColor: '#fff',
           flex: 1,
           elevation: 3,
-          borderRadius: 5
-        }}
-      >
+          borderRadius: 5,
+        }}>
         <View style={{ width: 200, padding: 17, flex: 1 }}>
           <View style={{ flexDirection: 'row', flex: 1 }}>
             <Text
@@ -125,10 +121,9 @@ class UserListItem extends React.Component {
                 marginRight: 5,
                 color: '#000',
                 fontSize: 16,
-                fontWeight: 'bold'
+                fontWeight: 'bold',
                 // textAlign: 'center'
-              }}
-            >
+              }}>
               {user.name}
             </Text>
             <Avatar
@@ -149,10 +144,9 @@ class UserListItem extends React.Component {
                 // marginLeft: 10,
                 flex: 1,
                 marginRight: 5,
-                fontSize: 14
+                fontSize: 14,
                 // textAlign: 'center'
-              }}
-            >
+              }}>
               {user.bio}
             </Text>
           </View>
@@ -175,5 +169,5 @@ export default createFragmentContainer(
       profile_picture_name
       ...FollowButton_user
     }
-  `
+  `,
 )

@@ -1,8 +1,8 @@
 // @flow
 
 import React from 'react'
-import { View, ScrollView, ToastAndroid,  } from 'react-native'
-import { Bar } from 'react-native-progress'
+import { View, ScrollView, ToastAndroid } from 'react-native'
+import Bar from 'react-native-progress/Bar'
 import ActivityButton from '../components/ActivityButton'
 import styles from '../styles'
 import TextInput from '../components/TextInput'
@@ -13,11 +13,11 @@ import { createFragmentContainer, graphql, commitMutation } from 'react-relay'
 import { connect } from 'react-redux'
 
 const mapStateToProps = state => ({
-  night_mode: state.night_mode
+  night_mode: state.night_mode,
 })
 function UpdatePassword(input, environment, config) {
   const variables = {
-    input: input
+    input: input,
   }
 
   commitMutation(environment, {
@@ -29,14 +29,14 @@ function UpdatePassword(input, environment, config) {
         }
       }
     `,
-    ...config
+    ...config,
   })
 }
 class ChangePassword extends React.Component {
   state = {
     current_password: null,
     new_password: null,
-    new_password_confirmation: null
+    new_password_confirmation: null,
   }
   inputProps = {
     style: {
@@ -47,15 +47,15 @@ class ChangePassword extends React.Component {
       // opacity: 0.9,
       borderRadius: 0,
 
-      backgroundColor: '#fff'
+      backgroundColor: '#fff',
     },
     inputProps: {
       placeholderTextColor: '#333',
-      underlineColorAndroid: '#000'
+      underlineColorAndroid: '#000',
     },
     inputStyle: {
-      color: '#000'
-    }
+      color: '#000',
+    },
   }
 
   buttonProps = {
@@ -64,8 +64,8 @@ class ChangePassword extends React.Component {
     textStyle: {
       textAlign: 'center',
       color: '#fff',
-      fontSize: 16
-    }
+      fontSize: 16,
+    },
   }
   constructor(props) {
     super(props)
@@ -82,7 +82,7 @@ class ChangePassword extends React.Component {
     const {
       current_password,
       new_password,
-      new_password_confirmation
+      new_password_confirmation,
     } = this.state
 
     if (current_password && new_password && new_password_confirmation) {
@@ -103,8 +103,8 @@ class ChangePassword extends React.Component {
           onError: _ => {
             this.setState({ isSaving: false })
             this.notify('Password update failed')
-          }
-        }
+          },
+        },
       )
     } else {
       this.notify('Fill all boxes')
@@ -141,8 +141,7 @@ class ChangePassword extends React.Component {
         <View style={{ height: 2 }}>{this.renderProgress()}</View>
         <ScrollView
           style={{ flex: 1, backgroundColor }}
-          contentContainerStyle={{ alignItems: 'center' }}
-        >
+          contentContainerStyle={{ alignItems: 'center' }}>
           <View style={{ flex: 1, padding: 40, alignItems: 'center' }}>
             <TextInput
               {...this.inputProps}
@@ -195,7 +194,7 @@ const ChangePasswordFragmentContainer = createFragmentContainer(
       id
       _id
     }
-  `
+  `,
 )
 
 export default ({ api_key, ...props }) => (

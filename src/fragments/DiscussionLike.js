@@ -5,18 +5,18 @@ import excerptStyles from '../styles/excerptStyles'
 import { connect } from 'react-redux'
 import { commitMutation, createFragmentContainer, graphql } from 'react-relay'
 import { navHelper } from '../helpers/getNavigation'
-import { withNavigation } from 'react-navigation'
+import { withNavigation } from '../navigation/withNavigation'
 import { BLACK } from '../ui'
 
 const mapStateToProps = state => ({
   night_mode: state.night_mode,
-  loggedIn: state.user.loggedIn
+  loggedIn: state.user.loggedIn,
 })
 function likeMutation({ _id, id, viewer_does_like, like_count }, environment) {
   const variables = {
     input: {
-      id: _id
-    }
+      id: _id,
+    },
   }
 
   const optimisticResponse = {
@@ -25,9 +25,9 @@ function likeMutation({ _id, id, viewer_does_like, like_count }, environment) {
         _id,
         id,
         viewer_does_like: !viewer_does_like,
-        like_count: like_count + 1
-      }
-    }
+        like_count: like_count + 1,
+      },
+    },
   }
 
   commitMutation(environment, {
@@ -43,18 +43,18 @@ function likeMutation({ _id, id, viewer_does_like, like_count }, environment) {
           }
         }
       }
-    `
+    `,
   })
 }
 
 function unlikeMutation(
   { _id, id, viewer_does_like, like_count },
-  environment
+  environment,
 ) {
   const variables = {
     input: {
-      id: _id
-    }
+      id: _id,
+    },
   }
 
   const optimisticResponse = {
@@ -63,9 +63,9 @@ function unlikeMutation(
         _id,
         id,
         viewer_does_like: !viewer_does_like,
-        like_count: like_count - 1
-      }
-    }
+        like_count: like_count - 1,
+      },
+    },
   }
 
   commitMutation(environment, {
@@ -81,7 +81,7 @@ function unlikeMutation(
           }
         }
       }
-    `
+    `,
   })
 }
 class DiscussionLike extends React.Component {
@@ -110,12 +110,11 @@ class DiscussionLike extends React.Component {
             flexDirection: stacked ? 'column' : 'row',
             alignItems: 'center',
             paddingTop: 10,
-            paddingBottom: 10
+            paddingBottom: 10,
           },
-          style
+          style,
         ]}
-        onPress={this.toggleLike}
-      >
+        onPress={this.toggleLike}>
         <Icon
           name={viewer_does_like ? 'md-heart' : 'md-heart-empty'}
           style={excerptStyles.controlIcon}
@@ -141,5 +140,5 @@ export default createFragmentContainer(
       viewer_does_like
       like_count
     }
-  `
+  `,
 )
