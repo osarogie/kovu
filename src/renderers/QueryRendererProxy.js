@@ -1,26 +1,15 @@
-// @flow
-
 import React, { useMemo, useState, useCallback } from 'react'
-import createEnvironment from '../relay-environment'
 import { QueryRenderer } from 'react-relay'
-import { connect } from 'react-redux'
 import LoaderBox from '../components/LoaderBox'
+import { useEnvironment } from '../providers/SessionProvider'
 
-const mapStateToProps = state => ({ api_key: state.user.api_key })
-
-function QueryRendererProxy({ api_key, render, ...props }) {
+function QueryRendererProxy({ render, ...props }) {
   const [resetValue, setResetValue] = useState()
-  const environment = useMemo(() => {
-    var config = {}
-    if (api_key) {
-      config = { headers: { Authorization: `Token token=${api_key}` } }
-    }
-    return createEnvironment(config)
-  }, [api_key])
+  const environment = useEnvironment()
 
   const reloadRenderer = useCallback(() => {
     setResetValue(Math.random() * 100)
-  })
+  }, [])
 
   const renderPage = useCallback(
     ({ error, props, retry }) => {
@@ -54,4 +43,4 @@ function QueryRendererProxy({ api_key, render, ...props }) {
   )
 }
 
-export default connect(mapStateToProps)(QueryRendererProxy)
+export default QueryRendererProxy

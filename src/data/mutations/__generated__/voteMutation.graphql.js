@@ -9,59 +9,40 @@
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
 type PostListItem_discussion$ref = any;
-type UserListItem_user$ref = any;
-export type CreateDiscussionInput = {|
+export type VoteInput = {|
   clientMutationId?: ?string,
-  name: string,
-  body: string,
-  group_id?: ?string,
-  photo?: ?string,
-  is_html?: ?boolean,
-  hide_poll?: ?boolean,
-  poll_close_date?: ?string,
-  poll_close_time?: ?string,
-  discussion_options_attributes?: ?$ReadOnlyArray<?DiscussionOptionsInputType>,
+  option: string,
 |};
-export type DiscussionOptionsInputType = {|
-  id?: ?string,
-  title: string,
-  _destroy: string,
+export type voteMutationVariables = {|
+  input: VoteInput
 |};
-export type CreateDiscussionMutationVariables = {|
-  input: CreateDiscussionInput
-|};
-export type CreateDiscussionMutationResponse = {|
-  +createDiscussion: ?{|
-    +success: ?boolean,
+export type voteMutationResponse = {|
+  +vote: ?{|
     +discussion: ?{|
-      +user: ?{|
-        +$fragmentRefs: UserListItem_user$ref
-      |},
-      +$fragmentRefs: PostListItem_discussion$ref,
+      +$fragmentRefs: PostListItem_discussion$ref
     |},
+    +success: ?boolean,
+    +message: ?string,
   |}
 |};
-export type CreateDiscussionMutation = {|
-  variables: CreateDiscussionMutationVariables,
-  response: CreateDiscussionMutationResponse,
+export type voteMutation = {|
+  variables: voteMutationVariables,
+  response: voteMutationResponse,
 |};
 */
 
 
 /*
-mutation CreateDiscussionMutation(
-  $input: CreateDiscussionInput!
+mutation voteMutation(
+  $input: VoteInput!
 ) {
-  createDiscussion(input: $input) {
-    success
+  vote(input: $input) {
     discussion {
       ...PostListItem_discussion
-      user {
-        ...UserListItem_user
-        id
-      }
       id
     }
+    success
+    message
   }
 }
 
@@ -83,12 +64,6 @@ fragment CommentListItem_comment on Comment {
     username
     profile_picture_name
   }
-}
-
-fragment FollowButton_user on User {
-  _id
-  viewer_follows
-  follows_viewer
 }
 
 fragment Poll_discussion on Discussion {
@@ -165,16 +140,6 @@ fragment PostListItem_discussion on Discussion {
   has_poll
   ...Poll_discussion
 }
-
-fragment UserListItem_user on User {
-  id
-  _id
-  name
-  username
-  bio
-  profile_picture_name
-  ...FollowButton_user
-}
 */
 
 const node/*: ConcreteRequest*/ = (function(){
@@ -183,7 +148,7 @@ var v0 = [
     "defaultValue": null,
     "kind": "LocalArgument",
     "name": "input",
-    "type": "CreateDiscussionInput!"
+    "type": "VoteInput!"
   }
 ],
 v1 = [
@@ -204,24 +169,31 @@ v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "message",
   "storageKey": null
 },
 v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "_id",
+  "name": "id",
   "storageKey": null
 },
 v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "_id",
+  "storageKey": null
+},
+v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v6 = [
+v7 = [
   {
     "kind": "Literal",
     "name": "by_latest",
@@ -233,39 +205,53 @@ v6 = [
     "value": 3
   }
 ],
-v7 = {
+v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "hasNextPage",
   "storageKey": null
 },
-v8 = {
+v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "endCursor",
   "storageKey": null
 },
-v9 = {
+v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "created_at",
   "storageKey": null
 },
-v10 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "username",
-  "storageKey": null
-},
 v11 = {
   "alias": null,
   "args": null,
-  "kind": "ScalarField",
-  "name": "profile_picture_name",
+  "concreteType": "User",
+  "kind": "LinkedField",
+  "name": "user",
+  "plural": false,
+  "selections": [
+    (v4/*: any*/),
+    (v5/*: any*/),
+    (v6/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "username",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "profile_picture_name",
+      "storageKey": null
+    }
+  ],
   "storageKey": null
 },
 v12 = {
@@ -301,17 +287,16 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "CreateDiscussionMutation",
+    "name": "voteMutation",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "CreateDiscussionPayload",
+        "concreteType": "VotePayload",
         "kind": "LinkedField",
-        "name": "createDiscussion",
+        "name": "vote",
         "plural": false,
         "selections": [
-          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -321,29 +306,15 @@ return {
             "plural": false,
             "selections": [
               {
-                "alias": null,
-                "args": null,
-                "concreteType": "User",
-                "kind": "LinkedField",
-                "name": "user",
-                "plural": false,
-                "selections": [
-                  {
-                    "args": null,
-                    "kind": "FragmentSpread",
-                    "name": "UserListItem_user"
-                  }
-                ],
-                "storageKey": null
-              },
-              {
                 "args": null,
                 "kind": "FragmentSpread",
                 "name": "PostListItem_discussion"
               }
             ],
             "storageKey": null
-          }
+          },
+          (v2/*: any*/),
+          (v3/*: any*/)
         ],
         "storageKey": null
       }
@@ -354,17 +325,16 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "CreateDiscussionMutation",
+    "name": "voteMutation",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "CreateDiscussionPayload",
+        "concreteType": "VotePayload",
         "kind": "LinkedField",
-        "name": "createDiscussion",
+        "name": "vote",
         "plural": false,
         "selections": [
-          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -373,9 +343,9 @@ return {
             "name": "discussion",
             "plural": false,
             "selections": [
-              (v3/*: any*/),
               (v4/*: any*/),
               (v5/*: any*/),
+              (v6/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -412,7 +382,7 @@ return {
               },
               {
                 "alias": null,
-                "args": (v6/*: any*/),
+                "args": (v7/*: any*/),
                 "concreteType": "CommentConnection",
                 "kind": "LinkedField",
                 "name": "comments",
@@ -426,8 +396,8 @@ return {
                     "name": "pageInfo",
                     "plural": false,
                     "selections": [
-                      (v7/*: any*/),
-                      (v8/*: any*/)
+                      (v8/*: any*/),
+                      (v9/*: any*/)
                     ],
                     "storageKey": null
                   },
@@ -447,7 +417,7 @@ return {
                         "name": "node",
                         "plural": false,
                         "selections": [
-                          (v3/*: any*/),
+                          (v4/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -455,7 +425,7 @@ return {
                             "name": "excerpt",
                             "storageKey": null
                           },
-                          (v4/*: any*/),
+                          (v5/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -463,7 +433,7 @@ return {
                             "name": "body",
                             "storageKey": null
                           },
-                          (v9/*: any*/),
+                          (v10/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -479,27 +449,12 @@ return {
                             "name": "discussion",
                             "plural": false,
                             "selections": [
-                              (v3/*: any*/),
-                              (v4/*: any*/)
-                            ],
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "concreteType": "User",
-                            "kind": "LinkedField",
-                            "name": "user",
-                            "plural": false,
-                            "selections": [
-                              (v3/*: any*/),
                               (v4/*: any*/),
-                              (v5/*: any*/),
-                              (v10/*: any*/),
-                              (v11/*: any*/)
+                              (v5/*: any*/)
                             ],
                             "storageKey": null
                           },
+                          (v11/*: any*/),
                           (v12/*: any*/)
                         ],
                         "storageKey": null
@@ -513,51 +468,15 @@ return {
               },
               {
                 "alias": null,
-                "args": (v6/*: any*/),
+                "args": (v7/*: any*/),
                 "filters": [],
                 "handle": "connection",
                 "key": "PostListItem_comments",
                 "kind": "LinkedHandle",
                 "name": "comments"
               },
-              (v9/*: any*/),
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "User",
-                "kind": "LinkedField",
-                "name": "user",
-                "plural": false,
-                "selections": [
-                  (v3/*: any*/),
-                  (v4/*: any*/),
-                  (v5/*: any*/),
-                  (v10/*: any*/),
-                  (v11/*: any*/),
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "bio",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "viewer_follows",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "follows_viewer",
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              },
+              (v10/*: any*/),
+              (v11/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -566,9 +485,9 @@ return {
                 "name": "group",
                 "plural": false,
                 "selections": [
-                  (v3/*: any*/),
                   (v4/*: any*/),
                   (v5/*: any*/),
+                  (v6/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -587,8 +506,8 @@ return {
                 "name": "feature_photo",
                 "plural": false,
                 "selections": [
-                  (v3/*: any*/),
                   (v4/*: any*/),
+                  (v5/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -603,7 +522,7 @@ return {
                     "name": "width",
                     "storageKey": null
                   },
-                  (v5/*: any*/)
+                  (v6/*: any*/)
                 ],
                 "storageKey": null
               },
@@ -674,8 +593,8 @@ return {
                         "name": "node",
                         "plural": false,
                         "selections": [
-                          (v3/*: any*/),
                           (v4/*: any*/),
+                          (v5/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -707,8 +626,8 @@ return {
                     "name": "pageInfo",
                     "plural": false,
                     "selections": [
-                      (v8/*: any*/),
-                      (v7/*: any*/)
+                      (v9/*: any*/),
+                      (v8/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -726,7 +645,9 @@ return {
               }
             ],
             "storageKey": null
-          }
+          },
+          (v2/*: any*/),
+          (v3/*: any*/)
         ],
         "storageKey": null
       }
@@ -735,13 +656,13 @@ return {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "CreateDiscussionMutation",
+    "name": "voteMutation",
     "operationKind": "mutation",
-    "text": "mutation CreateDiscussionMutation(\n  $input: CreateDiscussionInput!\n) {\n  createDiscussion(input: $input) {\n    success\n    discussion {\n      ...PostListItem_discussion\n      user {\n        ...UserListItem_user\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment CommentListItem_comment on Comment {\n  id\n  _id\n  body\n  created_at\n  discussion_id\n  excerpt\n  discussion {\n    id\n    _id\n  }\n  user {\n    id\n    _id\n    name\n    username\n    profile_picture_name\n  }\n}\n\nfragment FollowButton_user on User {\n  _id\n  viewer_follows\n  follows_viewer\n}\n\nfragment Poll_discussion on Discussion {\n  voting_has_ended\n  viewer_has_voted\n  hide_votes\n  has_poll\n  viewer_owns\n  vote_count\n  poll_closes_at\n  poll(first: 20) {\n    edges {\n      node {\n        id\n        _id\n        title\n        vote_count\n        viewer_selected\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment PostListItem_discussion on Discussion {\n  id\n  _id\n  name\n  public_url\n  excerpt(size: 20)\n  word_count\n  comment_count\n  comments(by_latest: true, first: 3) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        excerpt\n        ...CommentListItem_comment\n        __typename\n      }\n      cursor\n    }\n  }\n  created_at\n  user {\n    id\n    _id\n    name\n    username\n    profile_picture_name\n  }\n  group {\n    id\n    _id\n    name\n    permalink\n  }\n  feature_photo {\n    id\n    _id\n    height\n    width\n    name\n  }\n  has_poll\n  ...Poll_discussion\n}\n\nfragment UserListItem_user on User {\n  id\n  _id\n  name\n  username\n  bio\n  profile_picture_name\n  ...FollowButton_user\n}\n"
+    "text": "mutation voteMutation(\n  $input: VoteInput!\n) {\n  vote(input: $input) {\n    discussion {\n      ...PostListItem_discussion\n      id\n    }\n    success\n    message\n  }\n}\n\nfragment CommentListItem_comment on Comment {\n  id\n  _id\n  body\n  created_at\n  discussion_id\n  excerpt\n  discussion {\n    id\n    _id\n  }\n  user {\n    id\n    _id\n    name\n    username\n    profile_picture_name\n  }\n}\n\nfragment Poll_discussion on Discussion {\n  voting_has_ended\n  viewer_has_voted\n  hide_votes\n  has_poll\n  viewer_owns\n  vote_count\n  poll_closes_at\n  poll(first: 20) {\n    edges {\n      node {\n        id\n        _id\n        title\n        vote_count\n        viewer_selected\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment PostListItem_discussion on Discussion {\n  id\n  _id\n  name\n  public_url\n  excerpt(size: 20)\n  word_count\n  comment_count\n  comments(by_latest: true, first: 3) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        excerpt\n        ...CommentListItem_comment\n        __typename\n      }\n      cursor\n    }\n  }\n  created_at\n  user {\n    id\n    _id\n    name\n    username\n    profile_picture_name\n  }\n  group {\n    id\n    _id\n    name\n    permalink\n  }\n  feature_photo {\n    id\n    _id\n    height\n    width\n    name\n  }\n  has_poll\n  ...Poll_discussion\n}\n"
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'aa2d980cf620a2a0cea047193aa3faa0';
+(node/*: any*/).hash = 'cba61996c602559fa841bd74800f645d';
 
 module.exports = node;

@@ -35,16 +35,6 @@ function Authenticator({ goBack, dispatch }) {
   const [isLoginLoading, set_isLoginLoading] = useState(false)
   const [isRegisterLoading, set_isRegisterLoading] = useState(false)
 
-  const buttonProps = {
-    buttonStyle: styles.button,
-    loadingBackground: '#b2b2b2',
-    textStyle: {
-      textAlign: 'center',
-      color: colors.text,
-      fontSize: 16,
-    },
-  }
-
   const infoStyles = {
     textAlign: 'center',
     color: '#ccc',
@@ -120,6 +110,7 @@ function Authenticator({ goBack, dispatch }) {
   }
 
   const storeSession = response => {
+    AsyncStorage.setItem('token', response.api_key)
     dispatch(
       setUser(
         { ...response.user, _id: `${response.user.id}` },
@@ -165,6 +156,7 @@ function Authenticator({ goBack, dispatch }) {
           placeholder="Email"
           // ref={component => (_email = component)}
           onChangeText={set_email}
+          autoCapitalize="none"
           keyboardType="email-address"
           androidIcon="email"
           value={email}
@@ -174,6 +166,7 @@ function Authenticator({ goBack, dispatch }) {
           {...inputProps}
           placeholder="Password"
           androidIcon="lock"
+          autoCapitalize="none"
           // ref={component => (_r_password = component)}
           secureTextEntry={true}
           value={r_password}
@@ -222,6 +215,7 @@ function Authenticator({ goBack, dispatch }) {
           key="login$username"
           onChangeText={set_username}
           keyboardType="email-address"
+          autoCapitalize="none"
           value={username}
           // onSubmitEditing={() => _l_password.focus()}
         />
@@ -229,6 +223,7 @@ function Authenticator({ goBack, dispatch }) {
           {...inputProps}
           placeholder="Password"
           key="login$password"
+          autoCapitalize="none"
           androidIcon="lock"
           // ref={component => (_l_password = component)}
           secureTextEntry={true}

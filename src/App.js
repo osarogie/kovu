@@ -6,7 +6,7 @@ import { Provider as ReduxProvider } from 'react-redux'
 import getStore from './store'
 import { ThemeProvider } from './providers/ThemeProvider'
 import { CustomStatusBar } from './components/CustomStatusBar'
-import { ViewerProvider } from './providers/ViewerProvider'
+import { SessionProvider } from './providers/SessionProvider'
 import { RootNavigator } from './navigation/RootNavigator'
 
 enableScreens()
@@ -22,12 +22,12 @@ export default function App() {
   return (
     <ReduxProvider store={store}>
       <ThemeProvider>
-        <ViewerProvider>
+        <SessionProvider>
           <SafeAreaView style={{ flex: 1 }}>
             <CustomStatusBar />
             <RootNavigator uriPrefix={prefix} />
           </SafeAreaView>
-        </ViewerProvider>
+        </SessionProvider>
       </ThemeProvider>
     </ReduxProvider>
   )

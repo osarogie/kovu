@@ -1,9 +1,9 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import Authenticator from '../components/Authenticator'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useTheme } from '../providers/ThemeProvider'
 import { Appbar } from 'react-native-paper'
+import { ScrollView } from 'react-native-gesture-handler'
 
 export default function LoginScreen({ navigation }) {
   const { colors } = useTheme()
@@ -20,11 +20,8 @@ export default function LoginScreen({ navigation }) {
         color={colors.text}
         style={{ margin: 10 }}
       />
-      <KeyboardAwareScrollView
-        onKeyboardWillShow={frames => {
-          console.log('Keyboard event', frames)
-        }}
-        resetScrollToCoords={{ x: 0, y: 0 }}
+      <ScrollView
+        keyboardShouldPersistTaps={'handled'}
         contentContainerStyle={{
           alignItems: 'center',
         }}
@@ -36,7 +33,7 @@ export default function LoginScreen({ navigation }) {
               /> */}
           <Authenticator goBack={goBack} />
         </View>
-      </KeyboardAwareScrollView>
+      </ScrollView>
     </View>
   )
 }

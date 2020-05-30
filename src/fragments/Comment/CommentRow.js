@@ -11,7 +11,7 @@ import { View } from '@shoutem/ui/components/View'
 import { TouchableOpacity } from '@shoutem/ui/components/TouchableOpacity'
 
 const mapStateToProps = state => ({
-  night_mode: state.night_mode
+  night_mode: state.night_mode,
 })
 
 class CommentRow extends React.PureComponent {
@@ -44,9 +44,8 @@ class CommentRow extends React.PureComponent {
   }
 }
 
-export default createFragmentContainer(
-  connect(mapStateToProps)(CommentRow),
-  graphql`
+export default createFragmentContainer(connect(mapStateToProps)(CommentRow), {
+  comment: graphql`
     fragment CommentRow_comment on Comment {
       id
       _id
@@ -65,5 +64,5 @@ export default createFragmentContainer(
         profile_picture_name
       }
     }
-  `
-)
+  `,
+})

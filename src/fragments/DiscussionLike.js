@@ -1,12 +1,13 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { TouchableOpacity, Text } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import excerptStyles from '../styles/excerptStyles'
 import { connect } from 'react-redux'
 import { commitMutation, createFragmentContainer, graphql } from 'react-relay'
-import { navHelper } from '../helpers/getNavigation'
+import getNavigation, { navHelper } from '../helpers/getNavigation'
 import { withNavigation } from '../navigation/withNavigation'
 import { BLACK } from '../ui'
+import { useTheme } from 'react-native-paper'
 
 const mapStateToProps = state => ({
   night_mode: state.night_mode,
@@ -84,61 +85,74 @@ function unlikeMutation(
     `,
   })
 }
-class DiscussionLike extends React.Component {
-  toggleLike = () => {
-    if (!this.props.loggedIn) {
-      navHelper(this).openLogin()
+
+function DiscussionLike({
+  loggedIn,
+  relay,
+  style,
+  size,
+  hideCount,
+  discussion,
+  stacked,
+  navigation,
+}) {
+  const { viewer_does_like, like_count } = discussion
+  const { colors } = useTheme()
+
+  const toggleLike = useCallback(() => {
+    if (!loggedIn) {
+      getNavigation(navigation).openLogin()
       return
     }
 
-    const { discussion } = this.props
-    const { environment } = this.props.relay
-    const { viewer_does_like } = discussion
+    const { environment } = relay
     viewer_does_like
       ? unlikeMutation(discussion, environment)
       : likeMutation(discussion, environment)
-  }
-  render() {
-    const { style, size, hideCount, discussion, stacked } = this.props
-    const { viewer_does_like, like_count } = discussion
+  }, [loggedIn, discussion, navigation, relay, viewer_does_like])
 
-    const color = viewer_does_like ? BLACK : BLACK
-    return (
-      <TouchableOpacity
-        style={[
-          {
-            flexDirection: stacked ? 'column' : 'row',
-            alignItems: 'center',
-            paddingTop: 10,
-            paddingBottom: 10,
-          },
-          style,
-        ]}
-        onPress={this.toggleLike}>
-        <Icon
-          name={viewer_does_like ? 'md-heart' : 'md-heart-empty'}
-          style={excerptStyles.controlIcon}
-          size={size || 23}
-          color={color}
-        />
-        {hideCount ? null : (
-          <Text style={{ marginLeft: stacked ? 0 : 7, fontSize: 15, color }}>
-            {like_count}
-          </Text>
-        )}
-      </TouchableOpacity>
-    )
-  }
+  return (
+    <TouchableOpacity
+      style={[
+        {
+          flexDirection: stacked ? 'column' : 'row',
+          alignItems: 'center',
+          paddingTop: 10,
+          paddingBottom: 10,
+        },
+        style,
+      ]}
+      onPress={toggleLike}>
+      <Icon
+        name={viewer_does_like ? 'md-heart' : 'md-heart-empty'}
+        style={excerptStyles.controlIcon}
+        size={size || 23}
+        color={colors.text}
+      />
+      {hideCount ? null : (
+        <Text
+          style={{
+            marginLeft: stacked ? 0 : 7,
+            fontSize: 15,
+            color: colors.text,
+          }}>
+          {like_count}
+        </Text>
+      )}
+    </TouchableOpacity>
+  )
 }
 
 export default createFragmentContainer(
   withNavigation(connect(mapStateToProps)(DiscussionLike)),
-  graphql`
-    fragment DiscussionLike_discussion on Discussion {
-      id
-      _id
-      viewer_does_like
-      like_count
-    }
-  `,
+  {
+    discussion: graphql`
+      fragment DiscussionLike_discussion on Discussion {
+        id
+        _id
+        viewer_does_like
+        like_count
+      }
+    `,
+  },
 )

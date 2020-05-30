@@ -1,10 +1,10 @@
 import React from 'react'
 import Image from 'react-native-image-progress'
-import ProgressBar from 'react-native-progress/Bar'
+import { ActivityIndicator } from 'react-native'
 
 export default props => (
   <Image
-    indicator={ProgressBar}
+    indicator={() => <ActivityIndicator color="#fff" size={30} />}
     indicatorProps={{ color: '#fff' }}
     {...props}
   />

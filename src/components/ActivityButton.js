@@ -4,55 +4,62 @@ import {
   ActivityIndicator,
   Platform,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
 } from 'react-native'
+import { useTheme, Text } from 'react-native-paper'
 
-export default class ActivityButton extends React.Component {
-  renderLoading() {
-    const { icon } = this.props
-    // console.log(this.props)
-    if (this.props.isLoading === false && icon) {
+export default function ActivityButton({
+  icon,
+  title,
+  isLoading,
+  buttonStyle,
+  loadingBackground,
+  onPress,
+  textStyle,
+  indicatorColor,
+  indicatorSize,
+  activityIndicatorStyle,
+}) {
+  const { colors } = useTheme()
+  const renderLoading = () => {
+    if (isLoading === false && icon) {
       return icon
-    } else if (this.props.isLoading === false) {
-      return (
-        <Text style={[styles.text, this.props.textStyle]}>
-          {this.props.title}
-        </Text>
-      )
+    } else if (isLoading === false) {
+      return <Text style={[styles.text, textStyle]}>{title}</Text>
     }
     return (
       <View>
-        <Text style={[styles.text, this.props.textStyle, { opacity: 0 }]}>
-          {this.props.title}
-        </Text>
+        <Text style={[styles.text, textStyle, { opacity: 0 }]}>{title}</Text>
         <ActivityIndicator
-          color={this.props.indicatorColor}
-          size={this.props.indicatorSize}
-          style={[styles.activityIndicator, this.props.activityIndicatorStyle]}
+          color={indicatorColor || colors.text}
+          size={indicatorSize}
+          style={[styles.activityIndicator, activityIndicatorStyle]}
         />
       </View>
     )
   }
-  render() {
-    const extraStyles =
-      this.props.isLoading && this.props.loadingBackground
-        ? {
-            backgroundColor: this.props.loadingBackground,
-          }
-        : {}
+  const extraStyles =
+    isLoading && loadingBackground
+      ? {
+          backgroundColor: loadingBackground,
+        }
+      : {}
 
-    return (
-      <TouchableOpacity
-        onPress={this.props.onPress}
-        disabled={this.props.isLoading === true}
-        accessibilityTraits="button"
-        style={[styles.wrapper, this.props.buttonStyle, extraStyles]}>
-        {this.renderLoading()}
-      </TouchableOpacity>
-    )
-  }
+  return (
+    <TouchableOpacity
+      onPress={onPress}
+      disabled={isLoading === true}
+      accessibilityTraits="button"
+      style={[
+        styles.wrapper,
+        buttonStyle,
+        extraStyles,
+        { backgroundColor: colors.background },
+      ]}>
+      {renderLoading()}
+    </TouchableOpacity>
+  )
 }
 
 const styles = StyleSheet.create({
@@ -74,7 +81,6 @@ const styles = StyleSheet.create({
   },
   text: {
     backgroundColor: 'transparent',
-    color: '#fff',
     fontSize: 15,
   },
   activityIndicator: {

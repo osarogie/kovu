@@ -14,19 +14,16 @@ import { withNavigation } from '../navigation/withNavigation'
 import getNavigation, { navHelper } from '../helpers/getNavigation'
 import { createGroupListItemFragment } from './GroupListItem'
 import { useNavigation } from '@react-navigation/core'
-import { Text } from 'react-native-paper'
+import { Text, useTheme } from 'react-native-paper'
 
-function VerticalGroupListItem({ group, f_width, f_height, vertical }) {
+function VerticalGroupListItem({ group }) {
   const [layoutWidth, setLayoutWidth] = useState(100)
-  const width = vertical ? layoutWidth - 20 : f_width || 200
-  const height = width * 0.75 || f_height || 100
+  const width = layoutWidth - 20
+  const height = width * 0.65
+  const { colors } = useTheme()
 
   const widthPixels = useMemo(
-    () =>
-      Math.min(
-        1000,
-        vertical ? 1000 : PixelRatio.getPixelSizeForLayoutSize(width),
-      ),
+    () => Math.min(1000, PixelRatio.getPixelSizeForLayoutSize(width)),
     [width],
   )
 
@@ -49,10 +46,10 @@ function VerticalGroupListItem({ group, f_width, f_height, vertical }) {
             uri: imageUrl(header_image.name, `${widthPixels}x${heightPixels}`),
           }}
           style={{
-            width,
+            width: width - 4,
             flex: 1,
             borderRadius: 5,
-            height,
+            height: height - 4,
           }}
         />
       )
@@ -68,7 +65,7 @@ function VerticalGroupListItem({ group, f_width, f_height, vertical }) {
   return (
     <TouchableOpacity
       onLayout={setLayout}
-      underlayColor="whitesmoke"
+      underlayColor={colors.separator}
       style={{ paddingHorizontal: 10, flex: 1, paddingBottom: 5 }}
       onPress={onPress}>
       <>
@@ -79,16 +76,17 @@ function VerticalGroupListItem({ group, f_width, f_height, vertical }) {
               borderRadius: 5,
               height,
               flex: 1,
+              padding: 2,
               backgroundColor: '#ddd2',
             },
           ]}>
           {renderFeaturePhoto()}
         </View>
         <Text
-          numberOfLines={2}
+          numberOfLines={1}
           style={{
             fontWeight: 'bold',
-            fontSize: 18,
+            fontSize: 16,
             marginTop: 10,
           }}>
           {group.name}
@@ -96,7 +94,7 @@ function VerticalGroupListItem({ group, f_width, f_height, vertical }) {
         <Text
           numberOfLines={1}
           style={{
-            fontSize: 16,
+            fontSize: 14,
             opacity: 0.7,
           }}>
           {group.body}

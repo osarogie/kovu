@@ -10,9 +10,9 @@
 import type { ReaderFragment } from 'relay-runtime';
 type JoinButton_group$ref = any;
 import type { FragmentReference } from "relay-runtime";
-declare export opaque type Group$ref: FragmentReference;
-declare export opaque type Group$fragmentType: Group$ref;
-export type Group = {|
+declare export opaque type Group_group$ref: FragmentReference;
+declare export opaque type Group_group$fragmentType: Group_group$ref;
+export type Group_group = {|
   +id: string,
   +_id: string,
   +name: ?string,
@@ -32,12 +32,12 @@ export type Group = {|
     +profile_picture_name: ?string,
   |},
   +$fragmentRefs: JoinButton_group$ref,
-  +$refType: Group$ref,
+  +$refType: Group_group$ref,
 |};
-export type Group$data = Group;
-export type Group$key = {
-  +$data?: Group$data,
-  +$fragmentRefs: Group$ref,
+export type Group_group$data = Group_group;
+export type Group_group$key = {
+  +$data?: Group_group$data,
+  +$fragmentRefs: Group_group$ref,
   ...
 };
 */
@@ -69,7 +69,7 @@ return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "Group",
+  "name": "Group_group",
   "selections": [
     (v0/*: any*/),
     (v1/*: any*/),
@@ -159,6 +159,6 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '827e4004c8f3f43d8ee302ef672e5322';
+(node/*: any*/).hash = 'c706b861057e39b5ba106c909525405e';
 
 module.exports = node;

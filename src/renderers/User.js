@@ -4,7 +4,6 @@ import React from 'react'
 import {
   View,
   Image,
-  Text,
   PixelRatio,
   StyleSheet,
   findNodeHandle,
@@ -24,6 +23,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import { Image as StyledImage } from '@shoutem/ui/components/Image'
 import { BlurView } from 'react-native-blur'
 import { withNavigation } from '../navigation/withNavigation'
+import Color from 'color'
 
 import {
   createFragmentContainer,
@@ -32,6 +32,7 @@ import {
 } from 'react-relay'
 import { connect } from 'react-redux'
 import { navHelper } from '../helpers/getNavigation'
+import { withTheme, Text } from 'react-native-paper'
 
 const mapStateToProps = state => ({
   night_mode: state.night_mode,
@@ -44,8 +45,8 @@ const coverWidth = Math.min(1000, PixelRatio.getPixelSizeForLayoutSize(width))
 
 // @withNavigation
 class User extends React.Component {
-  friendLabelStyle = { color: '#000', marginRight: 10 }
-  friendValueStyle = { color: '#000', fontSize: 18 }
+  friendLabelStyle = { marginRight: 10 }
+  friendValueStyle = { fontSize: 18 }
   state = { coverImageRef: null }
 
   constructor(props) {
@@ -63,6 +64,7 @@ class User extends React.Component {
   }
 
   openPicture = () => {
+    if (!this.props.user.profile_picture_name) return
     navHelper(this).openProfilePicture(this.props.user)
   }
 
@@ -72,7 +74,7 @@ class User extends React.Component {
       <FollowButton
         user={this.props.user}
         openLogin={this.props.openLogin}
-        buttonStyle={{ marginTop: 10 }}
+        style={{ marginTop: 20 }}
       />
     )
 
@@ -114,59 +116,41 @@ class User extends React.Component {
     ) : null
 
   render() {
-    const { user, night_mode } = this.props
+    const { user, night_mode, theme } = this.props
     return (
       <View
         style={{
           flex: 1,
-          backgroundColor: '#fff',
+          backgroundColor: theme.colors.background,
         }}>
-        {/* <View
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%'
-          }}
-        >
-          <Image
-            style={{
-              flex: 1,
-              resizeMode: 'contain',
-              marginLeft: -30,
-              marginTop: -30,
-              transform: [{ rotate: '45deg' }]
-            }}
-            source={require('../images/welcome.png')}
-          />
-        </View> */}
         <Image
           style={[
-            { height: '100%', backgroundColor: '#f9f9f9' },
+            { height: '100%', backgroundColor: theme.colors.separator },
             _styles.coverImageBlur,
           ]}
           ref={img => {
             this.coverImage = img
           }}
           source={{
-            uri: imageUrl(user.profile_picture_name, `${coverWidth}x1000`),
+            uri: imageUrl(user.profile_picture_name, `100x100`),
           }}
           onLoadEnd={this.imageLoaded}
         />
-        <BlurView
-          style={_styles.coverImageBlur}
-          viewRef={this.state.coverImageRef}
-          blurType="light"
-          blurAmount={1}
-        />
+        {this.state.coverImageRef && (
+          <BlurView
+            style={_styles.coverImageBlur}
+            viewRef={this.state.coverImageRef}
+            blurType="light"
+            blurAmount={1}
+          />
+        )}
 
         <View
           style={{
             padding: 20,
             flex: 1,
             flexDirection: 'row',
-            backgroundColor: '#fffc' /*colors.get('container', night_mode)*/,
+            backgroundColor: Color(theme.colors.background).alpha(13 / 16),
           }}>
           <View style={{ marginRight: 10, flex: 1 }}>
             <Text style={styles.title}>{user.name}</Text>
@@ -179,6 +163,7 @@ class User extends React.Component {
           </View>
           <Avatar
             width={100}
+            height={100}
             rounded
             source={user}
             title={user.name}
@@ -192,7 +177,7 @@ class User extends React.Component {
     )
   }
 }
-User = withNavigation(User)
+User = withNavigation(withTheme(User))
 const _styles = StyleSheet.create({
   coverImageBlur: {
     position: 'absolute',
@@ -206,23 +191,25 @@ const _styles = StyleSheet.create({
 // UserFragmentContainer
 const UserFragmentContainer = createFragmentContainer(
   connect(mapStateToProps)(User),
-  graphql`
-    fragment User_user on User {
-      id
-      _id
-      name
-      bio
-      username
-      profile_picture_name
-      discussion_count
-      follower_count
-      following_count
-      ...FollowButton_user
-    }
-  `,
+  {
+    user: graphql`
+      fragment User_user on User {
+        id
+        _id
+        name
+        bio
+        username
+        profile_picture_name
+        discussion_count
+        follower_count
+        following_count
+        ...FollowButton_user
+      }
+    `,
+  },
 )
 
-export default ({ id, api_key, ...props }) => {
+export default withTheme(({ id, api_key, theme, ...props }) => {
   const itemProps = props
   return (
     <QueryRendererProxy
@@ -244,14 +231,18 @@ export default ({ id, api_key, ...props }) => {
           renderHeader={_ => (
             <View style={styles.container}>
               <UserFragmentContainer user={props.user} {...itemProps} />
-              <View style={[styles.container, { backgroundColor: '#fff' }]}>
+              <View
+                style={[
+                  styles.container,
+                  { backgroundColor: theme.colors.background },
+                ]}>
                 <UserGroupsPaginationContainer
                   renderHeader={renderCultureHeader}
                   id={id}
                   groupList={props.user}
                   itemProps={itemProps}
                 />
-                {renderPostsHeader()}
+                <Text style={styles.postsHeader}>Posts</Text>
               </View>
             </View>
           )}
@@ -259,23 +250,22 @@ export default ({ id, api_key, ...props }) => {
       )}
     />
   )
-}
-const renderCultureHeader = _ => (
-  <Text
-    style={{
-      fontSize: 15,
-      color: '#000',
-      fontWeight: 'bold',
-      paddingTop: 17,
-      paddingLeft: 20,
-      borderTopWidth: 1,
-      borderTopColor: '#ddd',
-    }}>
-    Cultures
-  </Text>
+})
+const renderCultureHeader = () => (
+  <>
+    <Separator />
+    <Text
+      style={{
+        fontSize: 15,
+        fontWeight: 'bold',
+        paddingTop: 17,
+        paddingLeft: 20,
+      }}>
+      Blogs
+    </Text>
+  </>
 )
 
-const renderPostsHeader = _ => <Text style={styles.postsHeader}>Posts</Text>
 // PAGINATION CONTAINERS
 
 const UserPostsPaginationContainer = createPaginationContainer(

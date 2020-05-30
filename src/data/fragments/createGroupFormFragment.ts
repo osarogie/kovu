@@ -2,9 +2,8 @@ import { createFragmentContainer, graphql } from 'react-relay'
 import { ReactNode } from 'react'
 
 export const createGroupFormFragment = (Component: ReactNode) =>
-  createFragmentContainer(
-    Component,
-    graphql`
+  createFragmentContainer(Component, {
+    group: graphql`
       fragment createGroupFormFragment_group on Group {
         id
         _id
@@ -12,5 +11,5 @@ export const createGroupFormFragment = (Component: ReactNode) =>
         body
         is_private
       }
-    `
-  )
+    `,
+  })

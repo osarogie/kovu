@@ -5,7 +5,7 @@ import {
   Store,
   QueryResponseCache,
 } from 'relay-runtime'
-
+import AsyncStorage from '@react-native-community/async-storage'
 const prod = process.env.NODE_ENV === 'production'
 const API_HOST = prod
   ? 'https://data.thecommunity.ng'
@@ -17,8 +17,10 @@ const cache = new QueryResponseCache({ size: 1024, ttl })
 const source = new RecordSource()
 const store = new Store(source)
 
-export default ({ headers }) => {
-  const fetchQuery = (operation, variables, cacheConfig, uploadables) => {
+let environment
+
+export default () => {
+  const fetchQuery = async (operation, variables, cacheConfig, uploadables) => {
     const queryID = operation.text
     const isMutation = operation.operationKind === 'mutation'
     const isQuery = operation.operationKind === 'query'
@@ -37,7 +39,6 @@ export default ({ headers }) => {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        ...headers,
       },
       body: JSON.stringify({
         query: operation.text,
@@ -45,24 +46,23 @@ export default ({ headers }) => {
       }),
     })
 
+    const token = await AsyncStorage.getItem('token')
+    const additionalHeaders = {}
+    if (token) additionalHeaders.Authorization = `Token token=${token}`
+
     return fetch(`${API_HOST}/v2`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        ...headers,
+        ...additionalHeaders,
       },
       body: JSON.stringify({
         query: operation.text,
         variables,
       }),
     })
-      .then(response => {
-        // console.log(response.text())
-        const r = response.json()
-        console.log(r)
-        return r
-      })
+      .then(response => response.json())
       .then(json => {
         if (isQuery && json) {
           cache.set(queryID, variables, json)
@@ -78,7 +78,7 @@ export default ({ headers }) => {
 
   const network = Network.create(fetchQuery)
 
-  const environment = new Environment({ network, store })
+  environment = environment || new Environment({ network, store })
 
   return environment
 }

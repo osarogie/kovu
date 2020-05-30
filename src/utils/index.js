@@ -12,13 +12,13 @@ export const openComments = (discussion, navigation) =>
 
 export const openWrite = (
   navigation,
-  { culture, discussion, id, editing_mode = false }
+  { culture, discussion, id, editing_mode = false },
 ) =>
   navigation.navigate('Write', {
     culture,
     id,
     discussion,
-    editing_mode
+    editing_mode,
   })
 
 export const openLogin = navigation => navigation.navigate('Auth')
@@ -91,7 +91,7 @@ function getMonth(month) {
     'Sept',
     'Oct',
     'Nov',
-    'Dec'
+    'Dec',
   ]
   return months[month]
 }
@@ -99,5 +99,3 @@ function getDay(day) {
   const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
   return days[day]
 }
-export const developmentLog = (...args) =>
-  process.env.NODE_ENV === 'development' ? console.log(...args) : null

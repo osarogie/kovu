@@ -1,16 +1,16 @@
 // @flow
 
-import React from "react"
-import { View, VirtualizedList } from "react-native"
-import { withNavigation } from "react-navigation"
-import LoaderBox from "../../components/LoaderBox"
-import UserRow from "./UserRow"
+import React from 'react'
+import { View, FlatList } from 'react-native'
+import { withNavigation } from 'react-navigation'
+import LoaderBox from '../../components/LoaderBox'
+import UserRow from './UserRow'
 
 export default class UserList extends React.Component {
   state = {
     isFetchingTop: false,
     isLoading: false,
-    hasMore: false
+    hasMore: false,
   }
 
   onRefresh = () => {
@@ -21,12 +21,12 @@ export default class UserList extends React.Component {
     }
 
     this.setState({
-      isFetchingTop: true
+      isFetchingTop: true,
     })
 
     this.props.relay.refetchConnection(users.edges.length, err => {
       this.setState({
-        isFetchingTop: false
+        isFetchingTop: false,
       })
     })
   }
@@ -42,7 +42,7 @@ export default class UserList extends React.Component {
     if (!hasMore || isLoading) {
       this.setState({
         hasMore,
-        isLoading
+        isLoading,
       })
       return
     }
@@ -50,13 +50,13 @@ export default class UserList extends React.Component {
     this.props.relay.loadMore(10, err => {
       this.setState({
         hasMore: this.props.relay.hasMore(),
-        isLoading: this.props.relay.isLoading()
+        isLoading: this.props.relay.isLoading(),
       })
     })
 
     this.setState({
       hasMore: this.props.relay.hasMore(),
-      isLoading: this.props.relay.isLoading()
+      isLoading: this.props.relay.isLoading(),
     })
   }
 
@@ -80,13 +80,12 @@ export default class UserList extends React.Component {
     return (
       <View>
         {this.props.renderHeader && this.props.renderHeader()}
-        <VirtualizedList
+        <FlatList
           data={users.edges}
           renderItem={props => this.renderItem({ ...props, itemProps })}
+          keyboardShouldPersistTaps={'handled'}
           keyExtractor={item => item.node.id}
           onEndReached={this.onEndReached}
-          getItemCount={data => data.length}
-          getItem={(data, ii) => data[ii]}
         />
       </View>
     )

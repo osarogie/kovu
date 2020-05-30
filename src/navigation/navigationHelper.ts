@@ -1,4 +1,4 @@
-import { useViewer } from '../providers/ViewerProvider'
+import { useViewer } from '../providers/SessionProvider'
 import { IAppNavigation } from './IAppNavigation'
 import { useMemo, useCallback } from 'react'
 import { useNavigation } from '@react-navigation/native'
@@ -6,7 +6,7 @@ import { NavigationParams } from 'react-navigation'
 
 export function useAppNavigation(): IAppNavigation {
   const navigation = useNavigation()
-  const { viewer } = useViewer()
+  const viewer = useViewer()
   const { navigate, goBack } = navigation
 
   const appNavigation = useMemo<IAppNavigation>(

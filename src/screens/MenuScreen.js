@@ -4,7 +4,6 @@ import {
   ScrollView,
   Image,
   Platform,
-  Text,
   TouchableOpacity,
   Linking,
 } from 'react-native'
@@ -29,17 +28,13 @@ import {
   openLogin,
 } from '../utils'
 import { RoundButton } from '../components/buttons/RoundButton'
+import { withTheme, Text } from 'react-native-paper'
 
 const mapStateToProps = state => ({
   night_mode: state.night_mode,
   user: state.user.user,
   loggedIn: state.user.loggedIn,
 })
-// import { withNavigation } from '../navigation/withNavigation'
-
-// @withNavigation
-// @connect(mapStateToProps)
-// export default
 class MenuScreen extends React.Component {
   static navigationOptions = {
     tabBarLabel: 'Options',
@@ -103,8 +98,8 @@ class MenuScreen extends React.Component {
     if (loggedIn) {
       return (
         <TouchableOpacity
-          underlayColor="whitesmoke"
-          style={{ backgroundColor: '#fff' }}
+          underlayColor={this.props.theme.colors.separator}
+          style={{ backgroundColor: this.props.theme.colors.background }}
           onPress={this.openProfile}>
           <View style={{ padding: 15, flexDirection: 'row' }}>
             <Avatar
@@ -253,7 +248,7 @@ class MenuScreen extends React.Component {
   }
   render() {
     return (
-      <View style={[styles.container, { backgroundColor: '#fff' }]}>
+      <View style={[styles.container]}>
         <ScrollView>
           {this.renderToolbar()}
           <View style={styles.container}>
@@ -261,50 +256,10 @@ class MenuScreen extends React.Component {
             <Separator />
           </View>
           {this.renderMenu()}
-          {/* <Hyperlink linkDefault={true}>
-            <Text style={[this.infoStyles, { marginTop: 50 }]}>
-              {`Some features will be available soon.`}
-            </Text>
-            <Text
-              style={[
-                this.infoStyles,
-                { color: '#05fc', textDecorationLine: 'underline' }
-              ]}
-            >
-              {'https://thecommunity.ng'}
-            </Text>
-            <Text style={[this.infoStyles, { marginTop: 30 }]}>
-              {`Nosakhare Emmanuel. \u00A9 `}
-              {new Date().getFullYear()}
-            </Text>
-            <Text
-              style={[
-                this.infoStyles,
-                {
-                  color: '#05fc',
-                  marginBottom: 50,
-                  textDecorationLine: 'underline'
-                }
-              ]}
-            >
-              {'https://osarogie.com'}
-            </Text>
-          </Hyperlink> */}
-          {/* <View style={{ alignItems: 'center' }}>
-            <Image
-              source={require('../images/ic_logo.png')}
-              width={45}
-              height={45}
-              style={{ width: 45, height: 45, marginBottom: 50 }}
-            />
-          </View> */}
         </ScrollView>
-        {/* <View style={styles.elevation} /> */}
       </View>
     )
   }
 }
 
-export default connect(mapStateToProps)(MenuScreen)
-
-// export default withNavigation(connect(mapStateToProps)(MenuScreen))
+export default connect(mapStateToProps)(withTheme(MenuScreen))

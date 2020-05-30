@@ -9,6 +9,7 @@
 /*::
 import type { ReaderFragment } from 'relay-runtime';
 type CommentListItem_comment$ref = any;
+type Poll_discussion$ref = any;
 import type { FragmentReference } from "relay-runtime";
 declare export opaque type PostListItem_discussion$ref: FragmentReference;
 declare export opaque type PostListItem_discussion$fragmentType: PostListItem_discussion$ref;
@@ -54,6 +55,8 @@ export type PostListItem_discussion = {|
     +width: ?number,
     +name: ?string,
   |},
+  +has_poll: ?boolean,
+  +$fragmentRefs: Poll_discussion$ref,
   +$refType: PostListItem_discussion$ref,
 |};
 export type PostListItem_discussion$data = PostListItem_discussion;
@@ -309,12 +312,24 @@ return {
         (v2/*: any*/)
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "has_poll",
+      "storageKey": null
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "Poll_discussion"
     }
   ],
   "type": "Discussion"
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '540bf9d2b468cd8a0fb8b9456e0ecafe';
+(node/*: any*/).hash = '65dba0e2240eb8dff590262020f3f0c6';
 
 module.exports = node;

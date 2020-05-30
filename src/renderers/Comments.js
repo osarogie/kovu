@@ -6,7 +6,7 @@ import {
   Image,
   Text,
   PixelRatio,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
 } from 'react-native'
 import Separator from '../components/Separator'
 import CommentList from '../fragments/CommentList'
@@ -22,15 +22,14 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import {
   createFragmentContainer,
   createPaginationContainer,
-  graphql
+  graphql,
 } from 'react-relay'
 import { connect } from 'react-redux'
-// import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const mapStateToProps = state => ({
   night_mode: state.night_mode,
   user: state.user.user,
-  loggedIn: state.user.loggedIn
+  loggedIn: state.user.loggedIn,
 })
 
 export default ({ id, gid, api_key, ...props }) => {
@@ -120,7 +119,7 @@ const CommentPaginationContainer = createPaginationContainer(
           }
         }
       }
-    `
+    `,
   },
   {
     direction: 'forward',
@@ -140,6 +139,6 @@ const CommentPaginationContainer = createPaginationContainer(
           ...Comments_commentList
         }
       }
-    `
-  }
+    `,
+  },
 )

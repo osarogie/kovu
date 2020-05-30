@@ -3,10 +3,9 @@ import React, { Component, useCallback } from 'react'
 
 import { Share } from 'react-native'
 
-import { Button } from '@shoutem/ui/components/Button'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { BLACK } from '../ui'
-import { useTheme } from 'react-native-paper'
+import { useTheme, Button } from 'react-native-paper'
 
 const { string } = PropTypes
 
@@ -31,7 +30,7 @@ export default function ShareButton({ title, message, url, color, style }) {
   }, [title, message, url])
 
   return (
-    <Button styleName="clear tight" onPress={onShare} style={style}>
+    <Button mode="text" onPress={onShare} style={style}>
       <Icon size={20} name="share" color={colors.text} />
     </Button>
   )

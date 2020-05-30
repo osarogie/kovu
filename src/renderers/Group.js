@@ -32,7 +32,7 @@ const mapStateToProps = state => ({
 })
 
 function Group({
-  data,
+  group: data,
   openProfile: openProfileFunc,
   openWrite: openWriteFunc,
   openStartCulture,
@@ -68,20 +68,21 @@ function Group({
   const renderFeaturePhoto = () => {
     if (header_image) {
       const height = width * 0.65
-      var widthPixels = PixelRatio.getPixelSizeForLayoutSize(width)
-      var heightPixels = PixelRatio.getPixelSizeForLayoutSize(height)
-      if (widthPixels > 1000 || heightPixels > 1000) {
-        widthPixels = 1000
-        heightPixels = 1000
-      }
-      // console.log(imageUrl(header_image.name, `${widthPixels}x${heightPixels}`))
+      var widthPixels = Math.min(
+        1000,
+        PixelRatio.getPixelSizeForLayoutSize(width),
+      )
+      var heightPixels = Math.min(
+        1000,
+        PixelRatio.getPixelSizeForLayoutSize(height),
+      )
       return (
         <View
           style={{
             height,
             width,
             flex: 1,
-            backgroundColor: '#eee',
+            backgroundColor: colors.separator,
           }}>
           <Image
             source={{
@@ -223,29 +224,31 @@ function Group({
 // GroupFragmentContainer
 const GroupFragmentContainer = createFragmentContainer(
   connect(mapStateToProps)(Group),
-  graphql`
-    fragment Group on Group {
-      id
-      _id
-      name
-      permalink
-      body
-      viewer_is_a_member
-      ...JoinButton_group
-      header_image {
-        name
-        height
-        width
-      }
-      user {
+  {
+    group: graphql`
+      fragment Group_group on Group {
         id
         _id
         name
-        username
-        profile_picture_name
+        permalink
+        body
+        viewer_is_a_member
+        ...JoinButton_group
+        header_image {
+          name
+          height
+          width
+        }
+        user {
+          id
+          _id
+          name
+          username
+          profile_picture_name
+        }
       }
-    }
-  `,
+    `,
+  },
 )
 
 export default ({ id, api_key, ...props }) => {
@@ -255,7 +258,7 @@ export default ({ id, api_key, ...props }) => {
       query={graphql`
         query GroupQuery($count: Int!, $cursor: String, $id: ID!) {
           group(id: $id) {
-            ...Group
+            ...Group_group
             ...Group_discussionList
             ...Group_userList
           }
@@ -269,7 +272,7 @@ export default ({ id, api_key, ...props }) => {
           itemProps={itemProps}
           renderHeader={() => (
             <View style={styles.container}>
-              <GroupFragmentContainer data={props.group} {...itemProps} />
+              <GroupFragmentContainer group={props.group} {...itemProps} />
               <Separator />
               <GroupUsersPaginationContainer
                 id={id}

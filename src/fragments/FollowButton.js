@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { commitMutation, createFragmentContainer, graphql } from 'react-relay'
 import { navHelper } from '../helpers/getNavigation'
 import { withNavigation } from '../navigation/withNavigation'
-import { Button, Text } from 'react-native-paper'
+import { Button, Text, withTheme } from 'react-native-paper'
 
 const mapStateToProps = state => ({
   night_mode: state.night_mode,
@@ -93,12 +93,16 @@ class FollowButton extends React.Component {
       <Icon
         name={viewer_follows ? 'user-check' : 'user-plus'}
         size={18}
-        color={viewer_follows ? '#fff' : '#05f'}
+        color={
+          viewer_follows
+            ? this.props.theme.colors.background
+            : this.props.theme.colors.primary
+        }
       />
     )
   }
   render() {
-    const { icon } = this.props
+    const { icon, style } = this.props
     const { viewer_follows, follows_viewer } = this.props.user
     const title = viewer_follows
       ? 'Following'
@@ -110,12 +114,15 @@ class FollowButton extends React.Component {
         mode={viewer_follows ? 'contained' : 'outlined'}
         onPress={this.toggleFollow}
         {...this.props}
-        style={{
-          marginTop: 20,
-          height: 40,
-        }}
-        contentStyle={{ height: 40, paddingHorizontal: 20 }}
+        style={[
+          {
+            height: 40,
+          },
+          style,
+        ]}
+        contentStyle={{ height: 40, paddingHorizontal: 10 }}
         loading={this.state.isLoading}
+        disabled={this.state.isLoading}
         icon={icon ? this.renderIcon() : null}>
         {icon ? this.renderIcon() : title}
       </Button>
@@ -124,7 +131,7 @@ class FollowButton extends React.Component {
 }
 
 export default createFragmentContainer(
-  withNavigation(connect(mapStateToProps)(FollowButton)),
+  withNavigation(connect(mapStateToProps)(withTheme(FollowButton))),
   {
     user: graphql`
       fragment FollowButton_user on User {

@@ -5,20 +5,21 @@ import React, {
   useEffect,
   useMemo,
 } from 'react'
-import { useColorScheme } from 'react-native'
+import { useColorScheme, Platform } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage'
 import {
   DefaultTheme,
   DarkTheme,
   Provider as PaperProvider,
 } from 'react-native-paper'
+import changeNavigationBarColor from 'react-native-navigation-bar-color'
 
 const lightTheme = {
   ...DefaultTheme,
   roundness: 5,
   colors: {
     ...DefaultTheme.colors,
-    background: '#fff',
+    background: '#ffffff',
     primary: '#05f',
     secondary: '#05f',
     accent: '#50f',
@@ -44,7 +45,7 @@ const darkTheme = {
     statusBar: '#000',
     text: '#fff',
     grayBackground: '#333',
-    darkGray: '#f9f9f9',
+    darkGray: '#aaa',
     separator: '#444',
   },
   statusBar: {
@@ -74,6 +75,12 @@ export function ThemeProvider({ children }) {
     () => ({ theme: themes[colorScheme] || lightTheme, colorScheme }),
     [colorScheme],
   )
+
+  useEffect(() => {
+    if (Platform.OS === 'android') {
+      changeNavigationBarColor(value.theme.colors.background)
+    }
+  }, [value.theme.colors.background])
 
   return (
     <ThemeContext.Provider value={value}>

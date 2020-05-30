@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, VirtualizedList } from 'react-native'
+import { View, FlatList } from 'react-native'
 import LoaderBox from '../components/LoaderBox'
 import UserListItem from '../fragments/UserListItem'
 import Separator from '../components/Separator'
@@ -8,7 +8,7 @@ export default class UserList extends React.Component {
   state = {
     isFetchingTop: false,
     isLoading: false,
-    hasMore: false
+    hasMore: false,
   }
 
   onRefresh = () => {
@@ -19,12 +19,12 @@ export default class UserList extends React.Component {
     }
 
     this.setState({
-      isFetchingTop: true
+      isFetchingTop: true,
     })
 
     this.props.relay.refetchConnection(users.edges.length, () => {
       this.setState({
-        isFetchingTop: false
+        isFetchingTop: false,
       })
     })
   }
@@ -40,7 +40,7 @@ export default class UserList extends React.Component {
     if (!hasMore || isLoading) {
       this.setState({
         hasMore,
-        isLoading
+        isLoading,
       })
       return
     }
@@ -49,14 +49,14 @@ export default class UserList extends React.Component {
     this.props.relay.loadMore(10, () => {
       this.setState({
         hasMore: this.props.relay.hasMore(),
-        isLoading: this.props.relay.isLoading()
+        isLoading: this.props.relay.isLoading(),
       })
       // console.log('loadMore: ', err)
     })
 
     this.setState({
       hasMore: this.props.relay.hasMore(),
-      isLoading: this.props.relay.isLoading()
+      isLoading: this.props.relay.isLoading(),
     })
   }
 
@@ -77,30 +77,16 @@ export default class UserList extends React.Component {
   render() {
     const { userList, itemProps } = this.props
     const users = userList.users
-    // console.log(this.props)
     return (
-      // <VirtualizedList
-      //   data={users.edges}
-      //   renderItem={props => this.renderItem({ ...props, itemProps })}
-      //   keyExtractor={item => item.node.id}
-      //   onEndReached={this.onEndReached}
-      //   onRefresh={this.onRefresh}
-      //   refreshing={this.state.isFetchingTop}
-      //   ListFooterComponent={this.renderFooter.bind(this)}
-      //   ListHeaderComponent={this.props.renderHeader}
-      //   getItemCount={data => data.length}
-      //   getItem={(data, ii) => data[ii]}
-      // />
       <View>
         {this.props.renderHeader && this.props.renderHeader()}
-        <VirtualizedList
+        <FlatList
           data={users.edges}
+          keyboardShouldPersistTaps={'handled'}
           horizontal
           renderItem={props => this.renderItem({ ...props, itemProps })}
           keyExtractor={item => item.node.id}
           onEndReached={this.onEndReached}
-          getItemCount={data => data.length}
-          getItem={(data, ii) => data[ii]}
         />
         <Separator />
       </View>

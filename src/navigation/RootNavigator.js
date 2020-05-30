@@ -35,7 +35,6 @@ function persistState(state) {
 
 export function RootNavigator() {
   const scheme = useColorScheme()
-  const { colors } = useTheme()
   const [isReady, setIsReady] = React.useState(__DEV__ ? false : true)
   const [initialState, setInitialState] = React.useState()
 
@@ -69,32 +68,24 @@ export function RootNavigator() {
     return null
   }
   return (
-    <View style={{ flex: 1, backgroundColor: colors.background }}>
-      <NavigationContainer
-        initialState={initialState}
-        onStateChange={persistState}
-        theme={themes[scheme] || DefaultTheme}>
-        <Stack.Navigator initialRouteName="Tab" headerMode="none">
-          <Stack.Screen name="Tab" component={HomeNavigator} />
-          <Stack.Screen name="Auth" component={AuthNavigator} />
-          <Stack.Screen name="Write" component={WriteScreen} />
-          <Stack.Screen name="Profile" component={ProfileScreen} />
-          <Stack.Screen
-            name="ProfilePicture"
-            component={ProfilePictureScreen}
-          />
-          <Stack.Screen name="Discussion" component={DiscussionScreen} />
-          <Stack.Screen name="Notifications" component={NotificationScreen} />
-          <Stack.Screen name="Culture" component={CultureScreen} />
-          <Stack.Screen name="Comments" component={ContributionsScreen} />
-          <Stack.Screen name="StartCulture" component={StartCultureScreen} />
-          <Stack.Screen name="EditProfile" component={EditProfileScreen} />
-          <Stack.Screen
-            name="ChangePassword"
-            component={ChangePasswordScreen}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </View>
+    <NavigationContainer
+      initialState={initialState}
+      onStateChange={persistState}
+      theme={themes[scheme] || DefaultTheme}>
+      <Stack.Navigator initialRouteName="Tab" headerMode="none">
+        <Stack.Screen name="Tab" component={HomeNavigator} />
+        <Stack.Screen name="Auth" component={AuthNavigator} />
+        <Stack.Screen name="Write" component={WriteScreen} />
+        <Stack.Screen name="Profile" component={ProfileScreen} />
+        <Stack.Screen name="ProfilePicture" component={ProfilePictureScreen} />
+        <Stack.Screen name="Discussion" component={DiscussionScreen} />
+        <Stack.Screen name="Notifications" component={NotificationScreen} />
+        <Stack.Screen name="Culture" component={CultureScreen} />
+        <Stack.Screen name="Comments" component={ContributionsScreen} />
+        <Stack.Screen name="StartCulture" component={StartCultureScreen} />
+        <Stack.Screen name="EditProfile" component={EditProfileScreen} />
+        <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   )
 }

@@ -1,44 +1,17 @@
 import React from 'react'
-import {  Text, StyleSheet, View } from 'react-native'
-import { connect } from 'react-redux'
-import colors from '../colors'
+import { View } from 'react-native'
+import { Text } from 'react-native-paper'
 
-const mapStateToProps = state => ({
-  night_mode: state.night_mode
-})
-
-class EmptyList extends React.Component {
-  render() {
-    return (
-      <View
-        style={{
-          flex: 1,
-          alignItems: 'center',
-          height: 100,
-          justifyContent: 'center'
-        }}
-      >
-        <Text>
-          {this.props.message}
-        </Text>
-      </View>
-    )
-  }
+export default function EmptyList({ message = 'Nothing to see here' }) {
+  return (
+    <View
+      style={{
+        flex: 1,
+        alignItems: 'center',
+        height: 100,
+        justifyContent: 'center',
+      }}>
+      <Text>{message}</Text>
+    </View>
+  )
 }
-
-EmptyList.defaultProps = {
-  message: 'Empty'
-}
-
-EmptyList.propTypes = {
-  // ...ViewPropTypes,
-  // message: React.PropTypes.string
-}
-export default connect(mapStateToProps)(EmptyList)
-// const styles = StyleSheet.create({
-//   // container: {
-//   //   flex: 1,
-//   //   alignItems: 'center',
-//   //   justifyContent: 'center'
-//   // }
-// })

@@ -8,7 +8,7 @@ import getNavigation from '../helpers/getNavigation'
 
 export default class StartCultureScreen extends React.Component {
   renderToolbar() {
-    const title = 'Culture Form'
+    const title = 'Blog Form'
     return <Toolbar title={title} navIconName="md-arrow-back" />
   }
 

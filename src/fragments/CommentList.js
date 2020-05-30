@@ -1,5 +1,5 @@
 import React from 'react'
-import { VirtualizedList } from 'react-native'
+import { FlatList } from 'react-native'
 import LoaderBox from '../components/LoaderBox'
 import EmptyList from '../components/EmptyList'
 import CommentListItem from '../fragments/CommentListItem'
@@ -8,7 +8,7 @@ export default class CommentList extends React.Component {
   state = {
     isFetchingTop: false,
     isLoading: false,
-    hasMore: false
+    hasMore: false,
   }
 
   onRefresh = () => {
@@ -19,12 +19,12 @@ export default class CommentList extends React.Component {
     }
 
     this.setState({
-      isFetchingTop: true
+      isFetchingTop: true,
     })
 
     this.props.relay.refetchConnection(comments.edges.length, () => {
       this.setState({
-        isFetchingTop: false
+        isFetchingTop: false,
       })
     })
   }
@@ -40,7 +40,7 @@ export default class CommentList extends React.Component {
     if (!hasMore || isLoading) {
       this.setState({
         hasMore,
-        isLoading
+        isLoading,
       })
       return
     }
@@ -49,14 +49,14 @@ export default class CommentList extends React.Component {
     this.props.relay.loadMore(10, () => {
       this.setState({
         hasMore: this.props.relay.hasMore(),
-        isLoading: this.props.relay.isLoading()
+        isLoading: this.props.relay.isLoading(),
       })
       // console.log('loadMore: ', err)
     })
 
     this.setState({
       hasMore: this.props.relay.hasMore(),
-      isLoading: this.props.relay.isLoading()
+      isLoading: this.props.relay.isLoading(),
     })
   }
 
@@ -82,7 +82,8 @@ export default class CommentList extends React.Component {
     const { commentList, itemProps } = this.props
     const comments = commentList.comments
     return (
-      <VirtualizedList
+      <FlatList
+        keyboardShouldPersistTaps={'handled'}
         data={comments.edges}
         renderItem={props => this.renderItem({ ...props, itemProps })}
         keyExtractor={item => item.node.id}
@@ -91,8 +92,6 @@ export default class CommentList extends React.Component {
         refreshing={this.state.isFetchingTop}
         ListFooterComponent={this.renderFooter.bind(this)}
         ListHeaderComponent={this.props.renderHeader}
-        getItemCount={data => data.length}
-        getItem={(data, ii) => data[ii]}
       />
     )
   }

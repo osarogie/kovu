@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, VirtualizedList } from 'react-native'
+import { View, FlatList } from 'react-native'
 import styles from '../styles'
 import LoaderBox from '../components/LoaderBox'
 import Separator from '../components/Separator'
@@ -9,7 +9,7 @@ export default class GroupList extends React.Component {
   state = {
     isFetchingTop: false,
     isLoading: false,
-    hasMore: false
+    hasMore: false,
   }
 
   onRefresh = () => {
@@ -20,12 +20,12 @@ export default class GroupList extends React.Component {
     }
 
     this.setState({
-      isFetchingTop: true
+      isFetchingTop: true,
     })
 
     this.props.relay.refetchConnection(groups.edges.length, () => {
       this.setState({
-        isFetchingTop: false
+        isFetchingTop: false,
       })
     })
   }
@@ -42,7 +42,7 @@ export default class GroupList extends React.Component {
     if (!hasMore || isLoading) {
       this.setState({
         hasMore,
-        isLoading
+        isLoading,
       })
       return
     }
@@ -51,14 +51,14 @@ export default class GroupList extends React.Component {
     this.props.relay.loadMore(10, () => {
       this.setState({
         hasMore: this.props.relay.hasMore(),
-        isLoading: this.props.relay.isLoading()
+        isLoading: this.props.relay.isLoading(),
       })
       // console.log('loadMore: ', err)
     })
 
     this.setState({
       hasMore: this.props.relay.hasMore(),
-      isLoading: this.props.relay.isLoading()
+      isLoading: this.props.relay.isLoading(),
     })
   }
 
@@ -90,7 +90,8 @@ export default class GroupList extends React.Component {
       return (
         <View>
           {this.props.renderHeader && this.props.renderHeader()}
-          <VirtualizedList
+          <FlatList
+            keyboardShouldPersistTaps={'handled'}
             data={groups.edges}
             horizontal
             renderItem={props => this.renderItem({ ...props, itemProps })}
@@ -99,8 +100,6 @@ export default class GroupList extends React.Component {
             // ItemSeparatorComponent={() => <View style={styles.separator} />}
             // ListFooterComponent={this.renderFooter.bind(this)}
             // ListHeaderComponent={this.renderHeader.bind(this)}
-            getItemCount={data => data.length}
-            getItem={(data, ii) => data[ii]}
           />
           <Separator />
         </View>

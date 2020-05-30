@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react'
-import { View, TouchableOpacity, VirtualizedList } from 'react-native'
+import { View, TouchableOpacity, FlatList } from 'react-native'
 // import { withNavigation } from '../navigation/withNavigation'
 import styles from '../styles'
 import LoaderBox from '../components/LoaderBox'
@@ -98,17 +98,16 @@ export default class GroupList extends React.Component {
       return (
         <View>
           {this.props.renderHeader && this.props.renderHeader()}
-          <VirtualizedList
+          <FlatList
             data={groups.edges}
             horizontal
+            keyboardShouldPersistTaps={'handled'}
             renderItem={props => this.renderItem({ ...props, itemProps })}
             keyExtractor={item => item.node.id}
             onEndReached={this.onEndReached}
             // ItemSeparatorComponent={() => <View style={styles.separator} />}
             // ListFooterComponent={this.renderFooter.bind(this)}
             // ListHeaderComponent={this.renderHeader.bind(this)}
-            getItemCount={data => data.length}
-            getItem={(data, ii) => data[ii]}
           />
           <Separator />
         </View>

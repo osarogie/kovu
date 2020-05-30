@@ -9,12 +9,12 @@ import EvilIcon from 'react-native-vector-icons/EvilIcons'
 import getNavigation from '../helpers/getNavigation'
 import { FAB, Title, useTheme } from 'react-native-paper'
 import { useAppNavigation } from '../navigation/navigationHelper'
-import { useViewer } from '../providers/ViewerProvider'
+import { useViewer } from '../providers/SessionProvider'
 import { elevation } from '../styles/elevation'
 
 function TopBar() {
   const { openWrite, openViewerProfile } = useAppNavigation()
-  const { viewer } = useViewer()
+  const viewer = useViewer()
   const { colors } = useTheme()
 
   function getPicture(user = {}) {

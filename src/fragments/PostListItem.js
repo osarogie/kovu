@@ -24,6 +24,7 @@ import { getTimeAgo, imageUrl, getCommentCount } from '../utils'
 import Icon from 'react-native-vector-icons/Ionicons'
 import CommentListItem from './CommentListItem'
 import { useTheme, Text, Subheading, Caption } from 'react-native-paper'
+import { PollView } from '../views/post/PollView'
 
 const featurePhotoStyles = {
   // backgroundColor: '#eee',
@@ -60,37 +61,32 @@ function PostListItem({
   const renderFeaturePhoto = () => {
     const image = discussion.feature_photo
 
-    if (image) {
-      const height = 100
-      const width = 100
-      const f_width = Math.min(
-        1000,
-        PixelRatio.getPixelSizeForLayoutSize(width),
-      )
-      // const f_height = PixelRatio.getPixelSizeForLayoutSize(height)
-      const uri = imageUrl(image.name, `${f_width}x1000`)
+    if (!image) return null
 
-      return (
-        <View
-          style={[
-            featurePhotoStyles,
-            { height, width, backgroundColor: colors.separator },
-          ]}>
-          <Image
-            source={{ uri }}
-            resizeMethod="resize"
-            style={{
-              borderRadius: 5,
-              height,
-              width,
-              backgroundColor: colors.separator,
-            }}
-          />
-        </View>
-      )
-    } else {
-      return null
-    }
+    const height = 100
+    const width = 100
+    const widthPx = Math.min(1000, PixelRatio.getPixelSizeForLayoutSize(width))
+
+    const uri = imageUrl(image.name, `${widthPx}x${widthPx}`)
+
+    return (
+      <View
+        style={[
+          featurePhotoStyles,
+          { height, width, backgroundColor: colors.separator },
+        ]}>
+        <Image
+          source={{ uri }}
+          resizeMethod="resize"
+          style={{
+            borderRadius: 5,
+            height,
+            width,
+            backgroundColor: colors.separator,
+          }}
+        />
+      </View>
+    )
   }
 
   const renderCultureName = () => {
@@ -167,13 +163,20 @@ function PostListItem({
         style={[styles.row, { alignItems: 'center', marginTop: 10 }]}
         key={`post.c.viewholder.${discussion.id}`}>
         {/* <DiscussionLike discussion={discussion} openLogin={openLogin} /> */}
+        <ShareButton
+          title={discussion.name}
+          url={discussion.public_url}
+          message={`Read "${discussion.name}" on TheCommunity - ${
+            discussion.public_url
+          } by ${discussion.user.name}`}
+        />
         <View style={styles.fillRow} />
         {renderEdit()}
         <TouchableOpacity
           underlayColor={colors.separator}
           onPress={openComments}>
           <Caption style={{ marginLeft: 20 }}>
-            {`${comment_count_} Contribution${comment_count == 1 ? '' : 's'}`}
+            {`${comment_count_} Comment${comment_count == 1 ? '' : 's'}`}
           </Caption>
         </TouchableOpacity>
         {/* <Icon
@@ -234,6 +237,7 @@ function PostListItem({
     return (
       <FlatList
         data={comments.edges}
+        keyboardShouldPersistTaps={'handled'}
         ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
         keyExtractor={item => item.node.id}
         renderItem={({ item }) => <CommentListItem strip comment={item.node} />}
@@ -268,23 +272,9 @@ function PostListItem({
             </View>
             {renderFeaturePhoto()}
           </View>
+          {discussion.has_poll && <PollView discussion={discussion} />}
           {renderControls()}
-          <View style={{ flexDirection: 'row', marginBottom: 8 }}>
-            {/* <DiscussionLike
-                  discussion={discussion}
-                  stacked
-                  size={20}
-                  // style={{ marginTop: 10 }}
-                /> */}
-            <ShareButton
-              title={discussion.name}
-              url={discussion.public_url}
-              message={`Read "${discussion.name}" on TheCommunity - ${
-                discussion.public_url
-              } by ${discussion.user.name}`}
-              style={{ marginTop: 5 }}
-            />
-          </View>
+
           {/* {renderComments()} */}
         </View>
       </TouchableHighlight>
@@ -338,6 +328,8 @@ export default createFragmentContainer(PostListItem, {
         width
         name
       }
+      has_poll
+      ...Poll_discussion
       # ...DiscussionLike_discussion
     }
   `,

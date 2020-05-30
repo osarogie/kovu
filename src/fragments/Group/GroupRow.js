@@ -1,15 +1,16 @@
-import React from "react"
+import React from 'react'
 import {
   Text,
   View,
   Image,
   // ViewPropTypes,
   TouchableOpacity,
-  PixelRatio
-} from "react-native"
-import styles from "../styles"
-import { createFragmentContainer, graphql } from "react-relay"
-import { imageUrl } from "../utils"
+  PixelRatio,
+} from 'react-native'
+import styles from '../styles'
+import { createFragmentContainer, graphql } from 'react-relay'
+import { imageUrl } from '../utils'
+import { withTheme } from 'react-native-paper'
 
 class GroupRow extends React.Component {
   renderFeaturePhoto() {
@@ -23,12 +24,12 @@ class GroupRow extends React.Component {
       return (
         <Image
           source={{
-            uri: imageUrl(header_image.name, `${f_width}x${f_height}`)
+            uri: imageUrl(header_image.name, `${f_width}x${f_height}`),
           }}
           style={{
             borderRadius: 5,
             height,
-            width
+            width,
           }}
         />
       )
@@ -43,9 +44,8 @@ class GroupRow extends React.Component {
 
     return (
       <TouchableOpacity
-        underlayColor="whitesmoke"
-        onPress={_ => openCulture && openCulture(group)}
-      >
+        underlayColor={this.props.theme.colors.separator}
+        onPress={_ => openCulture && openCulture(group)}>
         <View>
           <View
             style={{
@@ -56,50 +56,46 @@ class GroupRow extends React.Component {
               borderRadius: 5,
               marginRight: 15,
               elevation: 2,
-              backgroundColor: "#05f"
-            }}
-          >
+              backgroundColor: '#05f',
+            }}>
             <View
               style={[
                 styles.featurePhotoWarp,
                 {
                   height,
                   width,
-                  backgroundColor: "#05f",
-                  position: "absolute",
+                  backgroundColor: '#05f',
+                  position: 'absolute',
                   top: 0,
                   left: 0,
                   marginTop: 0,
-                  marginBottom: 0
-                }
-              ]}
-            >
+                  marginBottom: 0,
+                },
+              ]}>
               {this.renderFeaturePhoto()}
             </View>
             <View
               style={{
-                backgroundColor: "#0005",
+                backgroundColor: '#0005',
                 height,
                 width,
                 borderRadius: 5,
-                justifyContent: "center",
-                alignItems: "center"
-              }}
-            >
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
               <Text
                 numberOfLines={2}
                 style={{
                   width,
                   marginLeft: 10,
                   marginRight: 10,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  textAlign: "center",
-                  color: "#fff",
-                  fontWeight: "bold",
-                  fontSize: 18
-                }}
-              >
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  textAlign: 'center',
+                  color: '#fff',
+                  fontWeight: 'bold',
+                  fontSize: 18,
+                }}>
                 {group.name}
               </Text>
             </View>
@@ -111,10 +107,9 @@ class GroupRow extends React.Component {
               marginBottom: 20,
               marginLeft: 17,
               marginTop: 10,
-              color: "#000",
-              fontSize: 14
-            }}
-          >
+              color: '#000',
+              fontSize: 14,
+            }}>
             {group.body}
           </Text>
         </View>
@@ -123,9 +118,8 @@ class GroupRow extends React.Component {
   }
 }
 
-export default createFragmentContainer(
-  GroupRow,
-  graphql`
+export default createFragmentContainer(withTheme(GroupRow), {
+  group: graphql`
     fragment GroupRow_group on Group {
       id
       _id
@@ -136,5 +130,5 @@ export default createFragmentContainer(
         name
       }
     }
-  `
-)
+  `,
+})

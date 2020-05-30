@@ -4,7 +4,6 @@ import ActivityButton from './ActivityButton'
 import {
   View,
   Text,
-  TextInput,
   ToastAndroid,
   // KeyboardAvoidingView
 } from 'react-native'
@@ -15,6 +14,7 @@ import CreateCommentMutation from '../data/mutations/CreateCommentMutation'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { withNavigation } from '../navigation/withNavigation'
 import { navHelper } from '../helpers/getNavigation'
+import { TextInput } from 'react-native-paper'
 
 const mapStateToProps = state => ({
   loggedIn: state.user.loggedIn,
@@ -23,17 +23,11 @@ const mapStateToProps = state => ({
 class CommentBox extends React.Component {
   state = { isSending: false }
 
-  constructor(props) {
-    super(props)
-    this.sendReply = this.sendReply.bind(this)
-    this.state = { inputSize: 40 }
-  }
-
   notify(message) {
     ToastAndroid.show(message, ToastAndroid.SHORT)
   }
 
-  sendReply() {
+  sendReply = () => {
     this.setState({ isSending: true })
     const { body } = this.state
     const discussion_id = this.props.id
@@ -77,7 +71,6 @@ class CommentBox extends React.Component {
       <View
         style={{
           flexDirection: 'row',
-          backgroundColor: '#fff',
           elevation: 2,
           // flex: 1,
           width: '100%',
@@ -89,17 +82,10 @@ class CommentBox extends React.Component {
           // padding: 20,
           // borderRadius: 8
         }}>
-        {/* <View style={{ flex: 1 }}> */}
         <TextInput
-          style={[
-            styles.input,
-            { height: this.state.inputSize, fontSize: 17, flex: 1 },
-          ]}
+          style={[styles.input, { fontSize: 17, flex: 1 }]}
           ref={c => (this.commentBox = c)}
           underlineColorAndroid="#05f"
-          onContentSizeChange={e =>
-            this.setState({ inputSize: e.nativeEvent.contentSize.height })
-          }
           keyboardType={this.props.keyboardType}
           value={this.state.body}
           multiline={true}

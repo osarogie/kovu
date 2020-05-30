@@ -16,20 +16,15 @@ import Separator from '../components/Separator'
 import { getTimeAgo, imageUrl } from '../utils'
 import { Subtitle, Caption } from '@shoutem/ui/components/Text'
 import Avatar from '../components/Avatar'
-// import { connectDecorator } from '../lib'
 import { withNavigation } from '../navigation/withNavigation'
 import { navHelper } from '../helpers/getNavigation'
+import { withTheme } from 'react-native-paper'
 
 const mapStateToProps = state => ({
   night_mode: state.night_mode,
 })
 
-// @withNavigation
 class CommentListItem extends React.PureComponent {
-  clickableProps = {
-    underlayColor: 'whitesmoke',
-  }
-
   cultureNameProps = {
     style: { color: '#05f' },
   }
@@ -76,7 +71,7 @@ class CommentListItem extends React.PureComponent {
 
     return (
       <TouchableOpacity
-        {...this.clickableProps}
+        underlayColor={this.props.theme.colors.separator}
         onPress={_ => openProfile(comment.user)}>
         <View
           style={[excerptStyles.profilePicture, { backgroundColor: '#eee' }]}>
@@ -92,7 +87,7 @@ class CommentListItem extends React.PureComponent {
     return (
       <View>
         <TouchableOpacity
-          {...this.clickableProps}
+          underlayColor={this.props.theme.colors.separator}
           onPress={_ => openProfile(comment.user)}>
           <Text style={[styles.fill, { color: '#000' }]}>
             {comment.user.name}
@@ -112,7 +107,7 @@ class CommentListItem extends React.PureComponent {
     return (
       <View>
         <TouchableOpacity
-          {...this.clickableProps}
+          underlayColor={this.props.theme.colors.separator}
           style={{ backgroundColor: '#fff' }}>
           <View style={excerptStyles.container}>
             <View style={{ flexDirection: 'row' }}>
@@ -153,7 +148,8 @@ class CommentListItem extends React.PureComponent {
             />
             <View style={{ marginLeft: 10, flex: 1 }}>
               {/* <TouchableOpacity
-                {...this.clickableProps}
+                        underlayColor={this.props.theme.colors.separator}
+
                 onPress={_ => openProfile(comment.user)}
               >
                 <Text style={[styles.fill, { color: '#000' }]}>
@@ -184,33 +180,30 @@ class CommentListItem extends React.PureComponent {
   }
 }
 
-CommentListItem = withNavigation(CommentListItem)
-CommentListItem.defaultProps = {}
-
-CommentListItem.propTypes = {
-  // ...ViewPropTypes
-}
+CommentListItem = withNavigation(withTheme(CommentListItem))
 export default createFragmentContainer(
   connect(mapStateToProps)(CommentListItem),
-  graphql`
-    fragment CommentListItem_comment on Comment {
-      id
-      _id
-      body
-      created_at
-      discussion_id
-      excerpt
-      discussion {
+  {
+    comment: graphql`
+      fragment CommentListItem_comment on Comment {
         id
         _id
+        body
+        created_at
+        discussion_id
+        excerpt
+        discussion {
+          id
+          _id
+        }
+        user {
+          id
+          _id
+          name
+          username
+          profile_picture_name
+        }
       }
-      user {
-        id
-        _id
-        name
-        username
-        profile_picture_name
-      }
-    }
-  `,
+    `,
+  },
 )

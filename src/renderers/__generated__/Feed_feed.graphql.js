@@ -10,10 +10,10 @@
 import type { ReaderFragment } from 'relay-runtime';
 type PostListItem_discussion$ref = any;
 import type { FragmentReference } from "relay-runtime";
-declare export opaque type Feed_discussionList$ref: FragmentReference;
-declare export opaque type Feed_discussionList$fragmentType: Feed_discussionList$ref;
-export type Feed_discussionList = {|
-  +top_stories: ?{|
+declare export opaque type Feed_feed$ref: FragmentReference;
+declare export opaque type Feed_feed$fragmentType: Feed_feed$ref;
+export type Feed_feed = {|
+  +discussions: ?{|
     +pageInfo: {|
       +hasNextPage: boolean,
       +endCursor: ?string,
@@ -25,12 +25,12 @@ export type Feed_discussionList = {|
       |}
     |}>,
   |},
-  +$refType: Feed_discussionList$ref,
+  +$refType: Feed_feed$ref,
 |};
-export type Feed_discussionList$data = Feed_discussionList;
-export type Feed_discussionList$key = {
-  +$data?: Feed_discussionList$data,
-  +$fragmentRefs: Feed_discussionList$ref,
+export type Feed_feed$data = Feed_feed;
+export type Feed_feed$key = {
+  +$data?: Feed_feed$data,
+  +$fragmentRefs: Feed_feed$ref,
   ...
 };
 */
@@ -39,12 +39,14 @@ export type Feed_discussionList$key = {
 const node/*: ReaderFragment*/ = {
   "argumentDefinitions": [
     {
-      "kind": "RootArgument",
+      "defaultValue": 10,
+      "kind": "LocalArgument",
       "name": "count",
       "type": "Int"
     },
     {
-      "kind": "RootArgument",
+      "defaultValue": null,
+      "kind": "LocalArgument",
       "name": "cursor",
       "type": "String"
     }
@@ -57,19 +59,19 @@ const node/*: ReaderFragment*/ = {
         "cursor": "cursor",
         "direction": "forward",
         "path": [
-          "top_stories"
+          "discussions"
         ]
       }
     ]
   },
-  "name": "Feed_discussionList",
+  "name": "Feed_feed",
   "selections": [
     {
-      "alias": "top_stories",
+      "alias": "discussions",
       "args": null,
       "concreteType": "DiscussionConnection",
       "kind": "LinkedField",
-      "name": "__Feed_top_stories_connection",
+      "name": "__Feed_discussions_connection",
       "plural": false,
       "selections": [
         {
@@ -152,6 +154,6 @@ const node/*: ReaderFragment*/ = {
   "type": "Feed"
 };
 // prettier-ignore
-(node/*: any*/).hash = '2d3f86a0041eb9468f46b88354475ac4';
+(node/*: any*/).hash = '4a23bf14b8dcd3d0d2b5e6067c3bcff8';
 
 module.exports = node;

@@ -6,7 +6,7 @@ import Comments from '../renderers/Comments'
 import Toolbar from '../components/Toolbar'
 import getNavigation from '../helpers/getNavigation'
 
-export default class ProfileScreen extends React.Component {
+export default class ContributionsScreen extends React.Component {
   renderToolbar() {
     const { user } = this.props.route.params
     const title = (user && user.username) || 'Contributions'

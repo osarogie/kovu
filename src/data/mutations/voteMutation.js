@@ -1,16 +1,15 @@
-import { Environment } from 'relay-runtime'
 import { commitMutation, graphql } from 'react-relay'
 
 export function voteMutation({ option, environment }, requireViewer, config) {
-  if (!requireViewer('Please login to vote')) return
+  // if (!requireViewer('Please login to vote')) return
   const variables = {
-    input: { option }
+    input: { option },
   }
 
   commitMutation(environment, {
     variables,
     mutation: graphql`
-      mutation PollViewVoteMutation($input: VoteInput!) {
+      mutation voteMutation($input: VoteInput!) {
         vote(input: $input) {
           discussion {
             ...PostListItem_discussion
@@ -20,6 +19,6 @@ export function voteMutation({ option, environment }, requireViewer, config) {
         }
       }
     `,
-    ...config
+    ...config,
   })
 }

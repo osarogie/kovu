@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import { commitMutation, createFragmentContainer, graphql } from 'react-relay'
 import { navHelper } from '../helpers/getNavigation'
 import { withNavigation } from '../navigation/withNavigation'
+import { withTheme } from 'react-native-paper'
 
 const mapStateToProps = state => ({
   night_mode: state.night_mode,
@@ -97,8 +98,10 @@ class JoinButton extends React.Component {
   }
   render() {
     const { viewer_is_a_member, is_private } = this.props.group
-    const color = viewer_is_a_member ? '#fff' : '#05f'
-    const backgroundColor = viewer_is_a_member ? '#05f' : '#fff'
+    const color = viewer_is_a_member ? '#fff' : this.props.theme.colors.primary
+    const backgroundColor = viewer_is_a_member
+      ? this.props.theme.colors.primary
+      : '#fff'
     const title = viewer_is_a_member
       ? 'Joined'
       : is_private
@@ -116,7 +119,7 @@ class JoinButton extends React.Component {
           backgroundColor,
           borderRadius: 5,
           borderWidth: 1,
-          borderColor: '#05f',
+          borderColor: this.props.theme.colors.primary,
           ...this.props.buttonStyle,
         }}
         isLoading={this.state.isLoading}
@@ -126,12 +129,14 @@ class JoinButton extends React.Component {
 }
 
 export default createFragmentContainer(
-  withNavigation(connect(mapStateToProps)(JoinButton)),
-  graphql`
-    fragment JoinButton_group on Group {
-      _id
-      viewer_is_a_member
-      is_private
-    }
-  `,
+  withNavigation(connect(mapStateToProps)(withTheme(JoinButton))),
+  {
+    group: graphql`
+      fragment JoinButton_group on Group {
+        _id
+        viewer_is_a_member
+        is_private
+      }
+    `,
+  },
 )

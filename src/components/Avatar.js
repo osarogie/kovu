@@ -10,7 +10,7 @@ import {
   TouchableHighlight,
   TouchableNativeFeedback,
   TouchableWithoutFeedback,
-  PixelRatio
+  PixelRatio,
 } from 'react-native'
 // import ViewPropTypes from "../config/ViewPropTypes"
 
@@ -51,7 +51,7 @@ function Avatar(props) {
   const { openProfile } = useAppNavigation()
 
   function defaultOnPress() {
-    if (source && source._id) {
+    if (source?._id) {
       openProfile(source._id, source)
     }
   }
@@ -98,7 +98,7 @@ function Avatar(props) {
       const editButtonSizeStyle = {
         width: editButtonSize,
         height: editButtonSize,
-        borderRadius: editButtonSize / 2
+        borderRadius: editButtonSize / 2,
       }
       const editButtonIconSize = editButtonSize * 0.6
 
@@ -107,11 +107,10 @@ function Avatar(props) {
           style={[
             styles.editButton,
             editButtonSizeStyle,
-            editButtonProps.style
+            editButtonProps.style,
           ]}
           underlayColor={editButtonProps.underlayColor}
-          onPress={onEditPress}
-        >
+          onPress={onEditPress}>
           <View>
             <Icon
               size={editButtonIconSize}
@@ -126,20 +125,19 @@ function Avatar(props) {
   }
 
   const getPicture = () => {
-    if (
-      source.profile_picture_name &&
-      typeof source.profile_picture_name === 'string'
-    ) {
+    if (typeof source?.profile_picture_name === 'string') {
       return source.profile_picture_name
     }
-    if (source.profile_pic && typeof source.profile_pic === 'string') {
+
+    if (typeof source?.profile_pic === 'string') {
       return source.profile_pic.split('/').pop()
     }
+
     return null
   }
 
   const renderContent = () => {
-    if ((source && source.profile_picture_name) || source.profile_pic) {
+    if (source?.profile_picture_name || source?.profile_pic) {
       const size = PixelRatio.getPixelSizeForLayoutSize(width)
 
       const uri = imageUrl(getPicture(), `${size}x${size}`)
@@ -150,7 +148,7 @@ function Avatar(props) {
             styles.avatar,
             rounded && { borderRadius: width / 2 },
             radius && { borderRadius: radius },
-            avatarStyle && avatarStyle
+            avatarStyle && avatarStyle,
           ]}
           source={{ uri }}
         />
@@ -180,11 +178,11 @@ function Avatar(props) {
       backgroundColor: 'transparent',
       width,
       height,
-      overflow: 'hidden'
+      overflow: 'hidden',
     },
     avatar: {
       width: width,
-      height: height
+      height: height,
     },
     overlayContainer: {
       flex: 1,
@@ -196,13 +194,13 @@ function Avatar(props) {
       top: 0,
       left: 0,
       right: 0,
-      bottom: 0
+      bottom: 0,
     },
     title: {
       color: '#ffffff',
       fontSize: titleSize,
       backgroundColor: 'rgba(0,0,0,0)',
-      textAlign: 'center'
+      textAlign: 'center',
     },
     editButton: {
       position: 'absolute',
@@ -216,13 +214,13 @@ function Avatar(props) {
           shadowColor: DEFAULT_COLORS[0],
           shadowOffset: { width: 1, height: 1 },
           shadowRadius: 2,
-          shadowOpacity: 0.5
+          shadowOpacity: 0.5,
         },
         android: {
-          elevation: 1
-        }
-      })
-    }
+          elevation: 1,
+        },
+      }),
+    },
   })
 
   return (
@@ -233,18 +231,16 @@ function Avatar(props) {
       style={[
         styles.container,
         rounded && { borderRadius: width / 2 },
-        containerStyle && containerStyle
+        containerStyle && containerStyle,
       ]}
-      {...attributes}
-    >
+      {...attributes}>
       <View
         style={[
           styles.overlayContainer,
           rounded && { borderRadius: width / 2 },
           radius && { borderRadius: radius },
-          overlayContainerStyle && overlayContainerStyle
-        ]}
-      >
+          overlayContainerStyle && overlayContainerStyle,
+        ]}>
         {renderContent()}
       </View>
       {renderUtils()}
@@ -261,8 +257,8 @@ Avatar.defaultProps = {
     iconType: 'feather',
     iconColor: '#fff',
     underlayColor: DEFAULT_COLORS[0],
-    style: null
-  }
+    style: null,
+  },
 }
 
 Avatar.propTypes = {
@@ -271,7 +267,7 @@ Avatar.propTypes = {
     TouchableOpacity,
     TouchableHighlight,
     TouchableNativeFeedback,
-    TouchableWithoutFeedback
+    TouchableWithoutFeedback,
   ]),
   width: PropTypes.number,
   height: PropTypes.number,
@@ -299,9 +295,9 @@ Avatar.propTypes = {
     iconName: PropTypes.string,
     iconType: PropTypes.string,
     iconColor: PropTypes.string,
-    underlayColor: PropTypes.string
+    underlayColor: PropTypes.string,
     // style: ViewPropTypes.style
-  })
+  }),
 }
 
 export default Avatar

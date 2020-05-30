@@ -1,6 +1,5 @@
 import React from 'react'
 import {
-  Text,
   StyleSheet,
   View,
   Image,
@@ -17,6 +16,7 @@ import FollowButton from './FollowButton'
 import { connect } from 'react-redux'
 import { navHelper } from '../helpers/getNavigation'
 import { withNavigation } from '../navigation/withNavigation'
+import { Text, withTheme } from 'react-native-paper'
 
 const mapStateToProps = state => ({
   night_mode: state.night_mode,
@@ -24,10 +24,6 @@ const mapStateToProps = state => ({
   current_user: state.user.user,
 })
 class UserListItem extends React.Component {
-  clickableProps = {
-    underlayColor: 'whitesmoke',
-  }
-
   openProfile = _ => navHelper(this).openProfile(this.props.user)
 
   renderFollowButton = _ =>
@@ -46,12 +42,12 @@ class UserListItem extends React.Component {
     if (vertical)
       return (
         <TouchableHighlight
-          {...this.clickableProps}
+          underlayColor={this.props.theme.colors.separator}
           onPress={this.openProfile}
           style={{
             // padding: 17,
             // marginTop: 10,
-            backgroundColor: '#fff',
+            backgroundColor: this.props.theme.colors.background,
             flex: 1,
             // elevation: 3,
             // borderRadius: 5
@@ -71,7 +67,6 @@ class UserListItem extends React.Component {
                   style={{
                     flex: 1,
                     marginRight: 5,
-                    color: '#000',
                     fontSize: 16,
                     fontWeight: 'bold',
                     // textAlign: 'center'
@@ -100,12 +95,12 @@ class UserListItem extends React.Component {
 
     return (
       <TouchableHighlight
-        {...this.clickableProps}
+        underlayColor={this.props.theme.colors.separator}
         onPress={this.openProfile}
         style={{
           margin: 17,
           marginTop: 10,
-          backgroundColor: '#fff',
+          backgroundColor: this.props.theme.colors.background,
           flex: 1,
           elevation: 3,
           borderRadius: 5,
@@ -119,7 +114,7 @@ class UserListItem extends React.Component {
                 // marginLeft: 10,
                 flex: 1,
                 marginRight: 5,
-                color: '#000',
+                color: this.props.theme.colors.text,
                 fontSize: 16,
                 fontWeight: 'bold',
                 // textAlign: 'center'
@@ -157,17 +152,21 @@ class UserListItem extends React.Component {
   }
 }
 
+UserListItem = withTheme(UserListItem)
+
 export default createFragmentContainer(
   withNavigation(connect(mapStateToProps)(UserListItem)),
-  graphql`
-    fragment UserListItem_user on User {
-      id
-      _id
-      name
-      username
-      bio
-      profile_picture_name
-      ...FollowButton_user
-    }
-  `,
+  {
+    user: graphql`
+      fragment UserListItem_user on User {
+        id
+        _id
+        name
+        username
+        bio
+        profile_picture_name
+        ...FollowButton_user
+      }
+    `,
+  },
 )

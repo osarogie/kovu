@@ -1,9 +1,8 @@
 import { createFragmentContainer, graphql } from 'react-relay'
 
 export const createPollFragmentContainer = Component =>
-  createFragmentContainer(
-    Component,
-    graphql`
+  createFragmentContainer(Component, {
+    discussion: graphql`
       fragment Poll_discussion on Discussion {
         voting_has_ended
         viewer_has_voted
@@ -24,5 +23,5 @@ export const createPollFragmentContainer = Component =>
           }
         }
       }
-    `
-  )
+    `,
+  })

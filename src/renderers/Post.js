@@ -23,7 +23,7 @@ import QueryRendererProxy from './QueryRendererProxy'
 import Avatar from '../components/Avatar'
 import { getTimeAgo, getCommentCount, imageUrl } from '../utils'
 import { useTheme, Text } from 'react-native-paper'
-import { useViewer } from '../providers/ViewerProvider'
+import { useViewer } from '../providers/SessionProvider'
 import { readingTime } from '../utils/readingTime'
 
 const { width } = Dimensions.get('window')
@@ -71,7 +71,7 @@ function Post(props) {
         PixelRatio.getPixelSizeForLayoutSize(height),
       )
       return (
-        <View style={styles.imageWrap}>
+        <View style={{ backgroundColor: colors.separator }}>
           <Image
             source={{
               uri: imageUrl(
@@ -151,7 +151,7 @@ function Post(props) {
   }
 
   const renderEdit = () => {
-    if (current_user._id === discussion.user._id) {
+    if (current_user?._id === discussion.user._id) {
       return (
         <TouchableOpacity {...clickableProps} onPress={openWrite}>
           <Text style={{ marginLeft: 20 }}>Edit</Text>
@@ -258,7 +258,7 @@ function Post(props) {
             width={40}
             rounded
             source={current_user}
-            title={current_user.name}
+            title={current_user?.name}
             activeOpacity={0.7}
           />
           <Text

@@ -11,8 +11,8 @@ import getNavigation from '../helpers/getNavigation'
 export default class ProfileScreen extends React.Component {
   renderToolbar() {
     const { user } = this.props.route.params
-    const title = (user && `@${user.username}`) || 'Profile'
-    return <Toolbar title={title} navIconName="md-arrow-back" showNavIcon />
+    // const title = (user && `@${user.username}`) || 'Profile'
+    return <Toolbar title="Profile" navIconName="md-arrow-back" showNavIcon />
   }
 
   render() {

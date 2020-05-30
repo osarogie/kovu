@@ -28,6 +28,8 @@
     "appcenter-analytics": "3.0.2",
     "appcenter-crashes": "3.0.2",
     "base-64": "^0.1.0",
+    "color": "^3.1.2",
+    "dayjs": "^1.8.28",
     "graphql": "^14.2.1",
     "prop-types": "^15.7.2",
     "react": "16.11.0",
@@ -43,7 +45,7 @@
     "react-native-image-crop-picker": "^0.23.1",
     "react-native-image-progress": "^1.1.1",
     "react-native-keyboard-aware-scroll-view": "^0.8.0",
-    "react-native-optimized-flatlist": "^1.0.4",
+    "react-native-navigation-bar-color": "^2.0.1",
     "react-native-paper": "^3.10.1",
     "react-native-permissions": "^1.1.1",
     "react-native-progress": "^3.6.0",
@@ -66,7 +68,6 @@
     "redux-logger": "^3.0.6",
     "redux-persist": "^5.10.0",
     "redux-thunk": "^2.3.0",
-    "relay": "^0.8.0-1",
     "relay-runtime": "^9.1.0"
   },
   "devDependencies": {

@@ -1,17 +1,21 @@
-
 import React from 'react'
-import PostList from '../fragments/PostList'
 import QueryRendererProxy from './QueryRendererProxy'
 
 import { createPaginationContainer, graphql } from 'react-relay'
+import { VerticalPaginationList } from '../relay/pagination/VerticalPaginationList'
+import PostListItem from '../fragments/PostListItem'
 
 const FeedPaginationContainer = createPaginationContainer(
-  PostList,
+  VerticalPaginationList,
   {
-    discussionList: graphql`
-      fragment Feed_discussionList on Feed {
-        top_stories(first: $count, after: $cursor)
-          @connection(key: "Feed_top_stories") {
+    feed: graphql`
+      fragment Feed_feed on Feed
+        @argumentDefinitions(
+          count: { type: "Int", defaultValue: 10 }
+          cursor: { type: "String" }
+        ) {
+        discussions(first: $count, after: $cursor)
+          @connection(key: "Feed_discussions") {
           pageInfo {
             hasNextPage
             endCursor
@@ -24,34 +28,34 @@ const FeedPaginationContainer = createPaginationContainer(
           }
         }
       }
-    `
+    `,
   },
   {
     direction: 'forward',
     getConnectionFromProps(props) {
-      return props.discussionList && props.discussionList.top_stories
+      return props.feed?.discussions
     },
     getFragmentVariables(prevVars, totalCount) {
       return {
         ...prevVars,
-        count: totalCount
+        count: totalCount,
       }
     },
     getVariables(props, { count, cursor, size }, fragmentVariables) {
       return {
         count,
-        cursor
+        cursor,
       }
     },
     variables: { cursor: null },
     query: graphql`
       query FeedPaginationQuery($count: Int!, $cursor: String) {
         feed {
-          ...Feed_discussionList
+          ...Feed_feed @arguments(count: $count, cursor: $cursor)
         }
       }
-    `
-  }
+    `,
+  },
 )
 
 export default props => {
@@ -60,18 +64,23 @@ export default props => {
       query={graphql`
         query FeedQuery($count: Int!, $cursor: String) {
           feed {
-            ...Feed_discussionList
+            ...Feed_feed @arguments(count: $count, cursor: $cursor)
           }
         }
       `}
       variables={{
         cursor: null,
-        count: 10
+        count: 10,
       }}
       render={data => (
         <FeedPaginationContainer
-          discussionList={data.props.feed}
-          itemProps={{ ...props /*, feature_photo: { width, height }*/ }}
+          propName="feed"
+          fieldName="discussions"
+          feed={data.props.feed}
+          emptyListMessage="No posts yet"
+          renderItem={({ item }) => (
+            <PostListItem discussion={item.node} {...props} />
+          )}
         />
       )}
     />

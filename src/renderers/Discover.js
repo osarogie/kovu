@@ -3,16 +3,19 @@ import { StatusBar, StyleSheet, TouchableOpacity } from 'react-native'
 
 import React from 'react'
 import { View, Text, Dimensions } from 'react-native'
-import { VerticalGroupList } from '../fragments/VerticalGroupList'
 import { VerticalUserList } from '../fragments/VerticalUserList'
 import PostList from '../fragments/PostList'
 import QueryRendererProxy from './QueryRendererProxy'
-import { TabView, TabBar } from 'react-native-tab-view'
+import { TabView, TabBar, TabBarIndicator } from 'react-native-tab-view'
 import { createPaginationContainer, graphql } from 'react-relay'
 import Icon from 'react-native-vector-icons/Feather'
 import { WHITE } from '../ui'
 import Animated from 'react-native-reanimated'
 import { elevation } from '../styles/elevation'
+import { withTheme } from 'react-native-paper'
+import _ from 'lodash'
+import { VerticalPaginationList } from '../relay/pagination/VerticalPaginationList'
+import VerticalGroupListItem from '../fragments/VerticalGroupListItem'
 
 const initialLayout = {
   height: 0,
@@ -20,7 +23,7 @@ const initialLayout = {
 }
 
 const DiscoverGroupsPaginationContainer = createPaginationContainer(
-  VerticalGroupList,
+  VerticalPaginationList,
   {
     groupList: graphql`
       fragment Discover_groupList on Feed {
@@ -201,9 +204,14 @@ class Cultures extends React.Component {
           <View style={{ flex: 1 }}>
             <DiscoverGroupsPaginationContainer
               // renderHeader={_ => renderCultureHeader(q)}
+              propName="groupList"
+              fieldName="groups"
               groupList={data.props.feed}
               q={q}
-              itemProps={{ ...props, f_width: 300, f_height: 200 }}
+              numColumns={2}
+              renderItem={({ item, itemProps }) => (
+                <VerticalGroupListItem group={item.node} />
+              )}
             />
           </View>
         )}
@@ -255,15 +263,16 @@ class Stories extends React.Component {
             alignItems: 'center',
             justifyContent: 'center',
             flex: 1,
-            backgroundColor: WHITE,
+            backgroundColor: this.props.theme.colors.background,
           }}>
           <Icon
             name="search"
             size={100}
-            color="#05f"
+            color={this.props.theme.colors.primary}
             style={{ marginBottom: 10 }}
           />
-          <Text style={{ color: '#05f', fontSize: 20 }}>
+          <Text
+            style={{ color: this.props.theme.colors.primary, fontSize: 20 }}>
             Use the search bar to find stories
           </Text>
         </View>
@@ -294,13 +303,13 @@ class Stories extends React.Component {
   }
 }
 
-///////
+Stories = withTheme(Stories)
 
-export default class VideoPager extends React.Component {
+export default class Discover extends React.Component {
   state = {
     index: 0,
     routes: [
-      { key: 'cultures', title: 'Cultures' },
+      { key: 'cultures', title: 'Blogs' },
       { key: 'users', title: 'People' },
       { key: 'stories', title: 'Stories' },
     ],
@@ -329,42 +338,27 @@ export default class VideoPager extends React.Component {
     const inputRange = props.navigationState.routes.map((x, i) => i)
 
     return (
-      <View style={styles.tabBar}>
-        {props.navigationState.routes.map((route, i) => {
-          const color = Animated.color(
-            Animated.round(
-              Animated.interpolate(props.position, {
-                inputRange,
-                outputRange: inputRange.map(inputIndex =>
-                  inputIndex === i ? 255 : 0,
-                ),
-              }),
-            ),
-            0,
-            0,
-          )
-
-          return (
-            <TouchableOpacity
-              key={i}
-              style={styles.tabItem}
-              onPress={() => this.setState({ index: i })}>
-              <Animated.Text style={{ color }}>{route.title}</Animated.Text>
-            </TouchableOpacity>
-          )
-        })}
-      </View>
-    )
-
-    return (
       <TabBar
         {...props}
         onTabPress={this.onTabPress}
-        scrollEnabled
-        indicatorStyle={styles.indicator}
-        style={styles.tabbar}
-        tabStyle={styles.tab}
-        labelStyle={styles.label}
+        // scrollEnabled
+        bounces
+        indicatorColor={this.props.theme.colors.text}
+        indicatorStyle={{
+          backgroundColor: this.props.theme.colors.text,
+          height: 2,
+        }}
+        indicatorContainerStyle={{
+          backgroundColor: this.props.theme.colors.separator,
+        }}
+        tabStyle={{
+          backgroundColor: this.props.theme.colors.background,
+          height: 48,
+        }}
+        style={{ height: 50 }}
+        activeColor={this.props.theme.colors.text}
+        inactiveColor={this.props.theme.colors.darkGray}
+        labelStyle={[styles.label]}
       />
     )
   }
@@ -387,84 +381,12 @@ export default class VideoPager extends React.Component {
     )
   }
 }
-
-//////////
-
-//  (DiscoverQueryRenderer = ({ q, ...props }) => {
-//   return (
-//     <QueryRendererProxy
-//       query={graphql`
-//         query DiscoverQuery($count: Int!, $cursor: String, $q: String) {
-//           feed {
-//             ...Discover_userList
-//             ...Discover_discussionList
-//             ...Discover_groupList
-//           }
-//         }
-//       `}
-//       variables={{ cursor: null, count: 10, q }}
-//       render={data => (
-//         <DiscoverPostsPaginationContainer
-//           discussionList={data.props.feed}
-//           q={q}
-//           highlight
-//           itemProps={{ ...props }}
-//           renderHeader={_ => (
-//             <View style={{ flex: 1, backgroundColor: '#eee', marginTop: 53 }}>
-//               <DiscoverUsersPaginationContainer
-//                 renderHeader={_ => renderUserHeader(q)}
-//                 userList={data.props.feed}
-//                 q={q}
-//                 itemProps={{ ...props }}
-//               />
-//               <View style={{ flex: 1 }}>
-//                 <DiscoverGroupsPaginationContainer
-//                   renderHeader={_ => renderCultureHeader(q)}
-//                   groupList={data.props.feed}
-//                   q={q}
-//                   itemProps={{ ...props, f_width: 300, f_height: 200 }}
-//                 />
-//               </View>
-//               {renderPostsLabel(q)}
-//             </View>
-//           )}
-//         />
-//       )}
-//     />
-//   )
-// })
-const labelStyle = {
-  flexDirection: 'row',
-  alignItems: 'flex-end',
-  padding: 20,
-  paddingBottom: 8,
-  fontSize: 15,
-  color: '#000',
-  fontWeight: 'bold',
-}
-
 const styles = StyleSheet.create({
-  white: { color: '#fff', paddingVertical: 5 },
-  tabbar: {
-    backgroundColor: '#fff',
-  },
-  tab: {
-    // width: 'auto',
-    backgroundColor: '#fff',
-    height: 50,
-  },
-  indicator: {
-    backgroundColor: '#000',
-    height: 2,
-  },
   label: {
-    color: '#000',
     fontWeight: '400',
-    ...labelStyle,
   },
   tabBar: {
     flexDirection: 'row',
-    // paddingTop: StatusBar.currentHeight,
     ...elevation(2),
   },
   tabItem: {
@@ -474,34 +396,4 @@ const styles = StyleSheet.create({
   },
 })
 
-// const renderCultureHeader = q => (
-//   <Text style={labelStyle}>
-//     Top Cultures
-//     {renderMatch(q)}
-//   </Text>
-// )
-// const renderUserHeader = q => (
-//   <Text style={labelStyle}>
-//     People
-//     {renderMatch(q)}
-//   </Text>
-// )
-// const renderPostsLabel = q => (
-//   <Text style={[labelStyle, { backgroundColor: '#eee' }]}>
-//     Stories
-//     {renderMatch(q)}
-//   </Text>
-// )
-
-const renderMatch = q => {
-  if (q) {
-    return (
-      <Text style={{ fontSize: 13, color: '#777', fontStyle: 'italic' }}>
-        {` that match `}
-        <Text style={{ color: '#000' }}>{q}</Text>
-      </Text>
-    )
-  }
-
-  return null
-}
+Discover = withTheme(Discover)

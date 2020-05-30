@@ -32,7 +32,6 @@ export default StyleSheet.create({
   inputContainer: {
     flex: 1,
     flexDirection: 'row',
-    backgroundColor: '#eee',
     paddingRight: 20,
     paddingLeft: 20,
     borderRadius: 40,
@@ -101,7 +100,6 @@ export default StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#000',
     flex: 1,
   },
   separator: {
@@ -112,7 +110,6 @@ export default StyleSheet.create({
     margin: 17,
   },
   body: {
-    color: '#000',
     lineHeight: 25,
     textAlign: 'justify',
   },
@@ -144,7 +141,6 @@ export default StyleSheet.create({
   fill: { flex: 1 },
   postsHeader: {
     fontSize: 15,
-    color: '#000',
     fontWeight: 'bold',
     padding: 20,
     paddingBottom: 8,

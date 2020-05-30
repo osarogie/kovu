@@ -5,7 +5,7 @@ import { View, ScrollView, ToastAndroid } from 'react-native'
 import Bar from 'react-native-progress/Bar'
 import ActivityButton from '../components/ActivityButton'
 import styles from '../styles'
-import TextInput from '../components/TextInput'
+import { TextInput } from 'react-native-paper'
 import QueryRendererProxy from './QueryRendererProxy'
 import Toolbar from '../components/Toolbar'
 
@@ -46,16 +46,12 @@ class ChangePassword extends React.Component {
       marginTop: 15,
       // opacity: 0.9,
       borderRadius: 0,
-
-      backgroundColor: '#fff',
     },
     inputProps: {
       placeholderTextColor: '#333',
       underlineColorAndroid: '#000',
     },
-    inputStyle: {
-      color: '#000',
-    },
+    inputStyle: {},
   }
 
   buttonProps = {
@@ -133,14 +129,12 @@ class ChangePassword extends React.Component {
     return null
   }
   render() {
-    const backgroundColor = '#fff'
-
     return (
       <View style={styles.container}>
         {this.renderToolbar()}
         <View style={{ height: 2 }}>{this.renderProgress()}</View>
         <ScrollView
-          style={{ flex: 1, backgroundColor }}
+          style={{ flex: 1 }}
           contentContainerStyle={{ alignItems: 'center' }}>
           <View style={{ flex: 1, padding: 40, alignItems: 'center' }}>
             <TextInput
@@ -189,12 +183,14 @@ class ChangePassword extends React.Component {
 // ChangePasswordFragmentContainer
 const ChangePasswordFragmentContainer = createFragmentContainer(
   connect(mapStateToProps)(ChangePassword),
-  graphql`
-    fragment ChangePassword_viewer on User {
-      id
-      _id
-    }
-  `,
+  {
+    viewer: graphql`
+      fragment ChangePassword_viewer on User {
+        id
+        _id
+      }
+    `,
+  },
 )
 
 export default ({ api_key, ...props }) => (

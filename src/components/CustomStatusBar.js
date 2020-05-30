@@ -7,7 +7,7 @@ export function CustomStatusBar() {
 
   return (
     <StatusBar
-      backgroundColor={colors.statusBar}
+      backgroundColor={colors.background}
       barStyle={statusBar.barStyle}
     />
   )

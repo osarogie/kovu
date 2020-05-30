@@ -6,7 +6,7 @@ import {
   Dimensions,
   TouchableHighlight,
   PixelRatio,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native'
 import styles from '../../styles'
 import excerptStyles from '../../styles/excerptStyles'
@@ -18,25 +18,22 @@ import Avatar from '../../components/Avatar'
 import DiscussionLike from '../../fragments/DiscussionLike'
 import { getTimeAgo, imageUrl, getCommentCount } from '../../utils'
 import Icon from 'react-native-vector-icons/Ionicons'
+import { withTheme } from 'react-native-paper'
 
 const mapStateToProps = state => ({
   night_mode: state.night_mode,
-  current_user: state.user.user
+  current_user: state.user.user,
 })
 
 class PostRow extends React.PureComponent {
-  clickableProps = {
-    underlayColor: 'whitesmoke'
-  }
-
   cultureNameProps = {
-    style: { color: '#05f' }
+    style: { color: '#05f' },
   }
 
   featurePhotoStyles = {
     ...excerptStyles.featurePhoto,
     backgroundColor: '#eee',
-    marginTop: 10
+    marginTop: 10,
   }
 
   openProfile = _ => this.props.openProfile(this.props.discussion.user)
@@ -78,14 +75,12 @@ class PostRow extends React.PureComponent {
     if (discussion.group && showGroupInfo !== false) {
       return (
         <TouchableOpacity
-          {...this.clickableProps}
+          underlayColor={this.props.theme.colors.separator}
           style={{ flex: 1, flexDirection: 'row' }}
-          onPress={this.openCulture}
-        >
+          onPress={this.openCulture}>
           <Text
             style={[excerptStyles.groupInfo, excerptStyles.meta]}
-            numberOfLines={1}
-          >
+            numberOfLines={1}>
             <Text> in </Text>
             <Text {...this.cultureNameProps}>{discussion.group.name}</Text>
           </Text>
@@ -99,10 +94,9 @@ class PostRow extends React.PureComponent {
 
     return [
       <TouchableOpacity
-        {...this.clickableProps}
+        underlayColor={this.props.theme.colors.separator}
         onPress={this.openProfile}
-        key={`post.m.t.${discussion.id}`}
-      >
+        key={`post.m.t.${discussion.id}`}>
         <Text style={[styles.fill, { color: '#000' }]} numberOfLines={1}>
           {discussion.user.name}
         </Text>
@@ -112,7 +106,7 @@ class PostRow extends React.PureComponent {
           {getTimeAgo(discussion.created_at)}
         </Text>
         {this.renderCultureName()}
-      </View>
+      </View>,
     ]
   }
 
@@ -120,7 +114,9 @@ class PostRow extends React.PureComponent {
     const { discussion } = this.props
     if (this.props.current_user._id == discussion.user._id) {
       return (
-        <TouchableOpacity {...this.clickableProps} onPress={this.openWrite}>
+        <TouchableOpacity
+          underlayColor={this.props.theme.colors.separator}
+          onPress={this.openWrite}>
           <Text style={{ marginLeft: 20 }}>Edit</Text>
         </TouchableOpacity>
       )
@@ -141,12 +137,13 @@ class PostRow extends React.PureComponent {
       // />,
       <View
         style={[styles.row, { alignItems: 'center' }]}
-        key={`post.c.viewholder.${discussion.id}`}
-      >
+        key={`post.c.viewholder.${discussion.id}`}>
         <DiscussionLike discussion={discussion} openLogin={openLogin} />
         <View style={styles.fillRow} />
         {this.renderEdit()}
-        <TouchableOpacity {...this.clickableProps} onPress={this.openComments}>
+        <TouchableOpacity
+          underlayColor={this.props.theme.colors.separator}
+          onPress={this.openComments}>
           <Text style={{ marginLeft: 20 }}>
             {`${comment_count_} Contribution${comment_count == 1 ? '' : 's'}`}
           </Text>
@@ -157,7 +154,7 @@ class PostRow extends React.PureComponent {
             size={25}
             color="#777"
           /> */}
-      </View>
+      </View>,
     ]
   }
 
@@ -169,15 +166,14 @@ class PostRow extends React.PureComponent {
     return (
       <View>
         <TouchableHighlight
-          {...this.clickableProps}
+          underlayColor={this.props.theme.colors.separator}
           style={{
             backgroundColor: '#fff',
             elevation: 2,
             marginBottom: 15,
-            marginTop: 2
+            marginTop: 2,
           }}
-          onPress={this.openDiscussion}
-        >
+          onPress={this.openDiscussion}>
           <View style={[excerptStyles.container, { marginBottom: 0 }]}>
             <View style={{ flexDirection: 'row', marginBottom: 8 }}>
               <Avatar
@@ -207,37 +203,39 @@ class PostRow extends React.PureComponent {
   }
 }
 export default createFragmentContainer(
-  connect(mapStateToProps)(PostRow),
-  graphql`
-    fragment PostRow_discussion on Discussion {
-      id
-      _id
-      name
-      excerpt(size: 20)
-      word_count
-      comment_count
-      created_at
-      user {
+  connect(mapStateToProps)(withTheme(PostRow)),
+  {
+    discussion: graphql`
+      fragment PostRow_discussion on Discussion {
         id
         _id
         name
-        username
-        profile_picture_name
+        excerpt(size: 20)
+        word_count
+        comment_count
+        created_at
+        user {
+          id
+          _id
+          name
+          username
+          profile_picture_name
+        }
+        group {
+          id
+          _id
+          name
+          permalink
+        }
+        feature_photo {
+          id
+          _id
+          height
+          width
+          name
+        }
+        ...DiscussionLike_discussion
       }
-      group {
-        id
-        _id
-        name
-        permalink
-      }
-      feature_photo {
-        id
-        _id
-        height
-        width
-        name
-      }
-      ...DiscussionLike_discussion
-    }
-  `
+    `,
+  },
 )

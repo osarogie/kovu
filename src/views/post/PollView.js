@@ -1,9 +1,13 @@
+import React from 'react'
+import { View } from 'react-native'
 import { createPollFragmentContainer } from '../../fragments/Poll'
-import { pluralise } from 'helpers/pluralize'
-import moment from 'moment'
-import { Text } from 'react-native'
-import { useEnvironment } from '../../providers/ViewerProvider'
+import { pluralise } from '../../helpers/pluralize'
+import dayjs from 'dayjs'
+import { Text, useTheme } from 'react-native-paper'
+import { useEnvironment } from '../../providers/SessionProvider'
 import { voteMutation } from '../../data/mutations/voteMutation'
+import { TouchableOpacity } from 'react-native'
+import Colors from 'color'
 
 export function PollView({ discussion, hasViewer, requireViewer }) {
   const {
@@ -13,8 +17,10 @@ export function PollView({ discussion, hasViewer, requireViewer }) {
     viewer_owns,
     vote_count,
     poll_closes_at,
-    viewer_has_voted
+    viewer_has_voted,
   } = discussion
+
+  const { colors } = useTheme()
 
   const environment = useEnvironment()
 
@@ -32,7 +38,7 @@ export function PollView({ discussion, hasViewer, requireViewer }) {
       hide_votes,
       viewer_owns,
       voting_has_ended,
-      hasViewer
+      hasViewer,
     } = props
 
     const width =
@@ -51,7 +57,7 @@ export function PollView({ discussion, hasViewer, requireViewer }) {
     }
 
     function onChoiceClick(option) {
-      if (viewer_has_voted) return
+      if (viewer_has_voted || voting_has_ended) return
       // if (voting_has_ended)
       //   return notification.error({
       //     message: 'Sorry',
@@ -66,15 +72,38 @@ export function PollView({ discussion, hasViewer, requireViewer }) {
       viewer_owns || !hide_votes ? `${countVote()} (${width}%)` : countVote()
 
     return (
-      <View onPress={() => onChoiceClick(_id)}>
+      <TouchableOpacity
+        underlayColor={colors.separator}
+        style={[
+          {
+            paddingHorizontal: 20,
+            marginBottom: 10,
+            borderRadius: 4,
+            position: 'relative',
+            overflow: 'hidden',
+            borderWidth: 1,
+            borderColor: colors.separator,
+          },
+          viewer_selected && { borderColor: colors.primary },
+        ]}
+        onPress={() => onChoiceClick(_id)}>
         {(viewer_owns || !hide_votes) && (
-          <View style={{ width: `${width}%` }} />
+          <View
+            style={{
+              width: `${width}%`,
+              height: '100%',
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              backgroundColor: Colors(colors.primary).alpha(0.2),
+            }}
+          />
         )}
-        <Text className="vote-text">
+        <Text style={{ fontSize: 16, paddingVertical: 10 }}>
           {voting_has_ended || viewer_has_voted} {title}{' '}
           {!!vote_count && ` - ${perc}`}
         </Text>
-      </View>
+      </TouchableOpacity>
     )
   }
 
@@ -82,7 +111,7 @@ export function PollView({ discussion, hasViewer, requireViewer }) {
     if (viewer_has_voted) return 'You have voted'
     if (voting_has_ended) return 'Voting has ended'
 
-    const time = moment(poll_closes_at * 1000)
+    const time = dayjs(poll_closes_at * 1000)
     return `Closes ${time.fromNow()}`
   }
 
@@ -93,7 +122,7 @@ export function PollView({ discussion, hasViewer, requireViewer }) {
   }
 
   return (
-    <View>
+    <View style={{ marginTop: 20 }}>
       {poll.edges.map(p => (
         <Choice
           hasViewer={hasViewer}

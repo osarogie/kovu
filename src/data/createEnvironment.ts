@@ -6,15 +6,6 @@ import {
   QueryResponseCache,
 } from 'relay-runtime'
 
-const prod = process.env.NODE_ENV === 'production'
-const API_HOST = prod ? 'https://data.thecommunity.ng' : 'http://localhost:5000'
-
-const ttl = 3 * 60 * 1000
-const cache = new QueryResponseCache({ size: 1024, ttl })
-
-const source = new RecordSource()
-const store = new Store(source)
-
 interface ICacheConfig {
   force: boolean
 }
@@ -24,6 +15,17 @@ interface IOptions {
 }
 
 export function createEnvironment({ headers }: IOptions): Environment {
+  const prod = process.env.NODE_ENV === 'production'
+  const API_HOST = prod
+    ? 'https://data.thecommunity.ng'
+    : 'https://data.thecommunity.ng'
+
+  const ttl = 3 * 60 * 1000
+  const cache = new QueryResponseCache({ size: 1024, ttl })
+
+  const source = new RecordSource()
+  const store = new Store(source)
+
   async function fetchQuery(
     operation,
     variables: any,

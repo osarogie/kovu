@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View, TouchableHighlight, TouchableOpacity } from 'react-native'
+import { View, TouchableHighlight, TouchableOpacity } from 'react-native'
 import styles from '../styles'
 import excerptStyles from '../styles/excerptStyles'
 import { createFragmentContainer, graphql } from 'react-relay'
@@ -7,34 +7,18 @@ import { connect } from 'react-redux'
 import Separator from '../components/Separator'
 import Avatar from '../components/Avatar'
 import { getTimeAgo } from '../utils'
+import { withTheme, Text } from 'react-native-paper'
 
 const mapStateToProps = state => ({
-  night_mode: state.night_mode
+  night_mode: state.night_mode,
 })
 
 class PostThumb extends React.PureComponent {
-  clickableProps = {
-    underlayColor: 'whitesmoke'
-  }
-
-  cultureNameProps = {
-    style: { color: '#05f' }
-  }
-
-  constructor(props) {
-    super(props)
-    this.openProfile = this.openProfile.bind(this)
-    this.openDiscussion = this.openDiscussion.bind(this)
-    this.openProfile = this.openProfile.bind(this)
-    this.openComments = this.openComments.bind(this)
-    this.openCulture = this.openCulture.bind(this)
-  }
-
-  openProfile = _ => this.props.openProfile(this.props.discussion.user)
-  openDiscussion = _ => this.props.openDiscussion(this.props.discussion)
-  openComments = _ => this.props.openComments(this.props.discussion)
-  openCulture = _ => this.props.openCulture(this.props.discussion.group)
-  openProfile = _ => this.props.openProfile(this.props.discussion.user)
+  openProfile = () => this.props.openProfile(this.props.discussion.user)
+  openDiscussion = () => this.props.openDiscussion(this.props.discussion)
+  openComments = () => this.props.openComments(this.props.discussion)
+  openCulture = () => this.props.openCulture(this.props.discussion.group)
+  openProfile = () => this.props.openProfile(this.props.discussion.user)
 
   renderCultureName() {
     const { discussion, showGroupInfo } = this.props
@@ -42,42 +26,20 @@ class PostThumb extends React.PureComponent {
     if (discussion.group && showGroupInfo !== false) {
       return (
         <TouchableOpacity
-          {...this.clickableProps}
+          underlayColor={this.props.theme.colors.separator}
           style={{ flex: 1, flexDirection: 'row' }}
-          onPress={this.openCulture}
-        >
+          onPress={this.openCulture}>
           <Text style={excerptStyles.groupInfo} numberOfLines={1}>
             <Text> in </Text>
-            <Text {...this.cultureNameProps}>{discussion.group.name}</Text>
+            <Text style={{ color: this.props.theme.colors.primary }}>
+              {discussion.group.name}
+            </Text>
             <Text> culture</Text>
           </Text>
         </TouchableOpacity>
       )
     } else return null
   }
-
-  // renderProfilePicture() {
-  //   const { discussion, openProfile } = this.props
-  //   const size = PixelRatio.getPixelSizeForLayoutSize(40)
-  //
-  //   const uri = imageUrl(
-  //     discussion.user.profile_picture_name,
-  //     `${size}x${size}`
-  //   )
-  //
-  //   return (
-  //     <TouchableOpacity
-  //       {...this.clickableProps}
-  //       onPress={_ => openProfile(discussion.user)}
-  //     >
-  //       <View
-  //         style={[excerptStyles.profilePicture, { backgroundColor: '#eee' }]}
-  //       >
-  //         <Image source={{ uri }} style={excerptStyles.profilePicture} />
-  //       </View>
-  //     </TouchableOpacity>
-  //   )
-  // }
 
   renderMeta() {
     const { discussion } = this.props
@@ -87,10 +49,12 @@ class PostThumb extends React.PureComponent {
         <Text style={[excerptStyles.title, { marginTop: 0 }]}>
           {discussion.name}
         </Text>
-        <TouchableOpacity {...this.clickableProps} onPress={this.openProfile}>
+        <TouchableOpacity
+          underlayColor={this.props.theme.colors.separator}
+          onPress={this.openProfile}>
           <Text style={[styles.fill]} numberOfLines={1}>
             <Text style={{ fontStyle: 'italic' }}>{'by '}</Text>
-            <Text style={[styles.fill, { color: '#000' }]} numberOfLines={1}>
+            <Text style={[styles.fill]} numberOfLines={1}>
               {discussion.user.name}
             </Text>
           </Text>
@@ -110,17 +74,16 @@ class PostThumb extends React.PureComponent {
     return (
       <View>
         <TouchableHighlight
-          {...this.clickableProps}
+          underlayColor={this.props.theme.colors.separator}
           style={{
-            backgroundColor: '#fff'
+            backgroundColor: this.props.theme.colors.background,
             // margin: 20,
             // elevation: 2,
             // borderRadius: 5
             // borderWidth: 1,
             // borderColor: '#ddd'
           }}
-          onPress={this.openDiscussion}
-        >
+          onPress={this.openDiscussion}>
           <View style={excerptStyles.container}>
             <View style={{ flexDirection: 'row', marginBottom: 8 }}>
               <Avatar
@@ -142,16 +105,10 @@ class PostThumb extends React.PureComponent {
     )
   }
 }
+PostThumb = withTheme(PostThumb)
 
-PostThumb.defaultProps = {}
-
-PostThumb.propTypes = {
-  // ...ViewPropTypes
-}
-
-export default createFragmentContainer(
-  connect(mapStateToProps)(PostThumb),
-  graphql`
+export default createFragmentContainer(connect(mapStateToProps)(PostThumb), {
+  discussion: graphql`
     fragment PostThumb_discussion on Discussion {
       id
       _id
@@ -173,5 +130,5 @@ export default createFragmentContainer(
         permalink
       }
     }
-  `
-)
+  `,
+})

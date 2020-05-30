@@ -1,7 +1,6 @@
 import React from 'react'
 import {
   // ViewPropTypes,
-  Text,
   View,
   KeyboardAvoidingView,
   ToastAndroid,
@@ -18,7 +17,7 @@ import { connect } from 'react-redux'
 import styles from '../styles'
 import CreateGroupMutation from '../data/mutations/CreateGroupMutation'
 import ActivityButton from '../components/ActivityButton'
-import TextInput from '../components/TextInput'
+import { TextInput, Text, Button } from 'react-native-paper'
 import EditGroupMutation from '../data/mutations/EditGroupMutation'
 import Toolbar from '../components/Toolbar'
 
@@ -71,7 +70,7 @@ class StartCulture extends React.Component {
     loadingBackground: '#b2b2b2',
     textStyle: {
       textAlign: 'center',
-      color: '#fff',
+
       fontSize: 16,
     },
   }
@@ -112,7 +111,7 @@ class StartCulture extends React.Component {
               // this.props.openGroup({ _id: this.props.id })
             },
             onError: _ => {
-              this.notify('Your culture could not be saved')
+              this.notify('Your blog could not be saved')
             },
             updater: store => {
               // const newGroup = store
@@ -129,10 +128,10 @@ class StartCulture extends React.Component {
           onCompleted: _ => {
             if (this.new_id) {
               this.props.openCulture({ _id: this.new_id })
-            } else this.notify('Your culture could not be saved')
+            } else this.notify('Your blog could not be saved')
           },
           onError: _ => {
-            this.notify('Your culture could not be saved')
+            this.notify('Your blog could not be saved')
           },
           updater: store => {
             const newGroup = store
@@ -147,13 +146,13 @@ class StartCulture extends React.Component {
     } else {
       this.setState({ sending: false })
 
-      this.notify('Your culture needs a name and a description')
+      this.notify('Your blog needs a name and a description')
     }
   }
   renderToolbar() {
     const { editing_mode } = this.props
-    const title = editing_mode ? 'Edit Culture' : 'Create Culture'
-    // const subtitle = culture ? { subtitle: culture.name } : {}
+    const title = editing_mode ? 'Edit Blog' : 'Create Blog'
+    // const subtitle = blog ? { subtitle: blog.name } : {}
     return <Toolbar title={title} navIconName="md-close" />
   }
 
@@ -177,63 +176,50 @@ class StartCulture extends React.Component {
 
   render() {
     return (
-      <View style={{ flex: 1, backgroundColor: '#fff' }}>
+      <View style={{ flex: 1 }}>
         {this.renderToolbar()}
         <View>{this.renderProgress()}</View>
         <ScrollView style={{ flex: 1 }}>
           <View style={{ flex: 1, padding: 40 }}>
             <TextInput
-              {...this.inputProps}
-              // placeholder="Culture Name"
+              label="Blog Name"
               onChangeText={name => this.setState({ name })}
-              // androidIcon="text-format"
-              sideText="Culture Name"
               value={this.state.name}
+              style={{ marginBottom: 20 }}
+              mode="outlined"
               onSubmitEditing={() => this._body.focus()}
             />
-            {/* <TextInput
-              {...this.inputProps}
-              // placeholder="Username"
-              ref={component => (this._body = component)}
-              // androidIcon="person"
-              sideText="Username"
-              onChangeText={username => this.setState({ username })}
-              value={this.state.username}
-              onSubmitEditing={() => this._body.focus()}
-            /> */}
             <TextInput
-              {...this.bodyInputProps}
-              inputStyle={{
-                height: this.state.inputSize,
-                color: '#000',
-              }}
-              // placeholder="Bio"
               ref={component => (this._body = component)}
-              // androidIcon="person"
-              sideText="Description"
+              label="Description"
               onChangeText={body => this.setState({ body })}
               value={this.state.body}
+              style={{ marginBottom: 20 }}
+              mode="outlined"
+              multiline
             />
             <View
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                padding: 20,
+                paddingVertical: 20,
+                paddingHorizontal: 10,
+                marginBottom: 20,
               }}>
-              <Text style={{ marginRight: 10, color: '#000' }}>
-                Private Culture?
-              </Text>
+              <Text style={{ marginRight: 10 }}>Private Blog?</Text>
               <Switch
                 onValueChange={is_private => this.setState({ is_private })}
                 value={this.state.is_private}
               />
             </View>
-            <ActivityButton
-              {...this.buttonProps}
-              title="Save"
-              isLoading={this.state.isSaving}
-              onPress={this.save}
-            />
+            <Button
+              loading={this.state.isSaving}
+              disabled={this.state.isSaving}
+              contentStyle={{ height: 50 }}
+              mode="contained"
+              onPress={this.save}>
+              Save
+            </Button>
           </View>
         </ScrollView>
         <KeyboardAvoidingView />
@@ -247,15 +233,17 @@ const ConnectedStartCulture = connect(mapStateToProps)(StartCulture)
 
 const StartCultureFragmentContainer = createFragmentContainer(
   ConnectedStartCulture,
-  graphql`
-    fragment StartCulture_group on Group {
-      id
-      _id
-      name
-      body
-      is_private
-    }
-  `,
+  {
+    group: graphql`
+      fragment StartCulture_group on Group {
+        id
+        _id
+        name
+        body
+        is_private
+      }
+    `,
+  },
 )
 
 export default props =>

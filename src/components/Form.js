@@ -226,7 +226,6 @@ export class Form extends React.Component {
         </View>
         {this.props.bottomContent}
         <Animated.View style={{ height: this.state.keyboardHeight }} />
-        {/* </KeyboardAwareScrollView> */}
       </View>
     )
   }

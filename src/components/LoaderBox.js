@@ -18,7 +18,7 @@ function LoaderBox({
   onPress,
   isLoading = false,
   title = 'Tap to load',
-  indicatorColor = '#000',
+  indicatorColor,
   indicatorSize = 'large',
   containerStyle,
   buttonStyle = { backgroundColor: 'transparent' },
@@ -64,7 +64,7 @@ function LoaderBox({
         buttonStyle={[{ height: 100 }, buttonStyle]}
         textStyle={[{ fontSize: 10 }, textStyle]}
         indicatorSize={indicatorSize}
-        indicatorColor={indicatorColor}
+        indicatorColor={indicatorColor || colors.text}
         icon={renderIcon()}
         activityIndicatorStyle={activityIndicatorStyle}
       />

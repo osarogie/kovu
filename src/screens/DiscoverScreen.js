@@ -83,7 +83,7 @@ export default function DiscoverScreen({ navigation }) {
     )
   }
   return (
-    <View style={styles.container}>
+    <View style={{ flex: 1, backgroundColor: colors.background }}>
       {renderToolbar()}
       {renderPage()}
     </View>

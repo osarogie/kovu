@@ -173,7 +173,7 @@ class Editor extends React.Component {
             padding: 5,
             paddingLeft: 20,
           }}>
-          {'This will go in the culture '}
+          {'This will go in the blog '}
           <Text style={{ fontStyle: 'italic', color: '#05f' }}>
             {culture.name}
           </Text>
@@ -290,9 +290,8 @@ class Editor extends React.Component {
 const ConnectedEditor = withNavigation(connect(mapStateToProps)(Editor))
 // export default connect(mapStateToProps)(Editor)
 
-const EditorFragmentContainer = createFragmentContainer(
-  ConnectedEditor,
-  graphql`
+const EditorFragmentContainer = createFragmentContainer(ConnectedEditor, {
+  discussion: graphql`
     fragment Editor_discussion on Discussion {
       id
       _id
@@ -301,7 +300,7 @@ const EditorFragmentContainer = createFragmentContainer(
       parsed_body
     }
   `,
-)
+})
 
 export default props =>
   props.editing_mode ? (
